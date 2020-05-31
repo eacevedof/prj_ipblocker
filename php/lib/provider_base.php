@@ -42,18 +42,22 @@ class ProviderBase
         $this->db->exec($sql);
     }
 
+    private function to_json($arvar)
+    {
+        if($arvar)
+            return json_encode($arvar);
+        return "";
+    }
+
     public function save_request()
     {
         if(!$this->is_registered()) $this->save_app_ip();
 
         $requesturi = $_SERVER["REQUEST_URI"];
         $domain = $_SERVER['HTTP_HOST'];
-        $get = var_export($_GET, 1);
-        if(!$get) $get="";
-        $post = var_export($_POST,1);
-        if(!$post) $post="";
-        $files = var_export($_FILES,1);
-        if(!$files) $files="";
+        $get = $this->to_json($_GET);
+        $post = $this->to_json($_POST);
+        $files = $this->to_json($_FILES);
 
         $sql = "
         -- save_request
