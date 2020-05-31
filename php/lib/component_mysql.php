@@ -8,9 +8,12 @@
  * @observations
  */
 namespace TheFramework\Components\Db;
+use Theframework\Traits\TraitLog;
 
 class ComponentMysql
 {
+    use TraitLog;
+
     private $arConn;
     private $isError;
     private $arErrors;
@@ -121,20 +124,6 @@ class ComponentMysql
             $this->log($sSQL,"ComponentMysql.exec error: $sMessage");
         }
     }//exec
-
-    private function log($mxVar,$sTitle=NULL)
-    {
-        if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog"))
-        {
-            $oLog = new \TheFramework\Components\ComponentLog("debug",PATH_LOGS);
-            $oLog->save($mxVar,$sTitle);
-        }
-        else {
-            //echo "<pre>";
-            //print_r("$sTitle: ");
-            //print_r($mxVar);
-        }
-    }
 
     private function add_error($sMessage){$this->isError = TRUE;$this->iAffected=-1; $this->arErrors[]=$sMessage;}
     public function is_error(){return $this->isError;}
