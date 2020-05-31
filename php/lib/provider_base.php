@@ -57,7 +57,9 @@ class ProviderBase
         if($arvar) {
             $string = json_encode($arvar);
             //$string = serialize($string);    # safe -- won't count the slash
-            return addslashes($string);
+            //return addslashes($string);
+            $string = str_replace("'","\\'",$string);
+            return $string;
         }
         return "";
     }
@@ -74,7 +76,7 @@ class ProviderBase
 
         $sql = "
         -- save_request
-        INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files) 
+        INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files`) 
         VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
         $this->db->exec($sql);
     }
