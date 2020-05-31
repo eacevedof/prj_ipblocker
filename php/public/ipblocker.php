@@ -2,8 +2,10 @@
 //ipblocker.php
 $pathlib = realpath(__DIR__."/../lib");
 $pathconfig = realpath(__DIR__."/../../config");
+$pathlogs = realpath(__DIR__."/../../logs");
 //define("IPB_PATH_LIB",$pathlib);
 define("IPB_PATH_CONFIG",$pathconfig);
+define("IPB_PATH_LOGS",$pathlogs);
 //die(PATH_LIB);
 //die("pathlib:$pathlib");
 include("$pathlib/functions.php");

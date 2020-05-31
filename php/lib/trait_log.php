@@ -6,14 +6,14 @@ trait TraitLog
 {
     protected function log($mxVar,$sTitle=NULL)
     {
-        $pathlogs = realpath(__DIR__."/../../logs");
+        $pathlogs = realpath(IPB_PATH_LOGS);
         $oLog = new L("sql",$pathlogs);
         $oLog->save($mxVar,$sTitle);
     }
 
     protected function logd($mxVar,$sTitle=NULL)
     {
-        $pathlogs = realpath(__DIR__."/../../logs");
+        $pathlogs = realpath(IPB_PATH_LOGS);
         $oLog = new L("debug",$pathlogs);
         $oLog->save($mxVar,$sTitle);
     }
