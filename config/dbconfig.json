@@ -1,0 +1,16 @@
+[
+  {
+    "id":"c1",
+    "alias":"The Framework - es",
+    "description":"Bd de theframework,",
+    "type":"mysql",
+    "server":"db630725462.db.1and1.com",
+    "schemas":[
+      {
+        "database":"db630725462",
+        "user":"dbo630725462",
+        "password":"Tfw@1234"
+      }
+    ]
+  }
+]
