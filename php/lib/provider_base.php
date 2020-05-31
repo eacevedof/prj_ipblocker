@@ -54,8 +54,11 @@ class ProviderBase
 
     private function to_json($arvar)
     {
-        if($arvar)
-            return json_encode($arvar);
+        if($arvar) {
+            $string = json_encode($arvar);
+            //$string = serialize($string);    # safe -- won't count the slash
+            return addslashes($string);
+        }
         return "";
     }
 
@@ -63,7 +66,7 @@ class ProviderBase
     {
         if(!$this->is_registered()) $this->save_app_ip();
 
-        $requesturi = $_SERVER["REQUEST_URI"];
+        $requesturi = addslashes($_SERVER["REQUEST_URI"]);
         $domain = $_SERVER['HTTP_HOST'];
         $get = $this->to_json($_GET);
         $post = $this->to_json($_POST);
