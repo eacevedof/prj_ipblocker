@@ -13,3 +13,7 @@ TRUNCATE TABLE app_ip_request;
 py.sh dump ipblocker
 py.sh deploy.dbrestore ipblocker
 ```
+### php
+```php
+include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
+```
