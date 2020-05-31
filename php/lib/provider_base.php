@@ -20,8 +20,9 @@ class ProviderBase
     {
         $sql = "
         -- is_blacklisted
-        SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1 ";
-        $id = $this->db->query($sql,1,1);
+        SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1";
+        $id = $this->db->query($sql,0,0);
+        //print_r($id);
         return $id;
     }
 
@@ -30,7 +31,7 @@ class ProviderBase
         $sql = "
         -- is_registered
         SELECT id FROM app_ip WHERE remote_ip='$this->remoteip'";
-        $id = $this->db->query($sql,1,1);
+        $id = $this->db->query($sql,0,0);
         return $id;
     }
 
