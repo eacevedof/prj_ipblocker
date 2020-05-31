@@ -1,6 +1,6 @@
 <?php
 namespace Theframework\Traits;
-use Theframework\Components\ComponentLogLog As L;
+use Theframework\Components\ComponentLog As L;
 
 trait TraitLog
 {
