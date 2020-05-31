@@ -3,11 +3,10 @@ namespace TheFramework\Components;
 
 class ComponentConfig
 {
-
     private static  function get_pathjson()
     {
-        $files["local"] = "../../config/contexts.local.json";
-        $files["prod"] = "../../config/contexts.json";
+        $files["local"] = IPB_PATH_CONFIG."/contexts.local.json";
+        $files["prod"] = IPB_PATH_CONFIG."/contexts.json";
         if(is_file($files["local"]))
             return $files["local"];
         return $files["prod"];
