@@ -7,6 +7,8 @@ define("IPB_PATH_CONFIG",$pathconfig);
 //die(PATH_LIB);
 //die("pathlib:$pathlib");
 include("$pathlib/functions.php");
+include("$pathlib/component_log.php");
+include("$pathlib/trait_log.php");
 include("$pathlib/helper_request.php");
 include("$pathlib/component_config.php");
 include("$pathlib/component_mysql.php");
