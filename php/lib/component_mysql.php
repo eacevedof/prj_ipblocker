@@ -129,6 +129,11 @@ class ComponentMysql
             $oLog = new \TheFramework\Components\ComponentLog("debug",PATH_LOGS);
             $oLog->save($mxVar,$sTitle);
         }
+        else {
+            echo "<pre>";
+            print_r("$sTitle: ");
+            print_r($mxVar);
+        }
     }
 
     private function add_error($sMessage){$this->isError = TRUE;$this->iAffected=-1; $this->arErrors[]=$sMessage;}
