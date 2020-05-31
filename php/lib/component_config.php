@@ -12,6 +12,14 @@ class ComponentConfig
         return $files["prod"];
     }
 
+    public static function get_env()
+    {
+        $pathjson = self::get_pathjson();
+        if(strstr($pathjson,"contexts.local.json"))
+            return "dev";
+        return "prod";
+    }
+
     public static function get_schema($id,$database)
     {
         $pathjson = self::get_pathjson();

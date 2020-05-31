@@ -1,7 +1,7 @@
 <?php
 namespace TheFramework\Providers;
 
-use TheFramework\Components\ComponentConfig;
+use TheFramework\Components\ComponentConfig as cfg;
 use TheFramework\Components\Db\ComponentMysql;
 
 class ProviderBase
@@ -11,9 +11,18 @@ class ProviderBase
 
     public function __construct($remoteip)
     {
-        $config = ComponentConfig::get_schema("c1","db_security");
+        $dbname = $this->_get_dbname_by_env();
+        $config = cfg::get_schema("c1", $dbname);
         $this->db = new ComponentMysql($config);
         $this->remoteip = $remoteip;
+    }
+
+    private function _get_dbname_by_env()
+    {
+        $env = cfg::get_env();
+        if($env=="prod")
+            return "dbs433062";
+        return "db_security";
     }
 
     public function is_blacklisted()
