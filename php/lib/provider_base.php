@@ -19,14 +19,14 @@ class ProviderBase
 
     public function is_blacklisted()
     {
-        $sql = "SELECT id FROM app_blacklist WHERE ip_remote='$this->remoteip' AND is_blocked=1 ";
+        $sql = "SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1 ";
         $id = $this->query($sql,0,0);
         return $id;
     }
 
     public function is_registered()
     {
-        $sql = "SELECT id FROM app_ip WHERE ip_remote='$this->remoteip'";
+        $sql = "SELECT id FROM app_ip WHERE remote_ip='$this->remoteip'";
         $id = $this->query($sql,0,0);
         return $id;
     }
@@ -34,7 +34,7 @@ class ProviderBase
     private function save_app_ip()
     {
         $sql = "INSERT INTO app_ip (remote_ip) VALUES('$this->remoteip')";
-        print_r($sql);
+        //print_r($sql);
         $this->db->exec($sql);
     }
 
