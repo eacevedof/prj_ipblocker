@@ -1,18 +1,20 @@
 <?php
 namespace TheFramework\Components;
+include("helper_request.php");
+include("component_mysql.php");
+include("component_mailing.php");
+include("provider_base.php");
+
+use TheFramework\Helpers\HelperRequest;
+
 class ComponentIpblocker
 {
-    private $post;
-    private $get;
-    private $requrl;
-    private $remoteip;
+
+    private $req = null;
 
     public function __construct()
     {
-        $this->post = $_POST;
-        $this->get = $_GET;
-        $this->requrl = $_SERVER["REQUEST_URI"];
-        $this->remoteip = $_SERVER["REMOTE_ADDR"];
+        $this->req = new HelperRequest();
     }
 
     private function is_blocked()
