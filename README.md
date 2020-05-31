@@ -15,6 +15,6 @@ py.sh deploy.dbrestore ipblocker
 ```
 ### php
 ```php
-if(is_fil("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
+if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
     include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
 ```
