@@ -69,7 +69,7 @@ class ComponentMysql
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
                 ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
             $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-            $this->log($sSQL,"ComponentMysql.exec");
+            $this->log($sSQL,"ComponentMysql.query");
             $oCursor = $oPdo->query($sSQL);
             if($oCursor===FALSE)
             {
