@@ -130,9 +130,9 @@ class ComponentMysql
             $oLog->save($mxVar,$sTitle);
         }
         else {
-            echo "<pre>";
-            print_r("$sTitle: ");
-            print_r($mxVar);
+            //echo "<pre>";
+            //print_r("$sTitle: ");
+            //print_r($mxVar);
         }
     }
 
