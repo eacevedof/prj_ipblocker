@@ -9,3 +9,7 @@ TRUNCATE TABLE app_ip;
 TRUNCATE TABLE app_ip_blacklist;
 TRUNCATE TABLE app_ip_request;
 ```
+```s
+py.sh dump ipblocker
+py.sh deploy.dbrestore ipblocker
+```
