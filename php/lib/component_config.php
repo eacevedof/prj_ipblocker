@@ -3,12 +3,12 @@ namespace TheFramework\Components;
 
 class ComponentConfig
 {
-    private CONST pathcfg = "../config/dbconfig.json";
+    private CONST pathcfg = "../../config/dbconfig.json";
 
     public static function get_schema($id,$database)
     {
         $content = file_get_contents(self::pathcfg);
-        $array = json_decode($content);
+        $array = json_decode($content,true);
         foreach ($array as $arcfg)
         {
             if($arcfg["id"] == $id) {

@@ -2,14 +2,15 @@
   {
     "id":"c1",
     "alias":"The Framework - es",
-    "description":"Bd de theframework,",
+    "description":"Bd de gestion de ataques",
     "type":"mysql",
-    "server":"db630725462.db.1and1.com",
+    "server":"localhost",
+    "port": "3306",
     "schemas":[
       {
-        "database":"db630725462",
-        "user":"dbo630725462",
-        "password":"Tfw@1234"
+        "database":"db_security",
+        "user":"root",
+        "password":"1234"
       }
     ]
   }
