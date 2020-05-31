@@ -3,7 +3,7 @@ namespace TheFramework\Components;
 
 class ComponentConfig
 {
-    private CONST pathcfg = "../../config/dbconfig.json";
+    private CONST pathcfg = "../../config/contexts.json";
 
     public static function get_schema($id,$database)
     {
@@ -19,9 +19,10 @@ class ComponentConfig
                     {
                         return [
                             "server" => $arcfg["server"],
+                            "port" => $arcfg["port"] ?? "3306",
                             "database" => $database,
-                            "user"=>$arcfg["user"],
-                            "password"=>$arcfg["password"],
+                            "user"=>$arschm["user"],
+                            "password"=>$arschm["password"],
                         ];
                     }
                 }

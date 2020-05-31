@@ -10,7 +10,20 @@ class ProviderBase
 
     public function __construct()
     {
-        $config = ComponentConfig::get_schema("ci","db_security");
-        $this->db = new ComponentMysql();
+        $config = ComponentConfig::get_schema("c1","db_security");
+        print_r($config);
+        $this->db = new ComponentMysql($config);
+    }
+
+    public function is_bocked($ip)
+    {
+        $sql = "SELECT ip FROM app_blacklist WHERE ip='$ip'";
+        $result = $this->query($sql);
+        print_r($result);
+    }
+
+    private function query($sql)
+    {
+        return $this->db->query($sql);
     }
 }
