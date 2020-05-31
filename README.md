@@ -13,7 +13,7 @@ TRUNCATE TABLE app_ip_request;
 py.sh dump ipblocker
 py.sh deploy.dbrestore ipblocker
 ```
-- [prod](https://trello.com/c/G9OArwWO/9-ionos-conectar-por-consola)
+- [prod mysql console](https://trello.com/c/G9OArwWO/9-ionos-conectar-por-consola)
 ### php
 - [prod include](https://trello.com/c/5qbASalI/10-ipblocker)
 ```php
