@@ -20,3 +20,6 @@ py.sh deploy.dbrestore ipblocker
 if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
     include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
 ```
+
+### To-do:
+- Warning messages a partir de app_words
