@@ -74,7 +74,7 @@ class ProviderBase
 
         $sql = "
         -- save_request
-        INSERT INTO app_ip_request (remote_ip,domain,request_uri,post,get,files) 
+        INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files) 
         VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
         $this->db->exec($sql);
     }
