@@ -1,0 +1,1 @@
+php -S localhost:500 -t ipblocker.php
