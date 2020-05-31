@@ -1,20 +1,20 @@
 <?php
 namespace TheFramework\Components;
-include("helper_request.php");
-include("component_mysql.php");
-include("component_mailing.php");
-include("provider_base.php");
 
 use TheFramework\Helpers\HelperRequest;
+use TheFramework\Providers\ProviderBase;
 
 class ComponentIpblocker
 {
 
     private $req = null;
+    private $prov;
 
     public function __construct()
     {
         $this->req = new HelperRequest();
+        $this->prov = new ProviderBase();
+
     }
 
     private function is_blocked()
