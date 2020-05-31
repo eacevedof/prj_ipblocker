@@ -3,11 +3,20 @@ namespace TheFramework\Components;
 
 class ComponentConfig
 {
-    private CONST pathcfg = "../../config/contexts.json";
+
+    private static  function get_pathjson()
+    {
+        $files["local"] = "../../config/contexts.local.json";
+        $files["prod"] = "../../config/contexts.json";
+        if(is_file($files["local"]))
+            return $files["local"];
+        return $files["prod"];
+    }
 
     public static function get_schema($id,$database)
     {
-        $content = file_get_contents(self::pathcfg);
+        $pathjson = self::get_pathjson();
+        $content = file_get_contents($pathjson);
         $array = json_decode($content,true);
         foreach ($array as $arcfg)
         {
