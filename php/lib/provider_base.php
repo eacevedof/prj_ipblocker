@@ -11,7 +11,6 @@ class ProviderBase
 
     public function __construct($remoteip)
     {
-        print_r($remoteip);
         $config = ComponentConfig::get_schema("c1","db_security");
         $this->db = new ComponentMysql($config);
         $this->remoteip = $remoteip;
@@ -19,28 +18,28 @@ class ProviderBase
 
     public function is_blacklisted()
     {
-        $sql = "SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1 ";
-        $id = $this->query($sql,0,0);
+        $sql = "
+        -- is_blacklisted
+        SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1 ";
+        $id = $this->db->query($sql,0,0);
         return $id;
     }
 
     public function is_registered()
     {
-        $sql = "SELECT id FROM app_ip WHERE remote_ip='$this->remoteip'";
-        $id = $this->query($sql,0,0);
+        $sql = "
+        -- is_registered
+        SELECT id FROM app_ip WHERE remote_ip='$this->remoteip'";
+        $id = $this->db->query($sql,0,0);
         return $id;
     }
 
     private function save_app_ip()
     {
-        $sql = "INSERT INTO app_ip (remote_ip) VALUES('$this->remoteip')";
-        //print_r($sql);
+        $sql = "
+        -- save_app_ip 
+        INSERT INTO app_ip (remote_ip) VALUES('$this->remoteip')";
         $this->db->exec($sql);
-    }
-
-    private function query($sql,$icol=null,$irow=null)
-    {
-        return $this->db->query($sql,$icol,$irow);
     }
 
     public function save_request()
@@ -50,10 +49,16 @@ class ProviderBase
         $requesturi = $_SERVER["REQUEST_URI"];
         $domain = $_SERVER['HTTP_HOST'];
         $get = var_export($_GET, 1);
+        if(!$get) $get="";
         $post = var_export($_POST,1);
+        if(!$post) $post="";
         $files = var_export($_FILES,1);
+        if(!$files) $files="";
 
-        $sql = "INSERT INTO app_ip_request (remote_ip,domain,request_uri,post,get,files) VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
+        $sql = "
+        -- save_request
+        INSERT INTO app_ip_request (remote_ip,domain,request_uri,post,get,files) 
+        VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
         $this->db->exec($sql);
     }
 }
