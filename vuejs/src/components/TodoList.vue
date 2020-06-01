@@ -14,15 +14,7 @@
       </thead>
 
       <tbody v-if="todos.length > 0">
-        <tr v-for="(todo, index) in todos" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ todo }}</td>
-          <td>
-            <button @click="fn_removetodo(index)" class="btn btn-danger btn-block">
-              Eliminar
-            </button>
-          </td>
-        </tr>
+        <TodoItem @fn_removetodo="fn_removetodo(index)" :todo="todo" :index="index" v-for="(todo, index) in todos" :key="index" />
       </tbody>
 
       <tbody v-else>
@@ -37,10 +29,12 @@
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 import TodoForm from "@/components/TodoForm.vue";
+import TodoItem from "@/components/TodoItem.vue";
 
 @Component({
   components:{
-    TodoForm
+    TodoForm,
+    TodoItem
   }
 })
 
