@@ -32,7 +32,7 @@
 import {Component, Vue} from "vue-property-decorator";
 
 @Component
-export default class TodoApp extends Vue{
+export default class TodoList extends Vue{
   
   todos: Array<string> = [];
   
