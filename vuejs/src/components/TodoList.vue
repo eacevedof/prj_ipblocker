@@ -47,7 +47,7 @@ export default class TodoList extends Vue{
     this.todos.push(todo)
   }
 
-  fn_removetodo(index:any){
+  fn_removetodo(index:number){
     this.todos.splice(index,1)
   }
 
