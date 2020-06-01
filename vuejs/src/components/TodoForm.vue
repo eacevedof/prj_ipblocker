@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="fn_addtodo">
     <div class="form-group" >
-      <label for="todo">Email address</label>
+      <label for="todo">To-do:</label>
       <input type="text"  v-model="todo" autocomplete="off" class="form-control" id="todo" autofocus >
     </div>
     <button type="submit" class="btn btn-primary btn-block">Agregar todo</button>
