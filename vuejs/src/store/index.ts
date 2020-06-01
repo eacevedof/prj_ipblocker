@@ -7,10 +7,13 @@ export default new Vuex.Store({
   state: {
     fullname: "Eduardo global"
   },
+
   mutations: {
   },
+  
   actions: {
   },
+  
   modules: {
   }
 })

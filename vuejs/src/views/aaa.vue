@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-import Xxx from "@/components/Xxx"
+import Xxx from "@/components/Xxx.vue"
 
 @Component({
   components: {
