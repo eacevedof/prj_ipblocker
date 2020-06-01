@@ -1,7 +1,11 @@
 <template>
   <div>
-    <TodoForm />
+    <TodoForm @fn_newtodo="fn_newtodo($event)" />
     <hr />
+
+    <button @click="fn_removetodos" class="btn btn-dark btn-block">Eliminar todos</button>
+    <br/>
+
     <table class="table">
       <thead>
         <th>id</th>
@@ -10,7 +14,7 @@
       </thead>
 
       <tbody v-if="todos.length > 0">
-        <tr v-for="{todo, index} in todos" :key="index">
+        <tr v-for="(todo, index) in todos" :key="index">
           <td>{{ index + 1 }}</td>
           <td>{{ todo }}</td>
           <td>
@@ -32,7 +36,7 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-import TodoForm from "@/components/TodoForm";
+import TodoForm from "@/components/TodoForm.vue";
 
 @Component({
   components:{
@@ -44,11 +48,12 @@ export default class TodoList extends Vue{
   
   todos: Array<string> = [];
   
-  fn_newtodo(todo){
+  fn_newtodo(todo:string){
+    console.log("fn_newtodo.todo",todo)
     this.todos.push(todo)
   }
 
-  fn_removetodo(index){
+  fn_removetodo(index:any){
     this.todos.splice(index,1)
   }
 
