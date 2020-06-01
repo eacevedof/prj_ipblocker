@@ -6,7 +6,15 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-@Component
+import Xxx from "@/components/Xxx"
+
+@Component({
+  components: {
+    Xxx
+  }
+})
+
+
 export default class Aaa extends Vue{
   
 }

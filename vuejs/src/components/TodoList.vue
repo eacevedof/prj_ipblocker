@@ -1,5 +1,7 @@
 <template>
   <div>
+    <TodoForm />
+    <hr />
     <table class="table">
       <thead>
         <th>id</th>
@@ -30,8 +32,14 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
+import TodoForm from "@/components/TodoForm";
 
-@Component
+@Component({
+  components:{
+    TodoForm
+  }
+})
+
 export default class TodoList extends Vue{
   
   todos: Array<string> = [];
