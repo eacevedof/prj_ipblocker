@@ -21,5 +21,46 @@ if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
     include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
 ```
 
+### Sql check:
+```sql
+
+-- ips con su contenido
+SELECT remote_ip,post 
+FROM
+(
+  SELECT remote_ip, substring(post,1,175) post 
+  FROM app_ip_request 
+  WHERE 1 
+  AND post!=''
+  AND remote_ip NOT IN 
+  (
+    SELECT remote_ip FROM app_ip_blacklist
+  )
+) x 
+order by remote_ip asc;
+
+-- guardo ips sospechosas
+INSERT INTO app_ip_blacklist (remote_ip, reason)
+SELECT remote_ip, substring(post,1,120) post
+FROM app_ip_request 
+WHERE 1 
+AND post!=''
+AND remote_ip NOT IN 
+(
+  SELECT remote_ip 
+  FROM app_ip_blacklist
+);
+
+-- numero de accesos por ip
+SELECT remote_ip, count(id) ireq
+FROM app_ip_request
+WHERE 1
+GROUP BY remote_ip
+ORDER BY ireq DESC;
+
+INSERT INTO app_ip_blacklist (remote_ip, reason) 
+values('152.32.104.0','pais:ph, fuente: ionos log, accion: intenta acceder a eduardoaf.com/wp-login');
+```
+
 ### To-do:
 - Warning messages a partir de app_words
