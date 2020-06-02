@@ -1,39 +1,29 @@
 <template>
-  <v-app-bar
-    app
-    color="primary"
+  <v-bottom-navigation
+    v-model="bottomNav"
+    color="yellow"
     dark
   >
-  
-  <v-btn class="btn-edit"
-      color="blue"
-      :to="{ name: 'Home',}">
-      Home
-  </v-btn>
+    <v-btn :to="{name:'home'}">
+      <span>Home</span>
+      <v-icon>mdi-home</v-icon>
+    </v-btn>
 
-  <v-btn class="btn-edit"
-      color="blue"
-      :to="{ name: 'Login',}">
-      Login
-  </v-btn>  
-  
+    <v-btn :to="{name:'login'}">
+      <span>Login</span>
+      <v-icon>mdi-login</v-icon>
+    </v-btn>
 
-    
-  </v-app-bar>
+  </v-bottom-navigation>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'Navbar',
-  
-
-  props: {
-    msg: String,
+export default {
+  name: "Navbar",  
+  data () {
+    return {
+      bottomNav: 'recent',
+    }
   },
-});
+}
 </script>
-
-<style>
-</style>
