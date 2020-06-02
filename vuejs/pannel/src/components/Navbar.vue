@@ -4,7 +4,7 @@
     color="yellow"
     dark
   >
-    <v-btn :to="{name:'home'}">
+    <v-btn :to="{name:'home'}" exact>
       <span>Home</span>
       <v-icon>mdi-home</v-icon>
     </v-btn>
