@@ -103,7 +103,7 @@ AND id IN
 SELECT r.remote_ip, domain
 , count(r.id) ireq
 , CASE WHEN b.id IS NULL THEN '' ELSE 'bl' END AS blid
-, CONCAT(COALESCE(i.whois,''),'',COALSECE(i.country,'')) who
+, CONCAT(COALESCE(i.whois,''),' - ',COALESCE(i.country,'')) who
 FROM app_ip_request r
 LEFT JOIN app_ip_blacklist b
 ON r.remote_ip = b.remote_ip
