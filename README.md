@@ -123,7 +123,9 @@ FROM app_ip_request
 WHERE 1
 -- 
 -- AND post like '%.ru%'
-
+AND remote_ip IN (
+  '159.89.49.60 '
+);
 ORDER BY id DESC
 LIMIT 1000;
 
