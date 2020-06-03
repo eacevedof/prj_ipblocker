@@ -135,8 +135,9 @@ values('92.38.136.69','pais:ru, fuente:ip manual, accion: intenta acceder a edua
 
 UPDATE app_ip
 SET country='US'
-,whois='google maybe'
-WHERE remote_ip IN ('209.17.96.42','209.17.96.202');
+,whois='google'
+WHERE remote_ip IN ('66.249.79.106','66.249.79.108')
+AND whois is null;
 ```
 
 ### To-do:
