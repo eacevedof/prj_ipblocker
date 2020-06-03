@@ -124,10 +124,16 @@ SELECT id, remote_ip, insert_date, domain
 , substring(`post`,1,100) p
 FROM app_ip_request 
 WHERE 1
--- 
 -- AND post like '%.ru%'
- AND request_uri LIKE '%?%'
+-- AND request_uri LIKE '%?%'
+AND remote_ip NOT IN (
+  SELECT remote_ip FROM app_ip_blacklist
 
+  UNION
+ 
+  -- los que estan inventariados
+  SELECT remote_ip FROM app_ip WHERE whois IS NOT NULL
+)
 ORDER BY id DESC
 LIMIT 100;
 
@@ -135,14 +141,16 @@ LIMIT 100;
 -- ips de google
 SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
 
+SELECT * FROM app_ip_request WHERE remote_ip='5.188.210.18'
+
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('89.36.224.3','pais:ro, fuente:ip manual, accion: intenta index.php?option=com_fireboard&Itemid=0&id=1&catid=0&func=fb_pdf en helpers');
+values('5.188.210.18','pais:ru, fuente:ip manual, accion: nada');
 
 
 UPDATE app_ip
-SET country='US'
-,whois='google'
-WHERE remote_ip IN ('66.249.79.106','66.249.79.108')
+SET country='DEU'
+,whois='ionos'
+WHERE remote_ip IN ('217.160.152.4')
 AND whois is null;
 ```
 
