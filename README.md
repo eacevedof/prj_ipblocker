@@ -41,21 +41,63 @@ order by remote_ip asc;
 
 -- guardo ips sospechosas
 INSERT INTO app_ip_blacklist (remote_ip, reason)
-SELECT remote_ip, substring(post,1,120) post
+
+SELECT remote_ip, substring(`post`,1,120) p
 FROM app_ip_request 
-WHERE 1 
-AND post!=''
-AND remote_ip NOT IN 
+WHERE 1
+AND id IN
 (
-  SELECT remote_ip 
-  FROM app_ip_blacklist
-);
+  SELECT MAX(id) mid
+  FROM app_ip_request
+  WHERE 1
+  AND `post`!=''
+  AND remote_ip IN
+  (
+    SELECT remote_ip
+    FROM app_ip_request 
+    WHERE 1 
+    AND `post`!=''
+    AND remote_ip NOT IN 
+    (
+      SELECT remote_ip 
+      FROM app_ip_blacklist
+    )
+  )
+  GROUP BY remote_ip
+)
+
+-- sospechosos por get
+INSERT INTO app_ip_blacklist (remote_ip, reason)
+
+SELECT remote_ip, substring(`get`,1,120) g
+FROM app_ip_request 
+WHERE 1
+AND id IN
+(
+  SELECT MAX(id) mid
+  FROM app_ip_request
+  WHERE 1
+  AND `get` LIKE '%email%'
+  AND remote_ip IN
+  (
+    SELECT remote_ip
+    FROM app_ip_request 
+    WHERE 1 
+    AND `get` LIKE '%email%'
+    AND remote_ip NOT IN 
+    (
+      SELECT remote_ip 
+      FROM app_ip_blacklist
+    )
+  )
+  GROUP BY remote_ip
+)
 
 -- numero de accesos por ip
-SELECT remote_ip, count(id) ireq
+SELECT remote_ip, domain, count(id) ireq
 FROM app_ip_request
 WHERE 1
-GROUP BY remote_ip
+GROUP BY remote_ip, domain
 ORDER BY ireq DESC;
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
