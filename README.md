@@ -50,25 +50,24 @@ AND id IN
   SELECT MAX(id) mid
   FROM app_ip_request
   WHERE 1
-  AND `post`!=''
+  AND post != ''
   AND remote_ip IN
   (
     SELECT remote_ip
     FROM app_ip_request 
     WHERE 1 
-    AND `post`!=''
     AND remote_ip NOT IN 
     (
       SELECT remote_ip 
       FROM app_ip_blacklist
     )
   )
-  AND remote_ip NOT IN
+  AND remote_ip IN
   (
-    SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+    SELECT DISTINCT remote_ip FROM app_ip_request WHERE post LIKE '%.ru%'
   )  
   GROUP BY remote_ip
-)
+);
 
 -- sospechosos por get
 INSERT INTO app_ip_blacklist (remote_ip, reason)
@@ -81,22 +80,21 @@ AND id IN
   SELECT MAX(id) mid
   FROM app_ip_request
   WHERE 1
-  AND `get` LIKE '%email%'
+  AND `get` != ''
   AND remote_ip IN
   (
     SELECT remote_ip
     FROM app_ip_request 
     WHERE 1 
-    AND `get` LIKE '%email%'
     AND remote_ip NOT IN 
     (
       SELECT remote_ip 
       FROM app_ip_blacklist
     )
   )
-  AND remote_ip NOT IN
+  AND remote_ip IN
   (
-    SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+    SELECT DISTINCT remote_ip FROM app_ip_request WHERE `get` LIKE '%.ru%'
   )
   GROUP BY remote_ip
 );
@@ -104,11 +102,18 @@ AND id IN
 -- numero de accesos por ip
 SELECT r.remote_ip, domain
 , count(r.id) ireq
-,COALESCE(b.id,'') AS blid
+, CASE WHEN b.id IS NULL THEN '' ELSE 'bl' END AS blid
+, COALESCE(i.whois,'')
 FROM app_ip_request r
 LEFT JOIN app_ip_blacklist b
 ON r.remote_ip = b.remote_ip
+LEFT JOIN app_ip i
+ON r.remote_ip = i.remote_ip
 WHERE 1
+AND r.remote_ip NOT IN
+(
+  SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+)
 GROUP BY r.remote_ip, domain
 ORDER BY domain ASC,ireq DESC;
 
@@ -116,13 +121,22 @@ ORDER BY domain ASC,ireq DESC;
 SELECT id, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
 FROM app_ip_request 
 WHERE 1
-AND remote_ip='184.154.139.51';
+-- AND post like '%.ru%'
+AND remote_ip IN (
+  '159.89.49.60 '
+);
 
 -- ips de google
 SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('152.32.104.0','pais:ph, fuente: ionos log, accion: intenta acceder a eduardoaf.com/wp-login');
+values('92.38.136.69','pais:ru, fuente:ip manual, accion: intenta acceder a eduardoaf.com/wp-login');
+
+
+UPDATE app_ip
+SET country='US'
+,whois='google maybe'
+WHERE remote_ip IN ('209.17.96.42','209.17.96.202');
 ```
 
 ### To-do:
