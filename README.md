@@ -103,7 +103,7 @@ AND id IN
 SELECT r.remote_ip, domain
 , count(r.id) ireq
 , CASE WHEN b.id IS NULL THEN '' ELSE 'bl' END AS blid
-, COALESCE(i.whois,'')
+, CONCAT(COALESCE(i.whois,''),'',COALSECE(i.country,'')) who
 FROM app_ip_request r
 LEFT JOIN app_ip_blacklist b
 ON r.remote_ip = b.remote_ip
@@ -112,7 +112,9 @@ ON r.remote_ip = i.remote_ip
 WHERE 1
 AND r.remote_ip NOT IN
 (
-  SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+  SELECT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+  UNION 
+  SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
 )
 GROUP BY r.remote_ip, domain
 ORDER BY domain ASC,ireq DESC;
@@ -136,7 +138,7 @@ AND remote_ip NOT IN
   -- los que estan inventariados
   SELECT remote_ip FROM app_ip WHERE whois IS NOT NULL
 )
-ORDER BY id DESC
+ORDER BY remote_ip,id DESC
 LIMIT 100;
 
 
@@ -146,13 +148,14 @@ SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a
 SELECT * FROM app_ip_request WHERE remote_ip='5.188.210.18'
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('5.188.210.18','pais:ru, fuente:ip manual, accion: nada');
+values('2001:41d0:8:531::','pais:FR, fuente:ip manual, accion: elchalanaruba.com/wp-admin');
 
 
 UPDATE app_ip
-SET country='SV'
-,whois='Telgua'
-WHERE remote_ip IN ('190.87.46.180')
+SET 
+  country='ES'
+  ,whois='Orange Espagne SA'
+WHERE remote_ip IN ('2a01:c50e:8c0a:8000:1d81:f209:358c:1009')
 AND whois is null;
 ```
 
