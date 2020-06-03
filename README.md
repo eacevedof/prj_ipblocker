@@ -22,8 +22,8 @@ if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
 ```
 
 ### Sql check:
+- [ipgeolocation](https://ipgeolocation.io/ip-location/34.241.107.14)
 ```sql
-
 -- ips con su contenido
 SELECT remote_ip,post 
 FROM
@@ -91,14 +91,24 @@ AND id IN
     )
   )
   GROUP BY remote_ip
-)
+);
 
 -- numero de accesos por ip
-SELECT remote_ip, domain, count(id) ireq
-FROM app_ip_request
+SELECT r.remote_ip, domain
+, count(r.id) ireq
+,COALESCE(b.id,'') AS blid
+FROM app_ip_request r
+LEFT JOIN app_ip_blacklist b
+ON r.remote_ip = b.remote_ip
 WHERE 1
-GROUP BY remote_ip, domain
-ORDER BY ireq DESC;
+GROUP BY r.remote_ip, domain
+ORDER BY domain ASC,ireq DESC;
+
+-- comprueba q tipo de peticiones ha hecho una determinada ip
+SELECT id, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
+FROM app_ip_request 
+WHERE 1
+AND remote_ip='34.241.107.14'
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
 values('152.32.104.0','pais:ph, fuente: ionos log, accion: intenta acceder a eduardoaf.com/wp-login');
