@@ -119,14 +119,16 @@ ORDER BY domain ASC,ireq DESC;
 
 -- comprueba q tipo de peticiones ha hecho una determinada ip
 SELECT id, remote_ip, insert_date, domain
-, substring(request_uri,1,20) r
+, substring(request_uri,1,100) r
 , substring(`get`,1,100) g
 , substring(`post`,1,100) p
+
 FROM app_ip_request 
 WHERE 1
 -- AND post like '%.ru%'
 -- AND request_uri LIKE '%?%'
-AND remote_ip NOT IN (
+AND remote_ip NOT IN 
+(
   SELECT remote_ip FROM app_ip_blacklist
 
   UNION
@@ -148,9 +150,9 @@ values('5.188.210.18','pais:ru, fuente:ip manual, accion: nada');
 
 
 UPDATE app_ip
-SET country='DEU'
-,whois='ionos'
-WHERE remote_ip IN ('217.160.152.4')
+SET country='SV'
+,whois='Telgua'
+WHERE remote_ip IN ('190.87.46.180')
 AND whois is null;
 ```
 
