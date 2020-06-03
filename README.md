@@ -118,23 +118,25 @@ GROUP BY r.remote_ip, domain
 ORDER BY domain ASC,ireq DESC;
 
 -- comprueba q tipo de peticiones ha hecho una determinada ip
-SELECT id, remote_ip, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
+SELECT id, remote_ip, insert_date, domain
+, substring(request_uri,1,20) r
+, substring(`get`,1,100) g
+, substring(`post`,1,100) p
 FROM app_ip_request 
 WHERE 1
 -- 
 -- AND post like '%.ru%'
-AND remote_ip IN (
-  '159.89.49.60 '
-);
+ AND request_uri LIKE '%?%'
+
 ORDER BY id DESC
-LIMIT 1000;
+LIMIT 100;
 
 
 -- ips de google
 SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('92.38.136.69','pais:ru, fuente:ip manual, accion: intenta acceder a eduardoaf.com/wp-login');
+values('89.36.224.3','pais:ro, fuente:ip manual, accion: intenta index.php?option=com_fireboard&Itemid=0&id=1&catid=0&func=fb_pdf en helpers');
 
 
 UPDATE app_ip
