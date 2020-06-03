@@ -38,6 +38,9 @@ class ComponentIpblocker
         This address will be blacklisted for some time.
         If you consider this is not your case please contact eacevedof@hotmail.com
         </pre>
+        <p>
+        Powered by prj_ipblocker
+        </p>
         ";
     }
 
