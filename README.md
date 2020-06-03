@@ -118,13 +118,15 @@ GROUP BY r.remote_ip, domain
 ORDER BY domain ASC,ireq DESC;
 
 -- comprueba q tipo de peticiones ha hecho una determinada ip
-SELECT id, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
+SELECT id, remote_ip, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
 FROM app_ip_request 
 WHERE 1
+-- 
 -- AND post like '%.ru%'
-AND remote_ip IN (
-  '159.89.49.60 '
-);
+
+ORDER BY id DESC
+LIMIT 1000;
+
 
 -- ips de google
 SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
