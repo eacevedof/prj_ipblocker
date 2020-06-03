@@ -63,6 +63,10 @@ AND id IN
       FROM app_ip_blacklist
     )
   )
+  AND remote_ip NOT IN
+  (
+    SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+  )  
   GROUP BY remote_ip
 )
 
@@ -90,6 +94,10 @@ AND id IN
       FROM app_ip_blacklist
     )
   )
+  AND remote_ip NOT IN
+  (
+    SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+  )
   GROUP BY remote_ip
 );
 
@@ -108,7 +116,10 @@ ORDER BY domain ASC,ireq DESC;
 SELECT id, insert_date, domain, request_uri, substring(`get`,1,100) g, substring(`post`,1,100) p
 FROM app_ip_request 
 WHERE 1
-AND remote_ip='34.241.107.14'
+AND remote_ip='184.154.139.51';
+
+-- ips de google
+SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
 values('152.32.104.0','pais:ph, fuente: ionos log, accion: intenta acceder a eduardoaf.com/wp-login');
