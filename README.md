@@ -75,6 +75,7 @@ INSERT INTO app_ip_blacklist (remote_ip, reason)
 SELECT remote_ip, substring(`get`,1,120) g
 FROM app_ip_request 
 WHERE 1
+AND insert_date>=curdate()
 AND id IN
 (
   SELECT MAX(id) mid
@@ -116,6 +117,7 @@ AND r.remote_ip NOT IN
   UNION 
   SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
 )
+AND  r.insert_date>=curdate()
 GROUP BY r.remote_ip, domain
 ORDER BY domain ASC,ireq DESC;
 
@@ -138,6 +140,7 @@ AND remote_ip NOT IN
   -- los que estan inventariados
   SELECT remote_ip FROM app_ip WHERE whois IS NOT NULL
 )
+AND insert_date>=curdate()
 ORDER BY remote_ip,id DESC
 LIMIT 100;
 
