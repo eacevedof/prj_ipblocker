@@ -1,9 +1,9 @@
 <template>
-  <v-toolbar app class="primary">
+  <v-app-bar app class="primary">
 
     <v-app-bar-nav-icon @click="$store.commit('set_navhamburger')"></v-app-bar-nav-icon>
 
-    <v-app-bar-side-icon @click="$store.commit('set_globalx',{value:'xxxxx'})"></v-app-bar-side-icon>
+
 
     <v-toolbar-title >IP Blocker {{ show_globalx }}</v-toolbar-title>
     
@@ -16,7 +16,7 @@
       salir
     </v-btn>
 
-  </v-toolbar>
+  </v-app-bar>
 
 </template>
 
