@@ -101,7 +101,12 @@ class ProviderBase
             ["http://"," offer "],
             ["https://"," offer "],
             ["http://","walmart.com"],
-            ["https://","walmart.com"]
+            ["https://","walmart.com"],
+            ["u0430u043"," u0434u"],
+            ["pussy"," pics "],
+            ["http",".xyz/"],
+            ["http","monkeydigital.co","Monkey Digital"],
+            ["http","furnitopia.com"],
         ];
         foreach($keywordsand as $arkw)
             if($this->_is_and($arkw,$strcontent))
@@ -111,7 +116,12 @@ class ProviderBase
 
     private function _is_orkeywords($strcontent)
     {
-        $keywordsand = [".link/"," dating ","-sex "];
+        $keywordsand = [
+            ".link/"," dating ","-sex ", "hairybeautypics.com", "judpharmacy.com","datanumen.com","virussprotection.com",
+            "datanumen.com","hairypussypix.com","topcasinos.","https://t.co/","ipcamerasoftware.cam","ome-security-camera.com",
+            "simpleloanslimited.com","kamagra-oraljelly100.com","keafmo.rbxrewards.club","ixiqwhoes.trextokenss.com","prancegoldholdings.com",
+            "hdclaps.me/"
+        ];
         foreach($keywordsand as $kw)
             if(strstr($strcontent,$kw))
                 return $kw;
