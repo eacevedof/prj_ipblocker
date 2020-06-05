@@ -68,8 +68,8 @@ class ProviderBase
     {
         if(!$this->is_registered()) $this->save_app_ip();
 
-        $requesturi = addslashes($_SERVER["REQUEST_URI"]);
-        $domain = $_SERVER['HTTP_HOST'];
+        $requesturi = addslashes($_SERVER["REQUEST_URI"] ?? "no-req-uri");
+        $domain = $_SERVER['HTTP_HOST'] ?? "no-req-domain";
         $get = $this->to_json($_GET);
         $post = $this->to_json($_POST);
         $files = $this->to_json($_FILES);
@@ -81,18 +81,37 @@ class ProviderBase
         $this->db->exec($sql);
     }
 
+    private function _is_and($arwords,$strcontent)
+    {
+        foreach ($arwords as $w)
+            if(!strstr($strcontent,$w))
+                return false;
+        return true;
+    }
+
     private function _is_andkeywords($strcontent)
     {
-        $keywordsand = ["https://",".ru"];
-        foreach($keywordsand as $kw)
-            if(!strstr($strcontent,$kw))
-                return false;
-        return implode(",",$keywordsand);
+        //print_r($strcontent);die;
+        $keywordsand = [
+            ["http:\/\/",".ru/"],
+            [".ru\""],
+            ["https:\/\/",".ru/"],
+            ["http:\/\/"," sex "],
+            ["https:\/\/"," sex "],
+            ["http:\/\/"," offer "],
+            ["https:\/\/"," offer "],
+            ["http:\/\/","walmart.com"],
+            ["https:\/\/","walmart.com"]
+        ];
+        foreach($keywordsand as $arkw)
+            if($this->_is_and($arkw,$strcontent))
+                return implode(",",$arkw);
+        return false;
     }
 
     private function _is_orkeywords($strcontent)
     {
-        $keywordsand = [".link/"];
+        $keywordsand = [".link\/"," dating "];
         foreach($keywordsand as $kw)
             if(strstr($strcontent,$kw))
                 return $kw;
@@ -104,6 +123,8 @@ class ProviderBase
         //$sql = "SELECT word FROM app_keyword";
         //$keywords = $this->db->exec($sql);
         $postjson = $this->to_json($_POST);
+        $postjson = strtolower($postjson);
+        //print_r($postjson);die;
         $isandkw = $this->_is_andkeywords($postjson);
         $isorkw = $this->_is_orkeywords($postjson);
         if($isandkw || $isorkw)
