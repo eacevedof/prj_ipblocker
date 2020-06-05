@@ -144,11 +144,11 @@ AND r.remote_ip NOT IN
   UNION 
   SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
 )
--- AND  r.insert_date>=curdate()
-AND  r.insert_date < curdate()
+AND  r.insert_date>=curdate()
+-- AND  r.insert_date < curdate()
 GROUP BY r.remote_ip, domain
 HAVING count(r.id)>1
-ORDER BY domain ASC,ireq DESC;
+ORDER BY domain ASC,ireq DESC, r.remote_ip DESC;
 -- =============================================
 -- =============================================
 
