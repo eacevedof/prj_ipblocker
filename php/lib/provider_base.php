@@ -93,15 +93,15 @@ class ProviderBase
     {
         //print_r($strcontent);die;
         $keywordsand = [
-            ["http:\/\/",".ru/"],
+            ["http://",".ru/"],
             [".ru\""],
-            ["https:\/\/",".ru/"],
-            ["http:\/\/"," sex "],
-            ["https:\/\/"," sex "],
-            ["http:\/\/"," offer "],
-            ["https:\/\/"," offer "],
-            ["http:\/\/","walmart.com"],
-            ["https:\/\/","walmart.com"]
+            ["https://",".ru/"],
+            ["http://"," sex "],
+            ["https://"," sex "],
+            ["http://"," offer "],
+            ["https://"," offer "],
+            ["http://","walmart.com"],
+            ["https://","walmart.com"]
         ];
         foreach($keywordsand as $arkw)
             if($this->_is_and($arkw,$strcontent))
@@ -111,7 +111,7 @@ class ProviderBase
 
     private function _is_orkeywords($strcontent)
     {
-        $keywordsand = [".link\/"," dating "];
+        $keywordsand = [".link/"," dating ","-sex "];
         foreach($keywordsand as $kw)
             if(strstr($strcontent,$kw))
                 return $kw;
@@ -124,6 +124,7 @@ class ProviderBase
         //$keywords = $this->db->exec($sql);
         $postjson = $this->to_json($_POST);
         $postjson = strtolower($postjson);
+        $postjson = str_replace("\/","/",$postjson);
         //print_r($postjson);die;
         $isandkw = $this->_is_andkeywords($postjson);
         $isorkw = $this->_is_orkeywords($postjson);
