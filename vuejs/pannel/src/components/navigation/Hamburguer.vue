@@ -47,6 +47,12 @@ export default {
 
   data: () => ({
     drawer: true,
+    items:[
+      {
+        title: "title A",
+        icon: ""
+      }
+    ]
   })
 }
 </script>
