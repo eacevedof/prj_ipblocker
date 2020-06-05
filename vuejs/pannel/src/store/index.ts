@@ -11,7 +11,12 @@ export default new Vuex.Store({
   mutations: {
     set_globalx(state,value){
       state.globalx = value
+    },
+
+    set_navhamburger(state){
+      state.navhamburguer = !state.navhamburguer
     }
+
   },
   actions: {
   },

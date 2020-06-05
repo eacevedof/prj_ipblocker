@@ -5,7 +5,7 @@
     style="position: relative;"
   >
   <v-navigation-drawer app
-    v-model="drawer"
+    v-model=$store.state.navhamburguer
     absolute
     temporary
   >

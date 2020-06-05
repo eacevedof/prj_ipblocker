@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app class="primary">
 
-    <v-app-bar-nav-icon @click="$store.commit('set_globalx','xxxxxuuuu')"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="$store.commit('set_navhamburger')"></v-app-bar-nav-icon>
 
     <v-app-bar-side-icon @click="$store.commit('set_globalx',{value:'xxxxx'})"></v-app-bar-side-icon>
 
@@ -21,14 +21,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-//import Hamburguer from "@/components/navigation/Hamburguer.vue"
 
 export default Vue.extend({
 
   name: "Navbar",  
 
   components: {
-    //Hamburguer,
+
   },
 
   data () {
