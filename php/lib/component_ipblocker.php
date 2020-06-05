@@ -22,6 +22,14 @@ class ComponentIpblocker
         return $isblocked;
     }
 
+    private function check_forbidden_content()
+    {
+        $words = $this->prov->get_forbidden_words();
+        if($words)
+            $this->prov->add_to_blacklist($words);
+    }
+
+
     private function response()
     {
         $codes = send_httpstatus(403);
@@ -39,7 +47,7 @@ class ComponentIpblocker
         If you consider this is not your case please contact eacevedof@hotmail.com
         </pre>
         <p>
-        Powered by prj_ipblocker
+        Powered by: <b>prj_ipblocker</b>
         </p>
         ";
     }
@@ -47,6 +55,8 @@ class ComponentIpblocker
     public function handle_request()
     {
         $this->prov->save_request();
+        //guarda en blacklist si detecta contenido prohibido
+        $this->check_forbidden_content();
         if($this->is_ipblacklisted()){
             $this->response();
             $this->pr();

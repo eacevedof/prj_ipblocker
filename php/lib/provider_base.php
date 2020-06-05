@@ -80,4 +80,43 @@ class ProviderBase
         VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
         $this->db->exec($sql);
     }
+
+    private function _is_andkeywords($strcontent)
+    {
+        $keywordsand = ["https://",".ru"];
+        foreach($keywordsand as $kw)
+            if(!strstr($strcontent,$kw))
+                return false;
+        return implode(",",$keywordsand);
+    }
+
+    private function _is_orkeywords($strcontent)
+    {
+        $keywordsand = [".link/"];
+        foreach($keywordsand as $kw)
+            if(strstr($strcontent,$kw))
+                return $kw;
+        return false;
+    }
+
+    public function get_forbidden_words()
+    {
+        //$sql = "SELECT word FROM app_keyword";
+        //$keywords = $this->db->exec($sql);
+        $postjson = $this->to_json($_POST);
+        $isandkw = $this->_is_andkeywords($postjson);
+        $isorkw = $this->_is_orkeywords($postjson);
+        if($isandkw || $isorkw)
+            return "or:$isorkw, and:$isandkw";
+        return "";
+    }
+
+    public function add_to_blacklist($kws)
+    {
+        $sql = "
+        -- add_to_blacklist
+        INSERT INTO app_ip_blacklist (`remote_ip`,`reason`) 
+        VALUES ('$this->remoteip','by keywords=> $kws')";
+        $this->db->exec($sql);
+    }
 }

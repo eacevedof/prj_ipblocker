@@ -144,25 +144,31 @@ AND r.remote_ip NOT IN
   UNION 
   SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
 )
-AND  r.insert_date>=curdate()
+-- AND  r.insert_date>=curdate()
+AND  r.insert_date < curdate()
 GROUP BY r.remote_ip, domain
 HAVING count(r.id)>1
 ORDER BY domain ASC,ireq DESC;
 -- =============================================
 -- =============================================
 
-
-SELECT * FROM app_ip_request WHERE remote_ip='2a01:4f8:c17:c2a2::1';
+SELECT * FROM app_ip_request WHERE remote_ip='45.86.203.42';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('185.216.34.227','pais:AU, fuente:ip manual, accion: gracestyle, theframework, c:\linksdating.txt spam');
+values('45.86.203.42','pais:DE, fuente:ip manual, accion: gracestyle, https://flipme.link/957bDy spam');
 
+-- INSERT INTO app_ip_blacklist (remote_ip,reason)
+
+SELECT remote_ip, 'https:// spam'
+-- ,post
+-- ,insert_date 
+FROM app_ip_request WHERE post LIKE '%https://%' AND remote_ip NOT IN (SELECT remote_ip FROM app_ip_blacklist); 
 
 UPDATE app_ip
 SET 
-  country='DE'
-  ,whois='Hetzner Online Gmbh'
-WHERE remote_ip IN ('2a01:4f8:c17:c2a2::1')
+  country='RU'
+  ,whois='KINGISEPP-ONLINE Ltd.'
+WHERE remote_ip IN ('31.132.211.144')
 AND whois is null;
 ```
 
