@@ -6,11 +6,11 @@
   >
     <v-list-item>
       <v-list-item-avatar>
-        <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+        <v-img src="https://pbs.twimg.com/profile_images/1325817320/Calamardo_reasonably_small.gif"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title>John Leider</v-list-item-title>
+        <v-list-item-title>Eduardo A.F</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
@@ -45,7 +45,7 @@ export default {
     items:[
       {
         title: "title A",
-        icon: ""
+        icon: "mdi-cart-arrow-down"
       }
     ]
   })
