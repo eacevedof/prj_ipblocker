@@ -1,9 +1,9 @@
 <template>
   <v-toolbar app class="primary">
 
-    <v-app-bar-nav-icon @click="$store.commit('setGlobalx','xxxxxuuuu')"></v-app-bar-nav-icon>
-    
-    <v-app-bar-side-icon @click="$store.commit('setGlobalx',{value:'xxxxx'})"></v-app-bar-side-icon>
+    <v-app-bar-nav-icon @click="$store.commit('set_globalx','xxxxxuuuu')"></v-app-bar-nav-icon>
+
+    <v-app-bar-side-icon @click="$store.commit('set_globalx',{value:'xxxxx'})"></v-app-bar-side-icon>
 
     <v-toolbar-title >IP Blocker {{$store.state.globalx}}</v-toolbar-title>
     

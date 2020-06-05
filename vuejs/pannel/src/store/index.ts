@@ -9,7 +9,7 @@ export default new Vuex.Store({
     globalx: "Soy la global",
   },
   mutations: {
-    setGlobalx(state,value){
+    set_globalx(state,value){
       state.globalx = value
     }
   },
