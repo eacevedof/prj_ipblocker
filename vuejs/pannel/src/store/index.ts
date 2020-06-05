@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    navhamburguer: false,
+    navhamburguer: true,
     globalx: "Soy la global",
   },
   mutations: {
