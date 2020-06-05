@@ -1,10 +1,14 @@
 <template>
   <v-app>
+    
     <navbar />
+
     <hamburguer />
+
     <v-content>
       <router-view />
     </v-content>
+
   </v-app>
 </template>
 
