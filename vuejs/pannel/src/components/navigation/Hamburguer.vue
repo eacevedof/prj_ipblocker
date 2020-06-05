@@ -1,9 +1,4 @@
 <template>
-<v-sheet
-    height="400"
-    class="overflow-hidden"
-    style="position: relative;"
-  >
   <v-navigation-drawer app
     v-model=$store.state.navhamburguer
     absolute
@@ -37,7 +32,7 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
-  </v-sheet>
+
 </template>
 
 <script lang="ts">
