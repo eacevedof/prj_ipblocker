@@ -100,27 +100,6 @@ AND id IN
   GROUP BY remote_ip
 );
 
--- numero de accesos por ip
-SELECT r.remote_ip, domain
-, count(r.id) ireq
-, CASE WHEN b.id IS NULL THEN '' ELSE 'bl' END AS blid
-, CONCAT(COALESCE(i.whois,''),' - ',COALESCE(i.country,'')) who
-FROM app_ip_request r
-LEFT JOIN app_ip_blacklist b
-ON r.remote_ip = b.remote_ip
-LEFT JOIN app_ip i
-ON r.remote_ip = i.remote_ip
-WHERE 1
-AND r.remote_ip NOT IN
-(
-  SELECT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
-  UNION 
-  SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
-)
-AND  r.insert_date>=curdate()
-GROUP BY r.remote_ip, domain
-ORDER BY domain ASC,ireq DESC;
-
 -- comprueba q tipo de peticiones ha hecho una determinada ip
 SELECT id, remote_ip, insert_date, domain
 , substring(request_uri,1,100) r
@@ -142,23 +121,48 @@ AND remote_ip NOT IN
 )
 AND insert_date>=curdate()
 ORDER BY remote_ip,id DESC
-LIMIT 100;
+LIMIT 500;
 
 
 -- ips de google
 SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
 
-SELECT * FROM app_ip_request WHERE remote_ip='5.188.210.18'
+-- numero de accesos por ip
+SELECT r.remote_ip, domain
+, count(r.id) ireq
+, CASE WHEN b.id IS NULL THEN '' ELSE 'bl' END AS blid
+, CONCAT(COALESCE(i.whois,''),' - ',COALESCE(i.country,'')) who
+FROM app_ip_request r
+LEFT JOIN app_ip_blacklist b
+ON r.remote_ip = b.remote_ip
+LEFT JOIN app_ip i
+ON r.remote_ip = i.remote_ip
+WHERE 1
+AND r.remote_ip NOT IN
+(
+  SELECT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
+  UNION 
+  SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
+)
+AND  r.insert_date>=curdate()
+GROUP BY r.remote_ip, domain
+HAVING count(r.id)>1
+ORDER BY domain ASC,ireq DESC;
+-- =============================================
+-- =============================================
+
+
+SELECT * FROM app_ip_request WHERE remote_ip='2a01:4f8:c17:c2a2::1';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('2001:41d0:8:531::','pais:FR, fuente:ip manual, accion: elchalanaruba.com/wp-admin');
+values('185.216.34.227','pais:AU, fuente:ip manual, accion: gracestyle, theframework, c:\linksdating.txt spam');
 
 
 UPDATE app_ip
 SET 
-  country='ES'
-  ,whois='Orange Espagne SA'
-WHERE remote_ip IN ('2a01:c50e:8c0a:8000:1d81:f209:358c:1009')
+  country='DE'
+  ,whois='Hetzner Online Gmbh'
+WHERE remote_ip IN ('2a01:4f8:c17:c2a2::1')
 AND whois is null;
 ```
 
