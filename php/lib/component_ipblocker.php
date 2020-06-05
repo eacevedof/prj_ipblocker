@@ -24,6 +24,8 @@ class ComponentIpblocker
 
     private function check_forbidden_content()
     {
+        if($this->is_ipblacklisted())
+            return;
         $words = $this->prov->get_forbidden_words();
         if($words)
             $this->prov->add_to_blacklist($words);
@@ -42,9 +44,11 @@ class ComponentIpblocker
         echo "
         <pre>
         {$now}:
-        We have detected malicious requests from your ip: {$ip}
-        This address will be blacklisted for some time.
-        If you consider this is not your case please contact eacevedof@hotmail.com
+        We have detected some malicious requests from your ip: {$ip}
+        This address will be blacklisted for some time around 24h.
+        If you consider this is not your case please contact
+            eacevedof@hotmail.com
+        so we can enable your ip again sooner.
         </pre>
         <p>
         Powered by: <b>prj_ipblocker</b>
@@ -55,7 +59,7 @@ class ComponentIpblocker
     public function handle_request()
     {
         $this->prov->save_request();
-        //guarda en blacklist si detecta contenido prohibido
+        //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
         $this->check_forbidden_content();
         if($this->is_ipblacklisted()){
             $this->response();
