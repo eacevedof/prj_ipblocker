@@ -13,6 +13,7 @@ final class SaveRequestTest extends BaseTest
         $_GET = [];
     }
 
+
     private function pr()
     {
         print_r($_POST);
@@ -22,6 +23,7 @@ final class SaveRequestTest extends BaseTest
 
     public function run()
     {
+        $this->pr();
         $o = new ComponentIpblocker();
         $o->handle_request();
     }
@@ -29,7 +31,4 @@ final class SaveRequestTest extends BaseTest
 
 //otra forma es lanzar: php -S localhost:2000 -t public
 if (!count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)))
-{
-    $t = new SaveRequestTest();
-    $t->run();
-}
+    (new SaveRequestTest())->run();

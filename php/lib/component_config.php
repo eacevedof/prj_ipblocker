@@ -24,7 +24,7 @@ class ComponentConfig
 
     private  static function _get_array_from_json($type="contexts")
     {
-        $pathjson = self::get_pathjson("contexts");
+        $pathjson = self::get_pathjson($type);
         $content = file_get_contents($pathjson);
         $array = json_decode($content,true);
         return $array;
