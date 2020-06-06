@@ -1,0 +1,9 @@
+{
+  "or": [
+    " viagra "," sex ",
+  ],
+  "and": [
+    ["http://","walmart.com"],
+    ["https://","walmart.com"]
+  ]
+}
