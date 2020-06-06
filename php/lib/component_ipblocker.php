@@ -3,9 +3,11 @@ namespace TheFramework\Components;
 
 use TheFramework\Helpers\HelperRequest;
 use TheFramework\Providers\ProviderBase;
+use Theframework\Traits\TraitLog;
 
 class ComponentIpblocker
 {
+    use TraitLog;
 
     private $req = null;
     private $prov;

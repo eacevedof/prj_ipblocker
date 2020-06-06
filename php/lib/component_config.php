@@ -55,9 +55,10 @@ class ComponentConfig
         return [];
     }
 
-    public static function get_keywords($andor="and")
+    public static function get_keywords($andor="or", $method="post")
     {
         $array = self::_get_array_from_json("keywords");
-        return $array[$andor] ?? $array;
+        $array = $array[$andor][$method] ?? [];
+        return $array;
     }
 }

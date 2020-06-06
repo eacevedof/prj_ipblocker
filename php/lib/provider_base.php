@@ -3,9 +3,12 @@ namespace TheFramework\Providers;
 
 use TheFramework\Components\ComponentConfig as cfg;
 use TheFramework\Components\Db\ComponentMysql;
+use Theframework\Traits\TraitLog;
 
 class ProviderBase
 {
+    use TraitLog;
+
     private $db;
     private $remoteip;
 
@@ -71,7 +74,9 @@ class ProviderBase
         $requesturi = addslashes($_SERVER["REQUEST_URI"] ?? "no-req-uri");
         $domain = $_SERVER['HTTP_HOST'] ?? "no-req-domain";
         $get = $this->to_json($_GET);
-        $post = $this->to_json($_POST);
+        $post = $_POST;
+        if(isset($post["password"])) $post["password"] = "****";
+        $post = $this->to_json($post);
         $files = $this->to_json($_FILES);
 
         $sql = "
@@ -89,19 +94,19 @@ class ProviderBase
         return true;
     }
 
-    private function _is_andkeywords($strcontent)
+    private function _is_andkeywords($strcontent,$method)
     {
         //print_r($strcontent);die;
-        $keywordsand = cfg::get_keywords();
+        $keywordsand = cfg::get_keywords("and",$method);
         foreach($keywordsand as $arkw)
             if($this->_is_and($arkw,$strcontent))
                 return implode(",",$arkw);
         return false;
     }
 
-    private function _is_orkeywords($strcontent)
+    private function _is_orkeywords($strcontent,$method)
     {
-        $keywordsor = cfg::get_keywords("or");
+        $keywordsor = cfg::get_keywords("or",$method);
         //print_r($keywordsor);die;
         foreach($keywordsor as $kw)
             if(strstr($strcontent,$kw))
@@ -109,18 +114,44 @@ class ProviderBase
         return false;
     }
 
+    private function _get_json_ofmethod($method="post")
+    {
+        if($method=="post") {
+            $post = $_POST;
+            unset($post["password"]);
+            $json = $this->to_json($post);
+        }
+        else
+            $json = $this->to_json($_GET);
+        $json = strtolower($json);
+        $json = str_replace("\/","/",$json);
+        return $json;
+    }
+
+    private function _is_method_nok($method="post")
+    {
+        if($method=="post" && !$_POST) return "";
+        if($method=="get" && !$_GET) return "";
+
+        $methodjson = $this->_get_json_ofmethod($method);
+        $isorkw = $this->_is_orkeywords($methodjson);
+        if($isorkw)
+            return "or {$method}:$isorkw";
+
+        $isandkw = $this->_is_andkeywords($methodjson);
+        if($isandkw)
+            return "and {$method}:$isandkw";
+
+        return "";
+    }
+
     public function get_forbidden_words()
     {
-        //$sql = "SELECT word FROM app_keyword";
-        //$keywords = $this->db->exec($sql);
-        $postjson = $this->to_json($_POST);
-        $postjson = strtolower($postjson);
-        $postjson = str_replace("\/","/",$postjson);
-        //print_r($postjson);die;
-        $isandkw = $this->_is_andkeywords($postjson);
-        $isorkw = $this->_is_orkeywords($postjson);
-        if($isandkw || $isorkw)
-            return "or:$isorkw, and:$isandkw";
+        //comprueba si todo va bien en post
+        $isnok = $this->_is_method_nok();
+        if($isnok) return $isnok;
+        $isnok = $this->_is_method_nok("get");
+        if($isnok) return $isnok;
         return "";
     }
 
