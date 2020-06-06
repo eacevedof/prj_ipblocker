@@ -155,7 +155,7 @@ ORDER BY domain ASC,ireq DESC, r.remote_ip DESC;
 SELECT * FROM app_ip_request WHERE remote_ip='45.86.203.42';
 
 INSERT INTO app_ip_blacklist (remote_ip, reason) 
-values('45.86.203.42','pais:DE, fuente:ip manual, accion: gracestyle, https://flipme.link/957bDy spam');
+values('189.82.46.38','pais:BR, fuente:ip manual, accion: /helper-theframework/examples/=ftp://orange:orange@orange.globecast.net hack');
 
 -- INSERT INTO app_ip_blacklist (remote_ip,reason)
 
@@ -166,9 +166,9 @@ FROM app_ip_request WHERE post LIKE '%https://%' AND remote_ip NOT IN (SELECT re
 
 UPDATE app_ip
 SET 
-  country='RU'
-  ,whois='KINGISEPP-ONLINE Ltd.'
-WHERE remote_ip IN ('31.132.211.144')
+  country='BR'
+  ,whois='Telemar Norte Leste S.A.'
+WHERE remote_ip IN ('189.82.46.38')
 AND whois is null;
 ```
 
