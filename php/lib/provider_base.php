@@ -134,11 +134,11 @@ class ProviderBase
         if($method=="get" && !$_GET) return "";
 
         $methodjson = $this->_get_json_ofmethod($method);
-        $isorkw = $this->_is_orkeywords($methodjson);
+        $isorkw = $this->_is_orkeywords($methodjson, $method);
         if($isorkw)
             return "or {$method}:$isorkw";
 
-        $isandkw = $this->_is_andkeywords($methodjson);
+        $isandkw = $this->_is_andkeywords($methodjson, $method);
         if($isandkw)
             return "and {$method}:$isandkw";
 
