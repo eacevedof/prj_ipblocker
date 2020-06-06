@@ -63,10 +63,22 @@ class ComponentIpblocker
         $this->prov->save_request();
         //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
         $this->check_forbidden_content();
+
         if($this->is_ipblacklisted()){
             $this->response();
             $this->pr();
             die();
         }
+    }
+
+    public function test_handle_request($m="")
+    {
+        $this->prov->save_request();
+        $this->check_forbidden_content();
+
+        if($this->is_ipblacklisted())
+            //echo "\nthis ip is blacklisted";
+            throw new \Exception("\nthis ip is blacklisted $m");
+        echo "\ntest passed for $m";
     }
 }

@@ -14,9 +14,9 @@ final class SaveRequestTest extends BaseTest
         //print_r($_FILES);
     }
 
-    private function _execute_ipblocker()
+    private function _execute_ipblocker($i)
     {
-        (new ComponentIpblocker())->handle_request();
+        (new ComponentIpblocker())->test_handle_request($i);
     }
 
     private function _test_blocked_get()
@@ -26,11 +26,22 @@ final class SaveRequestTest extends BaseTest
             ->add_get("content","die(@md5(");
 
         $this->log_globals();
-        $this->_execute_ipblocker();
+        $this->_execute_ipblocker("_test_blocked_get");
+    }
+
+    private function _test_non_blocked_get()
+    {
+        $this->reset_all()->
+        add_get("","ftp://")
+            ->add_get("content","(@md5(");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_non_blocked_get");
     }
 
     public function run()
     {
+        $this->_test_non_blocked_get();
         $this->_test_blocked_get();
     }
 }

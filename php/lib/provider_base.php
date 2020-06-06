@@ -160,7 +160,7 @@ class ProviderBase
         $sql = "
         -- add_to_blacklist
         INSERT INTO app_ip_blacklist (`remote_ip`,`reason`) 
-        VALUES ('$this->remoteip','by keywords=> $kws')";
+        VALUES ('$this->remoteip','keywords: $kws')";
         $this->db->exec($sql);
     }
 }
