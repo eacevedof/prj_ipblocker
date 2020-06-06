@@ -50,7 +50,7 @@ class ProviderBase
 
     private function get_searchbot()
     {
-        return sb::get_searchbot($this->remoteip);
+        return sb::get_name($this->remoteip);
     }
 
     private function save_app_ip()
@@ -147,6 +147,9 @@ class ProviderBase
         if($method=="get" && !$_GET) return "";
 
         $methodjson = $this->_get_json_ofmethod($method);
+        if($_POST && $this->_is_unicode($methodjson))
+            return "unicode";
+
         $isorkw = $this->_is_orkeywords($methodjson, $method);
         if($isorkw)
             return "or {$method}:$isorkw";
@@ -158,8 +161,14 @@ class ProviderBase
         return "";
     }
 
+    private function _is_unicode($string)
+    {
+        return (strlen($string) != strlen(utf8_decode($string)));
+    }
+
     public function get_forbidden_words()
     {
+
         //comprueba si todo va bien en post
         $isnok = $this->_is_method_nok();
         if($isnok) return $isnok;
