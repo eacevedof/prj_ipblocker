@@ -21,8 +21,8 @@ final class SaveRequestTest extends BaseTest
 
     private function _test_blocked_get()
     {
-        $this->reset_all()->
-            add_get("","=ftp://")
+        $this->reset_all()
+            ->add_get("","=ftp://")
             ->add_get("content","die(@md5(");
 
         $this->log_globals();
@@ -31,18 +31,29 @@ final class SaveRequestTest extends BaseTest
 
     private function _test_non_blocked_get()
     {
-        $this->reset_all()->
-        add_get("","ftp://")
+        $this->reset_all()
+            ->add_get("","ftp://")
             ->add_get("content","(@md5(");
 
         $this->log_globals();
         $this->_execute_ipblocker("_test_non_blocked_get");
     }
 
+    private function _test_non_blocked_post()
+    {
+        $this->reset_all()
+            ->add_post("user","juan@mail.com")
+            ->add_post("password","furnitopia.com");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_non_blocked_post");
+    }
+
     public function run()
     {
+        $this->_test_non_blocked_post();
         $this->_test_non_blocked_get();
-        $this->_test_blocked_get();
+        //$this->_test_blocked_get();
     }
 }
 
