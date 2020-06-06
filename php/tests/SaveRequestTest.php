@@ -49,11 +49,24 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_non_blocked_post");
     }
 
+    private function _test_blocked_by_post_dropbox()
+    {
+        $this->reset_all()
+            ->add_post("textarea","dropbox.com/s/sometoken");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_blocked_by_post_dropbox");
+    }
+
+
     public function run()
     {
         $this->_test_non_blocked_post();
         $this->_test_non_blocked_get();
         //$this->_test_blocked_get();
+        $this->_test_non_blocked_post();
+
+
     }
 }
 
