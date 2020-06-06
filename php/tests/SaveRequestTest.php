@@ -14,9 +14,12 @@ final class SaveRequestTest extends BaseTest
         //print_r($_FILES);
     }
 
-    private function _execute_ipblocker($i)
+    private function _execute_ipblocker($m)
     {
-        (new ComponentIpblocker())->test_handle_request($i);
+        echo "\n==================\n";
+        echo "$m";
+        echo "\n==================\n";
+        (new ComponentIpblocker())->test_handle_request($m);
     }
 
     private function _test_blocked_get()
@@ -58,14 +61,23 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_by_post_dropbox");
     }
 
+    private function _test_blocked_by_post_html()
+    {
+        $this->reset_all()
+            ->add_post("textarea","<a href=\"http://somedomain.com\">pincha aqui</a>");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_blocked_by_post_html");
+    }
 
     public function run()
     {
         $this->_test_non_blocked_post();
         $this->_test_non_blocked_get();
         //$this->_test_blocked_get();
-        $this->_test_non_blocked_post();
-
+        //$this->_test_non_blocked_post();
+        $this->_test_blocked_by_post_html();
+        $this->_test_blocked_by_post_dropbox();
 
     }
 }

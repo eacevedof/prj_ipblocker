@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer app
-    v-model=$store.state.navhamburguer
+    v-model=navhamburguer
     absolute
     temporary
   >
@@ -10,7 +10,7 @@
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title>Eduardo A.F</v-list-item-title>
+        <v-list-item-title>Eduardo A.F {{navhamburguer}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
@@ -36,6 +36,8 @@
 </template>
 
 <script lang="ts">
+import {mapState} from "vuex"
+
 export default {
 
   name: "Hamburguer",
@@ -48,6 +50,16 @@ export default {
         icon: "mdi-cart-arrow-down"
       }
     ]
-  })
+  }),
+
+  mounted(){
+    console.log("hamburg mounted")
+  },
+
+  computed:{
+    ...mapState(["navhamburguer"])
+  },
+
+
 }
 </script>

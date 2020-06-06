@@ -1,11 +1,9 @@
 <template>
   <v-app-bar app class="primary">
 
-    <v-app-bar-nav-icon @click="$store.commit('set_navhamburger')"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="set_navhamburger"></v-app-bar-nav-icon>
 
-
-
-    <v-toolbar-title >IP Blocker {{ show_globalx }}</v-toolbar-title>
+    <v-toolbar-title >IP Blocker {{ globalx }}</v-toolbar-title>
     
     <v-spacer />
 
@@ -22,6 +20,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
 
@@ -38,9 +37,14 @@ export default Vue.extend({
   },
 
   computed:{
-    show_globalx(): string {
-      return this.$store.state.globalx
-    }
-  }
+    ...mapState(["globalx","customers"])
+  },
+
+  methods:{
+    ...mapMutations(["set_navhamburger"]),
+    ...mapActions(["get_customers"])
+  }  
+
+
 })
 </script>
