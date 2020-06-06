@@ -1,4 +1,4 @@
 .idea
 config/contexts.local.json
-config/contexts.prod.json
+config/keywords.local.json
 logs
