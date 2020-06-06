@@ -1,6 +1,7 @@
 <?php
 namespace TheFramework\Providers;
 
+use TheFramework\Components\ComponentSearchbots as sb;
 use TheFramework\Components\ComponentConfig as cfg;
 use TheFramework\Components\Db\ComponentMysql;
 use Theframework\Traits\TraitLog;
@@ -47,11 +48,23 @@ class ProviderBase
         return $id;
     }
 
+    private function get_searchbot()
+    {
+        return sb::get_searchbot($this->remoteip);
+    }
+
     private function save_app_ip()
     {
         $sql = "
         -- save_app_ip 
         INSERT INTO app_ip (remote_ip) VALUES('$this->remoteip')";
+
+        $searchbot = $this->get_searchbot();
+        if($searchbot)
+            $sql = "
+            -- save_app_ip 
+            INSERT INTO app_ip (remote_ip, whois) VALUES('$this->remoteip','host:$searchbot')";
+
         $this->db->exec($sql);
     }
 

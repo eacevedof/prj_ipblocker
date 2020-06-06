@@ -1,6 +1,7 @@
 <?php
 namespace TheFramework\Components;
 
+use TheFramework\Components\ComponentSearchbots as sb;
 use TheFramework\Helpers\HelperRequest;
 use TheFramework\Providers\ProviderBase;
 use Theframework\Traits\TraitLog;
@@ -16,6 +17,11 @@ class ComponentIpblocker
     {
         $this->req = new HelperRequest();
         $this->prov = new ProviderBase($this->req->get_remoteip());
+    }
+
+    private function is_search_bot()
+    {
+        return sb::get_searchbot($this->req->get_remoteip());
     }
 
     private function is_ipblacklisted()
@@ -61,6 +67,7 @@ class ComponentIpblocker
     public function handle_request()
     {
         $this->prov->save_request();
+        if($this->is_search_bot()) return;
         //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
         $this->check_forbidden_content();
 
@@ -74,6 +81,7 @@ class ComponentIpblocker
     public function test_handle_request($m="")
     {
         $this->prov->save_request();
+        if($this->is_search_bot()) return;
         $this->check_forbidden_content();
 
         if($this->is_ipblacklisted())
