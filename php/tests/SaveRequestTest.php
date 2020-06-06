@@ -76,8 +76,8 @@ final class SaveRequestTest extends BaseTest
         $this->_test_non_blocked_get();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
-        $this->_test_blocked_by_post_html();
-        $this->_test_blocked_by_post_dropbox();
+        //$this->_test_blocked_by_post_html();
+        //$this->_test_blocked_by_post_dropbox();
 
     }
 }

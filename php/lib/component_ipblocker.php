@@ -21,7 +21,7 @@ class ComponentIpblocker
 
     private function is_search_bot()
     {
-        return sb::get_searchbot($this->req->get_remoteip());
+        return sb::get_name($this->req->get_remoteip());
     }
 
     private function is_ipblacklisted()

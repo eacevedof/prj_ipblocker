@@ -33,8 +33,7 @@ class ComponentSearchbots
          ]
     ];
 
-
-    public static function get_searchbot($remoteip)
+    public static function get_name($remoteip)
     {
         $output = [];
         exec("host $remoteip",$output);
