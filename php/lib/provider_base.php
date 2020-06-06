@@ -101,8 +101,9 @@ class ProviderBase
 
     private function _is_orkeywords($strcontent)
     {
-        $keywordsand = cfg::get_keywords("or");
-        foreach($keywordsand as $kw)
+        $keywordsor = cfg::get_keywords("or");
+        //print_r($keywordsor);die;
+        foreach($keywordsor as $kw)
             if(strstr($strcontent,$kw))
                 return $kw;
         return false;
