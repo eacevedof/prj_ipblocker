@@ -15,34 +15,30 @@ final class SaveRequestTest extends BaseTest
         (new ComponentIpblocker())->test_handle_request($m);
     }
 
-    private function _test_blocked_get()
+    //caso ideal
+    private function _test_non_blocked_post()
     {
         $this->reset_all()
-            ->add_get("","ftp://")
-            ->add_get("content","die(@md5(");
-
-        $this->log_globals();
-        $this->_execute_ipblocker("_test_blocked_get");
-    }
-
-    private function _test_non_blocked_get()
-    {
-        $this->reset_all()
-            ->add_get("","ftps://")
-            ->add_get("content","(@md5(");
+            ->add_server("REMOTE_ADDR","192.168.1.1")
+            ->add_server("REMOTE_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/contact/")
+            ->add_post("hidAction","insert");
 
         $this->log_globals();
         $this->_execute_ipblocker("_test_non_blocked_get");
     }
 
-    private function _test_non_blocked_post()
+    private function _test_blocked_post()
     {
         $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.1")
+            ->add_server("REMOTE_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/contact/")
             ->add_post("user","juan@mail.com")
             ->add_post("password","furnitopia.com");
 
         $this->log_globals();
-        $this->_execute_ipblocker("_test_non_blocked_post");
+        $this->_execute_ipblocker("_test_blocked_post");
     }
 
     private function _test_unicode_blocked_post()
@@ -53,6 +49,16 @@ final class SaveRequestTest extends BaseTest
         $this->reset_all()->add_post("textarea",$content);
         $this->log_globals();
         $this->_execute_ipblocker("_test_unicode_blocked_post");
+    }
+
+    private function _test_blocked_get()
+    {
+        $this->reset_all()
+            ->add_get("","ftp://")
+            ->add_get("content","die(@md5(");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_blocked_get");
     }
 
     private function _test_blocked_by_post_dropbox()
@@ -76,9 +82,9 @@ final class SaveRequestTest extends BaseTest
     public function run()
     {
         //$this->logd(geoip_record_by_name("127.0.0.1"));
-        $this->_test_non_blocked_post();
-        $this->_test_non_blocked_get();
-        $this->_test_unicode_blocked_post();
+        //$this->_test_non_blocked_post();
+        $this->_test_blocked_post();
+        //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();
