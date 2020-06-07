@@ -82,7 +82,7 @@ final class SaveRequestTest extends BaseTest
     public function run()
     {
         //$this->logd(geoip_record_by_name("127.0.0.1"));
-        //$this->_test_non_blocked_post();
+        $this->_test_non_blocked_post();
         $this->_test_blocked_by_post_required();
         //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
