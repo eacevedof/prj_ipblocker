@@ -59,6 +59,7 @@ abstract class BaseTest
 
     protected function reset_all()
     {
+        unset($_POST,$_GET,$_FILES,$_SERVER);
         $_POST=[]; $_GET=[]; $_FILES=[]; $_SERVER = [];
         return $this;
     }

@@ -118,14 +118,14 @@ class ProviderKeywords
     private function _is_post_nok($requri)
     {
         $pubpost = $this->_get_pub_post($requri);
-//pp($_POST,"POST");
-//pp($pubpost,"_is_postnok");
+        //pp($_POST,"POST");
+        //pp($pubpost,"_is_postnok");
         if(!$pubpost) return false;
         foreach ($pubpost as $f) {
-//            pp($f,"f");
-//            pp($this->req->is_key($f,"post"),"is f in post");
+            //pp($f,"f");
+            //pp($this->req->is_key($f,"post"),"is f in post");
             $inpost = $this->req->is_key($f,"post");
-//            pp($inpost,"IN POST");
+            //pp($inpost,"IN POST");
             if(!$inpost) return $f;
 
             $valpost = $this->req->get_key($f,"post");
