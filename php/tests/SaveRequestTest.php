@@ -57,14 +57,17 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_by_post_not_null");
     }
 
-    private function _test_unicode_blocked_post()
+    private function _test_blocked_by_country()
     {
-        $content = "\u0430\u043b"; //ал
-        //$content = utf8_encode($content);
-        $this->logd($content,"utf8?");
-        $this->reset_all()->add_post("textarea",$content);
+        //country n.a
+        $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.7")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/contact/")
+            ->add_post("hidAction","insert");
+
         $this->log_globals();
-        $this->_execute_ipblocker("_test_unicode_blocked_post");
+        $this->_execute_ipblocker("_test_blocked_by_country");
     }
 
     private function _test_blocked_get()
@@ -101,8 +104,8 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_blocked_by_post_required();
         //$this->_test_blocked_by_get_not_null();
         //$this->_test_blocked_by_post_not_null();
+        $this->_test_blocked_by_country();
 
-        //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();

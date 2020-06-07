@@ -254,7 +254,12 @@ class ProviderKeywords
     private function _is_country_nok()
     {
         $country = $this->req->get_whois("country");
+        $country = strtoupper($country);
         $countries = $this->data["domains"]["*"]["countries"]["forbidden"] ?? [];
+        $countries = array_flip($countries);
+        $countries = array_change_key_case($countries, CASE_UPPER);
+        $countries = array_flip($countries);
+        //pp($countries,"COUNTRIES of $country");die;
         return in_array($country, $countries);
     }
 
