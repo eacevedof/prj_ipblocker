@@ -3,15 +3,22 @@ namespace TheFramework\Components;
 
 class ComponentConfig
 {
-    private static  function get_pathjson($type="contexts")
+    private const FILES = [
+        "contexts" => [
+            "local" => IPB_PATH_CONFIG."/contexts.local.json",
+            "prod"=>IPB_PATH_CONFIG."/contexts.json",
+        ],
+        "keywords" => [
+            "local" => IPB_PATH_CONFIG."/keywords.local.json",
+            "prod"=>IPB_PATH_CONFIG."/keywords.json",
+        ],
+    ];
+
+    private static function get_pathjson($type="contexts")
     {
-        $files["contexts"]["local"] = IPB_PATH_CONFIG."/contexts.local.json";
-        $files["contexts"]["prod"] = IPB_PATH_CONFIG."/contexts.json";
-        $files["keywords"]["local"] = IPB_PATH_CONFIG."/keywords.local.json";
-        $files["keywords"]["prod"] = IPB_PATH_CONFIG."/keywords.json";
-        if(is_file($files[$type]["local"]))
-            return $files[$type]["local"];
-        return $files[$type]["prod"];
+        if(is_file(self::FILES[$type]["local"]))
+            return self::FILES[$type]["local"];
+        return self::FILES[$type]["prod"];
     }
 
     public static function get_env($type="contexts")
@@ -22,7 +29,7 @@ class ComponentConfig
         return "prod";
     }
 
-    private  static function _get_array_from_json($type="contexts")
+    private static function _get_array_from_json($type="contexts")
     {
         $pathjson = self::get_pathjson($type);
         $content = file_get_contents($pathjson);
@@ -55,10 +62,8 @@ class ComponentConfig
         return [];
     }
 
-    public static function get_keywords($andor="or", $method="post")
+    public static function get_keywords()
     {
-        $array = self::_get_array_from_json("keywords");
-        $array = $array[$andor][$method] ?? [];
-        return $array;
+        return self::_get_array_from_json("keywords");
     }
 }
