@@ -70,14 +70,17 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_by_country");
     }
 
-    private function _test_blocked_get()
+    private function _test_blocked_OR_get()
     {
         $this->reset_all()
-            ->add_get("","ftp://")
-            ->add_get("content","die(@md5(");
+            ->add_server("REMOTE_ADDR","192.168.1.10")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/post-null/")
+            ->add_get("content","die(@md5(")
+            ->add_get("s","ftp://");
 
         $this->log_globals();
-        $this->_execute_ipblocker("_test_blocked_get");
+        $this->_execute_ipblocker("_test_blocked_OR_get");
     }
 
     private function _test_blocked_by_post_dropbox()
@@ -104,9 +107,9 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_blocked_by_post_required();
         //$this->_test_blocked_by_get_not_null();
         //$this->_test_blocked_by_post_not_null();
-        $this->_test_blocked_by_country();
+        //$this->_test_blocked_by_country();
 
-        //$this->_test_blocked_get();
+        $this->_test_blocked_OR_get();
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();
         //$this->_test_blocked_by_post_dropbox();
