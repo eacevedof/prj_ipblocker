@@ -233,6 +233,7 @@ class ProviderKeywords
     {
         //comprobar reglas en los valores de los campos
         $mxnok = $this->_get_rules_scan("post");
+pp($mxnok,"mxnok is_rules");die;
         if($mxnok) return $mxnok;
 
         $mxnok = $this->_get_rules_scan("get");
