@@ -72,8 +72,6 @@ class ProviderBase
     {
         if($arvar) {
             $string = json_encode($arvar);
-            //$string = serialize($string);    # safe -- won't count the slash
-            //return addslashes($string);
             $string = str_replace("'","\\'",$string);
             return $string;
         }
@@ -147,8 +145,8 @@ class ProviderBase
         if($method=="get" && !$_GET) return "";
 
         $methodjson = $this->_get_json_ofmethod($method);
-        if($_POST && $this->_is_unicode($methodjson))
-            return "unicode";
+        //if($_POST && $this->_is_unicode($methodjson))
+            //return "unicode";
 
         $isorkw = $this->_is_orkeywords($methodjson, $method);
         if($isorkw)
@@ -161,10 +159,6 @@ class ProviderBase
         return "";
     }
 
-    private function _is_unicode($string)
-    {
-        return (strlen($string) != strlen(utf8_decode($string)));
-    }
 
     public function get_forbidden_words()
     {

@@ -25,7 +25,7 @@ final class SaveRequestTest extends BaseTest
     private function _test_blocked_get()
     {
         $this->reset_all()
-            ->add_get("","=ftp://")
+            ->add_get("","ftp://")
             ->add_get("content","die(@md5(");
 
         $this->log_globals();
@@ -35,7 +35,7 @@ final class SaveRequestTest extends BaseTest
     private function _test_non_blocked_get()
     {
         $this->reset_all()
-            ->add_get("","ftp://")
+            ->add_get("","ftps://")
             ->add_get("content","(@md5(");
 
         $this->log_globals();
@@ -50,6 +50,16 @@ final class SaveRequestTest extends BaseTest
 
         $this->log_globals();
         $this->_execute_ipblocker("_test_non_blocked_post");
+    }
+
+    private function _test_unicode_blocked_post()
+    {
+        $content = "\u0430\u043b"; //ал
+        //$content = utf8_encode($content);
+        $this->logd($content,"utf8?");
+        $this->reset_all()->add_post("textarea",$content);
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_unicode_blocked_post");
     }
 
     private function _test_blocked_by_post_dropbox()
@@ -72,13 +82,23 @@ final class SaveRequestTest extends BaseTest
 
     public function run()
     {
+        $this->whois(); die;
+        //$this->logd(geoip_record_by_name("127.0.0.1"));
         $this->_test_non_blocked_post();
         $this->_test_non_blocked_get();
+        $this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();
         //$this->_test_blocked_by_post_dropbox();
 
+    }
+
+    private function whois()
+    {
+        $output = [];
+        exec("whois 2a01:c50e:8c0a:8000:107f:22d5:abda:4a83",$output);
+        print_r($output);
     }
 }
 

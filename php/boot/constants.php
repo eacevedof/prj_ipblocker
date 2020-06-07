@@ -1,6 +1,6 @@
 <?php
 //constants.php
-define("IPB_ENABLE_LOGS",0);
+define("IPB_ENABLE_LOGS",1);
 $pathlib = realpath(__DIR__."/../lib");
 $pathconfig = realpath(__DIR__."/../../config");
 $pathlogs = realpath(__DIR__."/../../logs");
@@ -8,5 +8,3 @@ $pathlogs = realpath(__DIR__."/../../logs");
 define("IPB_PATH_CONFIG",$pathconfig);
 define("IPB_PATH_LOGS",$pathlogs);
 define("IPB_PATH_LIB",$pathlib);
-
-
