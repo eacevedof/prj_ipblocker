@@ -98,7 +98,7 @@ class ProviderKeywords
     private function _get_pub_post($requri)
     {
         $uriconf = $this->_get_uriconfig($requri);
-        pp($uriconf,"uriconf post $requri");
+//pp($uriconf,"uriconf post $requri");
         return $uriconf["post"] ?? [];
     }
 
@@ -114,46 +114,43 @@ class ProviderKeywords
         return $uriconf["files"] ?? [];
     }
 
-    private function _is_post_ok($requri)
+    private function _is_post_nok($requri)
     {
         $pubpost = $this->_get_pub_post($requri);
-//pp($pubpost,"pubpost");die;
-        if(!$pubpost) return true;
+        if(!$pubpost) return false;
         foreach ($pubpost as  $f) {
-            //pp($this->req->get_post(),"POST");
-            //pp($this->req->is_key($f,"post"),"$f in post");die;
             if(!$this->req->is_key($f,"post"))
-                return false;
+                return $f;
             if(!$this->req->get_key($f,"post"))
-                return false;
+                return $f;
         }
-        return true;
+        return false;
     }
 
-    private function _is_get_ok($requri)
+    private function _is_get_nok($requri)
     {
         $pubget = $this->_get_pub_get($requri);
-        if(!$pubget) return true;
-        foreach ($pubget as $f => $v) {
+        if(!$pubget) return false;
+        foreach ($pubget as $f) {
             if(!$this->req->is_key($f,"get"))
-                return false;
+                return $f;
             if(!$this->req->get_key($f,"get"))
-                return false;
+                return $f;
         }
-        return true;
+        return false;
     }
 
-    private function _is_files_ok($requri)
+    private function _is_files_nok($requri)
     {
         $pubfiles = $this->_get_pub_files($requri);
-        if(!$pubfiles) return true;
-        foreach ($pubfiles as $f => $v) {
+        if(!$pubfiles) return false;
+        foreach ($pubfiles as $f) {
             if(!$this->req->is_key($f,"files"))
-                return false;
+                return $f;
             if(!$this->req->get_key($f,"files"))
-                return false;
+                return $f;
         }
-        return true;
+        return false;
     }
 
     private function _is_and($array,$string)
@@ -220,17 +217,16 @@ class ProviderKeywords
         return true;
     }
 
-    private function _is_req_fields_ok($requri)
+    private function _is_req_fields_nok($requri)
     {
         //comprobar campos obligatorios
-        $isok = $this->_is_get_ok($requri);
-        if(!$isok) return false;
-        $isok = $this->_is_post_ok($requri);
-//pp($isok,"is_postok");die;
-        if(!$isok) return false;
-        $isok = $this->_is_files_ok($requri);
-        if(!$isok) return false;
-        return true;
+        $isnok = $this->_is_get_nok($requri);
+        if($isnok) return $isnok;
+        $isnok = $this->_is_post_nok($requri);
+        if($isnok) return $isnok;
+        $isnok = $this->_is_files_nok($requri);
+        if($isnok) return $isnok;
+        return false;
     }
 
     private function _is_rules_nok()
@@ -268,13 +264,12 @@ class ProviderKeywords
         if(!$isok) return "not null in get or post";
 
         //comprobar campos obligatorios en post, get y files
-        $mxresult = $this->_is_req_fields_ok($requri);
-        if(!$mxresult) return "reqfields";
-pp("obligatorios");die;
+        $nok = $this->_is_req_fields_nok($requri);
+        if($nok) return "reqfields {$nok}";
 
         //comprobar reglas en contenido en post, get y files
-        $mxresult = $this->_is_rules_nok();
-        if(!$mxresult) return "rules:".$mxresult;
+        $nok = $this->_is_rules_nok();
+        if(!$nok) return "rules: {$nok}";
 
         return false;
     }
