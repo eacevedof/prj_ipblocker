@@ -82,7 +82,6 @@ final class SaveRequestTest extends BaseTest
 
     public function run()
     {
-        $this->whois(); die;
         //$this->logd(geoip_record_by_name("127.0.0.1"));
         $this->_test_non_blocked_post();
         $this->_test_non_blocked_get();
@@ -91,15 +90,8 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();
         //$this->_test_blocked_by_post_dropbox();
-
     }
 
-    private function whois()
-    {
-        $output = [];
-        exec("whois 2a01:c50e:8c0a:8000:107f:22d5:abda:4a83",$output);
-        print_r($output);
-    }
 }
 
 //otra forma es lanzar: php -S localhost:2000 -t public
