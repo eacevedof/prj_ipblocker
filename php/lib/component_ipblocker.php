@@ -86,7 +86,8 @@ class ComponentIpblocker
 
         if($this->_is_ipblacklisted())
             //echo "\nthis ip is blacklisted";
-            throw new \Exception("\nthis ip is blacklisted $m");
-        echo "\ntest passed for $m";
+            return print("\n result: blocked //");
+
+        echo "\n result: no-blocked //";
     }
 }
