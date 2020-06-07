@@ -87,8 +87,10 @@ class ProviderKeywords
     private function _is_get_nullok($requri)
     {
         $config = $this->_get_uriconfig($requri);
+prin_r($config["get"]);die;
         if(isset($config["get"]) && $config["get"]===null)
         {
+            pp($config,"config of $requri");die;
             if($this->req->get_get())
                 return false;
         }
