@@ -117,7 +117,7 @@ final class HelperRequest
     }
 
     public function get_whois($k=null){
-        if($k) $this->whois[$k] ?? "";
+        if($k) return $this->whois[$k] ?? "";
         return $this->whois;
     }
 

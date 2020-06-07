@@ -18,33 +18,32 @@ class ProviderKeywords
         $this->req = req::getInstance();
     }
 
-    private function _get_public_uris($domain)
+    private function _get_uris_by_domain($domain)
     {
         $domains = array_keys($this->data["domains"]);
+//pp($domains,"domains");die;
         if(!in_array($domain, $domains)) return [];
-        $urispublic = $domains[$domain]["public"] ?? [];
+        $urispublic = $this->data["domains"][$domain]["public"] ?? [];
+ //pp($urispublic,"urispublic");die;
         return $urispublic;
     }
 
     private function _get_requris_by_domain()
     {
         $domain = $this->req->get_domain();
+//pp($domain,"domain");die;
         if($domain==="*") return [];
-        $urispublic = $this->_get_public_uris($domain);
+        $urispublic = $this->_get_uris_by_domain($domain);
+//pp($urispublic,"urispublic");die;
         if(!$urispublic) return [];
         $requris =  array_column($urispublic,"requri");
-
-        function sort($a,$b){
-            return strlen($b) - strlen($a);
-        }
-
-        usort($requris,'sort');
+        rsort($requris);
         return  $requris;
     }
 
-    private function _get_exact_uri($requri, $puburis)
+    private function _get_exact_uri($requri, $urisbydom)
     {
-        foreach ($puburis as $puburi)
+        foreach ($urisbydom as $puburi)
             if($requri===$puburi)
                 return $puburi;
         return "";
@@ -53,15 +52,20 @@ class ProviderKeywords
     private function _in_requris()
     {
         $requri = $this->req->get_requri();
+//pp($requri,"requri");
         $urisbydom = $this->_get_requris_by_domain();
+//pp($urisbydom,"urisbydom");
         $exact = $this->_get_exact_uri($requri, $urisbydom);
+//pp($exact,"exact");die;
         return $exact;
     }
 
     private function _get_uriconfig($requri)
     {
-        $public = $this->_get_public_uris();
-        foreach ($public as $arrequri)
+        $domain = $this->req->get_domain();
+        $urisbydom = $this->_get_uris_by_domain($domain);
+        //pp($urisbydom,"urisbydom uris of $requri");die;
+        foreach ($urisbydom as $arrequri)
         {
             if($arrequri["requri"]==$requri)
                 return $arrequri;
@@ -94,6 +98,7 @@ class ProviderKeywords
     private function _get_pub_post($requri)
     {
         $uriconf = $this->_get_uriconfig($requri);
+        pp($uriconf,"uriconf post $requri");
         return $uriconf["post"] ?? [];
     }
 
@@ -112,8 +117,11 @@ class ProviderKeywords
     private function _is_post_ok($requri)
     {
         $pubpost = $this->_get_pub_post($requri);
+//pp($pubpost,"pubpost");die;
         if(!$pubpost) return true;
-        foreach ($pubpost as $f => $v) {
+        foreach ($pubpost as  $f) {
+            //pp($this->req->get_post(),"POST");
+            //pp($this->req->is_key($f,"post"),"$f in post");die;
             if(!$this->req->is_key($f,"post"))
                 return false;
             if(!$this->req->get_key($f,"post"))
@@ -148,12 +156,21 @@ class ProviderKeywords
         return true;
     }
 
+    private function _is_and($array,$string)
+    {
+        foreach ($array as $str)
+            if(!strstr($string,$str))
+                return false;
+        return true;
+    }
+
     private function _is_and_string($arsearch,$string)
     {
-        foreach ($arsearch as $search)
-            if(!strstr($string,$search))
-                return false;
-        return implode("|",$arsearch);
+//pp($arsearch,"arsearch");die;
+        foreach ($arsearch as $arwords)
+            if($this->_is_and($arwords,$string))
+                return implode("|",$arwords);
+        return false;
     }
 
     private function _is_or_string($arsearch,$string)
@@ -209,6 +226,7 @@ class ProviderKeywords
         $isok = $this->_is_get_ok($requri);
         if(!$isok) return false;
         $isok = $this->_is_post_ok($requri);
+//pp($isok,"is_postok");die;
         if(!$isok) return false;
         $isok = $this->_is_files_ok($requri);
         if(!$isok) return false;
@@ -232,11 +250,12 @@ class ProviderKeywords
     {
         $country = $this->req->get_whois("country");
         $countries = $this->data["domains"]["*"]["countries"]["forbidden"] ?? [];
-        return in_array($country,$countries);
+        return in_array($country, $countries);
     }
 
     public function is_forbidden()
     {
+
         //comprobar bloqueo por pais
         if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
 
@@ -251,6 +270,7 @@ class ProviderKeywords
         //comprobar campos obligatorios en post, get y files
         $mxresult = $this->_is_req_fields_ok($requri);
         if(!$mxresult) return "reqfields";
+pp("obligatorios");die;
 
         //comprobar reglas en contenido en post, get y files
         $mxresult = $this->_is_rules_nok();

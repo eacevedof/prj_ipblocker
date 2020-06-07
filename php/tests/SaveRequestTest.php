@@ -20,7 +20,7 @@ final class SaveRequestTest extends BaseTest
     {
         $this->reset_all()
             ->add_server("REMOTE_ADDR","192.168.1.1")
-            ->add_server("REMOTE_HOST","theframework.es")
+            ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/contact/")
             ->add_post("hidAction","insert");
 
@@ -28,12 +28,12 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_non_blocked_get");
     }
 
-    private function _test_blocked_post()
+    private function _test_blocked_by_post_required()
     {
         $this->reset_all()
             ->add_server("REMOTE_ADDR","192.168.1.1")
-            ->add_server("REMOTE_HOST","theframework.es")
-            ->add_server("REQUEST_URI","/contact/")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/contact/")
             ->add_post("user","juan@mail.com")
             ->add_post("password","furnitopia.com");
 
@@ -83,7 +83,7 @@ final class SaveRequestTest extends BaseTest
     {
         //$this->logd(geoip_record_by_name("127.0.0.1"));
         //$this->_test_non_blocked_post();
-        $this->_test_blocked_post();
+        $this->_test_blocked_by_post_required();
         //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
