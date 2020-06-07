@@ -61,7 +61,7 @@ final class SaveRequestTest extends BaseTest
     {
         //country n.a
         $this->reset_all()
-            ->add_server("REMOTE_ADDR","192.168.1.7")
+            ->add_server("REMOTE_ADDR","192.168.1.5")
             ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/contact/")
             ->add_post("hidAction","insert");
@@ -73,7 +73,7 @@ final class SaveRequestTest extends BaseTest
     private function _test_blocked_OR_get()
     {
         $this->reset_all()
-            ->add_server("REMOTE_ADDR","192.168.1.10")
+            ->add_server("REMOTE_ADDR","192.168.1.6")
             ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/post-null/")
             ->add_get("content","die(@md5(")
@@ -86,7 +86,7 @@ final class SaveRequestTest extends BaseTest
     private function _test_blocked_OR_post_dropbox()
     {
         $this->reset_all()
-            ->add_server("REMOTE_ADDR","192.168.1.12")
+            ->add_server("REMOTE_ADDR","192.168.1.7")
             ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/blocked-or-post/")
             ->add_post("textarea","dropbox.com/s/");
@@ -95,13 +95,31 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_OR_post_dropbox");
     }
 
-    private function _test_blocked_by_post_html()
+    private function _test_blocked_OR_post_html()
     {
         $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.8")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/blocked-or-post/")
             ->add_post("textarea","<a href=\"http://somedomain.com\">pincha aqui</a>");
 
         $this->log_globals();
-        $this->_execute_ipblocker("_test_blocked_by_post_html");
+        $this->_execute_ipblocker("_test_blocked_OR_post_html");
+    }
+
+    private function _test_blocked_AND_pussy_pics()
+    {
+        $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.8")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/blocked-or-post/")
+            ->add_post("textarea","
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam aut pussy ex cupiditate distinctio, cumque 
+            ea iste doloremque earum totam velit omnis debitis quas est pics non necessitatibus. Eaque, ut!
+            ");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_blocked_AND_pussy_pics");
     }
 
     public function run()
@@ -112,11 +130,9 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_blocked_by_post_not_null();
         //$this->_test_blocked_by_country();
         //$this->_test_blocked_OR_get();
-        $this->_test_blocked_OR_post_dropbox();
-
-        //$this->_test_non_blocked_post();
-        //$this->_test_blocked_by_post_html();
-
+        //$this->_test_blocked_OR_post_dropbox();
+        //$this->_test_blocked_OR_post_html();
+        $this->_test_blocked_AND_pussy_pics();
     }
 
 }
