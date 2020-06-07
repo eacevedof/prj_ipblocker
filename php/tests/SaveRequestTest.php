@@ -44,6 +44,19 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_by_get_not_null");
     }
 
+    private function _test_blocked_by_post_not_null()
+    {
+        $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.4")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/post-null/")
+            ->add_post("hidAction","insert")
+            ->add_get("s","plato de comida x");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_blocked_by_post_not_null");
+    }
+
     private function _test_unicode_blocked_post()
     {
         $content = "\u0430\u043b"; //ал
@@ -86,7 +99,9 @@ final class SaveRequestTest extends BaseTest
     {
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_required();
-        $this->_test_blocked_by_get_not_null();
+        //$this->_test_blocked_by_get_not_null();
+        //$this->_test_blocked_by_post_not_null();
+
         //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
