@@ -207,7 +207,7 @@ class ProviderKeywords
     public function is_forbidden()
     {
         //comprobar bloqueo por pais
-        if($this->_is_country_ok())  return $this->req->get_whois("country");
+        if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
 
         //comprobar si requri es palicable
         $requri = $this->_in_requris();
@@ -215,11 +215,13 @@ class ProviderKeywords
 
         //comprobar campos obligatorios en post, get y files
         $mxresult = $this->_is_req_fields_ok($requri);
-        if(!$mxresult) return true;
+        if(!$mxresult) return "reqfields";
 
         //comprobar reglas en contenido en post, get y files
         $mxresult = $this->_is_rules_nok();
-        if(!$mxresult) return $mxresult;
+        if(!$mxresult) return "rules:".$mxresult;
+
+        return false;
     }
 
 }

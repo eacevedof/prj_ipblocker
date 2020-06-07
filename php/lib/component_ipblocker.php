@@ -2,8 +2,9 @@
 namespace TheFramework\Components;
 
 use TheFramework\Components\ComponentSearchbots as sb;
-use TheFramework\Helpers\HelperRequest;
+use TheFramework\Helpers\HelperRequest as req;
 use TheFramework\Providers\ProviderBase;
+use Theframework\Providers\ProviderKeywords;
 use Theframework\Traits\TraitLog;
 
 class ComponentIpblocker
@@ -15,32 +16,31 @@ class ComponentIpblocker
 
     public function __construct()
     {
-        $this->req = new HelperRequest();
+        $this->req = req::getInstance();
         $this->prov = new ProviderBase($this->req->get_remoteip());
     }
 
-    private function is_search_bot()
+    private function _is_search_bot()
     {
         return sb::get_name($this->req->get_remoteip());
     }
 
-    private function is_ipblacklisted()
+    private function _is_ipblacklisted()
     {
         $isblocked = $this->prov->is_blacklisted();
         return $isblocked;
     }
 
-    private function check_forbidden_content()
+    private function _check_forbidden_content()
     {
-        if($this->is_ipblacklisted())
+        if($this->_is_ipblacklisted())
             return;
-        $words = $this->prov->get_forbidden_words();
+        $words = (new ProviderKeywords())->is_forbidden();
         if($words)
             $this->prov->add_to_blacklist($words);
     }
 
-
-    private function response()
+    private function _response_headers()
     {
         $codes = send_httpstatus(403);
     }
@@ -67,12 +67,12 @@ class ComponentIpblocker
     public function handle_request()
     {
         $this->prov->save_request();
-        if($this->is_search_bot()) return;
+        if($this->_is_search_bot()) return;
         //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
-        $this->check_forbidden_content();
+        $this->_check_forbidden_content();
 
-        if($this->is_ipblacklisted()){
-            $this->response();
+        if($this->_is_ipblacklisted()){
+            $this->_response_headers();
             $this->pr();
             die();
         }
@@ -81,10 +81,10 @@ class ComponentIpblocker
     public function test_handle_request($m="")
     {
         $this->prov->save_request();
-        if($this->is_search_bot()) return;
-        $this->check_forbidden_content();
+        if($this->_is_search_bot()) return;
+        $this->_check_forbidden_content();
 
-        if($this->is_ipblacklisted())
+        if($this->_is_ipblacklisted())
             //echo "\nthis ip is blacklisted";
             throw new \Exception("\nthis ip is blacklisted $m");
         echo "\ntest passed for $m";
