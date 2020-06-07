@@ -1,31 +1,20 @@
 <?php
 include("BaseTest.php");
 use Tests\BaseTest;
-use \TheFramework\Components\ComponentIpblocker;
-
 
 final class SaveRequestTest extends BaseTest
 {
-
-    private function _execute_ipblocker($m)
-    {
-        echo "\n==================\n";
-        echo "$m";
-        echo "\n==================\n";
-        (new ComponentIpblocker())->test_handle_request($m);
-    }
-
     //caso ideal
     private function _test_non_blocked_post()
     {
         $this->reset_all()
-            ->add_server("REMOTE_ADDR","192.168.1.5")
+            ->add_server("REMOTE_ADDR","192.168.1.3")
             ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/contact/")
             ->add_post("hidAction","insert");
 
         $this->log_globals();
-        $this->_execute_ipblocker("_test_non_blocked_get");
+        $this->_execute_ipblocker("_test_non_blocked_post");
     }
 
     private function _test_blocked_by_post_required()
@@ -83,7 +72,7 @@ final class SaveRequestTest extends BaseTest
     {
         //$this->logd(geoip_record_by_name("127.0.0.1"));
         $this->_test_non_blocked_post();
-        $this->_test_blocked_by_post_required();
+        //$this->_test_blocked_by_post_required();
         //$this->_test_unicode_blocked_post();
         //$this->_test_blocked_get();
         //$this->_test_non_blocked_post();
