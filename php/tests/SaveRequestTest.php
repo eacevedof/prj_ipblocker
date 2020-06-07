@@ -8,7 +8,7 @@ final class SaveRequestTest extends BaseTest
     private function _test_non_blocked_post()
     {
         $this->reset_all()
-            ->add_server("REMOTE_ADDR","192.168.1.3")
+            ->add_server("REMOTE_ADDR","192.168.1.10")
             ->add_server("HTTP_HOST","theframework.es")
             ->add_server("REQUEST_URI","/en/contact/")
             ->add_post("hidAction","insert");
