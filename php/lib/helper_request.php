@@ -92,8 +92,9 @@ final class HelperRequest
         $arwhois = [];
         foreach ($output as $i=> $strdata)
         {
-            list($key,$val) = explode(": ",$strdata);
-            $arwhois[trim(strtolower($key))] = [trim($val)];
+            $parts = explode(": ",$strdata);
+            if(count($parts) >1 )
+                $arwhois[trim(strtolower($parts[0]))] = trim($parts[1]);
         }
         return $arwhois;
     }
@@ -103,10 +104,9 @@ final class HelperRequest
         $output = [];
         exec("whois $remoteip",$output);
         $arwhois = self::_get_whoisarray($output);
-
         return [
-            "country" => $arwhois["country"],
-            "whois" => $arwhois["hostname"] . "|" . $arwhois["organisation"],
+            "country" => $arwhois["country"] ?? "n.a",
+            "whois" => ($arwhois["hostname"] ?? "n.a"). "|" . ($arwhois["organisation"] ?? "n.a"),
         ];
     }
 
