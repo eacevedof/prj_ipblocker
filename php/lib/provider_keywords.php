@@ -69,6 +69,28 @@ class ProviderKeywords
         return [];
     }
 
+    private function _is_post_nullok($requri)
+    {
+        $config = $this->_get_uriconfig($requri);
+        if(isset($config["post"]) && $config["post"]===null)
+        {
+            if($this->req->get_post())
+                return false;
+        }
+        return true;
+    }
+
+    private function _is_get_nullok($requri)
+    {
+        $config = $this->_get_uriconfig($requri);
+        if(isset($config["get"]) && $config["get"]===null)
+        {
+            if($this->req->get_get())
+                return false;
+        }
+        return true;
+    }
+
     private function _get_pub_post($requri)
     {
         $uriconf = $this->_get_uriconfig($requri);
@@ -172,6 +194,15 @@ class ProviderKeywords
         return "";
     }
 
+    private function _are_nulls_ok($requri)
+    {
+        $isok = $this->_is_get_nullok($requri);
+        if(!$isok) return false;
+        $isok = $this->_is_post_nullok($requri);
+        if(!$isok) return false;
+        return true;
+    }
+
     private function _is_req_fields_ok($requri)
     {
         //comprobar campos obligatorios
@@ -212,6 +243,10 @@ class ProviderKeywords
         //comprobar si requri es palicable
         $requri = $this->_in_requris();
         if(!$requri)  return false;
+
+        //comprobar obligatoriedad de nulos
+        $isok = $this->_are_nulls_ok($requri);
+        if(!$isok) return "not null in get or post";
 
         //comprobar campos obligatorios en post, get y files
         $mxresult = $this->_is_req_fields_ok($requri);

@@ -7,13 +7,6 @@ use \TheFramework\Components\ComponentIpblocker;
 final class SaveRequestTest extends BaseTest
 {
 
-    private function pr()
-    {
-        //print_r($_POST);
-        //print_r($_GET);
-        //print_r($_FILES);
-    }
-
     private function _execute_ipblocker($m)
     {
         echo "\n==================\n";
