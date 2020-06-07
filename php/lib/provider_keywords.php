@@ -233,7 +233,6 @@ class ProviderKeywords
     {
         //comprobar reglas en los valores de los campos
         $mxnok = $this->_get_rules_scan("post");
-pp($mxnok,"mxnok is_rules");die;
         if($mxnok) return $mxnok;
 
         $mxnok = $this->_get_rules_scan("get");
@@ -241,6 +240,7 @@ pp($mxnok,"mxnok is_rules");die;
 
         $mxnok = $this->_get_rules_scan("files");
         if($mxnok) return $mxnok;
+        return false;
     }
 
     private function _is_country_nok()
@@ -252,7 +252,6 @@ pp($mxnok,"mxnok is_rules");die;
 
     public function is_forbidden()
     {
-
         //comprobar bloqueo por pais
         if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
 
@@ -270,7 +269,7 @@ pp($mxnok,"mxnok is_rules");die;
 
         //comprobar reglas en contenido en post, get y files
         $nok = $this->_is_rules_nok();
-        if(!$nok) return "rules: {$nok}";
+        if($nok) return "rules: {$nok}";
 
         return false;
     }
