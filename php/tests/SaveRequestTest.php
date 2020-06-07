@@ -83,13 +83,16 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_OR_get");
     }
 
-    private function _test_blocked_by_post_dropbox()
+    private function _test_blocked_OR_post_dropbox()
     {
         $this->reset_all()
-            ->add_post("textarea","dropbox.com/s/sometoken");
+            ->add_server("REMOTE_ADDR","192.168.1.12")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/blocked-or-post/")
+            ->add_post("textarea","dropbox.com/s/");
 
         $this->log_globals();
-        $this->_execute_ipblocker("_test_blocked_by_post_dropbox");
+        $this->_execute_ipblocker("_test_blocked_OR_post_dropbox");
     }
 
     private function _test_blocked_by_post_html()
@@ -108,11 +111,12 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_blocked_by_get_not_null();
         //$this->_test_blocked_by_post_not_null();
         //$this->_test_blocked_by_country();
+        //$this->_test_blocked_OR_get();
+        $this->_test_blocked_OR_post_dropbox();
 
-        $this->_test_blocked_OR_get();
         //$this->_test_non_blocked_post();
         //$this->_test_blocked_by_post_html();
-        //$this->_test_blocked_by_post_dropbox();
+
     }
 
 }
