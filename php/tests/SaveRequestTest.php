@@ -122,6 +122,21 @@ final class SaveRequestTest extends BaseTest
         $this->_execute_ipblocker("_test_blocked_AND_pussy_pics");
     }
 
+    private function _test_NO_BLOCKED_AND_pusy_pixs()
+    {
+        $this->reset_all()
+            ->add_server("REMOTE_ADDR","192.168.1.9")
+            ->add_server("HTTP_HOST","theframework.es")
+            ->add_server("REQUEST_URI","/en/blocked-or-post/")
+            ->add_post("textarea","
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam aut pusy ex cupiditate distinctio, cumque 
+            ea iste doloremque earum totam velit omnis debitis quas est pix non necessitatibus. Eaque, ut!
+            ");
+
+        $this->log_globals();
+        $this->_execute_ipblocker("_test_NO_BLOCKED_AND_pusy_pixs");
+    }
+
     public function run()
     {
         //$this->_test_non_blocked_post();
@@ -132,7 +147,8 @@ final class SaveRequestTest extends BaseTest
         //$this->_test_blocked_OR_get();
         //$this->_test_blocked_OR_post_dropbox();
         //$this->_test_blocked_OR_post_html();
-        $this->_test_blocked_AND_pussy_pics();
+        //$this->_test_blocked_AND_pussy_pics();
+        $this->_test_NO_BLOCKED_AND_pusy_pixs();
     }
 
 }
