@@ -5,6 +5,7 @@ $pathboot = realpath(__DIR__."/../boot");
 include("$pathboot/appbootstrap.php");
 
 use Theframework\Traits\TraitLog;
+use TheFramework\Components\ComponentIpblocker;
 
 abstract class BaseTest
 {
@@ -63,4 +64,12 @@ abstract class BaseTest
     }
 
     public abstract function run();
+
+    protected function _execute_ipblocker($m)
+    {
+        echo "\n==================\n";
+        echo "$m";
+        echo "\n==================\n";
+        (new ComponentIpblocker())->test_handle_request($m);
+    }
 }
