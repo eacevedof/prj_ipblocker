@@ -150,7 +150,7 @@ final class SaveRequestTest extends BaseTest
     public function run()
     {
         $this->_test_NO_BLOCKED_post_req_without_post();
-        /*
+
         $this->_test_non_blocked_post();
         $this->_test_blocked_by_post_required();
 
@@ -162,7 +162,7 @@ final class SaveRequestTest extends BaseTest
         $this->_test_blocked_OR_post_html();
         $this->_test_blocked_AND_pussy_pics();
         $this->_test_NO_BLOCKED_AND_pusy_pixs();
-        */
+
     }
 
 }
