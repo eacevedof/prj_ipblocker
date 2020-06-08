@@ -6,7 +6,7 @@ class ComponentSearchbots
     private static $botsns = [
         "baidu1"=>".crawl.baidu.com",
         "baidu2"=>".crawl.baidu.jp",
-        "bing1"=>".search.msn.com",
+        "msn"=>".msn.com",
         "google1"=>".google.com",
         "google2"=>".googlebot.com",
         "google3-user"=>".googleusercontent.com",
