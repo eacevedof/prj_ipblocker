@@ -2,11 +2,7 @@
   <v-row align="center">
     <v-col>
       <v-form>
-        <v-text-field prepend-icon="person" name="Username" label="Username" v-model="username"></v-text-field>
-        <v-text-field prepend-icon="lock" name="Password" label="Password" type="password" v-model="password"></v-text-field>
-        <v-card-actions>
-          <v-btn primary large block>Login</v-btn>
-        </v-card-actions>
+    
       </v-form>
     </v-col>
   </v-row>
@@ -15,29 +11,48 @@
 
 <script lang="ts">
 import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
+import { required, maxLength, password } from 'vuelidate/lib/validators'
 
 export default {
+  mixins: [validationMixin],
+
+  validations: {
+    username: { required, maxLength: maxLength(10) },
+    password: { required, password },
+  },  
+
   data: () => ({
     valid: true,
     username: '',
-    usernameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    ],
     password: '',
-    passRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
   }),//data
+
+  computed: {
+    usernameErrors () {
+      const errors = []
+      if (!this.$v.username.$dirty) return errors
+      !this.$v.username.maxLength && errors.push('username must be at most 10 characters long')
+      !this.$v.username.required && errors.push('username is required.')
+      return errors
+    },
+    passwordErrors () {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.password && errors.push('Must be valid password')
+      !this.$v.password.required && errors.push('password is required')
+      return errors
+    },
+  },
 
   methods: {
     submit () {
-      this.$refs.form.validate()
+      this.$v.$touch()
     },
-
+    clear () {
+      this.$v.$reset()
+      this.username = ''
+      this.password = ''
+    },
   },
-
 }
 </script>
