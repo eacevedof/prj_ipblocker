@@ -9,6 +9,7 @@ class ComponentSearchbots
         "bing1"=>".search.msn.com",
         "google1"=>".google.com",
         "google2"=>".googlebot.com",
+        "google3-user"=>".googleusercontent.com",
         "yahoo1"=>".crawl.yahoo.net",
         "yandex1"=>".yandex.ru",
         "yandex2"=>".yandex.net",
