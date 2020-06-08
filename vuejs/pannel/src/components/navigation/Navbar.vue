@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app class="primary">
 
-    <v-app-bar-nav-icon @click="set_navhamburger"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="set_sidebar(true)"></v-app-bar-nav-icon>
 
     <v-toolbar-title >IP Blocker {{ globalx }}</v-toolbar-title>
     
@@ -29,12 +29,11 @@ export default Vue.extend({
   },
 
   computed:{
-    ...mapState(["globalx","customers"])
+    ...mapState(["globalx"])
   },
 
   methods:{
-    ...mapMutations(["set_navhamburger"]),
-    ...mapActions(["get_customers"])
+    ...mapMutations(["set_sidebar"]),
   }  
 
 

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   
   state: {
-    navhamburguer: false,
+    sidebar: false,
     globalx: "Soy la global",
     customers: [],
   },
@@ -17,9 +17,9 @@ export default new Vuex.Store({
       state.globalx = value
     },
 
-    set_navhamburger(state){
-      console.log("set_navhamburger")
-      state.navhamburguer = !state.navhamburguer
+    set_sidebar(state, isvisible: boolean){
+      console.log("set_sidebar.isvisible:",isvisible)
+      state.sidebar = isvisible
     },
 
     set_customers(state, data){

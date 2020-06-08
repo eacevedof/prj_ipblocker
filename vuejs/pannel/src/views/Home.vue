@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Lorem ipsum dolor sit.</h1>
+    <h1>IP Blocker</h1>
     <v-row>
       <v-col>
         <ul>
@@ -28,11 +28,13 @@ export default {
   },
 
   computed:{
+    //las propiedades
     ...mapState(["globalx","customers"])
   },
 
   methods:{
-    ...mapMutations(["set_navhamburger"]),
+    //los setters y getters 
+    ...mapMutations(["set_sidebar"]),
     //ajax
     ...mapActions(["get_customers"])
   }    
