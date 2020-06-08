@@ -16,9 +16,14 @@
 import Vue from 'vue';
 import Navbar from "@/components/navigation/Navbar.vue"
 import hamburguer from "@/components/navigation/Sidebar.vue"
+import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
   name: 'App',
+
+  created(){
+    this.get_async_myip()
+  },
 
   components: {
     Navbar,
@@ -29,5 +34,16 @@ export default Vue.extend({
     //
   }),
   
+
+  computed:{
+    //las propiedades
+    ...mapState(["myip"])
+  },
+
+  methods:{
+    //ajax
+    ...mapActions(["get_async_myip"])
+  } 
+
 });
 </script>
