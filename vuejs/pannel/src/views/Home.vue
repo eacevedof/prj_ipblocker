@@ -1,41 +1,40 @@
 <template>
   <v-container>
-    <v-layout wrap>
-      <v-flex class="primary" xs12>
-        <h1>12</h1>
-      </v-flex>
-      <v-flex class="secondary" xs6>
-        <h1>6</h1>
-      </v-flex>  
-      <v-flex class="red" xs6>
-        <h1>6</h1>
-      </v-flex>            
-    </v-layout>
-
-    <v-layout class="mt-5 secondary" justify-center align-center style="height:300px">
-      <v-flex class="info" xs6>
-        <h1>Centrado</h1>
-      </v-flex>
-      <v-flex class="pink lighten-1 white--text" xs4>
-        <h1>Centrado</h1>
-      </v-flex>      
-    </v-layout>
-
-    <v-layout>
-      <v-flex>
-        <h1 class="display-1 text-uppercase">Lorem, ipsum dolor.</h1>
-        <h1 class="display-2 primary pa-5">Lorem ipsum dolor sit.</h1>
-        <h1 class="display-3 text-xs-center">Lorem ipsum dolor sit.</h1>
-        <h1 class="display-4">Lorem ipsum dolor sit amet.</h1>
-        
-      </v-flex>    
-    </v-layout>
-
+    <h1>Lorem ipsum dolor sit.</h1>
+    <v-row>
+      <v-col>
+        <ul>
+          <li
+            v-for="(item, index) in customers"
+            :key="index">
+            {{item.description}}
+          </li>
+        </ul>
+      </v-col>    
+    </v-row>
   </v-container>
 </template>
 
 <script>
+
+import {mapMutations, mapActions, mapState} from "vuex"
 export default {
-  name: "Home"
+  name: "Home",
+
+  created(){
+    //get_customers
+    console.log("Home created")
+    this.get_customers()
+  },
+
+  computed:{
+    ...mapState(["globalx","customers"])
+  },
+
+  methods:{
+    ...mapMutations(["set_navhamburger"]),
+    //ajax
+    ...mapActions(["get_customers"])
+  }    
 };
 </script>
