@@ -4,6 +4,7 @@ namespace Tests;
 $pathboot = realpath(__DIR__."/../boot");
 include("$pathboot/appbootstrap.php");
 
+use TheFramework\Helpers\HelperRequest;
 use Theframework\Traits\TraitLog;
 use TheFramework\Components\ComponentIpblocker;
 
@@ -59,6 +60,7 @@ abstract class BaseTest
 
     protected function reset_all()
     {
+        HelperRequest::reset();
         unset($_POST,$_GET,$_FILES,$_SERVER);
         $_POST=[]; $_GET=[]; $_FILES=[]; $_SERVER = [];
         return $this;

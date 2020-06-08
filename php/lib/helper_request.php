@@ -103,10 +103,10 @@ final class HelperRequest
     {
         $output = [];
         exec("whois $remoteip",$output);
-        $arwhois = self::_get_whoisarray($output);
+        $arwhois = $this->_get_whoisarray($output);
         return [
             "country" => $arwhois["country"] ?? "n.a",
-            "whois" => ($arwhois["hostname"] ?? "n.a"). "|" . ($arwhois["organisation"] ?? "n.a"),
+            "whois" => ($arwhois["netname"] ?? "n.a"). "|" . ($arwhois["organisation"] ?? "n.a"),
         ];
     }
 
@@ -119,6 +119,11 @@ final class HelperRequest
     public function get_whois($k=null){
         if($k) return $this->whois[$k] ?? "";
         return $this->whois;
+    }
+
+    public static function reset()
+    {
+        self::$thisself = null;
     }
 
     /**

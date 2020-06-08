@@ -78,6 +78,11 @@ class ComponentIpblocker
         }
     }
 
+    public function refill_whois()
+    {
+        $this->prov->refill_whois();
+    }
+
     public function test_handle_request($m="")
     {
         $this->prov->save_request();

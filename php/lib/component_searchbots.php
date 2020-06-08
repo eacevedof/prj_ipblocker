@@ -49,4 +49,63 @@ class ComponentSearchbots
         return "";
     }
 
+    private static function _get_whoisarray($output)
+    {
+        $arwhois = [];
+        foreach ($output as $i=> $strdata)
+        {
+            $parts = explode(": ",$strdata);
+            if(count($parts) >1 )
+                $arwhois[trim(strtolower($parts[0]))] = trim($parts[1]);
+        }
+        return $arwhois;
+    }
+
+    public static function get_host($remoteip)
+    {
+        $output = [];
+        exec("host $remoteip",$output);
+        $parts = explode(" ",$output[0] ?? "n.f");
+        return trim(end($parts));
+    }
+
+    private static function _get_whois($arwhois)
+    {
+        $config = [
+            "netname" => [
+                "netname","nserver",
+            ],
+            "organisation" => [
+                "organisation","owner"
+            ]
+        ];
+
+        $netname = "n.a";
+        $organisation = "n.a";
+        foreach ($config["netname"] as $alias)
+            if(isset($arwhois[$alias])){
+                $netname = trim($arwhois[$alias]);
+                break;
+            }
+
+        foreach ($config["organisation"] as $alias)
+            if(isset($arwhois[$alias])){
+                $organisation = trim($arwhois[$alias]);
+                break;
+            }
+
+        return "$netname | $organisation";
+    }
+
+    public static function get_whois($remoteip)
+    {
+        $output = [];
+        exec("whois $remoteip",$output);
+        $arwhois = self::_get_whoisarray($output);
+        return [
+            "country" => $arwhois["country"] ?? "n.a",
+            "whois" => self::_get_whois($arwhois),
+        ];
+    }
+
 }
