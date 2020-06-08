@@ -13,9 +13,8 @@
     <v-btn class="error">
       salir
     </v-btn>
-
   </v-app-bar>
-
+  
 </template>
 
 <script lang="ts">
