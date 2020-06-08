@@ -6,13 +6,6 @@
     <v-toolbar-title >IP Blocker {{ globalx }}</v-toolbar-title>
     
     <v-spacer />
-
-    <v-btn class="success">
-      login
-    </v-btn>
-    <v-btn class="error">
-      salir
-    </v-btn>
   </v-app-bar>
   
 </template>
