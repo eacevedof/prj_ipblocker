@@ -3,7 +3,7 @@
 
     <v-app-bar-nav-icon @click="set_sidebar(true)"></v-app-bar-nav-icon>
 
-    <v-toolbar-title >IP Blocker {{ globalx }}</v-toolbar-title>
+    <v-toolbar-title >IP Blocker - Your ip: {{ myip }}</v-toolbar-title>
     
     <v-spacer />
   </v-app-bar>
@@ -29,7 +29,7 @@ export default Vue.extend({
   },
 
   computed:{
-    ...mapState(["globalx"])
+    ...mapState(["myip"])
   },
 
   methods:{
