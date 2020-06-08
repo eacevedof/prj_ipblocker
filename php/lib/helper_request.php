@@ -10,7 +10,7 @@ final class HelperRequest
     private $post;
     private $whois;
 
-    private static ?HelperRequest $thisself = null;
+    private static $thisself = null;
 
     /**
      * is not allowed to call from outside to prevent from creating multiple instances,
