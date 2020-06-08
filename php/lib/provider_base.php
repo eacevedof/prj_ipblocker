@@ -112,7 +112,7 @@ class ProviderBase
 
     public function refill_whois()
     {
-        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois IS NULL OR whois LIKE '%n.a%' LIMIT 10";
+        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois IS NULL OR whois LIKE '%n.a%' ORDER BY id DESC LIMIT 1000";
         $ips = $this->db->query($sql);
         $ips = array_column($ips,"remote_ip");
 //pp($ips,"ips");die;
@@ -134,7 +134,7 @@ class ProviderBase
         $this->logd($arupdates,"arupdates");
         if($arupdates){
             $sql = implode(";",$arupdates);
-            //$this->db->exec($sql);
+            $this->db->exec($sql);
         }
     }
 }

@@ -18,7 +18,7 @@ class ComponentSearchbots
     private static $botsip = [
         //https://help.duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/
          "duckduckgo" => [
-             "23.21.227.69",
+            "23.21.227.69",
             "40.88.21.235",
             "50.16.241.113",
             "50.16.241.114",
@@ -37,7 +37,7 @@ class ComponentSearchbots
     {
         $output = [];
         exec("host $remoteip",$output);
-        $output = $output[0];
+        $output = trim($output[0]);
         foreach (self::$botsns as $botname => $ns)
             if(strstr($output,$ns))
                 return $botname;
