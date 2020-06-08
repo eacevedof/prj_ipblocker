@@ -39,66 +39,24 @@ FROM
 ) x 
 order by remote_ip asc;
 
--- guardo ips sospechosas
-INSERT INTO app_ip_blacklist (remote_ip, reason)
-
-SELECT remote_ip, substring(`post`,1,120) p
-FROM app_ip_request 
+SELECT r.id, 
+-- r.remote_ip,
+r.insert_date,
+ip.country,
+SUBSTR(ip.whois,5,35) whois, 
+CONCAT(r.domain,r.request_uri) uri,
+-- r.request_uri,
+-- r.get,
+r.post
+FROM app_ip_request r
+LEFT JOIN app_ip ip
+ON r.remote_ip = ip.remote_ip
 WHERE 1
-AND id IN
-(
-  SELECT MAX(id) mid
-  FROM app_ip_request
-  WHERE 1
-  AND post != ''
-  AND remote_ip IN
-  (
-    SELECT remote_ip
-    FROM app_ip_request 
-    WHERE 1 
-    AND remote_ip NOT IN 
-    (
-      SELECT remote_ip 
-      FROM app_ip_blacklist
-    )
-  )
-  AND remote_ip IN
-  (
-    SELECT DISTINCT remote_ip FROM app_ip_request WHERE post LIKE '%.ru%'
-  )  
-  GROUP BY remote_ip
-);
-
--- sospechosos por get
-INSERT INTO app_ip_blacklist (remote_ip, reason)
-
-SELECT remote_ip, substring(`get`,1,120) g
-FROM app_ip_request 
-WHERE 1
-AND insert_date>=curdate()
-AND id IN
-(
-  SELECT MAX(id) mid
-  FROM app_ip_request
-  WHERE 1
-  AND `get` != ''
-  AND remote_ip IN
-  (
-    SELECT remote_ip
-    FROM app_ip_request 
-    WHERE 1 
-    AND remote_ip NOT IN 
-    (
-      SELECT remote_ip 
-      FROM app_ip_blacklist
-    )
-  )
-  AND remote_ip IN
-  (
-    SELECT DISTINCT remote_ip FROM app_ip_request WHERE `get` LIKE '%.ru%'
-  )
-  GROUP BY remote_ip
-);
+-- AND r.domain LIKE '%grace%'
+-- AND r.domain LIKE '%doble%'
+-- AND r.domain LIKE '%theframe%'
+AND r.domain LIKE '%elchalan%'
+ORDER BY id DESC, whois DESC;
 
 -- comprueba q tipo de peticiones ha hecho una determinada ip
 SELECT id, remote_ip, insert_date, domain
@@ -123,10 +81,6 @@ AND insert_date>=curdate()
 ORDER BY remote_ip,id DESC
 LIMIT 500;
 
-
--- ips de google
-SELECT DISTINCT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%';
-
 -- numero de accesos por ip
 SELECT r.remote_ip, domain
 , count(r.id) ireq
@@ -140,8 +94,6 @@ ON r.remote_ip = i.remote_ip
 WHERE 1
 AND r.remote_ip NOT IN
 (
-  SELECT remote_ip FROM app_ip_request WHERE request_uri LIKE '%th1s_1s_a_4o4%'
-  UNION 
   SELECT remote_ip FROM app_ip WHERE whois LIKE '%google%'
 )
 AND  r.insert_date>=curdate()
