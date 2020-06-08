@@ -1,5 +1,8 @@
 <template>
-  <form-login/>
+  <v-container>
+    <h1>Login</h1>
+    <form-login/>
+  </v-container>
 </template>
 <script>
 import FormLogin from "@/components/forms/FormLogin.vue"
