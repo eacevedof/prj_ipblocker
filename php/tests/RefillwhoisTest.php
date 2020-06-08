@@ -9,10 +9,13 @@ final class RefillwhoisTest extends BaseTest
 
     protected function _execute_refill($m)
     {
-        echo "\n==================\n";
+        $now = date("Ymd His");
+        echo "\n=======START: $now ===========\n";
         echo "$m";
-        echo "\n==================\n";
+        echo "\n==========================\n";
         (new ComponentIpblocker())->refill_whois();
+        $now = date("Ymd His");
+        echo "\n=========END: $now =============\n";
     }
 
     private function _test_host_google()
@@ -47,9 +50,9 @@ final class RefillwhoisTest extends BaseTest
 
     public function run()
     {
-        //$this->_test_refill_whois();
-        $this->_test_host_google();
-        $this->_test_host_yandex();
+        $this->_test_refill_whois();
+        //$this->_test_host_google();
+        //$this->_test_host_yandex();
     }
 }
 
