@@ -109,4 +109,32 @@ class ProviderBase
         VALUES ('$this->remoteip','keywords: $kws')";
         $this->db->exec($sql);
     }
+
+    public function refill_whois()
+    {
+        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois IS NULL OR whois LIKE '%n.a%' LIMIT 10";
+        $ips = $this->db->query($sql);
+        $ips = array_column($ips,"remote_ip");
+//pp($ips,"ips");die;
+        $arupdates = [];
+        foreach ($ips as $ip)
+        {
+            $country = "n.a";
+            //$botname = sb::get_name($ip);
+            $host = sb::get_host($ip);
+            $arwhois = sb::get_whois($ip);
+
+            if($arwhois["country"]) $country = $arwhois["country"];
+            $whois = "host:$host, org:{$arwhois["whois"]}";
+
+            $sql = "UPDATE app_ip SET country='$country', whois='$whois' WHERE 1 AND remote_ip='$ip'";
+            $arupdates[] = $sql;
+        }
+
+        $this->logd($arupdates,"arupdates");
+        if($arupdates){
+            $sql = implode(";",$arupdates);
+            //$this->db->exec($sql);
+        }
+    }
 }

@@ -141,7 +141,7 @@ final class SaveRequestTest extends BaseTest
     {
         $this->_test_non_blocked_post();
         $this->_test_blocked_by_post_required();
-/*
+
         $this->_test_blocked_by_get_not_null();
         $this->_test_blocked_by_post_not_null();
         $this->_test_blocked_by_country();
@@ -150,7 +150,7 @@ final class SaveRequestTest extends BaseTest
         $this->_test_blocked_OR_post_html();
         $this->_test_blocked_AND_pussy_pics();
         $this->_test_NO_BLOCKED_AND_pusy_pixs();
-*/
+
     }
 
 }
