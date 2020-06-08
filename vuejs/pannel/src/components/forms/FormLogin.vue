@@ -1,6 +1,7 @@
 <template>
   <v-row align="center">
-    <v-col>
+    <v-col cols="2" />
+    <v-col cols="8">
       <form>
         <v-text-field
           v-model="username"
@@ -26,6 +27,7 @@
         <v-btn @click="clear">clear</v-btn>    
       </form>
     </v-col>
+    <v-col cols="2"/>
   </v-row>
 </template>
 
