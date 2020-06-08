@@ -112,7 +112,7 @@ class ProviderBase
 
     public function refill_whois()
     {
-        $sql = "SELECT remote_ip FROM app_ip WHERE 1 ORDER BY id DESC";
+        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois IS NULL ORDER BY id DESC LIMIT 31";
         $ips = $this->db->query($sql);
         $ips = array_column($ips,"remote_ip");
         $arupdates = [];
