@@ -117,6 +117,7 @@ class ProviderKeywords
 
     private function _is_post_nok($requri)
     {
+        if(!$this->req->get_post()) return false;
         $pubpost = $this->_get_pub_post($requri);
         //pp($_POST,"POST");
         //pp($pubpost,"_is_postnok");
@@ -137,6 +138,7 @@ class ProviderKeywords
 
     private function _is_get_nok($requri)
     {
+        if(!$this->req->get_get()) return false;
         $pubget = $this->_get_pub_get($requri);
         if(!$pubget) return false;
         foreach ($pubget as $f) {
@@ -150,6 +152,7 @@ class ProviderKeywords
 
     private function _is_files_nok($requri)
     {
+        if(!$this->req->get_files()) return false;
         $pubfiles = $this->_get_pub_files($requri);
         if(!$pubfiles) return false;
         foreach ($pubfiles as $f) {
@@ -231,6 +234,7 @@ class ProviderKeywords
         $isnok = $this->_is_get_nok($requri);
         if($isnok) return $isnok;
         $isnok = $this->_is_post_nok($requri);
+        //pp($isnok,"isnok");die;
         if($isnok) return $isnok;
         $isnok = $this->_is_files_nok($requri);
         if($isnok) return $isnok;
