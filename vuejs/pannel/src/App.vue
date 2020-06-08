@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Navbar from "@/components/navigation/Navbar.vue"
-import hamburguer from "@/components/navigation/Hamburguer.vue"
+import hamburguer from "@/components/navigation/Sidebar.vue"
 
 export default Vue.extend({
   name: 'App',

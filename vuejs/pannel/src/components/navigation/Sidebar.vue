@@ -49,7 +49,7 @@
 
 export default {
 
-  name: "Hamburguer",
+  name: "Sidebar",
 
   data: () => ({
     homehref: "/",
