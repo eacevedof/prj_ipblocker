@@ -38,7 +38,19 @@ export default {
           disabled: true,
           href: '/login',
         },
-      ]
+      ],
+      "iprequest":[
+        {
+          text: 'Home',
+          disabled: false,
+          href: '/',
+        },
+        {
+          text: 'Ip Requests',
+          disabled: true,
+          href: '/ip-request',
+        },
+      ]      
     }
   }),
   

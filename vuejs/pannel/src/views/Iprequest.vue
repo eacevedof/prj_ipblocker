@@ -1,13 +1,32 @@
+<!--login.vue-->
 <template>
-  <vi-container>
-    <h3>ip-request</h3>
-    <v-row>
-      <v-col cols="12" sm="8">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, ut excepturi? Aperiam obcaecati id blanditiis culpa maiores tempore dicta voluptatum quo rerum cum? Et dolore odio quaerat eum optio fuga?
-      </v-col>
-      <v-col cols="12" sm="4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem sunt accusantium laborum earum quod doloremque, delectus itaque beatae omnis ipsa culpa ipsum. Reprehenderit odio dignissimos architecto quis optio omnis quod!
-      </v-col>
-    </v-row>
-  </vi-container>
+  <v-container>
+
+    <scrumbs pagename="iprequest" />
+    <div class="mt-5"></div>
+
+  
+  </v-container>
 </template>
+<script lang="ts">
+import Scrumbs from "@/components/navigation/Scrumbs.vue"
+import api from "@/providers/api.ts"
+
+export default {
+  name: "IpRequest",
+
+  components:{
+    Scrumbs
+  },
+
+  beforemount: async function(){
+    console.log("before")
+  },
+  
+
+  components: {
+    Scrumbs,
+  },
+
+};
+</script>
