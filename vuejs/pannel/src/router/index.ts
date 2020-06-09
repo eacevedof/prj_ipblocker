@@ -15,21 +15,21 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'login',
+    meta:{
+      title: "Login"
+    },    
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
-    meta:{
-      title: "Login"
-    }
   },
   {
     path: '/ip-request',
     name: 'iprequest',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Iprequest.vue'),
+    meta:{
+      title: "IP Requests"
+    },    
+    component: () => import('../views/IpRequest.vue'),
   },  
 ];
 
