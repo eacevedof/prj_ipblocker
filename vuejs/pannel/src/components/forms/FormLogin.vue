@@ -4,9 +4,10 @@
       <v-card elevation="0" class="title pa-1" color="secondary">
         <v-icon color="primary">mdi-lock</v-icon>
       </v-card>
-      <v-form
-      >
+      <v-form>
+        <notificationerror v-if="objerror.message != ''" :title="objerror.title" :message="objerror.message" />
         <v-text-field
+          ref="username"
           v-model="username"
           :error-messages="usernameErrors"
           :counter="10"
@@ -17,6 +18,7 @@
         ></v-text-field>
         
         <v-text-field
+          ref="password"
           v-model="password"
           :error-messages="passwordErrors"
           label="Password"
@@ -43,6 +45,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import api from "@/providers/api.ts"
 import db from "@/helpers/localdb.ts"
+import notificationerror from "@/components/common/notifications/notification_error.vue"
 
 export default {
   mixins: [validationMixin],
@@ -52,10 +55,18 @@ export default {
     password: { required, minLength: minLength(8) },
   },  
 
+  components:{
+    notificationerror
+  },
+
   data: () => ({
     valid: true,
     username: 'fulanito',
     password: 'menganito',
+    objerror: {
+      title: "",
+      message: "",
+    }
   }),//data
 
   computed: {
@@ -81,7 +92,12 @@ export default {
       this.$v.$touch()
       console.log("on submit: ",this.username, this.password)
       const response = await api.get_async_apikey({username:this.username,password:this.password})
-      if(response.error) return alert(response.error)
+      if(response.error) {
+        this.objerror.title = "Error"
+        this.objerror.message = response.error.toString()
+        this.$refs.username.focus()
+        return
+      }
       const apikey = response.data.data.result
       db.save("apikey",apikey)
     },
@@ -90,6 +106,8 @@ export default {
       this.$v.$reset()
       this.username = ''
       this.password = ''
+      this.objerror = {title:"",message:""}
+      this.$refs.username.focus()      
     },
 
   },
