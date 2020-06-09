@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <scrumbs pagename="home" />
     <h1>IP Blocker</h1>
     <v-row>
       <v-col>
@@ -15,11 +16,15 @@
   </v-container>
 </template>
 
-<script>
-
+<script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
+import Scrumbs from "@/components/navigation/Scrumbs.vue"
 export default {
   name: "Home",
+
+  components:{
+    Scrumbs,
+  },
 
   created(){
     //get_customers
