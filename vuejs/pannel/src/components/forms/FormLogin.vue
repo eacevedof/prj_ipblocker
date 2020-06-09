@@ -100,6 +100,7 @@ export default {
       }
       const usertoken = response.data.data.result
       db.save("usertoken",usertoken)
+      this.$router.push({ name: "iprequest"})
     },
 
     clear () {
