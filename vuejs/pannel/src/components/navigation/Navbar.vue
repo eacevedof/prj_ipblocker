@@ -6,18 +6,14 @@
     <v-toolbar-title>
       <b>IP Blocker </b> 
     </v-toolbar-title>
-    
     <v-spacer />
-
-    <v-toolbar-items>
-      <v-tabs fixed-tabs color="secondary" background-color="primary">
-        <v-tab>
-          <span class="subtitle-2">Your ip:{{ myip }}</span>
-        </v-tab>
-        <v-tab>
-          <span class="subtitle-2">{{moment(date).format('YYYY-MM-DD H:m:s')}}</span>
-        </v-tab>
-      </v-tabs>
+    <v-toolbar-items >
+      <v-col cols="6" class="d-flex align-center justify-start">
+        <sub>Your ip:{{ myip }}</sub>
+      </v-col>
+      <v-col cols="7" class="d-flex align-center justify-end">
+        <sub>{{moment().format('YYYY-MM-DD H:m:s')}}</sub>
+      </v-col>
     </v-toolbar-items>
 
   </v-app-bar>
