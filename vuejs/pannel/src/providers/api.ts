@@ -41,9 +41,12 @@ const Api = {
         }
       }
       
+      const data = new FormData()
+      data.append("usertoken",usertoken)
+
       console.log("api.async_is_validtoken.url",url)
       //console.log("api.async_is_validtoken.headers",headers)
-      const response = await axios.post(url,{})
+      const response = await axios.post(url,data)
 
       console.log("api.async_is_validtoken.response.data",response.data)
       return response.data
