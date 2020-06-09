@@ -3,7 +3,9 @@
   <v-container>
 
     <scrumbs pagename="iprequest" />
-    <div class="mt-5"></div>
+    <div class="mt-5">
+      {{ islogged }}
+    </div>
 
   
   </v-container>
@@ -11,7 +13,7 @@
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
-import api from "@/providers/api.ts"
+//import api from "@/providers/api.ts"
 
 export default {
   name: "IpRequest",
@@ -21,11 +23,14 @@ export default {
   },
 
   data: () => ({
-    valid: true,
 
   }),//data
 
   beforeMount: async function(){
+    
+    await this.async_islogged()
+    //if(!this.islogged)
+      //this.$router.push({name:"login"})
     //comprobar si se esta logado, si no está redirect a login
   },
 
@@ -34,11 +39,12 @@ export default {
   },
 
   computed:{
-    ...mapState(["myip"])
+    ...mapState(["islogged"])
   },
 
   methods:{
-    ...mapMutations(["set_sidebar"]),
+    //setters
+    ...mapActions(["async_islogged"]),
   }  
 
 };

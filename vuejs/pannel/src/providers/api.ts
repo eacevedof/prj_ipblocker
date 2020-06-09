@@ -1,5 +1,7 @@
 import axios from "axios"
-const BASE_URL = "https://dbsapify.theframework.es"
+let BASE_URL = "https://dbsapify.theframework.es"
+BASE_URL = "https://dbsapify.theframework.es"
+//BASE_URL = "http://localhost:3000"
 
 const Api = {
 
@@ -26,21 +28,25 @@ const Api = {
     }
   },//async_get_usertoken
 
-  async_is_validtoken: async (usertoken)=>{
+  async_is_validtoken: async (usertoken) => {
     const url = `${BASE_URL}/apifiy/security/is-valid-token`
     //hay que enviar header: apify-auth: token
     try {
-      const data = new FormData()
-      data.append("action","checktoken")
-
-      const headers = {}
-      headers["apify-auth"] = usertoken
+      const headers = {
+        headers:{
+          //"apify-auth": usertoken
+          "Accept": "application/json",
+          "Authorization":`Basic ${usertoken}`,
+          "Content-Type": "application/json",
+        }
+      }
       
-      console.log("api.async_is_validtoken",url)
-      const response = await axios.post(url, data, headers)
+      console.log("api.async_is_validtoken.url",url)
+      //console.log("api.async_is_validtoken.headers",headers)
+      const response = await axios.post(url,{})
 
-      console.log("api.async_is_validtoken.response",response)
-      return response
+      console.log("api.async_is_validtoken.response.data",response.data)
+      return response.data
     } 
     catch (e) {
       console.error("ERROR: api.async_is_validtoken.url:",url,"e:",e)
