@@ -39,10 +39,12 @@ export default Vue.extend({
   },
 
   computed:{
+    //state
     ...mapState(["myip"])
   },
 
   methods:{
+    //setters
     ...mapMutations(["set_sidebar"]),
   }  
 
