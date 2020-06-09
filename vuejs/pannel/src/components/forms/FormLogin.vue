@@ -1,8 +1,10 @@
 <template>
   <v-row align="center" justify="center">
-    <v-col cols="7">
+    <v-col cols="7" class="elevation-8">
+      <v-card elevation="0" class="title pa-1" color="secondary">
+        <v-icon color="primary">mdi-lock</v-icon>
+      </v-card>
       <v-form
-        :elevation="50"
       >
         <v-text-field
           v-model="username"
@@ -27,10 +29,10 @@
         <v-card-actions>
           <v-btn @click="clear">clear</v-btn>
           <v-spacer></v-spacer>
-          <v-btn class="mr-4" color="secondary" @click="submit">submit</v-btn>
+          <v-btn class="mr-4 primary--text" color="secondary" @click="submit">submit</v-btn>
         </v-card-actions>
       </v-form>
-      
+
     </v-col>
   </v-row>
 </template>
