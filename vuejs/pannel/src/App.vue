@@ -3,7 +3,7 @@
     
     <navbar />
 
-    <hamburguer />
+    <sidebar />
 
     <v-content>
       <router-view />
@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Navbar from "@/components/navigation/Navbar.vue"
-import hamburguer from "@/components/navigation/Sidebar.vue"
+import Sidebar from "@/components/navigation/Sidebar.vue"
 import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
@@ -27,7 +27,7 @@ export default Vue.extend({
 
   components: {
     Navbar,
-    hamburguer
+    Sidebar
   },
 
   data: () => ({

@@ -1,16 +1,20 @@
 <template>
   <v-container>
-    <h2>Access</h2>
+    <scrumbs />
     <form-login/>
   </v-container>
 </template>
 <script>
+import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import FormLogin from "@/components/forms/FormLogin.vue"
+
 export default {
   name: "Login",
 
   components: {
-    FormLogin
+    Scrumbs,
+    FormLogin,
+
   },
 
 };
