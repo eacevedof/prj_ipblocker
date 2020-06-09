@@ -6,8 +6,10 @@ import vuetify from './plugins/vuetify';
 import '@babel/polyfill'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
+import moment from "moment"
 
 Vue.config.productionTip = false;
+Vue.prototype.moment = moment
 
 new Vue({
   router,

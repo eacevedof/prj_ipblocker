@@ -3,9 +3,23 @@
 
     <v-app-bar-nav-icon @click="set_sidebar(true)"></v-app-bar-nav-icon>
 
-    <v-toolbar-title >IP Blocker - Your ip: {{ myip }}</v-toolbar-title>
+    <v-toolbar-title>
+      <b>IP Blocker </b> 
+    </v-toolbar-title>
     
     <v-spacer />
+
+    <v-toolbar-items>
+      <v-tabs fixed-tabs color="secondary" background-color="primary">
+        <v-tab>
+          <span class="subtitle-2">Your ip:{{ myip }}</span>
+        </v-tab>
+        <v-tab>
+          <span class="subtitle-2">{{moment(date).format('YYYY-MM-DD H:m:s')}}</span>
+        </v-tab>
+      </v-tabs>
+    </v-toolbar-items>
+
   </v-app-bar>
   
 </template>
