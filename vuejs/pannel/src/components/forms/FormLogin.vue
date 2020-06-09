@@ -23,12 +23,14 @@
           @input="$v.password.$touch()"
           @blur="$v.password.$touch()"
         ></v-text-field>
+
         <v-card-actions>
           <v-btn @click="clear">clear</v-btn>
           <v-spacer></v-spacer>
           <v-btn class="mr-4" color="secondary" @click="submit">submit</v-btn>
         </v-card-actions>
       </v-form>
+      
     </v-col>
   </v-row>
 </template>

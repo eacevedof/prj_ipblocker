@@ -1,10 +1,13 @@
+<!--login.vue-->
 <template>
   <v-container>
-    <scrumbs />
+
+    <scrumbs pagename="login" />
     <form-login/>
+  
   </v-container>
 </template>
-<script>
+<script lang="ts">
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import FormLogin from "@/components/forms/FormLogin.vue"
 
@@ -14,7 +17,6 @@ export default {
   components: {
     Scrumbs,
     FormLogin,
-
   },
 
 };

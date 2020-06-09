@@ -1,5 +1,5 @@
 <template>
-  <v-breadcrumbs :items="items">
+  <v-breadcrumbs :items="get_scrumbs">
     <template v-slot:item="{ item }">
       <v-breadcrumbs-item
         :href="item.href"
@@ -11,26 +11,45 @@
   </v-breadcrumbs>
 </template>
 
-<script>
-  export default {
-    data: () => ({
-      items: [
+<script lang="ts">
+export default {
+
+  props:{
+    pagename: String
+  },
+
+  data: () => ({
+    obscrumbs: {
+      "home":[
         {
-          text: 'Dashboard',
-          disabled: false,
-          href: 'breadcrumbs_dashboard',
-        },
-        {
-          text: 'Link 1',
-          disabled: false,
-          href: 'breadcrumbs_link_1',
-        },
-        {
-          text: 'Link 2',
+          text: 'Home',
           disabled: true,
-          href: 'breadcrumbs_link_2',
+          href: '/',
         },
       ],
-    }),
+      "login":[
+        {
+          text: 'Home',
+          disabled: false,
+          href: '/',
+        },
+        {
+          text: 'Login',
+          disabled: true,
+          href: '/login',
+        },
+      ]
+    }
+  }),
+  
+  computed:{
+    get_scrumbs(){
+      const pagename = this.pagename
+      if(this.obscrumbs[pagename] == undefined)
+        return []
+      return this.obscrumbs[pagename]
+    }
   }
+
+}
 </script>
