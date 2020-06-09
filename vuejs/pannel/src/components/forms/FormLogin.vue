@@ -41,6 +41,8 @@
 <script lang="ts">
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+import api from "@/providers/api.ts"
+import db from "@/helpers/localdb.ts"
 
 export default {
   mixins: [validationMixin],
@@ -52,8 +54,8 @@ export default {
 
   data: () => ({
     valid: true,
-    username: '',
-    password: '',
+    username: 'fulanito',
+    password: 'menganito',
   }),//data
 
   computed: {
@@ -75,9 +77,13 @@ export default {
 
   methods: {
     
-    submit () {
+    submit : async function(){
       this.$v.$touch()
       console.log("on submit: ",this.username, this.password)
+      const response = await api.get_async_apikey({username:this.username,password:this.password})
+      if(response.error) return alert(response.error)
+      const apikey = response.data.data.result
+      db.save("apikey",apikey)
     },
 
     clear () {
