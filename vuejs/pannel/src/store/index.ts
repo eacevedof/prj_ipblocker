@@ -1,5 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Axios from 'axios';
+import api from "@/providers/api.ts"
+import db from "@/helpers/localdb.ts"
+import Localdb from '@/helpers/localdb.ts';
 
 Vue.use(Vuex);
 
@@ -10,6 +14,7 @@ export default new Vuex.Store({
     globalx: "Soy la global",
     customers: [],
     myip: "",
+    islogged: false,
   },
 
   //setters
@@ -31,6 +36,9 @@ export default new Vuex.Store({
       state.myip = data
     },
 
+    set_islogged(state, islogged){
+      state.islogged = islogged
+    }
 
   },
 
@@ -51,7 +59,21 @@ export default new Vuex.Store({
         console.log("get_async_ip",ip)
         commit("set_myip",ip) 
       });
-    }    
+    },
+
+    async_islogged: async function({commit}){
+      const usertoken = db.select("usertoken")
+      if(!usertoken){
+        commit("set_islogged",false)
+        return
+      }
+
+      const response = await api.async_is_validtoken(usertoken)
+      if(response.error) commit("set_islogged",false)
+      
+      if(response.result) commit("set_islogged",true)
+    }
+    
   },
 
   modules: {

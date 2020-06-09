@@ -24,12 +24,12 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: '/grid',
-    name: 'grid',
+    path: '/ip-request',
+    name: 'iprequest',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Grid.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/Iprequest.vue'),
   },  
 ];
 

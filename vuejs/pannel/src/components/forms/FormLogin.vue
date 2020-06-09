@@ -91,15 +91,15 @@ export default {
     submit : async function(){
       this.$v.$touch()
       console.log("on submit: ",this.username, this.password)
-      const response = await api.get_async_apikey({username:this.username,password:this.password})
+      const response = await api.async_get_usertoken({username:this.username,password:this.password})
       if(response.error) {
         this.objerror.title = "Error"
         this.objerror.message = response.error.toString()
         this.$refs.username.focus()
         return
       }
-      const apikey = response.data.data.result
-      db.save("apikey",apikey)
+      const usertoken = response.data.data.result
+      db.save("usertoken",usertoken)
     },
 
     clear () {
