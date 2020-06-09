@@ -1,8 +1,9 @@
 <template>
-  <v-row align="center">
-    <v-col cols="2" />
-    <v-col cols="8">
-      <form>
+  <v-row align="center" justify="center">
+    <v-col cols="7">
+      <v-form
+        :elevation="50"
+      >
         <v-text-field
           v-model="username"
           :error-messages="usernameErrors"
@@ -22,12 +23,13 @@
           @input="$v.password.$touch()"
           @blur="$v.password.$touch()"
         ></v-text-field>
-        
-        <v-btn class="mr-4" @click="submit">submit</v-btn>
-        <v-btn @click="clear">clear</v-btn>    
-      </form>
+        <v-card-actions>
+          <v-btn @click="clear">clear</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn class="mr-4" color="secondary" @click="submit">submit</v-btn>
+        </v-card-actions>
+      </v-form>
     </v-col>
-    <v-col cols="2"/>
   </v-row>
 </template>
 
@@ -40,7 +42,7 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    username: { required, maxLength: maxLength(10) },
+    username: { required, minLength: minLength(5), maxLength: maxLength(10) },
     password: { required, minLength: minLength(8) },
   },  
 
@@ -61,7 +63,7 @@ export default {
     passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
-      !this.$v.password.minLength && errors.push('Must be valid password')
+      //!this.$v.password.minLength && errors.push('Min length of pass is 8')
       !this.$v.password.required && errors.push('password is required')
       return errors
     },
@@ -71,6 +73,7 @@ export default {
     
     submit () {
       this.$v.$touch()
+      console.log("on submit: ",this.username, this.password)
     },
 
     clear () {
