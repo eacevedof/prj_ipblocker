@@ -42,6 +42,7 @@ export default {
       const usertoken = db.select("usertoken")
       if(!usertoken) return
       this.rows = await api.async_get_ip_request(usertoken)
+      console.table(this.rows)
     }
   },
 
