@@ -27,23 +27,13 @@ export default {
     rows: []
   }),//data
 
-  beforeMount: async function(){
+  beforeMount: function(){
     ;
     //comprobar si se esta logado, si no está redirect a login
   },
 
-  mounted: async function(){
-    await this.async_islogged()
-    if(!this.islogged)
-      this.$router.push({name:"login"})
-
-    console.log("iprequest.mounted.islogged: ",this.islogged)
-    if(this.islogged){
-      const usertoken = db.select("usertoken")
-      if(!usertoken) return
-      this.rows = await api.async_get_ip_request(usertoken)
-      console.table(this.rows)
-    }
+  mounted: function(){
+    this.load_data()
   },
 
   computed:{
@@ -53,6 +43,21 @@ export default {
   methods:{
     //setters
     ...mapActions(["async_islogged"]),
+
+    load_data: async function(){
+      await this.async_islogged()
+      if(!this.islogged)
+        this.$router.push({name:"login"})
+
+      console.log("iprequest.mounted.islogged: ",this.islogged)
+      if(this.islogged){
+        const usertoken = db.select("usertoken")
+        if(!usertoken) return
+        this.rows = await api.async_get_ip_request(usertoken)
+        console.table(this.rows)
+      }
+    }
+
   }  
 
 };
