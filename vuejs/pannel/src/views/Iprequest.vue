@@ -56,8 +56,14 @@
         <v-col>
           <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details />
         </v-col>
-
       </template>
+
+      <!-- botones columna -->
+      <template v-slot:item.accion="{ item }">
+        <v-btn class="m4-2" fab dark small color="cyan" @click="editar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
+        <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
+      </template>
+
     </v-data-table>
   
     <template>
@@ -91,7 +97,17 @@ export default {
     dialog: false,
     dialogtitle: "",
     search: "",
-    headers: ["id","remote_ip"],
+
+    headers: [
+      {
+        text: 'nº',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+      },
+      { text: 'Rem. IP', value: 'remote_ip' },
+
+    ],
     rows: [],
     editado: {
       marca:""
@@ -138,6 +154,11 @@ export default {
     cancelar(){;},
 
     guardar(){;},
+
+    borrar(){;},
+
+    editar(){;},
+
   }  
 
 };
