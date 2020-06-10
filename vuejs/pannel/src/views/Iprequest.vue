@@ -102,10 +102,11 @@ export default {
       {
         text: 'nº',
         align: 'start',
-        sortable: false,
+        sortable: true,
         value: 'id',
       },
       { text: 'Rem. IP', value: 'remote_ip' },
+      { text: 'Day', value: 'insert_date' },
 
     ],
     rows: [],
