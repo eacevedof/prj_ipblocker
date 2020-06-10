@@ -3,10 +3,10 @@
   <v-container>
 
     <scrumbs pagename="iprequest" />
+    
     <div class="mt-5">
       {{ islogged }}
     </div>
-
   
   </v-container>
 </template>
@@ -29,8 +29,8 @@ export default {
   beforeMount: async function(){
     
     await this.async_islogged()
-    //if(!this.islogged)
-      //this.$router.push({name:"login"})
+    if(!this.islogged)
+      this.$router.push({name:"login"})
     //comprobar si se esta logado, si no está redirect a login
   },
 
