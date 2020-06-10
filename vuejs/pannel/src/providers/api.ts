@@ -32,17 +32,9 @@ const Api = {
     const url = `${BASE_URL}/apifiy/security/is-valid-token`
     //hay que enviar header: apify-auth: token
     try {
-      const headers = {
-        headers:{
-          //"apify-auth": usertoken
-          "Accept": "application/json",
-          "Authorization":`Basic ${usertoken}`,
-          "Content-Type": "application/json",
-        }
-      }
-      
+
       const data = new FormData()
-      data.append("usertoken",usertoken)
+      data.append("apify-usertoken",usertoken)
 
       console.log("api.async_is_validtoken.url",url)
       //console.log("api.async_is_validtoken.headers",headers)
@@ -57,8 +49,29 @@ const Api = {
         error: e
       }
     }    
-  }
+  },
   
+  async_get_ip_request: async (usertoken) => {
+    const url = `${BASE_URL}/apify/read?context=c1&dbname=db_one`
+    //hay que enviar header: apify-auth: token
+    try {
+      const data = new FormData()
+      data.append("apify-usertoken",usertoken)
+      
+      console.log("api.async_get_ip_request",url)
+      const response = await axios.post(url, data)
+
+      console.log("api.async_get_ip_request.response",response)
+      return response
+    } 
+    catch (e) {
+      console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
+      return {
+        error: e
+      }
+    }
+  }
+
 }//Api
 
 export default Api;
