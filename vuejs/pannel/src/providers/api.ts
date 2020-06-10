@@ -65,6 +65,7 @@ const Api = {
       objselect.table = "app_ip_request"
       objselect.fields.push("id")
       objselect.fields.push("remote_ip")
+      objselect.fields.push("insert_date")
       const objform = objselect.get_query()
       objform.append("apify-usertoken",usertoken)
 
