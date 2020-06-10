@@ -52,7 +52,7 @@ export default new Vuex.Store({
       commit("set_customers",customers)
     },
 
-    get_async_myip: async function({commit}){
+    async_get_myip: async function({commit}){
       await fetch('https://api.ipify.org?format=json')
       .then(x => x.json())
       .then(({ ip }) => {

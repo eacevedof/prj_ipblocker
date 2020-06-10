@@ -22,7 +22,8 @@ export default Vue.extend({
   name: 'App',
 
   created(){
-    this.get_async_myip()
+    this.async_get_myip()
+    this.async_islogged()
   },
 
   components: {
@@ -42,7 +43,7 @@ export default Vue.extend({
 
   methods:{
     //ajax
-    ...mapActions(["get_async_myip"])
+    ...mapActions(["async_get_myip","async_islogged"])
   } 
 
 });

@@ -60,6 +60,8 @@ const Api = {
     //hay que enviar header: apify-auth: token
     try {
       const objselect = helpapify.select
+      objselect.reset()
+      
       objselect.table = "api_ip_request"
       objselect.fields.push("id")
       objselect.fields.push("remote_ip")

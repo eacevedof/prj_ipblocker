@@ -28,16 +28,16 @@ export default {
   }),//data
 
   beforeMount: async function(){
-    
-    await this.async_islogged()
-    if(!this.islogged)
-      this.$router.push({name:"login"})
+    ;
     //comprobar si se esta logado, si no está redirect a login
   },
 
   mounted: async function(){
-    alert(`${this.islogged}`)
-    console.log("iprequest.created: ",this.islogged)
+    await this.async_islogged()
+    if(!this.islogged)
+      this.$router.push({name:"login"})
+
+    console.log("iprequest.mounted.islogged: ",this.islogged)
     if(this.islogged){
       const usertoken = db.select("usertoken")
       if(!usertoken) return
