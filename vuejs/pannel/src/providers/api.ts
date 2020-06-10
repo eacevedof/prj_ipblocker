@@ -64,18 +64,20 @@ const Api = {
       const objselect = helpapify.select
       objselect.reset()
 
-      objselect.table = "app_ip_request"
-      
+      objselect.table = "app_ip_request r"
       objselect.foundrows = 1
-      objselect.fields.push("id")
-      objselect.fields.push("request_uri")
-      objselect.fields.push("domain")
-      objselect.fields.push("`get`")
-      objselect.fields.push("post")
-      objselect.fields.push("remote_ip")
-      objselect.fields.push("insert_date")
       
-      objselect.orderby.push("id DESC")
+      objselect.fields.push("r.id")
+      objselect.fields.push("r.remote_ip")      
+      objselect.fields.push("r.domain")
+      objselect.fields.push("r.request_uri")
+      objselect.fields.push("r.`get`")
+      objselect.fields.push("r.post")
+      objselect.fields.push("r.insert_date")
+      objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'Y' END inbl")
+      objselect.joins.push("LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip")
+      
+      objselect.orderby.push("r.id DESC")
       objselect.limit.perpage = 50
       objselect.limit.regfrom = 0
 
