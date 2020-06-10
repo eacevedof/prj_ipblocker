@@ -83,6 +83,7 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_get_ip_request.response",response)
+      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
       return response.data.data
     } 
     catch (e) {

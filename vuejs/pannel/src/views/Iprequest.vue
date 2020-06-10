@@ -110,6 +110,7 @@ export default {
 
     ],
     rows: [],
+    foundrows: 0,
     editado: {
       marca:""
     }
@@ -141,8 +142,12 @@ export default {
       if(this.islogged){
         const usertoken = db.select("usertoken")
         if(!usertoken) return
-        this.rows = await api.async_get_ip_request(usertoken)
-        console.log("THIS.ROWS: ")
+        const response = await api.async_get_ip_request(usertoken)
+        this.rows = response.result
+        this.foundrows = response.foundrows
+        //alert(this.foundrows)
+        //alert(JSON.stringify(response));
+        //console.log("THIS.ROWS: ",this.foundrows)
         console.table(this.rows)
       }
     },
