@@ -91,14 +91,15 @@ export default {
     submit : async function(){
       this.$v.$touch()
       console.log("on submit: ",this.username, this.password)
-      const response = await api.async_get_usertoken({username:this.username,password:this.password})
-      if(response.error) {
+      const usertoken = await api.async_get_usertoken({username:this.username,password:this.password})
+
+      if(usertoken.error) {
         this.objerror.title = "Error"
-        this.objerror.message = response.error.toString()
+        this.objerror.message = usertoken.error.toString()
         this.$refs.username.focus()
         return
       }
-      const usertoken = response.data.data.result
+
       db.save("usertoken",usertoken)
       this.$router.push({ name: "iprequest"})
     },

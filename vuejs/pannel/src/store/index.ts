@@ -68,14 +68,16 @@ export default new Vuex.Store({
       }
 
       const response = await api.async_is_validtoken(usertoken)
+      //alert(JSON.stringify(response.data.isvalid))
       console.log("store.async_islogged.response",response)
 
-      if(!response.data || response.error) {
+      if(response.error) {
         commit("set_islogged",false)
         return
       }
       
-      if(response.data.result == true) commit("set_islogged",true)
+      if(response.data.isvalid == true) 
+        commit("set_islogged",true)
     }
     
   },
