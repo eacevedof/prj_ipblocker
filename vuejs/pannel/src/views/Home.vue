@@ -6,7 +6,7 @@
       <v-col>
         <ul>
           <li
-            v-for="(item, index) in customers"
+            v-for="(item, index) in ipsblacklisted"
             :key="index">
             {{item.description}}
           </li>
@@ -27,21 +27,21 @@ export default {
   },
 
   created(){
-    //get_customers
+    //async_get_ipsblacklisted
     console.log("Home created")
-    this.get_customers()
+    this.async_get_ipsblacklisted()
   },
 
   computed:{
     //las propiedades
-    ...mapState(["globalx","customers"])
+    ...mapState(["pagetitle","ipsblacklisted"])
   },
 
   methods:{
     //los setters y getters 
     ...mapMutations(["set_sidebar"]),
     //ajax
-    ...mapActions(["get_customers"])
+    ...mapActions(["async_get_ipsblacklisted"])
   }    
 };
 </script>
