@@ -66,6 +66,12 @@ const Api = {
       objselect.fields.push("id")
       objselect.fields.push("remote_ip")
       objselect.fields.push("insert_date")
+      
+      objselect.orderby.push("id DESC")
+      objselect.limit.perpage=10
+      objselect.limit.regfrom=10
+
+
       const objform = objselect.get_query()
       objform.append("apify-usertoken",usertoken)
 
