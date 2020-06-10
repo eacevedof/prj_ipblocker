@@ -7,7 +7,68 @@
     <div class="mt-5">
       {{ islogged }}
     </div>
+
+    <v-data-table :headers="headers" :items="rows" class="elevation-3">
+      <template v-slot:top>
+        
+        <v-system-bar color="indigo darken-2" />
+
+        <v-toolbar color="indigo">
+          <v-btn
+            class="mx-2"
+            :elevation="10"
+            fab dark color="teal accent-4"
+            @click="accionx"
+          ><v-icon>mdi-plus</v-icon></v-btn>
+          <v-divider class="mx-4" inset vertical/>
+          <v-toolbar-title class="">IP Request</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator>
+
+            </template>
+            <v-card>
+              <v-card-title class="cyan white-text">
+                <span class="headline">{{dialogtitle}}</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editado.marca" label="marca"></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="blue-grey" class="ma-2 white--text" @click="cancelar" >Cancelar</v-btn>
+                <v-btn color="teal accent-4" class="ma-2 white--text" @click="guardar" >Guardar</v-btn>
+              </v-card-actions>
+
+            </v-card>
+          </v-dialog>
+          
+        </v-toolbar>
+
+        <!-- barra busqueda -->
+        <v-col>
+          <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details />
+        </v-col>
+
+      </template>
+    </v-data-table>
   
+    <template>
+      <div class="text-center ma-2">
+        <v-snackbar v-model="snackbar">
+          {{txtsnack}}
+          <v-btn color="info" text @click="snackbar=false">Cerrar</v-btn>
+        </v-snackbar>
+      </div>
+    </template>
+
   </v-container>
 </template>
 <script lang="ts">
@@ -24,7 +85,17 @@ export default {
   },
 
   data: () => ({
-    rows: []
+    snackbar: true,
+    txtsnack: "",
+    ison:false,
+    dialog: false,
+    dialogtitle: "",
+    search: "",
+    headers: ["id","remote_ip"],
+    rows: [],
+    editado: {
+      marca:""
+    }
   }),//data
 
   beforeMount: function(){
@@ -54,10 +125,19 @@ export default {
         const usertoken = db.select("usertoken")
         if(!usertoken) return
         this.rows = await api.async_get_ip_request(usertoken)
+        console.log("THIS.ROWS: ")
         console.table(this.rows)
       }
-    }
+    },
 
+    accionx(){
+      //alert("accionx")
+      this.dialog = true
+    },
+
+    cancelar(){;},
+
+    guardar(){;},
   }  
 
 };
