@@ -1,7 +1,9 @@
 import axios from "axios"
+import helpapify from "@/helpers/apify.ts"
+
 let BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "https://dbsapify.theframework.es"
-//BASE_URL = "http://localhost:3000"
+BASE_URL = "http://localhost:3000"
 
 const Api = {
 
@@ -52,14 +54,20 @@ const Api = {
   },
   
   async_get_ip_request: async (usertoken) => {
-    const url = `${BASE_URL}/apify/read?context=c1&dbname=db_one`
+    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
+    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
+
     //hay que enviar header: apify-auth: token
     try {
-      const data = new FormData()
-      data.append("apify-usertoken",usertoken)
-      
+      const objselect = helpapify.select
+      objselect.table = "api_ip_request"
+      objselect.fields.push("id")
+      objselect.fields.push("remote_ip")
+      const objform = objselect.get_query()
+      objform.append("apify-usertoken",usertoken)
+
       console.log("api.async_get_ip_request",url)
-      const response = await axios.post(url, data)
+      const response = await axios.post(url, objform)
 
       console.log("api.async_get_ip_request.response",response)
       return response
