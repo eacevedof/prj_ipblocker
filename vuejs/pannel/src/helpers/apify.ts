@@ -14,7 +14,16 @@ const Apify = {
         oform.append(`queryparts[fields][${i}]`,field)
       });
       return oform
+    },
+
+    reset(){
+      Apify.select.table = ""
+      Apify.select.fields = []
+      Apify.select.where = []
+      Apify.select.groupby = []
+      Apify.select.orderby = []
     }
+    
   }
 
 
