@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Axios from 'axios';
 import api from "@/providers/api.ts"
 import db from "@/helpers/localdb.ts"
-import Localdb from '@/helpers/localdb.ts';
 
 Vue.use(Vuex);
 
@@ -19,7 +17,7 @@ export default new Vuex.Store({
 
   //setters
   mutations: {
-    
+
     set_pagetitle(state,value){
       state.pagetitle = value
     },
