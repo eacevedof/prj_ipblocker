@@ -63,6 +63,8 @@ const Api = {
       objselect.reset()
 
       objselect.table = "app_ip_request"
+      
+      objselect.foundrows = 1
       objselect.fields.push("id")
       objselect.fields.push("remote_ip")
       objselect.fields.push("insert_date")
