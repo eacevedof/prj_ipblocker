@@ -4,10 +4,6 @@
 
     <scrumbs pagename="iprequest" />
 
-    <div class="mt-5">
-      {{ islogged }}
-    </div>
-
     <v-data-table :headers="headers" :items="rows" class="elevation-3">
       <template v-slot:top>
         
@@ -24,10 +20,10 @@
           <v-toolbar-title class="">IP Request</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator>
+            
+            <template v-slot:activator="{ on }"></template>
 
-            </template>
-            <v-card>
+            <v-card v-on="on">
               <v-card-title class="cyan white-text">
                 <span class="headline">{{dialogtitle}}</span>
               </v-card-title>
@@ -35,7 +31,7 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editado.marca" label="marca"></v-text-field>
+                      <v-text-field v-model="editado.remote_ip" label="marca"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -61,7 +57,7 @@
       <!-- botones columna -->
       <template v-slot:item.accion="{ item }">
         <v-btn class="m4-2" fab dark small color="cyan" @click="editar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
-        <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
+        <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
       </template>
 
     </v-data-table>
@@ -98,6 +94,7 @@ export default {
     dialogtitle: "",
     search: "",
 
+
     headers: [
       {
         text: 'nº',
@@ -107,9 +104,11 @@ export default {
       },
       { text: 'Rem. IP', value: 'remote_ip' },
       { text: 'Day', value: 'insert_date' },
+      { text: 'Action', value: 'accion' },
 
     ],
     rows: [],
+    editedIndex: -1,
     foundrows: 0,
     editado: {
       marca:""
@@ -125,9 +124,13 @@ export default {
     this.load_data()
   },
 
+  created(){;},
+
   computed:{
-    ...mapState(["islogged"])
+    ...mapState(["islogged"]),
   },
+
+  watch:{},
 
   methods:{
     //setters
