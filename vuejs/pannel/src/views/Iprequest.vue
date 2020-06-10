@@ -7,14 +7,14 @@
     <v-data-table :headers="headers" :items="rows" class="elevation-3">
       <template v-slot:top>
         
-        <v-system-bar color="black darken-2" />
+        <v-system-bar color="yellow lighten-1" />
 
         <v-toolbar color="black darken-4">
           
           <v-btn
             class="mx-2"
             :elevation="10"
-            fab dark color="green accent-4"
+            fab dark color="light-green accent-4"
             @click="accionx"
           ><v-icon>mdi-plus</v-icon></v-btn>
 
