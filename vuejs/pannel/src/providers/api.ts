@@ -20,7 +20,9 @@ const Api = {
       const response = await axios.post(url, data)
 
       console.log("api.async_get_usertoken.response",response)
-      return response
+      //alert(JSON.stringify(response))
+      //alert(response.data.data.token)
+      return response.data.data.token
     } 
     catch (e) {
       console.error("ERROR: api.async_get_usertoken.url:",url,"e:",e)
