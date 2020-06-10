@@ -61,8 +61,8 @@ const Api = {
     try {
       const objselect = helpapify.select
       objselect.reset()
-      
-      objselect.table = "api_ip_request"
+
+      objselect.table = "app_ip_request"
       objselect.fields.push("id")
       objselect.fields.push("remote_ip")
       const objform = objselect.get_query()
@@ -72,7 +72,7 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_get_ip_request.response",response)
-      return response
+      return response.data.data
     } 
     catch (e) {
       console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
