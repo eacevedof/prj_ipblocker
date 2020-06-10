@@ -68,6 +68,10 @@ const Api = {
       
       objselect.foundrows = 1
       objselect.fields.push("id")
+      objselect.fields.push("request_uri")
+      objselect.fields.push("domain")
+      objselect.fields.push("`get`")
+      objselect.fields.push("post")
       objselect.fields.push("remote_ip")
       objselect.fields.push("insert_date")
       
