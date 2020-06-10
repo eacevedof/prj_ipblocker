@@ -3,7 +3,7 @@
   <v-container>
 
     <scrumbs pagename="iprequest" />
-    
+
     <div class="mt-5">
       {{ islogged }}
     </div>
@@ -13,7 +13,8 @@
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
-//import api from "@/providers/api.ts"
+import api from "@/providers/api.ts"
+import db from "@/helpers/localdb.ts"
 
 export default {
   name: "IpRequest",
@@ -23,7 +24,7 @@ export default {
   },
 
   data: () => ({
-
+    rows: []
   }),//data
 
   beforeMount: async function(){
@@ -35,7 +36,13 @@ export default {
   },
 
   mounted: async function(){
-    ;
+    alert(`${this.islogged}`)
+    console.log("iprequest.created: ",this.islogged)
+    if(this.islogged){
+      const usertoken = db.select("usertoken")
+      if(!usertoken) return
+      this.rows = await api.async_get_ip_request(usertoken)
+    }
   },
 
   computed:{
