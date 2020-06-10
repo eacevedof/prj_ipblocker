@@ -11,16 +11,17 @@ export default new Vuex.Store({
   
   state: {
     sidebar: false,
-    globalx: "Soy la global",
-    customers: [],
+    pagetitle: "",
+    ipsblacklisted: [],
     myip: "",
     islogged: false,
   },
 
   //setters
   mutations: {
-    set_globalx(state,value){
-      state.globalx = value
+    
+    set_pagetitle(state,value){
+      state.pagetitle = value
     },
 
     set_sidebar(state, isvisible: boolean){
@@ -28,8 +29,8 @@ export default new Vuex.Store({
       state.sidebar = isvisible
     },
 
-    set_customers(state, data){
-      state.customers = data
+    set_ipsblacklisted(state, data){
+      state.ipsblacklisted = data
     },
 
     set_myip(state, data){
@@ -45,11 +46,11 @@ export default new Vuex.Store({
   //lo comiteable
   actions: {
 
-    get_customers: async function({ commit }){
-      console.log("async get_customers")
+    async_get_ipsblacklisted: async function({ commit }){
+      console.log("async get_ipsblacklisted")
       const data = await fetch("http://json.theframework.es/index.php?getfile=app_costumer.json");
-      const customers = await data.json()
-      commit("set_customers",customers)
+      const ipsblacklisted = await data.json()
+      commit("set_ipsblacklisted",ipsblacklisted)
     },
 
     async_get_myip: async function({commit}){
