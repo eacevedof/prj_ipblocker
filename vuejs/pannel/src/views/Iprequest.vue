@@ -7,21 +7,23 @@
     <v-data-table :headers="headers" :items="rows" class="elevation-3">
       <template v-slot:top>
         
-        <v-system-bar color="indigo darken-2" />
+        <v-system-bar color="black darken-2" />
 
-        <v-toolbar color="indigo">
+        <v-toolbar color="black darken-4">
+          
           <v-btn
             class="mx-2"
             :elevation="10"
-            fab dark color="teal accent-4"
+            fab dark color="green accent-4"
             @click="accionx"
           ><v-icon>mdi-plus</v-icon></v-btn>
+
           <v-divider class="mx-4" inset vertical/>
-          <v-toolbar-title class="">IP Request</v-toolbar-title>
+          <v-toolbar-title class="yellow--text font-weight-bold">IP Request</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             
-            <template v-slot:activator="{ on }"></template>
+            <template v-slot:activator="{  }"></template>
 
             <v-card v-on="on">
               <v-card-title class="cyan white-text">
@@ -87,8 +89,8 @@ export default {
   },
 
   data: () => ({
-    snackbar: true,
-    txtsnack: "",
+    snackbar: false,
+    txtsnack: "Texto snack",
     ison:false,
     dialog: false,
     dialogtitle: "",
