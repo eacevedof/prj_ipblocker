@@ -30,8 +30,8 @@ const Apify = {
         oform.append(`queryparts[fields][${i}]`,field)
       });
 
-      thisselect.fields.forEach((join,i) => {
-        oform.append(`queryparts[join][${i}]`,join)
+      thisselect.joins.forEach((join,i) => {
+        oform.append(`queryparts[joins][${i}]`,join)
       });
 
       thisselect.where.forEach((strcond,i) => {
@@ -42,7 +42,7 @@ const Apify = {
         oform.append(`queryparts[groupby][${i}]`,field)
       });
 
-      thisselect.groupby.forEach((metric,i) => {
+      thisselect.having.forEach((metric,i) => {
         oform.append(`queryparts[having][${i}]`,metric)
       });
 
@@ -62,10 +62,12 @@ const Apify = {
       const thisselect = Apify.select
       thisselect.table = ""
       thisselect.foundrows =0
-      thisselect.distinct = 0      
+      thisselect.distinct = 0
       thisselect.fields = []
+      thisselect.joins = []
       thisselect.where = []
       thisselect.groupby = []
+      thisselect.having = []
       thisselect.orderby = []
       thisselect.limit = {perpage:null, regfrom:0}
     },

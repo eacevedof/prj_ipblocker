@@ -25,7 +25,7 @@
             
             <template v-slot:activator="{  }"></template>
 
-            <v-card v-on="on">
+            <v-card>
               <v-card-title class="cyan white-text">
                 <span class="headline">{{dialogtitle}}</span>
               </v-card-title>
@@ -78,8 +78,8 @@
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
-import api from "@/providers/api.ts"
-import db from "@/helpers/localdb.ts"
+import api from "../providers/api"
+import db from "../helpers/localdb"
 
 export default {
   name: "IpRequest",
@@ -91,7 +91,6 @@ export default {
   data: () => ({
     snackbar: false,
     txtsnack: "Texto snack",
-    ison:false,
     dialog: false,
     dialogtitle: "",
     search: "",
@@ -105,6 +104,11 @@ export default {
         value: 'id',
       },
       { text: 'Rem. IP', value: 'remote_ip' },
+      { text: 'Domain', value: 'domain' },
+      { text: 'R. URI', value: 'request_uri' },
+      { text: 'GET', value: 'get' },
+      { text: 'POST', value: 'post' },
+      { text: 'In BL', value: 'inbl' },
       { text: 'Day', value: 'insert_date' },
       { text: 'Action', value: 'accion' },
 

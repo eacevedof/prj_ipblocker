@@ -15,7 +15,6 @@
         <sub>{{moment().format('YYYY-MM-DD H:m:s')}}</sub>
       </v-col>
     </v-toolbar-items>
-
   </v-app-bar>
   
 </template>
@@ -28,14 +27,16 @@ export default Vue.extend({
 
   name: "Navbar",  
 
-  components: {
 
+  components: {
+    
   },
 
   data () {
     return {
       
     }
+
   },
 
   computed:{

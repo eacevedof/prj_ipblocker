@@ -5,17 +5,15 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
-    //'@vue/airbnb',
-    '@vue/typescript/recommended',
+    //'@vue/typescript/recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,
   },
   rules: {
+
     
-    "@typescript-eslint/no-unused-vars": "off",
-    "camelcase": "off",
-    "@typescript-eslint/camelcase": ["warn"],
+    
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },

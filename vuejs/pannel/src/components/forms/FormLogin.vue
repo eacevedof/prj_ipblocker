@@ -43,8 +43,8 @@
 <script lang="ts">
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
-import api from "@/providers/api.ts"
-import db from "@/helpers/localdb.ts"
+import api from "@/providers/api"
+import db from "@/helpers/localdb"
 import notificationerror from "@/components/common/notifications/notification_error.vue"
 
 export default {
