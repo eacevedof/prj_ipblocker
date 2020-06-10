@@ -2,6 +2,8 @@ const Apify = {
   //https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify
   select: {
     table: "",
+    foundrows:0,
+    distinct: 0,
     fields: [],
     where: [],
     groupby:[],
@@ -10,9 +12,17 @@ const Apify = {
     limit:{perpage:null, regfrom:0},
 
     get_query(){
-      const oform = new FormData()
       const thisselect = Apify.select
+      const oform = new FormData()
+
+      //table
       oform.append("queryparts[table]",thisselect.table)
+
+      if(thisselect.foundrows)
+        oform.append("queryparts[foundrows]",thisselect.foundrows)
+
+      if(thisselect.distinct)
+        oform.append("queryparts[distinct]",thisselect.distinct)
       
       thisselect.fields.forEach((field,i) => {
         oform.append(`queryparts[fields][${i}]`,field)
@@ -42,6 +52,8 @@ const Apify = {
     reset(){
       const thisselect = Apify.select
       thisselect.table = ""
+      thisselect.foundrows =0
+      thisselect.distinct = 0      
       thisselect.fields = []
       thisselect.where = []
       thisselect.groupby = []
