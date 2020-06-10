@@ -12,6 +12,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    "no-unused-vars": "off",
+    //"@typescript-eslint/no-unused-vars": "error",
     "camelcase": "off",
     "@typescript-eslint/camelcase": ["warn"],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

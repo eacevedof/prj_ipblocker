@@ -72,8 +72,8 @@ const Api = {
       objselect.fields.push("insert_date")
       
       objselect.orderby.push("id DESC")
-      objselect.limit.perpage=10
-      objselect.limit.regfrom=10
+      objselect.limit.perpage = 50
+      objselect.limit.regfrom = 0
 
 
       const objform = objselect.get_query()
