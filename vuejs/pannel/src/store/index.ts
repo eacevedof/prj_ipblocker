@@ -22,7 +22,7 @@ export default new Vuex.Store({
       state.pagetitle = value
     },
 
-    set_sidebar(state, isvisible: boolean){
+    set_sidebar(state, isvisible){
       console.log("set_sidebar.isvisible:",isvisible)
       state.sidebar = isvisible
     },

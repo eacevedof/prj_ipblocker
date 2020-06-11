@@ -24,7 +24,7 @@
     <v-list dense>
 
       <v-list-item
-        v-for="item in links"
+        v-for="item in get_links"
         :key="item.title"
         link
         :to="item.href"
@@ -65,6 +65,12 @@ export default {
         title: "IP Requests",
         icon: "mdi-arrow-left-right",
         href:"/ip-request"
+      },
+      {
+        logged: true,
+        title: "Log out",
+        icon: "mdi-exit-run",
+        href:"/logout"
       },      
     ]
   }),
@@ -75,21 +81,29 @@ export default {
 
   computed:{
     mdldrawer: {
-        get() {
-          console.log("mdldrawer.get.store.state.sidebar:",this.$store.state.sidebar)
-          return this.$store.state.sidebar
-        },
-
-        set (isvisible) {
-          console.log("mdldrawer.set.isvisible:",isvisible)
-          this.$store.commit('set_sidebar',isvisible)
-        }
+      get() {
+        console.log("mdldrawer.get.store.state.sidebar:",this.$store.state.sidebar)
+        return this.$store.state.sidebar
       },
-    ...mapState(["sidebar"]),
+
+      set (isvisible) {
+        console.log("mdldrawer.set.isvisible:",isvisible)
+        this.$store.commit('set_sidebar',isvisible)
+      }
+    },
+    ...mapState(["islogged","sidebar"]),
+    get_links(){
+      if(this.islogged)
+        return this.links.filter(link => link.logged)
+      
+      return this.links.filter(link => !link.logged)
+      
+    }
+
   },
 
   methods:{
-    //...mapMutations(["set_sidebar"]),
+ 
   }
 }
 </script>

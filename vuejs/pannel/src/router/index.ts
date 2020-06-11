@@ -31,6 +31,14 @@ const routes: Array<RouteConfig> = [
     },    
     component: () => import('../views/IpRequest.vue'),
   },  
+  {
+    path: '/logout',
+    name: 'logout',
+    meta:{
+      title: "Logout"
+    },    
+    component: () => import('../views/Logout.vue'),
+  },    
 ];
 
 const router = new VueRouter({

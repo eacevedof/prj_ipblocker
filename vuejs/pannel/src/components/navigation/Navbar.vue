@@ -27,18 +27,6 @@ export default Vue.extend({
 
   name: "Navbar",  
 
-
-  components: {
-    
-  },
-
-  data () {
-    return {
-      
-    }
-
-  },
-
   computed:{
     //state
     ...mapState(["myip"])
