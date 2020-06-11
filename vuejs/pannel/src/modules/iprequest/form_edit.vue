@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_showdialog" max-width="500px">
+  <v-dialog v-model="showstate" max-width="500px">
     <template v-slot:activator="{}"></template>
     <v-card>
       
@@ -30,11 +30,11 @@
 
 export default {
 
-name: "form-edit",
+  name: "form-edit",
 
   props:{
     
-    showdialog: Boolean,
+    ison: Boolean,
     dialogtitle: String,
 
     objrow: {
@@ -52,29 +52,28 @@ name: "form-edit",
 
   //getters
   computed:{
-    is_showdialog(){
-      return this.showdialog
-    },
-
+    
     get_dialogtitle(){
       return this.dialogtitle
     },
 
     showstate:{
       get(){
-        return this.showdialog
+        return this.ison
       },
       set(val){
-        return this.$emit("updateShowdialog",false)
+        //lanza un evento hacia afuera
+        this.$emit("evtclose",val)
       }
     }
 
   },
-
+  
   //setters 
   methods:{
     cancel(){
-      this.showdialog = false
+      //ejecuta el shostate.set
+      this.showstate = false
     },
     save(){
       alert("saving")

@@ -15,14 +15,14 @@
             class="mx-2"
             :elevation="10"
             fab dark color="light-green accent-4"
-            @click="accionx"
+            @click="show_dialog" 
           ><v-icon>mdi-plus</v-icon></v-btn>
 
           <v-divider class="mx-4" inset vertical/>
           <v-toolbar-title class="yellow--text font-weight-bold">IP Request</v-toolbar-title>
           <v-spacer></v-spacer>
 
-          <formedit objrow="objrow" showdialog="showdialog" />
+          <formedit objrow="objrow" :ison="showdialog" v-on:evtclose="showdialog=$event" />
 
         </v-toolbar>
 
@@ -141,8 +141,8 @@ export default {
       }
     },
 
-    accionx(){
-      //alert("accionx")
+    show_dialog(){
+      //alert("show_dialog")
       this.showdialog = true
     },
 
