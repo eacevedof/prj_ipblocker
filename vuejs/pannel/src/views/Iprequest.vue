@@ -64,19 +64,13 @@
 
     </v-data-table>
   
-    <template>
-      <div class="text-center ma-2">
-        <v-snackbar v-model="snackbar">
-          {{txtsnack}}
-          <v-btn color="info" text @click="snackbar=false">Cerrar</v-btn>
-        </v-snackbar>
-      </div>
-    </template>
+    <notifsnack showsnack="showsnack" innertext="txtsnack" />
 
   </v-container>
 </template>
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
+import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import api from "../providers/api"
 import db from "../helpers/localdb"
@@ -86,10 +80,11 @@ export default {
   
   components: {
     Scrumbs,
+    notifsnack,
   },
 
   data: () => ({
-    snackbar: false,
+    showsnack: true,
     txtsnack: "Texto snack",
     dialog: false,
     dialogtitle: "",
