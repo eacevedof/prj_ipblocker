@@ -24,7 +24,7 @@
     <v-list dense>
 
       <v-list-item
-        v-for="item in items"
+        v-for="item in links"
         :key="item.title"
         link
         :to="item.href"
@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-//import {mapMutations, mapState} from "vuex"
+import {mapMutations, mapState} from "vuex"
 
 export default {
 
@@ -53,12 +53,19 @@ export default {
 
   data: () => ({
     homehref: "/",
-    items:[
+    links:[
       {
+        logged: false,
         title: "Login",
         icon: "mdi-login",
         href:"/login"
-      }
+      },
+      {
+        logged: true,
+        title: "IP Requests",
+        icon: "mdi-arrow-left-right",
+        href:"/ip-requests"
+      },      
     ]
   }),
 
@@ -78,7 +85,7 @@ export default {
           this.$store.commit('set_sidebar',isvisible)
         }
       },
-    //...mapState(["sidebar"]),
+    ...mapState(["sidebar"]),
   },
 
   methods:{
