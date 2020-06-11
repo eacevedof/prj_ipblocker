@@ -63,18 +63,17 @@ export default {
   }),
 
   mounted(){
-    console.log("hamburg mounted")
-    //this.set_sidebar()
+    console.log("sidebar mounted")
   },
 
   computed:{
     mdldrawer: {
-        get (): boolean {
+        get() {
           console.log("mdldrawer.get.store.state.sidebar:",this.$store.state.sidebar)
           return this.$store.state.sidebar
         },
 
-        set (isvisible: boolean) {
+        set (isvisible) {
           console.log("mdldrawer.set.isvisible:",isvisible)
           this.$store.commit('set_sidebar',isvisible)
         }

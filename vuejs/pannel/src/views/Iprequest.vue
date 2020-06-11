@@ -5,7 +5,7 @@
     <scrumbs pagename="iprequest" />
     
     <list />
-
+    
   </v-container>
 </template>
 <script lang="ts">
@@ -17,7 +17,7 @@ import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import list from "@/modules/iprequest/list.vue"
 
 export default {
-  
+
   name: "IpRequest",
   
   components: {

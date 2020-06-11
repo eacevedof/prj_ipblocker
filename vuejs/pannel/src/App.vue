@@ -35,6 +35,11 @@ export default Vue.extend({
     //
   }),
   
+  watch: {
+    $route(to, from) {
+      document.title = to.meta.title || 'IP Blocker';
+    },
+  },
 
   computed:{
     //las propiedades
