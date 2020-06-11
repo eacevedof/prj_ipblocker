@@ -94,7 +94,7 @@ export default {
 
     ],
     rows: [],
-    editedIndex: -1,
+    editingindex: -1,
     foundrows: 0,
     editado: {
       marca:""

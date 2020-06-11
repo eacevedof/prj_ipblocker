@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showdialog" max-width="500px">
+  <v-dialog v-model="is_showdialog" max-width="500px">
     <template v-slot:activator="{}"></template>
     <v-card>
       
@@ -60,12 +60,21 @@ name: "form-edit",
       return this.dialogtitle
     },
 
+    showstate:{
+      get(){
+        return this.showdialog
+      },
+      set(val){
+        return this.$emit("updateShowdialog",false)
+      }
+    }
+
   },
 
   //setters 
   methods:{
     cancel(){
-      alert("canclel")
+      this.showdialog = false
     },
     save(){
       alert("saving")
