@@ -41,8 +41,8 @@
 
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="blue-grey" class="ma-2 white--text" @click="cancelar" >Cancelar</v-btn>
-                <v-btn color="teal accent-4" class="ma-2 white--text" @click="guardar" >Guardar</v-btn>
+                <v-btn color="blue-grey" class="ma-2 white--text" @click="cancelar" > D. Cancelar</v-btn>
+                <v-btn color="teal accent-4" class="ma-2 white--text" @click="guardar" > D .Guardar</v-btn>
               </v-card-actions>
 
             </v-card>
