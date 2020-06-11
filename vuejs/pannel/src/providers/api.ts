@@ -66,9 +66,11 @@ const Api = {
 
       objselect.table = "app_ip_request r"
       objselect.foundrows = 1
-      
+            
       objselect.fields.push("r.id")
-      objselect.fields.push("r.remote_ip")      
+      objselect.fields.push("r.remote_ip")
+      objselect.fields.push("i.country")
+      objselect.fields.push("i.whois")
       objselect.fields.push("r.domain")
       objselect.fields.push("r.request_uri")
       objselect.fields.push("r.`get`")
@@ -76,9 +78,10 @@ const Api = {
       objselect.fields.push("r.insert_date")
       objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'Y' END inbl")
       objselect.joins.push("LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip")
+      objselect.joins.push("LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip")
       
       objselect.orderby.push("r.id DESC")
-      objselect.limit.perpage = 50
+      objselect.limit.perpage = 250
       objselect.limit.regfrom = 0
 
 
