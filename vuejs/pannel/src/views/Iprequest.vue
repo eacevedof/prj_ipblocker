@@ -21,33 +21,9 @@
           <v-divider class="mx-4" inset vertical/>
           <v-toolbar-title class="yellow--text font-weight-bold">IP Request</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            
-            <template v-slot:activator="{}"></template>
 
-            <v-card>
-              <v-card-title class="cyan white-text">
-                <span class="headline">{{dialogtitle}}</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editado.remote_ip" label="marca"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+          <formedit objrow="objrow" showdialog="showdialog" />
 
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="blue-grey" class="ma-2 white--text" @click="cancelar" > D. Cancelar</v-btn>
-                <v-btn color="teal accent-4" class="ma-2 white--text" @click="guardar" > D .Guardar</v-btn>
-              </v-card-actions>
-
-            </v-card>
-          </v-dialog>
-          
         </v-toolbar>
 
         <!-- barra busqueda -->
@@ -70,10 +46,13 @@
 </template>
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
-import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import api from "../providers/api"
 import db from "../helpers/localdb"
+
+import Scrumbs from "@/components/navigation/Scrumbs.vue"
+import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
+import formedit from "@/modules/iprequest/form_edit.vue"
+
 
 export default {
   name: "IpRequest",
@@ -81,15 +60,21 @@ export default {
   components: {
     Scrumbs,
     notifsnack,
+    formedit,
   },
 
   data: () => ({
     showsnack: true,
     txtsnack: "Texto snack",
-    dialog: false,
+    showdialog: false,
     dialogtitle: "",
     search: "",
 
+    objrow: {
+      id: "",
+      remote_ip: "",
+      domain: ""
+    },
 
     headers: [
       {
@@ -158,7 +143,7 @@ export default {
 
     accionx(){
       //alert("accionx")
-      this.dialog = true
+      this.showdialog = true
     },
 
     cancelar(){;},

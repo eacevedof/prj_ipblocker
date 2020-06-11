@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_dialog" max-width="500px">
+  <v-dialog v-model="showdialog" max-width="500px">
     <template v-slot:activator="{}"></template>
     <v-card>
       
@@ -11,7 +11,7 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field v-model="objrow.remote_ip" label="marca"></v-text-field>
+              <v-text-field v-model="objrow.remote_ip" label="R. IP" />
             </v-col>
           </v-row>
         </v-container>
@@ -34,7 +34,7 @@ name: "form-edit",
 
   props:{
     
-    isdialog: Boolean,
+    showdialog: Boolean,
     dialogtitle: String,
 
     objrow: {
@@ -50,20 +50,25 @@ name: "form-edit",
     }
   },
 
+  //getters
   computed:{
-    is_dialog(){
-      return this.isdialog
+    is_showdialog(){
+      return this.showdialog
     },
 
     get_dialogtitle(){
       return this.dialogtitle
     },
 
+  },
+
+  //setters 
+  methods:{
     cancel(){
-      alert("cancel")
+      alert("canclel")
     },
     save(){
-      alert("save... post to server")
+      alert("saving")
     }
   }
 }
