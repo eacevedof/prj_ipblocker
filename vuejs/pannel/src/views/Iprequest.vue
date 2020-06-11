@@ -23,7 +23,7 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             
-            <template v-slot:activator="{  }"></template>
+            <template v-slot:activator="{}"></template>
 
             <v-card>
               <v-card-title class="cyan white-text">
