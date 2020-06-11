@@ -37,7 +37,7 @@
       <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
     </template>
 
-    <notifsnack showsnack="showsnack" innertext="txtsnack" />
+    <notifsnack :showsnack="showsnack" innertext="txtsnack" />
   </v-data-table>
 </template>
 
@@ -96,48 +96,30 @@ export default {
     }
   }),//data
 
-  beforeMount: function(){
-    ;
-    //comprobar si se esta logado, si no está redirect a login
+  mounted: async function(){
+    await this.load_data()
   },
-
-  mounted: function(){
-    this.load_data()
-  },
-
-  created(){;},
 
   computed:{
     ...mapState(["islogged"]),
   },
-
-  watch:{},
 
   methods:{
     //setters
     ...mapActions(["async_islogged"]),
 
     load_data: async function(){
-      await this.async_islogged()
-      if(!this.islogged)
-        this.$router.push({name:"login"})
-
       console.log("iprequest.mounted.islogged: ",this.islogged)
       if(this.islogged){
         const usertoken = db.select("usertoken")
-        if(!usertoken) return
         const response = await api.async_get_ip_request(usertoken)
         this.rows = response.result
         this.foundrows = response.foundrows
-        //alert(this.foundrows)
-        //alert(JSON.stringify(response));
-        //console.log("THIS.ROWS: ",this.foundrows)
         console.table(this.rows)
       }
     },
 
     show_dialog(){
-      //alert("show_dialog")
       this.showdialog = true
     },
 
@@ -151,10 +133,7 @@ export default {
       ;
     },
 
-  }  
+  }//methods  
 
 };
 </script>
-
-<style>
-</style>
