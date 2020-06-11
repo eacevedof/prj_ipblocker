@@ -30,7 +30,15 @@ const routes: Array<RouteConfig> = [
       title: "IP Requests"
     },    
     component: () => import('../views/IpRequest.vue'),
-  },  
+  },
+  {
+    path: '/ip-blacklist',
+    name: 'ipblacklist',
+    meta:{
+      title: "IP Blacklist"
+    },    
+    component: () => import('../views/IpRequest.vue'),
+  },    
   {
     path: '/logout',
     name: 'logout',

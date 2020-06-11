@@ -49,7 +49,7 @@ import {mapMutations, mapState} from "vuex"
 
 export default {
 
-  name: "Sidebar",
+  name: "sidebar",
 
   data: () => ({
     homehref: "/",
@@ -66,6 +66,12 @@ export default {
         icon: "mdi-arrow-left-right",
         href:"/ip-request"
       },
+      {
+        logged: true,
+        title: "IP Blacklist",
+        icon: "mdi-clipboard-text",
+        href:"/ip-blacklist"
+      },      
       {
         logged: true,
         title: "Log out",
