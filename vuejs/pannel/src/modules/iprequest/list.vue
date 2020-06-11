@@ -97,7 +97,7 @@ export default {
   }),//data
 
   mounted: async function(){
-    alert("list mounted")
+    //alert("list mounted")
     console.log("iprequest.list.mounted")
     await this.load_data()
   },

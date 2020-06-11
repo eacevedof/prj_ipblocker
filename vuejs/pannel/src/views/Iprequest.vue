@@ -29,7 +29,7 @@ export default {
     console.log("iprequest beforeMount")
     await this.async_islogged()
     if(!this.islogged)
-      this.$router.push({name:"login"})    
+      this.$router.push({name:"login"})
   },
 
   mounted: async function(){

@@ -38,8 +38,6 @@ export default {
   },
 
   methods:{
-    //los setters y getters 
-    ...mapMutations(["set_sidebar"]),
     //ajax
     ...mapActions(["async_get_ipsblacklisted"])
   }    

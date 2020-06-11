@@ -41,10 +41,11 @@
 
 
 <script lang="ts">
+import {mapMutations} from "vuex"
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
-import api from "@/providers/api"
-import db from "@/helpers/localdb"
+import api from "../../providers/api"
+import db from "../../helpers/localdb"
 import notificationerror from "@/components/common/notifications/notification_error.vue"
 
 export default {
@@ -87,7 +88,8 @@ export default {
   },
 
   methods: {
-    
+    ...mapMutations(["set_islogged"]),
+
     submit : async function(){
       this.$v.$touch()
       console.log("on submit: ",this.username, this.password)
@@ -101,6 +103,7 @@ export default {
       }
 
       db.save("usertoken",usertoken)
+      this.set_islogged(true)
       this.$router.push({ name: "iprequest"})
     },
 
@@ -113,5 +116,6 @@ export default {
     },
 
   },
+  
 }
 </script>
