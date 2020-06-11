@@ -64,7 +64,7 @@ export default {
         logged: true,
         title: "IP Requests",
         icon: "mdi-arrow-left-right",
-        href:"/ip-requests"
+        href:"/ip-request"
       },      
     ]
   }),
