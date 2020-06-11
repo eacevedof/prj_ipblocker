@@ -79,6 +79,8 @@ export default {
         value: 'id',
       },
       { text: 'Rem. IP', value: 'remote_ip' },
+      { text: 'Country', value: 'country' },
+      { text: 'Whois', value: 'whois' },
       { text: 'Domain', value: 'domain' },
       { text: 'R. URI', value: 'request_uri' },
       { text: 'GET', value: 'get' },
