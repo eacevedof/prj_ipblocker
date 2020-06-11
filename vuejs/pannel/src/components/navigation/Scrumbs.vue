@@ -2,7 +2,7 @@
   <v-breadcrumbs :items="get_scrumbs">
     <template v-slot:item="{ item }">
       <v-breadcrumbs-item
-        :href="item.href"
+        :to="item.href"
         :disabled="item.disabled"
       >
         {{ item.text.toUpperCase() }}
@@ -50,6 +50,11 @@ export default {
           disabled: true,
           href: '/ip-request',
         },
+        {
+          text: 'IP Blacklist',
+          disabled: false,
+          href: '/ip-blacklist',
+        },        
       ],  
       "ipblacklist":[
         {
@@ -57,6 +62,11 @@ export default {
           disabled: false,
           href: '/',
         },
+        {
+          text: 'Ip Requests',
+          disabled: false,
+          href: '/ip-request',
+        },        
         {
           text: 'IP Blacklist',
           disabled: true,
