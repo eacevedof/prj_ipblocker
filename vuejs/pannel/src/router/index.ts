@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/login.vue'),
   },
   {
     path: '/ip-request',
@@ -29,7 +29,7 @@ const routes: Array<RouteConfig> = [
     meta:{
       title: "IP Requests"
     },    
-    component: () => import('../views/IpRequest.vue'),
+    component: () => import('../views/iprequest.vue'),
   },
   {
     path: '/ip-blacklist',
@@ -37,7 +37,7 @@ const routes: Array<RouteConfig> = [
     meta:{
       title: "IP Blacklist"
     },    
-    component: () => import('../views/IpRequest.vue'),
+    component: () => import('../views/ipblacklist.vue'),
   },    
   {
     path: '/logout',
@@ -45,7 +45,7 @@ const routes: Array<RouteConfig> = [
     meta:{
       title: "Logout"
     },    
-    component: () => import('../views/Logout.vue'),
+    component: () => import('../views/logout.vue'),
   },    
 ];
 

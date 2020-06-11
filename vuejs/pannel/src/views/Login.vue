@@ -13,7 +13,7 @@ import Scrumbs from "@/components/navigation/Scrumbs.vue"
 import FormLogin from "@/components/forms/FormLogin.vue"
 
 export default {
-  name: "Login",
+  name: "login",
 
   components: {
     Scrumbs,

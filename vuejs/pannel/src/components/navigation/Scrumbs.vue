@@ -50,7 +50,19 @@ export default {
           disabled: true,
           href: '/ip-request',
         },
-      ]      
+      ],  
+      "ipblacklist":[
+        {
+          text: 'Home',
+          disabled: false,
+          href: '/',
+        },
+        {
+          text: 'IP Blacklist',
+          disabled: true,
+          href: '/ip-blacklist',
+        },
+      ]  
     }
   }),
   
