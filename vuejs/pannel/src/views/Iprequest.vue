@@ -3,44 +3,8 @@
   <v-container>
 
     <scrumbs pagename="iprequest" />
-
-    <v-data-table :headers="headers" :items="rows" class="elevation-3">
-      <template v-slot:top>
-        
-        <v-system-bar color="yellow lighten-1" />
-
-        <v-toolbar color="black darken-4">
-          
-          <v-btn
-            class="mx-2"
-            :elevation="10"
-            fab dark color="light-green accent-4"
-            @click="show_dialog" 
-          ><v-icon>mdi-plus</v-icon></v-btn>
-
-          <v-divider class="mx-4" inset vertical/>
-          <v-toolbar-title class="yellow--text font-weight-bold">IP Request</v-toolbar-title>
-          <v-spacer></v-spacer>
-
-          <formedit objrow="objrow" :ison="showdialog" v-on:evtclose="showdialog=$event" />
-
-        </v-toolbar>
-
-        <!-- barra busqueda -->
-        <v-col>
-          <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details />
-        </v-col>
-      </template>
-
-      <!-- botones columna -->
-      <template v-slot:item.accion="{ item }">
-        <v-btn class="m4-2" fab dark small color="cyan" @click="editar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
-        <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
-      </template>
-
-    </v-data-table>
-  
-    <notifsnack showsnack="showsnack" innertext="txtsnack" />
+    <list />
+    
 
   </v-container>
 </template>
@@ -50,55 +14,18 @@ import api from "../providers/api"
 import db from "../helpers/localdb"
 
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
-import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
-import formedit from "@/modules/iprequest/form_edit.vue"
-
+import list from "@/modules/iprequest/list.vue"
 
 export default {
   name: "IpRequest",
   
   components: {
     Scrumbs,
-    notifsnack,
-    formedit,
+    list,
   },
 
   data: () => ({
-    showsnack: true,
-    txtsnack: "Texto snack",
-    showdialog: false,
-    dialogtitle: "",
-    search: "",
-
-    objrow: {
-      id: "",
-      remote_ip: "",
-      domain: ""
-    },
-
-    headers: [
-      {
-        text: 'nº',
-        align: 'start',
-        sortable: true,
-        value: 'id',
-      },
-      { text: 'Rem. IP', value: 'remote_ip' },
-      { text: 'Domain', value: 'domain' },
-      { text: 'R. URI', value: 'request_uri' },
-      { text: 'GET', value: 'get' },
-      { text: 'POST', value: 'post' },
-      { text: 'In BL', value: 'inbl' },
-      { text: 'Day', value: 'insert_date' },
-      { text: 'Action', value: 'accion' },
-
-    ],
-    rows: [],
-    editingindex: -1,
-    foundrows: 0,
-    editado: {
-      marca:""
-    }
+  
   }),//data
 
   beforeMount: function(){
@@ -140,21 +67,7 @@ export default {
         console.table(this.rows)
       }
     },
-
-    show_dialog(){
-      //alert("show_dialog")
-      this.showdialog = true
-    },
-
-    cancelar(){;},
-
-    guardar(){;},
-
-    borrar(){;},
-
-    editar(){;},
-
-  }  
+  }
 
 };
 </script>
