@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showstate" max-width="700px">
+  <v-dialog v-model="is_visible" max-width="700px">
     
     <v-card>
       
@@ -72,7 +72,7 @@ export default {
   props:{
 
     //si se muestra el form
-    ison: Boolean,
+    isvisible: Boolean,
 
     objrow: {
       id:         "",
@@ -106,9 +106,9 @@ export default {
       return `Nº:${this.objrow.id} - IP: ${this.objrow.remote_ip}`
     },
 
-    showstate:{
+    is_visible:{
       get(){
-        return this.ison
+        return this.isvisible
       },
       set(val){
         //lanza un evento hacia afuera
@@ -132,7 +132,7 @@ export default {
 
     close(){
       this.clearalert()
-      this.showstate = false
+      this.is_visible = false
     },
 
     async_save: async function (){
@@ -147,14 +147,14 @@ export default {
         this.error.title = "Error"
         this.error.message = "Some error ocurred. " + result.error
         
-        this.$emit("evtresult","nok")
+        this.$emit("evtedit","nok")
         return
       }
         
       this.success.title = "Success"
       this.success.message = "Data has been saved!"
-      //this.showstate = true  
-      this.$emit("evtresult","ok")
+      //this.is_visible = true  
+      this.$emit("evtedit","ok")
     }
   }
 }

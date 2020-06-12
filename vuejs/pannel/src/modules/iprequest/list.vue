@@ -19,7 +19,9 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit v-if="crudopt=='edit'" :objrow="objrow" :ison="showform" v-on:evtresult="dialog_result" v-on:evtclose="showform=$event.value" />
+        <formedit v-if="crudopt=='edit'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=$event.value" />
+
+        <formremove v-if="crudopt=='remove'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=$event.value" />
 
       </v-toolbar>
 
@@ -50,6 +52,7 @@ import db from "../../helpers/localdb"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import formedit from "@/modules/iprequest/form_edit.vue"
+import formremove from "@/modules/iprequest/form_remove.vue"
 
 
 export default {
@@ -58,6 +61,7 @@ export default {
   components: {
     //notifsnack,
     formedit,
+    formremove,
   },
 
   data: () => ({
@@ -125,6 +129,7 @@ export default {
 
     dialog_result(val){
       //alert("updated snack"+val)
+
       this.load_data()
     },
 
@@ -138,8 +143,9 @@ export default {
     },
 
     remove(objrow){
-      this.crudopt = "delete"
+      this.crudopt = "remove"
       this.objrow = objrow
+      this.show_dialog()
     },
 
   }//methods  
