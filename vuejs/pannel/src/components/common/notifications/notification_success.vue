@@ -1,8 +1,8 @@
 <template>
   <v-alert
-    color="error"
+    color="success"
     dark
-    icon="mdi-alert-circle"
+    icon="mdi-check-circle-outline"
     border="right"
     dense
   >
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 export default {
-  name: 'notificationerror',
+  name: 'notificationsuccess',
   props: {
     title: String,
     message: String

@@ -9,6 +9,12 @@
 
       <v-card-text>
         <v-container>
+          <v-row v-if="error.title!='' || success.title!=''">
+            <v-col ms="12">
+              <notierror v-if="error.title!=''" :title="error.title"  :message="error.message" />
+              <notisuccess v-if="success.title!=''" :title="success.title"  :message="success.message" />
+            </v-col>
+          </v-row>
           <v-row>
             <v-col ms="5">
               <v-text-field v-model="objrow.remote_ip" readonly label="R. IP" />
@@ -41,7 +47,7 @@
 
       <v-card-actions>
         <v-spacer />
-        <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="cancel">Cancel</v-btn>
+        <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
         <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_save">Save</v-btn>
       </v-card-actions>
 
@@ -50,6 +56,8 @@
 </template>
 <script lang="ts">
 import progressbar from "@/components/common/bars/progress_bar.vue"
+import notisuccess from "@/components/common/notifications/notification_success.vue"
+import notierror from "@/components/common/notifications/notification_error.vue"
 import api from "../../providers/api"
 export default {
 
@@ -57,6 +65,8 @@ export default {
 
   components:{
     progressbar,
+    notisuccess,
+    notierror,
   },
 
   props:{
@@ -79,9 +89,9 @@ export default {
 
   data: ()=>(
     {
-      //loader: null,
-      //butloading: false,
       issubmitting: false,
+      error:{title:"",mesage:""},
+      success:{title:"",message:""}
     }
   ),
 
@@ -114,27 +124,36 @@ export default {
   //setters 
   methods:{
 
-    cancel(){
-      //ejecuta el shostate.set
+    clearalert(){
+      this.error = {title:"",message:""}
+      this.success = {title:"",message:""}
+    },
+
+    close(){
+      this.clearalert()
       this.showstate = false
     },
 
     async_save: async function (){
       //this.loader = 'loading5'
+      this.clearalert()
       this.issubmitting = true
-      const objrow = {...this.objrow}
-      console.log("form_edit.methods.async_save.objrow",objrow)
-      const result = await api.async_update(objrow, ["id"])
+      
+      const result = await api.async_update(this.objrow, ["id"])
       
       this.issubmitting = false
       if(result.error){  
-        this.showstate = false
+        this.error.title = "Error"
+        this.error.message = "Some error ocurred. " + result.error
+        
         this.$emit("evtresult","error on async_save")
         return
       }
         
-      this.showstate = true  
-      this.$emit("evtresult","all fine :)")
+      this.success.title = "Success"
+      this.success.message = "Data has been saved!"
+      //this.showstate = true  
+      //this.$emit("evtresult","all fine :)")
     }
   }
 }

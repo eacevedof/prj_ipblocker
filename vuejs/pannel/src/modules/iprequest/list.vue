@@ -19,7 +19,7 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit :objrow="objrow" :ison="showdialog" v-on:evtresult="dialog_result" v-on:evtclose="showdialog=$event.value" />
+        <formedit :objrow="objrow" :ison="showform" v-on:evtresult="dialog_result" v-on:evtclose="showform=$event.value" />
 
       </v-toolbar>
 
@@ -59,10 +59,10 @@ export default {
   },
 
   data: () => ({
-    showsnack: false,
+    showsnack: true,
     textsnack: "",
 
-    showdialog: false,
+    showform: false,
 
     search: "",
     
@@ -122,13 +122,13 @@ export default {
     },
 
     show_dialog(){
-      this.showdialog = true
+      this.showform = true
     },
 
     dialog_result(value){
       this.showsnack = true
       this.textsnack = value
-      alert("updated snack")
+      //alert("updated snack")
       this.load_data()
     },
 
