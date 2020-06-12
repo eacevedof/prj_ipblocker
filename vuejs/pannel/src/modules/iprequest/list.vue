@@ -19,7 +19,7 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit objrow="objrow" :ison="showdialog" v-on:evtclose="showdialog=$event.value" />
+        <formedit :objrow="objrow" :ison="showdialog" v-on:evtclose="showdialog=$event.value" />
 
       </v-toolbar>
 
@@ -33,7 +33,7 @@
 
     <!-- botones columna -->
     <template v-slot:item.colbuttons="{ item }">
-      <v-btn class="m4-2" fab dark small color="cyan" @click="editar(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
+      <v-btn class="m4-2" fab dark small color="cyan" @click="edit(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
       <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
     </template>
 
@@ -78,6 +78,7 @@ export default {
         sortable: true,
         value: 'id',
       },
+      { text: 'Action', value: 'colbuttons' },
       { text: 'Rem. IP', value: 'remote_ip' },
       { text: 'Country', value: 'country' },
       { text: 'Whois', value: 'whois' },
@@ -87,8 +88,6 @@ export default {
       { text: 'POST', value: 'post' },
       { text: 'In BL', value: 'inbl' },
       { text: 'Day', value: 'insert_date' },
-      { text: 'Action', value: 'colbuttons' },
-
     ],
     rows: [],
     editingindex: -1,
@@ -133,8 +132,14 @@ export default {
 
     borrar(){;},
 
-    editar(){
-      ;
+    detail(){;},
+
+    edit(objrow){
+      //alert(JSON.stringify(objrow))
+      this.editingindex = this.rows.indexOf(objrow)
+      //alert(this.editingindex)
+      this.objrow = Object.assign({}, objrow)
+      this.show_dialog()
     },
 
   }//methods  

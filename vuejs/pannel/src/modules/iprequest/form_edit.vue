@@ -1,17 +1,38 @@
 <template>
-  <v-dialog v-model="showstate" max-width="500px">
+  <v-dialog v-model="showstate" max-width="700px">
     <template v-slot:activator="{}"></template>
     <v-card>
       
-      <v-card-title class="cyan white-text">
-        <span class="headline">Editing: {{get_dialogtitle}}</span>
+      <v-card-title class="yellow accent-4 blue-grey-darken-2--text">
+        <span class="headline"><b>Editing:</b> {{get_dialogtitle}}</span>
       </v-card-title>
 
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="12" sm="6" md="4">
+            <v-col ms="5">
               <v-text-field v-model="objrow.remote_ip" label="R. IP" />
+            </v-col>
+            <v-col ms="1">
+              <v-text-field v-model="objrow.country" label="Country" />
+            </v-col>
+            <v-col sm="6">
+              <v-text-field v-model="objrow.domain" label="Domain" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col sm="12">
+              <v-text-field v-model="objrow.whois" label="Whois" />
+            </v-col>                        
+          </v-row>
+          <v-row>
+            <v-col>  
+              <v-text-field v-model="objrow.request_uri" label="Uri" />
+              <v-textarea rows="1" v-model="objrow.get" label="GET" />
+            </v-col>
+            <v-col>
+              <v-textarea rows="1" v-model="objrow.post" label="POST" />
+              <v-text-field v-model="objrow.insert_date" readonly label="Date" />
             </v-col>
           </v-row>
         </v-container>
@@ -33,28 +54,27 @@ export default {
   name: "form-edit",
 
   props:{
-    
     ison: Boolean,
-    dialogtitle: String,
 
     objrow: {
-      id: "",
-      remote_ip: "",
-      domain: ""
-    }
-  },
-  
-  data(){
-    return {
+      id:         "",
+      remote_ip:  "",
+      country:    "",
+      whois:      "",
+      domain:     "",
+      request_uri:"",
+      get:        "",
+      post:       "",
+      insert_date:"",    
+    },
 
-    }
   },
 
   //getters
   computed:{
     
     get_dialogtitle(){
-      return this.dialogtitle
+      return `Nº:${this.objrow.id} - IP: ${this.objrow.remote_ip}`
     },
 
     showstate:{
@@ -76,7 +96,8 @@ export default {
       this.showstate = false
     },
     save(){
-      alert("saving")
+      const objrow = {...this.objrow}
+
     }
   }
 }
