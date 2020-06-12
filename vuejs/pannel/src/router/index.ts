@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
 Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes = [
   {
     path: '/',
     name: 'home',
@@ -47,6 +47,15 @@ const routes: Array<RouteConfig> = [
     },    
     component: () => import('../views/logout.vue'),
   },    
+  {
+    path: '/404',
+    name: 'notfound',
+    meta:{
+      title: "404 Not found"
+    },    
+    component: () => import('../views/notfound.vue'),
+  },  
+  { path: '*', redirect: '/404' }
 ];
 
 const router = new VueRouter({
