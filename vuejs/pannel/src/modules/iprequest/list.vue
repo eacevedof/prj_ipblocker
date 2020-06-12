@@ -19,7 +19,7 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit :objrow="objrow" :ison="showform" v-on:evtresult="dialog_result" v-on:evtclose="showform=$event.value" />
+        <formedit v-if="crudopt=='edit'" :objrow="objrow" :ison="showform" v-on:evtresult="dialog_result" v-on:evtclose="showform=$event.value" />
 
       </v-toolbar>
 
@@ -65,6 +65,8 @@ export default {
     //textsnack: "",
 
     showform: false,
+    crudopt: "",
+
     search: "",
     
     objrow: {},
@@ -130,11 +132,13 @@ export default {
 
     edit(objrow){
       //alert(JSON.stringify(objrow))
+      this.crudopt = "edit"
       this.objrow = objrow
       this.show_dialog()
     },
 
     remove(objrow){
+      this.crudopt = "delete"
       this.objrow = objrow
     },
 
