@@ -101,7 +101,7 @@ export default {
   mounted: async function(){
     //alert("list mounted")
     console.log("iprequest.list.mounted")
-    await this.load_data()
+    await this.async_loaddata()
   },
 
   computed:{
@@ -112,14 +112,13 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
-    load_data: async function(){
-      console.log("iprequest.mounted.islogged: ",this.islogged)
+    async_loaddata: async function(){
+      console.log("list.methods.loaddata this.islogged: ",this.islogged)
       if(this.islogged){
-        const usertoken = db.select("usertoken")
-        const response = await api.async_get_ip_request(usertoken)
+        const response = await api.async_get_ip_request()
         this.rows = response.result
         this.foundrows = response.foundrows
-        console.table(this.rows)
+        //console.table(this.rows)
       }
     },
 
@@ -129,8 +128,7 @@ export default {
 
     dialog_result(val){
       //alert("updated snack"+val)
-
-      this.load_data()
+      this.async_loaddata()
     },
 
     detail(){;},
