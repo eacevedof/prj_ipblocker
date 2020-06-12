@@ -7,7 +7,17 @@ export default {
   name: 'detail',
   
   props: {
-
+    objrow: {
+      id:         "",
+      remote_ip:  "",
+      country:    "",
+      whois:      "",
+      domain:     "",
+      request_uri:"",
+      get:        "",
+      post:       "",
+      insert_date:"",
+    }
   },
 }
 </script>
