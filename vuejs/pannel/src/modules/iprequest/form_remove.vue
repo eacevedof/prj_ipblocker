@@ -12,8 +12,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="secondary darken-1" text @click="accept">Cancel</v-btn>
-          <v-btn color="error darken-1" text @click="cancel">Accept</v-btn>
+          <v-btn color="secondary darken-1" text @click="cancel">Cancel</v-btn>
+          <v-btn color="error darken-1" text @click="accept">Accept</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -34,6 +34,7 @@ export default {
         return this.isvisible
       },
       set(val){
+        //alert("emiting evtclose:"+val)
         this.$emit("evtclose",val)
       }
     }
@@ -45,6 +46,7 @@ export default {
     },
 
     cancel(){
+      //alert("canceling y setting is_visible false para que emita evtclose")
       this.is_visible = false
     }
   },

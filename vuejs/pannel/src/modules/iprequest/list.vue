@@ -19,9 +19,9 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit v-if="crudopt=='edit'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=$event.value" />
+        <formedit v-if="crudopt=='edit'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
 
-        <formremove v-if="crudopt=='remove'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=$event.value" />
+        <formremove v-if="crudopt=='remove'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=false" />
 
       </v-toolbar>
 
@@ -48,7 +48,6 @@
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../../providers/api"
-import db from "../../helpers/localdb"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import formedit from "@/modules/iprequest/form_edit.vue"
@@ -127,7 +126,7 @@ export default {
     },
 
     dialog_result(val){
-      //alert("updated snack"+val)
+      //alert("dialog_result: "+val)
       this.async_loaddata()
     },
 
