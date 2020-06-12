@@ -61,7 +61,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 import api from "../../providers/api"
 export default {
 
-  name: "form-edit",
+  name: "formedit",
 
   components:{
     progressbar,
