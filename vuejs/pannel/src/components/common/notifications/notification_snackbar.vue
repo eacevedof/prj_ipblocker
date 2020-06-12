@@ -2,7 +2,7 @@
   <div class="text-center ma-2">
     <v-snackbar v-model="is_showsnack">
       {{get_innertext}}
-      <v-btn color="info" text @click="is_showsnack">Cerrar</v-btn>
+      <v-btn color="info" text>Cerrar</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -17,16 +17,9 @@ export default {
     innertext:String,
   },
   
-  data(){
-    return {
-      dshowsnack: false,
-      dinnertext: "",
-    }
-  },
-
   computed:{
     is_showsnack(){
-      return !this.showsnack
+      return this.showsnack
     },
 
     get_innertext(){
