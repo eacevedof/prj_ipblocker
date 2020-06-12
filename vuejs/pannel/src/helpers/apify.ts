@@ -113,7 +113,7 @@ const Apify = {
     get_query(){
       const thisdelete = Apify.delete
       const oform = new FormData()
-      oform.append("action","update")
+      oform.append("action","delete")
 
       //table
       oform.append("queryparts[table]",thisdelete.table)

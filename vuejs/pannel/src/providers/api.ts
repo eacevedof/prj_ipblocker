@@ -173,6 +173,8 @@ const Api = {
   },
 
   async_delete: async(objrow, keys=[]) => {
+    //alert("async objrow: "+JSON.stringify(objrow))
+    //return
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
     //hay que enviar header: apify-auth: token

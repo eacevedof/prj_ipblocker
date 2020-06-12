@@ -13,7 +13,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="secondary darken-1" text @click="cancel">Cancel</v-btn>
-          <v-btn color="error darken-1" text @click="accept">Accept</v-btn>
+          <v-btn color="error darken-1" text @click="async_accept">Accept</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -50,9 +50,9 @@ export default {
   },
 
   methods:{
-    async_accept: async function(objrow){
-      await api.async_delete(objrow,["id"])
-      
+    async_accept: async function(){
+      const result = await api.async_delete(this.objrow,["id"])
+      //alert(JSON.stringify(result))
       this.$emit("evtremove","ok")
     },
 
