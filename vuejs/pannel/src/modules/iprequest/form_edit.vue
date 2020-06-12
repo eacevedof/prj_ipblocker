@@ -39,6 +39,7 @@
       </v-card-text>
 
       <v-card-actions>
+        <progressbar :visible="issubmitting" />
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="cancel">Cancel</v-btn>
         <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_save">Save</v-btn>
@@ -48,10 +49,15 @@
   </v-dialog>
 </template>
 <script lang="ts">
+import progressbar from "@/components/common/bars/progress_bar.vue"
 import api from "../../providers/api"
 export default {
 
   name: "form-edit",
+
+  components:{
+    progressbar,
+  },
 
   props:{
 
@@ -73,8 +79,8 @@ export default {
 
   data: ()=>(
     {
-      loader: null,
-      butloading: false,
+      //loader: null,
+      //butloading: false,
       issubmitting: false,
     }
   ),
@@ -107,19 +113,19 @@ export default {
   
   //setters 
   methods:{
-    
+
     cancel(){
       //ejecuta el shostate.set
       this.showstate = false
     },
 
     async_save: async function (){
-      alert("x")
       //this.loader = 'loading5'
       this.issubmitting = true
       const objrow = {...this.objrow}
       console.log("form_edit.methods.async_save.objrow",objrow)
       const result = await api.async_update(objrow, ["id"])
+      
       this.issubmitting = false
       if(result.error){  
         this.showstate = false
