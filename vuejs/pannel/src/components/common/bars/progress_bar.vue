@@ -1,6 +1,6 @@
 <template>
   <v-progress-linear
-    v-if="visible"
+    v-if="isvisible"
     color="teal accent-3"
     indeterminate
     striped
