@@ -37,7 +37,7 @@
       <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
     </template>
 
-    <notifsnack :showsnack="showsnack" :innertext="textsnack" />
+    <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
   </v-data-table>
 </template>
 
@@ -59,7 +59,7 @@ export default {
   },
 
   data: () => ({
-    showsnack: true,
+    showsnack: false,
     textsnack: "",
 
     showdialog: false,
@@ -128,12 +128,9 @@ export default {
     dialog_result(value){
       this.showsnack = true
       this.textsnack = value
+      alert("updated snack")
       this.load_data()
     },
-
-    cancelar(){;},
-
-    guardar(){;},
 
     remove(){;},
 

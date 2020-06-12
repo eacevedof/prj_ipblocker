@@ -1,30 +1,33 @@
 <template>
-  <div class="text-center ma-2">
-    <v-snackbar v-model="is_showsnack">
-      {{get_innertext}}
-      <v-btn color="info" text>Cerrar</v-btn>
-    </v-snackbar>
-  </div>
+  <v-snackbar
+    v-model="isvisible"
+  >
+    {{ innertext }}
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        color="pink"
+        text
+        v-bind="attrs"
+        @click="on_click"
+      >
+        Close
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 <script lang="ts">
-
 export default {
-
   name: "notification-snackbar",
-
   props:{
-    showsnack:Boolean,
-    innertext:String,
+    isvisible: Boolean,
+    innertext: String,
   },
-  
-  computed:{
-    is_showsnack(){
-      return this.showsnack
-    },
 
-    get_innertext(){
-      return this.innertext
-    },
+  methdos:{
+    on_click(){
+      this.$emit("evtclose",1)
+    }
   }
+
 }
 </script>
