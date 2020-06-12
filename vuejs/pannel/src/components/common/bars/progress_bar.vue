@@ -1,27 +1,19 @@
 <template>
-  <v-row
-    class="fill-height"
-    align-content="center"
-    justify="center"
-  >
-    <v-col cols="6">
-      <v-progress-linear
-        color="deep-purple accent-4"
-        indeterminate
-        rounded
-        height="6"
-      ></v-progress-linear>
-    </v-col>
-  </v-row>
+  <v-progress-linear
+    v-if="visible"
+    color="teal accent-3"
+    indeterminate
+    striped
+    height="6"
+  ></v-progress-linear>
 </template>
 
 <script>
 export default {
-  
   name: "progressbar",
 
   props:{
-    visible:Boolean
+    isvisible:Boolean
   },
 
 }
