@@ -19,7 +19,7 @@
         <v-spacer></v-spacer>
 
         <!-- los hijos se comunican por eventos con los padres -->
-        <formedit :objrow="objrow" :ison="showdialog" v-on:evtclose="showdialog=$event.value" />
+        <formedit :objrow="objrow" :ison="showdialog" v-on:evtresult="dialog_result" v-on:evtclose="showdialog=$event.value" />
 
       </v-toolbar>
 
@@ -34,10 +34,10 @@
     <!-- botones columna -->
     <template v-slot:item.colbuttons="{ item }">
       <v-btn class="m4-2" fab dark small color="cyan" @click="edit(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
-      <v-btn class="m4-2" fab dark small color="error" @click="borrar(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
+      <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
     </template>
 
-    <notifsnack :showsnack="showsnack" innertext="txtsnack" />
+    <notifsnack :showsnack="showsnack" :innertext="textsnack" />
   </v-data-table>
 </template>
 
@@ -60,11 +60,12 @@ export default {
 
   data: () => ({
     showsnack: true,
-    txtsnack: "Texto snack",
-    showdialog: false,
-    dialogtitle: "",
-    search: "",
+    textsnack: "",
 
+    showdialog: false,
+
+    search: "",
+    
     objrow: {
       id: "",
       remote_ip: "",
@@ -90,11 +91,9 @@ export default {
       { text: 'Day', value: 'insert_date' },
     ],
     rows: [],
-    editingindex: -1,
     foundrows: 0,
-    editado: {
-      marca:""
-    }
+    editingindex: -1,
+
   }),//data
 
   mounted: async function(){
@@ -126,16 +125,22 @@ export default {
       this.showdialog = true
     },
 
+    dialog_result(value){
+      this.showsnack = true
+      this.textsnack = value
+      this.load_data()
+    },
+
     cancelar(){;},
 
     guardar(){;},
 
-    borrar(){;},
+    remove(){;},
 
     detail(){;},
 
     edit(objrow){
-      //alert(JSON.stringify(objrow))
+      alert(JSON.stringify(objrow))
       this.editingindex = this.rows.indexOf(objrow)
       //alert(this.editingindex)
       this.objrow = Object.assign({}, objrow)
