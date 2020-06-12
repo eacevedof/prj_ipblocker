@@ -71,9 +71,40 @@ const Apify = {
       thisselect.orderby = []
       thisselect.limit = {perpage:null, regfrom:0}
     },
+  }, //select
+  
+  update:{
+    table: "",
+    fields: [],
+    where: [],
 
-  }
+    get_query(){
+      const thisupdate = Apify.update
+      const oform = new FormData()
+      oform.append("action","update")
 
+     //table
+     oform.append("queryparts[table]",thisupdate.table)
+
+     
+     thisupdate.fields.forEach( field => {
+       oform.append(`queryparts[fields][${field.k}]`,field.v)
+     });
+
+     thisupdate.where.forEach((strcond,i) => {
+       oform.append(`queryparts[where][${i}]`,strcond)
+     });      
+
+     return oform
+    },
+    
+    reset(){
+      const thisupdate = Apify.update
+      thisupdate.table = ""
+      thisupdate.fields = []
+      thisupdate.where = []
+    },    
+  }//update
 
 
 }

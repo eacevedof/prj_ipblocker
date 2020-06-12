@@ -48,12 +48,13 @@
   </v-dialog>
 </template>
 <script lang="ts">
-
+import api from "../../providers/api"
 export default {
 
   name: "form-edit",
 
   props:{
+
     ison: Boolean,
 
     objrow: {
@@ -95,9 +96,10 @@ export default {
       //ejecuta el shostate.set
       this.showstate = false
     },
-    save(){
+    save: async function (){
       const objrow = {...this.objrow}
-
+      console.log("form_edit.methods.save.objrow",objrow)
+      await api.async_update(objrow, ["id"]);
     }
   }
 }
