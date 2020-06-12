@@ -1,11 +1,18 @@
 <template>
-  <v-progress-linear
-      v-if="visible"
-      :value="progress"
-      :color="color"
-      absolute
-      height="7"
-  ></v-progress-linear>
+  <v-row
+    class="fill-height"
+    align-content="center"
+    justify="center"
+  >
+    <v-col cols="6">
+      <v-progress-linear
+        color="deep-purple accent-4"
+        indeterminate
+        rounded
+        height="6"
+      ></v-progress-linear>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -15,19 +22,6 @@ export default {
 
   props:{
     visible:Boolean
-  },
-
-  data: () => ({
-    value: '',
-  }),
-  
-  computed: {
-    progress () {
-      return Math.min(100, this.value.length * 10)
-    },
-    color () {
-      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)]
-    },
   },
 
 }
