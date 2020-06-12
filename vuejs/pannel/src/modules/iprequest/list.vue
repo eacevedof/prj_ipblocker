@@ -37,7 +37,9 @@
       <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
     </template>
 
+    <!--
     <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
+    -->
   </v-data-table>
 </template>
 
@@ -54,23 +56,18 @@ export default {
   name: "list",
   
   components: {
-    notifsnack,
+    //notifsnack,
     formedit,
   },
 
   data: () => ({
-    showsnack: true,
-    textsnack: "",
+    //showsnack: true,
+    //textsnack: "",
 
     showform: false,
-
     search: "",
     
-    objrow: {
-      id: "",
-      remote_ip: "",
-      domain: ""
-    },
+    objrow: {},
 
     headers: [
       {
@@ -92,7 +89,6 @@ export default {
     ],
     rows: [],
     foundrows: 0,
-    editingindex: -1,
 
   }),//data
 
@@ -125,23 +121,21 @@ export default {
       this.showform = true
     },
 
-    dialog_result(value){
-      this.showsnack = true
-      this.textsnack = value
-      //alert("updated snack")
+    dialog_result(val){
+      //alert("updated snack"+val)
       this.load_data()
     },
-
-    remove(){;},
 
     detail(){;},
 
     edit(objrow){
       //alert(JSON.stringify(objrow))
-      this.editingindex = this.rows.indexOf(objrow)
-      //alert(this.editingindex)
-      this.objrow = Object.assign({}, objrow)
+      this.objrow = objrow
       this.show_dialog()
+    },
+
+    remove(objrow){
+      this.objrow = objrow
     },
 
   }//methods  

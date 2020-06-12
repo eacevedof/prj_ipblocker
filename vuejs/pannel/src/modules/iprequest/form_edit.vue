@@ -71,6 +71,7 @@ export default {
 
   props:{
 
+    //si se muestra el form
     ison: Boolean,
 
     objrow: {
@@ -146,14 +147,14 @@ export default {
         this.error.title = "Error"
         this.error.message = "Some error ocurred. " + result.error
         
-        this.$emit("evtresult","error on async_save")
+        this.$emit("evtresult","nok")
         return
       }
         
       this.success.title = "Success"
       this.success.message = "Data has been saved!"
       //this.showstate = true  
-      //this.$emit("evtresult","all fine :)")
+      this.$emit("evtresult","ok")
     }
   }
 }
