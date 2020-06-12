@@ -24,8 +24,8 @@
 export default {
 
   props:{
-    objrow:{},
     isvisible: Boolean,
+    objrow:{},
   },
 
   computed:{
