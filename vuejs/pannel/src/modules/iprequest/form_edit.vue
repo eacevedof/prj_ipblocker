@@ -74,18 +74,7 @@ export default {
     //si se muestra el form
     isvisible: Boolean,
 
-    objrow: {
-      id:         "",
-      remote_ip:  "",
-      country:    "", //ro
-      whois:      "", //ro
-      domain:     "", 
-      request_uri:"",
-      get:        "",
-      post:       "",
-      insert_date:"",    
-    },
-
+    objrow: {},
   },
 
   data: ()=>(
@@ -125,37 +114,43 @@ export default {
   //setters 
   methods:{
 
-    clearalert(){
-      this.error = {title:"",message:""}
-      this.success = {title:"",message:""}
+    set_error(title,message){
+      this.error.title = title
+      this.error.message = message
+    },
+
+    set_success(title,message){
+      this.success.title = title
+      this.success.message = message
+    },    
+
+    reset_alerts(){
+      this.set_error("","")
+      this.set_success("","")
     },
 
     close(){
-      this.clearalert()
+      this.reset_alerts()
       this.is_visible = false
     },
 
     async_save: async function (){
       //this.loader = 'loading5'
-      this.clearalert()
+      this.reset_alerts()
       this.issubmitting = true
       
       const result = await api.async_update(this.objrow, ["id"])
       
       this.issubmitting = false
       if(result.error){  
-        this.error.title = "Error"
-        this.error.message = "Some error ocurred. " + result.error
-        
+        this.set_error("Error","Some error ocurred. " + result.error)        
         this.$emit("evtedit","nok")
         return
       }
-        
-      this.success.title = "Success"
-      this.success.message = "Data has been saved!"
-      //this.is_visible = true  
+      
+      this.set_success("Success","Data have been changed!")
       this.$emit("evtedit","ok")
-    }
+    }// async
   }
 }
 </script>

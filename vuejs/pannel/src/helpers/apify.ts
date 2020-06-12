@@ -104,8 +104,34 @@ const Apify = {
       thisupdate.fields = []
       thisupdate.where = []
     },    
-  }//update
+  },//update
 
+  delete:{
+    table: "",
+    where: [],
+
+    get_query(){
+      const thisdelete = Apify.delete
+      const oform = new FormData()
+      oform.append("action","update")
+
+      //table
+      oform.append("queryparts[table]",thisdelete.table)
+      
+      //where
+      thisdelete.where.forEach((strcond,i) => {
+        oform.append(`queryparts[where][${i}]`,strcond)
+      });      
+
+      return oform
+    },
+    
+    reset(){
+      const thisdelete = Apify.delete
+      thisdelete.table = ""
+      thisdelete.where = []
+    },    
+  }//delete  
 
 }
 
