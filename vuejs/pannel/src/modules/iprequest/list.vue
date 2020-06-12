@@ -140,7 +140,7 @@ export default {
     detail(){;},
 
     edit(objrow){
-      alert(JSON.stringify(objrow))
+      //alert(JSON.stringify(objrow))
       this.editingindex = this.rows.indexOf(objrow)
       //alert(this.editingindex)
       this.objrow = Object.assign({}, objrow)
