@@ -35,11 +35,11 @@
               <v-text-field v-model="objrow.insert_date" readonly label="Date" />
             </v-col>
           </v-row>
+          <progressbar :isvisible="issubmitting" />
         </v-container>
       </v-card-text>
 
       <v-card-actions>
-        <progressbar :visible="issubmitting" />
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="cancel">Cancel</v-btn>
         <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_save">Save</v-btn>
