@@ -161,6 +161,8 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_update.response",response)
+      if(!response.data.data)
+        throw new Error("No data received from server")
       //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
       return response.data.data
     } 

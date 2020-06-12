@@ -5,7 +5,12 @@
         <v-icon color="primary">mdi-lock</v-icon>
       </v-card>
       <v-form>
-        <notificationerror v-if="objerror.message != ''" :title="objerror.title" :message="objerror.message" />
+        <v-row v-if="error.message != ''">
+          <v-col>
+            <notificationerror :title="error.title" :message="error.message" />
+          </v-col>
+        </v-row>
+
         <v-text-field
           ref="username"
           v-model="username"
@@ -31,7 +36,7 @@
         <v-card-actions>
           <v-btn @click="clear">clear</v-btn>
           <v-spacer></v-spacer>
-          <v-btn class="mr-4 primary--text" color="secondary" @click="submit">submit</v-btn>
+          <v-btn class="mr-4 primary--text" color="secondary" @click="async_login">submit</v-btn>
         </v-card-actions>
       </v-form>
 
@@ -64,7 +69,7 @@ export default {
     valid: true,
     username: 'fulanito',
     password: 'menganito',
-    objerror: {
+    error: {
       title: "",
       message: "",
     }
@@ -90,14 +95,14 @@ export default {
   methods: {
     ...mapMutations(["set_islogged"]),
 
-    submit : async function(){
+    async_login : async function(){
       this.$v.$touch()
-      console.log("on submit: ",this.username, this.password)
+      console.log("on async_submit: ",this.username, this.password)
       const usertoken = await api.async_get_usertoken({username:this.username,password:this.password})
 
       if(usertoken.error) {
-        this.objerror.title = "Error"
-        this.objerror.message = usertoken.error.toString()
+        this.error.title = "Error"
+        this.error.message = usertoken.error.toString()
         this.$refs.username.focus()
         return
       }
@@ -111,7 +116,7 @@ export default {
       this.$v.$reset()
       this.username = ''
       this.password = ''
-      this.objerror = {title:"",message:""}
+      this.error = {title:"",message:""}
       this.$refs.username.focus()      
     },
 
