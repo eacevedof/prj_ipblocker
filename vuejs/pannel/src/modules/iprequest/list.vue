@@ -1,7 +1,7 @@
 <template>
   <div>
-    <barover :isvisible="fetching" />
-    
+    <barover :isvisible="isfetching" />
+
     <v-data-table v-if="!isfetching" :headers="headers" :items="rows" class="elevation-3">
       <!-- inyecta en la cabecera de la tabla en la zona top-->
       <template v-slot:top>
@@ -102,10 +102,9 @@ export default {
   }),//data
 
   mounted: async function(){
-    //alert("list mounted")
-    console.log("iprequest.list.mounted async")
+    console.log("iprequest.list.mounted.async_islogged.response islogged:",this.islogged)
     this.isfetching = true
-    await this.async_islogged()
+    const response = await this.async_islogged()
     await this.async_loaddata()
     this.isfetching = false
   },

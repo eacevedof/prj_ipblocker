@@ -5,12 +5,12 @@ import db from "@/helpers/localdb.ts"
 
 Vue.use(Vuex);
 
+const is_undefined = mxvar => (typeof mxvar == "undefined")
+
 export default new Vuex.Store({
   
   state: {
     sidebar: false,
-    pagetitle: "",
-    ipsblacklisted: [],
     myip: "",
     islogged: false,
   },
@@ -18,17 +18,9 @@ export default new Vuex.Store({
   //setters
   mutations: {
 
-    set_pagetitle(state,value){
-      state.pagetitle = value
-    },
-
     set_sidebar(state, isvisible){
       console.log("set_sidebar.isvisible:",isvisible)
       state.sidebar = isvisible
-    },
-
-    set_ipsblacklisted(state, data){
-      state.ipsblacklisted = data
     },
 
     set_myip(state, data){
@@ -44,13 +36,6 @@ export default new Vuex.Store({
   //lo comiteable
   actions: {
 
-    async_get_ipsblacklisted: async function({ commit }){
-      console.log("async get_ipsblacklisted")
-      const data = await fetch("http://json.theframework.es/index.php?getfile=app_costumer.json");
-      const ipsblacklisted = await data.json()
-      commit("set_ipsblacklisted",ipsblacklisted)
-    },
-
     async_get_myip: async function({commit}){
       await fetch('https://api.ipify.org?format=json')
       .then(x => x.json())
@@ -64,20 +49,22 @@ export default new Vuex.Store({
       const usertoken = db.select("usertoken")
       if(!usertoken){
         commit("set_islogged",false)
-        return
+        return { error: "Not logged"}
       }
 
-      const response = await api.async_is_validtoken(usertoken)
-      //alert(JSON.stringify(response.data.isvalid))
-      console.log("store.async_islogged.response",response)
+      const response = await api.async_is_validtoken()
+      //alert("store.async_islogged.async_is_validtoken.response raw:"+JSON.stringify(response))
+      console.log("store.async_islogged.async_is_validtoken.response raw",response)
 
-      if(response.error) {
-        commit("set_islogged",false)
-        return
+      if(!is_undefined(response.error)){
+        if(response.error.includes("403"))
+          commit("set_islogged",false)
       }
-      
-      if(response.data.isvalid == true) 
+
+      if(response == true) 
         commit("set_islogged",true)
+      
+      return response
     }
     
   },
