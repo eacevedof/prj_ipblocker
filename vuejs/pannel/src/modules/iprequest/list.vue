@@ -1,32 +1,7 @@
 <template>
   <div>
-    <!-- https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/dialogs/intermediate/loader.vue-->
-    <v-row justify="center">
-      <v-col cols="1">
-        <v-dialog
-          v-model="isfetching"
-          hide-overlay
-          persistent
-          width="300"
-        >
-          <v-card
-            color="primary"
-            dark
-          >
-            <v-card-text>
-              <span class="blue-grey--text">Please stand by </span>
-              <v-progress-linear
-                indeterminate
-                color="blue-grey darken-4"
-                class="mb-0"
-              />
-            </v-card-text>
-          </v-card>
-          
-        </v-dialog>
-      </v-col>
-    </v-row>
-
+    <barover :isvisible="fetching" />
+    
     <v-data-table v-if="!isfetching" :headers="headers" :items="rows" class="elevation-3">
       <!-- inyecta en la cabecera de la tabla en la zona top-->
       <template v-slot:top>
@@ -79,6 +54,7 @@ import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../../providers/api"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
+import barover from "@/components/common/bars/progress_barover.vue"
 import formedit from "@/modules/iprequest/form_edit.vue"
 import formremove from "@/modules/iprequest/form_remove.vue"
 
@@ -90,6 +66,7 @@ export default {
     //notifsnack,
     formedit,
     formremove,
+    barover,
   },
 
   data: () => ({
