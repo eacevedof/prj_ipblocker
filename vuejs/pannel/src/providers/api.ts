@@ -34,7 +34,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_usertoken.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }
   },//async_get_usertoken
@@ -49,16 +49,20 @@ const Api = {
       data.append("apify-usertoken",usertoken)
 
       console.log("api.async_is_validtoken.url",url)
-      //console.log("api.async_is_validtoken.headers",headers)
+      
       const response = await axios.post(url,data)
+      console.log("api.async_is_validtoken.response raw",response)
       //pr(response,"async_is_valid_token")
       
-      return response.data
+      if(is_undefined(response.data.data.isvalid))
+        throw new Error("Wrong data received from server. Token validation")
+
+      return response.data.data.isvalid
     } 
     catch (e) {
       console.error("ERROR: api.async_is_validtoken.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }    
   },
@@ -110,7 +114,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }
   },
@@ -128,7 +132,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_fields.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }    
   },
@@ -177,7 +181,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_update.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }
   },
@@ -217,7 +221,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_delete.url:",url,"e:",e)
       return {
-        error: e
+        error: e.toString()
       }
     }
   }, //async_delete
