@@ -150,7 +150,7 @@ export default {
         return
       }
       
-      this.set_success("Success","Data have been changed!")
+      this.set_success("Success",`Reults updated ${result}`)
       this.$emit("evtedit","ok")
     }// async
   }

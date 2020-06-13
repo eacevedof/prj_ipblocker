@@ -148,7 +148,7 @@ export default {
         return
       }
       
-      this.set_success("Success","Data have been changed!")
+      this.set_success("Success",`Reults deleted ${result}`)
       this.$emit("evtremove","ok")
     },
   },
