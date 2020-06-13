@@ -34,25 +34,15 @@ export default {
     }
   },
 
-  beforeMount: async function (){
-    this.reset_error()
-    const response = await this.async_islogged()
-    console.log("iprequest.beforeMount.async_islogged.response RAW",response)
-
-    if(response.error){
-      //alert(response.error)
-      this.set_error("Error",response.error)
-    }
-
-    if(!this.islogged)
-      this.$router.push({name:"login"})
-  },
-
   mounted: async function(){
-    console.log("iprequest mounted")
+    console.log("iprequest.mounted islogged",this.islogged)
     //await this.async_islogged()
     //if(!this.islogged)
       //this.$router.push({name:"login"})
+  },
+
+  beforeMount: async function (){
+
   },
 
   computed:{

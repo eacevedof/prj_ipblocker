@@ -101,10 +101,40 @@ export default {
 
   }),//data
 
+  beforeMounted: async function(){
+    alert("beofremounted de list ^^ nunca pasa por aqui?")
+    //this.reset_error()
+    //const response = await this.async_islogged()
+    console.log("iprequest.list.beforeMount.islogged",this.islogged)
+
+    //if(response.error){
+      //alert(response.error)
+      //this.set_error("Error",response.error)
+    //}
+
+    //if(!this.islogged)
+      //this.$router.push({name:"login"})
+
+  },
+
   mounted: async function(){
     console.log("iprequest.list.mounted.async_islogged.response islogged:",this.islogged)
     this.isfetching = true
+    //is_logged comprueba el token y setea this.islogged
+    //si ha dado error no desloguea
     const response = await this.async_islogged()
+    //error network
+    if(response.error && this.islogged){
+      alert(response.error)
+      this.set_error("Error",response.error)
+      return 
+    }
+
+    if(!this.islogged){
+      this.$router.push({name:"login"})
+      return
+    }
+
     await this.async_loaddata()
     this.isfetching = false
   },
