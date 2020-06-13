@@ -30,6 +30,11 @@ export default {
           iscurrent: true,
           href: '/',
         },
+        {
+          text: 'Login',
+          iscurrent: false,
+          href: '/login',
+        },        
       ],
       "login":[
         {
