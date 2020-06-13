@@ -3,7 +3,7 @@
     <v-card>    
       <v-card-title class="red accent-4 white--text">
         <span class="headline"> 
-          <v-icon color="white">mdi-trash-can-outline</v-icon> <b>Deleting:</b> {{get_dialogtitle}}
+          <v-icon color="white">mdi-trash-can-outline</v-icon> <b>Deleting IP Request!:</b> {{get_dialogtitle}}
         </span>
       </v-card-title>
 
@@ -17,28 +17,28 @@
           </v-row>
           <v-row>
             <v-col ms="5">
-              <v-text-field v-model="objrow.remote_ip" readonly label="R. IP" />
+              <v-text-field v-model="objrow.remote_ip" label="R. IP" disabled outlined dense />
             </v-col>
             <v-col ms="1">
-              <v-text-field v-model="objrow.country" readonly label="Country" />
+              <v-text-field v-model="objrow.country" disabled outlined dense label="Country" />
             </v-col>
             <v-col sm="6">
-              <v-text-field v-model="objrow.domain" label="Domain" />
+              <v-text-field v-model="objrow.domain" disabled outlined dense label="Domain" />
             </v-col>
           </v-row>
           <v-row>
             <v-col sm="12">
-              <v-text-field v-model="objrow.whois" readonly label="Whois" />
+              <v-text-field v-model="objrow.whois" disabled outlined dense label="Whois" />
             </v-col>                        
           </v-row>
           <v-row>
             <v-col>  
-              <v-text-field v-model="objrow.request_uri" label="Uri" />
-              <v-textarea rows="1" v-model="objrow.get" label="GET" />
+              <v-text-field v-model="objrow.request_uri" label="Uri" disabled outlined dense />
+              <v-textarea rows="1" v-model="objrow.get" label="GET" disabled outlined dense />
             </v-col>
             <v-col>
-              <v-textarea rows="1" v-model="objrow.post" label="POST" />
-              <v-text-field v-model="objrow.insert_date" readonly label="Date" />
+              <v-textarea rows="1" v-model="objrow.post" label="POST" disabled outlined dense />
+              <v-text-field v-model="objrow.insert_date" disabled label="Date" outlined dense />
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -134,9 +134,21 @@ export default {
       this.reset_alerts()
       this.is_visible = false
     },
+
     async_accept: async function(){
+      this.reset_alerts()
+      this.issubmitting = true
+
       const result = await api.async_delete(this.objrow,["id"])
-      //alert(JSON.stringify(result))
+      this.issubmitting = false
+      
+      if(result.error){  
+        this.set_error("Error","Some error ocurred. " + result.error)        
+        this.$emit("evtremove","nok")
+        return
+      }
+      
+      this.set_success("Success","Data have been changed!")
       this.$emit("evtremove","ok")
     },
   },

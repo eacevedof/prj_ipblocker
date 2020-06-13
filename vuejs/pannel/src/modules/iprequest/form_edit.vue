@@ -4,7 +4,9 @@
     <v-card>
       
       <v-card-title class="yellow accent-4 blue-grey-darken-2--text">
-        <span class="headline"><b>Editing:</b> {{get_dialogtitle}}</span>
+        <span class="headline">
+          <v-icon color="black">mdi-pencil</v-icon> <b>Editing IP Request:</b> {{get_dialogtitle}}
+          </span>
       </v-card-title>
 
       <v-card-text>
@@ -48,7 +50,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_save">Save</v-btn>
+        <v-btn color="yellow accent-4t" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
       </v-card-actions>
 
     </v-card>
