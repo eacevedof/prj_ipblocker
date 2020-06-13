@@ -18,7 +18,7 @@ import list from "@/modules/iprequest/list.vue"
 
 export default {
 
-  name: "IpRequest",
+  name: "iprequest",
   
   components: {
     Scrumbs,
