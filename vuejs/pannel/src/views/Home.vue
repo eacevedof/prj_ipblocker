@@ -2,6 +2,7 @@
   <v-container>
     <scrumbs pagename="home" />
     <h1>IP Blocker</h1>
+    
     <v-row>
       <v-col>
         <ul>
@@ -11,7 +12,7 @@
         </ul>
         <br/>
         <pre>
-          IP Blocker es una herramienta que eventualmente está realizada en PHP y que tiene como fin
+          IP Blocker es una herramienta que eventualmente está realizada en <b>PHP</b> y <b>Vue</b> y que tiene como fin
           poder gestionar las peticiones que se hacen a tus "dominios"
         </pre>
       </v-col>
