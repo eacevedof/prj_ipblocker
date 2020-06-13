@@ -49,16 +49,17 @@ export default new Vuex.Store({
       const usertoken = db.select("usertoken")
       if(!usertoken){
         commit("set_islogged",false)
-        return { error: "Not logged"}
+        return { error: "Not token found"}
       }
 
       const response = await api.async_is_validtoken()
       //alert("store.async_islogged.async_is_validtoken.response raw:"+JSON.stringify(response))
-      console.log("store.async_islogged.async_is_validtoken.response raw",response)
+      console.log("store.async_islogged.async_is_validtoken.response",response)
 
       if(!is_undefined(response.error)){
         if(response.error.includes("403"))
           commit("set_islogged",false)
+        return response
       }
 
       if(response == true) 
