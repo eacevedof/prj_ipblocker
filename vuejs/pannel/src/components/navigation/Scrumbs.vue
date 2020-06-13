@@ -3,10 +3,14 @@
     <template v-slot:item="{ item }">
       <v-breadcrumbs-item
         :to="item.href"
-        :disabled="item.disabled"
       >
         {{ item.text.toUpperCase() }}
       </v-breadcrumbs-item>
+      <span v-if="item.iscurrent" style="margin-left:5px; margin-right:10px;">
+        <v-btn x-small icon @click="refresh">
+          <v-icon>mdi-cached</v-icon>
+        </v-btn>
+      </span>      
     </template>
   </v-breadcrumbs>
 </template>
@@ -23,53 +27,53 @@ export default {
       "home":[
         {
           text: 'Home',
-          disabled: true,
+          iscurrent: true,
           href: '/',
         },
       ],
       "login":[
         {
           text: 'Home',
-          disabled: false,
+          iscurrent: false,
           href: '/',
         },
         {
           text: 'Login',
-          disabled: true,
+          iscurrent: true,
           href: '/login',
         },
       ],
       "iprequest":[
         {
           text: 'Home',
-          disabled: false,
+          iscurrent: false,
           href: '/',
         },
         {
           text: 'Ip Requests',
-          disabled: true,
+          iscurrent: true,
           href: '/ip-request',
         },
         {
           text: 'IP Blacklist',
-          disabled: false,
+          iscurrent: false,
           href: '/ip-blacklist',
         },        
       ],  
       "ipblacklist":[
         {
           text: 'Home',
-          disabled: false,
+          iscurrent: false,
           href: '/',
         },
         {
           text: 'Ip Requests',
-          disabled: false,
+          iscurrent: false,
           href: '/ip-request',
         },        
         {
           text: 'IP Blacklist',
-          disabled: true,
+          iscurrent: true,
           href: '/ip-blacklist',
         },
       ]  
@@ -83,6 +87,14 @@ export default {
         return []
       return this.obscrumbs[pagename]
     }
+  },
+
+  methods:{
+    refresh(){
+      //alert("refresh")
+      //this.$router.go(0)
+      location.reload()
+    },
   }
 
 }
