@@ -1,7 +1,13 @@
 <template>
   <div>
-    <v-progress-circular v-if="isfetching" indeterminate size="64"></v-progress-circular>
-    <v-data-table :headers="headers" :items="rows" class="elevation-3">
+    <v-row v-if="isfetching" align="center" justify="center">
+      <v-col cols="12" sm="8" md="4">
+        <v-progress-circular indeterminate size="50" />
+      </v-col>
+    </v-row>
+    
+
+    <v-data-table v-if="!isfetching" :headers="headers" :items="rows" class="elevation-3">
       <!-- inyecta en la cabecera de la tabla en la zona top-->
       <template v-slot:top>
         
@@ -101,8 +107,10 @@ export default {
   mounted: async function(){
     //alert("list mounted")
     console.log("iprequest.list.mounted async")
+    this.isfetching = true
     await this.async_islogged()
     await this.async_loaddata()
+    this.isfetching = false
   },
 
   computed:{
@@ -116,11 +124,10 @@ export default {
     async_loaddata: async function(){
       console.log("list.methods.loaddata this.islogged: ",this.islogged)
       if(this.islogged){
-        this.isfetching = true
+        
         const response = await api.async_get_ip_request()
         this.rows = response.result
         this.foundrows = response.foundrows
-        this.isfetching = false
         //console.table(this.rows)
       }
     },
