@@ -58,7 +58,6 @@ import barover from "@/components/common/bars/progress_barover.vue"
 import formedit from "@/modules/iprequest/form_edit.vue"
 import formremove from "@/modules/iprequest/form_remove.vue"
 
-
 export default {
   name: "list",
   
@@ -102,19 +101,8 @@ export default {
   }),//data
 
   beforeMounted: async function(){
-    alert("beofremounted de list ^^ nunca pasa por aqui?")
-    //this.reset_error()
-    //const response = await this.async_islogged()
+    alert("iprequest.list.beofremounted de list ^^ nunca pasa por aqui?")
     console.log("iprequest.list.beforeMount.islogged",this.islogged)
-
-    //if(response.error){
-      //alert(response.error)
-      //this.set_error("Error",response.error)
-    //}
-
-    //if(!this.islogged)
-      //this.$router.push({name:"login"})
-
   },
 
   mounted: async function(){
@@ -123,16 +111,16 @@ export default {
     //is_logged comprueba el token y setea this.islogged
     //si ha dado error no desloguea
     const response = await this.async_islogged()
-    //error network
-    if(response.error && this.islogged){
-      alert(response.error)
-      this.set_error("Error",response.error)
-      return 
-    }
 
     if(!this.islogged){
       this.$router.push({name:"login"})
       return
+    }    
+    
+    //error network
+    if(response.error){
+      this.$emit("evterror",response.error)
+      return 
     }
 
     await this.async_loaddata()
@@ -150,11 +138,11 @@ export default {
     async_loaddata: async function(){
       console.log("list.methods.loaddata this.islogged: ",this.islogged)
       if(this.islogged){
-        
+
         const response = await api.async_get_ip_request()
         this.rows = response.result
         this.foundrows = response.foundrows
-        //console.table(this.rows)
+        console.table("iprequest.list.async_loaddata.foundrows:",this.foundrows)
       }
     },
 
