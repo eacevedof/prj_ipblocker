@@ -6,6 +6,10 @@ let BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "http://localhost:3000"
 
+const pr = (mxvar,title="") => alert(title+":\n"+JSON.stringify(mxvar))
+
+const is_undefined = mxvar => (typeof mxvar == "undefined")
+
 const Api = {
 
   async_get_usertoken: async (objlogin)=>{
@@ -22,7 +26,9 @@ const Api = {
 
       console.log("api.async_get_usertoken.response",response)
       //alert(JSON.stringify(response))
-      //alert(response.data.data.token)
+      if(is_undefined(response.data.data.token))
+        throw new Error("Wrong data received from server. No token")
+
       return response.data.data.token
     } 
     catch (e) {
@@ -45,8 +51,8 @@ const Api = {
       console.log("api.async_is_validtoken.url",url)
       //console.log("api.async_is_validtoken.headers",headers)
       const response = await axios.post(url,data)
-
-      console.log("api.async_is_validtoken.response.data",response.data)
+      //pr(response,"async_is_valid_token")
+      
       return response.data
     } 
     catch (e) {
@@ -95,7 +101,10 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_get_ip_request.response",response)
-      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
+
+      if(is_undefined(response.data.data))
+        throw new Error("Wrong data received from server. Resultset")
+
       return response.data.data
     } 
     catch (e) {
@@ -159,10 +168,11 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_update.response",response)
-      if(!response.data.data)
-        throw new Error("No data received from server")
+
+      if(is_undefined(response.data.data.result))
+        throw new Error("Wrong data received from server. Update result")
       //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
-      return response.data.data
+      return response.data.data.result
     } 
     catch (e) {
       console.error("ERROR: api.async_update.url:",url,"e:",e)
@@ -198,10 +208,11 @@ const Api = {
       const response = await axios.post(url, objform)
 
       console.log("api.async_delete.response",response)
-      if(!response.data.data)
-        throw new Error("No data received from server")
+      //devuelve el num de registros afectados
+      if(is_undefined(response.data.data.result))
+        throw new Error("Wrong data received from server. Delete result")
       //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
-      return response.data.data
+      return response.data.data.result
     } 
     catch (e) {
       console.error("ERROR: api.async_delete.url:",url,"e:",e)
