@@ -5,7 +5,8 @@
     <scrumbs pagename="iprequest" />
     
     <notierror v-if="error.title!=''" :title="error.title"  :message="error.message" />
-    <list v-if="error.title==''" />
+    
+    <list v-if="error.title==''" v-on:evterror="on_error"/>
     
   </v-container>
 </template>
@@ -36,13 +37,10 @@ export default {
 
   mounted: async function(){
     console.log("iprequest.mounted islogged",this.islogged)
-    //await this.async_islogged()
-    //if(!this.islogged)
-      //this.$router.push({name:"login"})
   },
 
   beforeMount: async function (){
-
+    console.log("iprequest.beforemount islogged",this.islogged)
   },
 
   computed:{
@@ -53,6 +51,7 @@ export default {
   methods:{
     //setters
     ...mapActions(["async_islogged"]),
+    
     set_error(title,message){
       this.error.title = title
       this.error.message = message;
@@ -60,7 +59,12 @@ export default {
     
     reset_error(){
       this.error = { title:"", message:""}
-    },    
+    },
+
+    on_error(val){
+      this.set_error("Error",val)
+    },
+
   }
 }
 </script>
