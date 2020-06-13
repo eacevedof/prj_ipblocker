@@ -99,7 +99,8 @@ export default {
 
   mounted: async function(){
     //alert("list mounted")
-    console.log("iprequest.list.mounted")
+    console.log("iprequest.list.mounted async")
+    await this.async_islogged()
     await this.async_loaddata()
   },
 

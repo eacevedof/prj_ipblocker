@@ -91,9 +91,12 @@ export default {
 
   methods:{
     refresh(){
+      //this.$forceUpdate();
+      //this.$router.push({ name: pathname})
       //alert("refresh")
       //this.$router.go(0)
-      location.reload()
+      //location.reload()
+      this.$router.go(this.$router.currentRoute)
     },
   }
 
