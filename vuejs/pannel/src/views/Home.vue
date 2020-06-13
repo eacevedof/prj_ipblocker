@@ -5,13 +5,16 @@
     <v-row>
       <v-col>
         <ul>
-          <li
-            v-for="(item, index) in ipsblacklisted"
-            :key="index">
-            {{item.description}}
+          <li>
+          <a href="https://github.com/eacevedof/prj_ipblocker" class="black--text" target="_blank">En Github</a><br/>
           </li>
         </ul>
-      </v-col>    
+        <br/>
+        <pre>
+          IP Blocker es una herramienta que eventualmente está realizada en PHP y que tiene como fin
+          poder gestionar las peticiones que se hacen a tus "dominios"
+        </pre>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -20,26 +23,10 @@
 import {mapMutations, mapActions, mapState} from "vuex"
 import Scrumbs from "@/components/navigation/Scrumbs.vue"
 export default {
-  name: "Home",
+  name: "home",
 
   components:{
     Scrumbs,
   },
-
-  created(){
-    //async_get_ipsblacklisted
-    console.log("Home created")
-    this.async_get_ipsblacklisted()
-  },
-
-  computed:{
-    //las propiedades
-    ...mapState(["pagetitle","ipsblacklisted"])
-  },
-
-  methods:{
-    //ajax
-    ...mapActions(["async_get_ipsblacklisted"])
-  }    
 };
 </script>
