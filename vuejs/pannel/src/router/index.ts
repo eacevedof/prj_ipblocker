@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import home from '../views/home.vue';
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home,
+    component: home,
     meta:{
       title: "IP Blocker"
     }

@@ -6,7 +6,7 @@
     
     <notierror v-if="error.title!=''" :title="error.title"  :message="error.message" />
     
-    <list v-if="error.title==''" v-on:evterror="on_error"/>
+    <index v-if="error.title==''" v-on:evterror="on_error"/>
     
   </v-container>
 </template>
@@ -16,8 +16,8 @@ import api from "../providers/api"
 import db from "../helpers/localdb"
 
 import scrumbs from "@/components/navigation/scrumbs.vue"
-import list from "@/modules/iprequest/list.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
+import index from "@/modules/iprequest/index.vue"
 
 export default {
 
@@ -25,7 +25,7 @@ export default {
   
   components: {
     scrumbs,
-    list,
+    index,
     notierror,
   },
 

@@ -4,7 +4,7 @@
 
     <scrumbs pagename="ipblacklist" />
     
-    <list />
+    <index />
     
   </v-container>
 </template>
@@ -14,7 +14,7 @@ import api from "../providers/api"
 import db from "../helpers/localdb"
 
 import scrumbs from "@/components/navigation/scrumbs.vue"
-import list from "@/modules/iprequest/list.vue"
+import index from "@/modules/iprequest/index.vue"
 
 export default {
 
@@ -22,7 +22,7 @@ export default {
   
   components: {
     scrumbs,
-    list,
+    index,
   },
 
   beforeMount: async function (){
