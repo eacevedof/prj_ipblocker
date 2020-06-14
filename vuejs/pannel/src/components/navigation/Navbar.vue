@@ -35,8 +35,6 @@ export default Vue.extend({
   methods:{
     //setters
     ...mapMutations(["set_sidebar"]),
-  }  
-
-
+  } 
 })
 </script>
