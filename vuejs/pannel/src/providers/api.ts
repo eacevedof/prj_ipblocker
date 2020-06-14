@@ -10,6 +10,8 @@ const pr = (mxvar,title="") => alert(title+":\n"+JSON.stringify(mxvar))
 
 const is_undefined = mxvar => (typeof mxvar == "undefined")
 
+const get_error = objerr => objerr.toString().replace("Error:","") 
+
 const Api = {
 
   async_get_usertoken: async (objlogin)=>{
@@ -34,7 +36,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_usertoken.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }
   },//async_get_usertoken
@@ -62,7 +64,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_is_validtoken.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }    
   },
@@ -114,7 +116,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }
   },
@@ -132,7 +134,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_get_fields.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }    
   },
@@ -181,7 +183,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_update.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }
   },
@@ -221,7 +223,7 @@ const Api = {
     catch (e) {
       console.error("ERROR: api.async_delete.url:",url,"e:",e)
       return {
-        error: e.toString()
+        error: get_error(e)
       }
     }
   }, //async_delete
