@@ -10,7 +10,7 @@ const pr = (mxvar,title="") => alert(title+":\n"+JSON.stringify(mxvar))
 
 const is_undefined = mxvar => (typeof mxvar == "undefined")
 
-const get_error = objerr => ({"error": objerr.toString().replace("Error:","")})
+const get_error = objerr => ({"error": objerr.toString().replace("Error:","").trim()})
 
 const Api = {
 
