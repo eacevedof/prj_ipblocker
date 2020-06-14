@@ -12,7 +12,7 @@
         <sub>Your ip:{{ myip }}</sub>
       </v-col>
       <v-col cols="7" class="d-flex align-center justify-end">
-        <sub>{{moment().format('YYYY-MM-DD H:m:s')}}</sub>
+        <sub>{{ get_now }}</sub>
       </v-col>
     </v-toolbar-items>
   </v-app-bar>
@@ -26,15 +26,35 @@ import {mapMutations, mapActions, mapState} from "vuex"
 export default Vue.extend({
 
   name: "navbar",  
+  data(){
+    return {
+      ithread: -1,
+      timeout: "",
+    }
+  },
 
   computed:{
     //state
-    ...mapState(["myip"])
+    ...mapState(["myip"]),
+    get_now(){
+      this.set_now()
+      return this.timeout      
+    }
   },
 
   methods:{
     //setters
     ...mapMutations(["set_sidebar"]),
-  } 
+    set_now(){
+      if(this.ithread == -1){
+        const now = this.moment().format('YYYY-MM-DD H:m:s')
+        this.ithread = setInterval(()=>{
+          this.timeout = now
+        },1000)
+      }
+      console.log("set_now.this.ithread",this.ithread)
+    }
+  }
+
 })
 </script>
