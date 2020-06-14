@@ -150,7 +150,7 @@ const Api = {
 
       console.log("api.async_insert",url)
       const response = await axios.post(url, objform)
-      pr(response,"async_insert")
+      //pr(response,"async_insert")
       console.log("api.async_insert.response",response)
 
       if(is_undefined(response.data.data.result))
