@@ -44,7 +44,6 @@
   </v-row>
 </template>
 
-
 <script lang="ts">
 import {mapMutations} from "vuex"
 import { validationMixin } from 'vuelidate'
@@ -54,6 +53,9 @@ import db from "../../helpers/localdb"
 import notificationerror from "@/components/common/notifications/notification_error.vue"
 
 export default {
+
+  name: "formlogin",
+  
   mixins: [validationMixin],
 
   validations: {
