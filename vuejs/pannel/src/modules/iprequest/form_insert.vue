@@ -26,10 +26,10 @@
                 <v-text-field ref="remote_ip" :rules="valrules.remote_ip" v-model="objrow.remote_ip" autofocus label="Rem. IP" />
               </v-col>
               <v-col>
-                <v-text-field v-model="objrow.domain" required label="Domain" />
+                <v-text-field :rules="valrules.domain" v-model="objrow.domain" required label="Domain" />
               </v-col>
               <v-col>
-                <v-text-field v-model="objrow.request_uri" required label="Uri" />
+                <v-text-field :rules="valrules.request_uri" v-model="objrow.request_uri" required label="Uri" />
               </v-col>
             </v-row>
             <v-row>
@@ -91,6 +91,8 @@ export default {
           v => !!v || 'Remote IP is required',
           v => (v && v.length > 14) || 'Remote must be more than 14 characters',
         ],
+        domain:[v => !!v || 'Domain is required',],
+        request_uri:[v => !!v || 'Uri is required',],
       },  
     }
   ),
@@ -176,8 +178,8 @@ export default {
       this.set_success("Success",`Reg created ${result}`)
       this.$emit("evtinsert","ok")
       this.reset_objrow()
+      this.$refs.form.resetValidation()
       this.$refs.remote_ip.focus()
-
     }// async
   }
 }
