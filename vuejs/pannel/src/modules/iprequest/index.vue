@@ -59,7 +59,7 @@ import formedit from "@/modules/iprequest/form_edit.vue"
 import formremove from "@/modules/iprequest/form_remove.vue"
 
 export default {
-  name: "list",
+  name: "iprequest-index",
   
   components: {
     //notifsnack,

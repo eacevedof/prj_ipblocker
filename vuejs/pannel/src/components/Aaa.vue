@@ -6,9 +6,8 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Aaaa',
+  name: 'aaa',
   
-
   props: {
     msg: String,
   },
