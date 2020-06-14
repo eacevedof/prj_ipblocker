@@ -136,7 +136,7 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
       
-      const result = await api.async_update(this.objrow, ["id"])
+      const result = await api.async_insert(this.objrow)
       
       this.issubmitting = false
       if(result.error){  

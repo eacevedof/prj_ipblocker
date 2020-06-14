@@ -73,6 +73,33 @@ const Apify = {
     },
   }, //select
   
+  insert:{
+    table: "",
+    fields: [],
+
+    get_query(){
+      const thisinsert = Apify.insert
+      const oform = new FormData()
+      oform.append("action","insert")
+
+     //table
+     oform.append("queryparts[table]",thisinsert.table)
+
+     
+     thisinsert.fields.forEach( field => {
+       oform.append(`queryparts[fields][${field.k}]`,field.v)
+     });
+
+     return oform
+    },
+    
+    reset(){
+      const thisinsert = Apify.insert
+      thisinsert.table = ""
+      thisinsert.fields = []
+    },    
+  },//insert
+
   update:{
     table: "",
     fields: [],
