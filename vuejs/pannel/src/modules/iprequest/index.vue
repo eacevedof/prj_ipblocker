@@ -2,7 +2,7 @@
   <div>
     <barover :isvisible="isfetching" />
 
-    <v-data-table v-if="!isfetching" :headers="headers" :items="rows" class="elevation-3">
+    <v-data-table v-if="!isfetching" :headers="headers" :search="search" :items="rows" class="elevation-3">
       <!-- inyecta en la cabecera de la tabla en la zona top-->
       <template v-slot:top>
         

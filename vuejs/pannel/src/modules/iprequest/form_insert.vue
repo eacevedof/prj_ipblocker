@@ -68,7 +68,6 @@ export default {
   },
 
   props:{
-
     //si se muestra el form
     isvisible: Boolean, 
   },
