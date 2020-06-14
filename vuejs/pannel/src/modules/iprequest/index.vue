@@ -14,7 +14,7 @@
             class="mx-2"
             :elevation="10"
             fab dark color="light-green accent-4"
-            @click="show_dialog" 
+            @click="insert" 
           ><v-icon>mdi-plus</v-icon></v-btn>
 
           <v-divider class="mx-4" inset vertical/>
@@ -22,9 +22,10 @@
           <v-spacer></v-spacer>
 
           <!-- los hijos se comunican por eventos con los padres -->
-          <formupdate v-if="crudopt=='edit'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
-
-          <formdelete v-if="crudopt=='remove'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=false" />
+          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
+          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />          
+          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
+          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=false" />
 
         </v-toolbar>
 
@@ -38,7 +39,7 @@
 
       <!-- botones columna -->
       <template v-slot:item.colbuttons="{ item }">
-        <v-btn class="m4-2" fab dark small color="cyan" @click="edit(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
+        <v-btn class="m4-2" fab dark small color="cyan" @click="update(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
       </template>
 
@@ -55,6 +56,8 @@ import api from "../../providers/api"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
+import detail from "@/modules/iprequest/detail.vue"
+import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
 import formdelete from "@/modules/iprequest/form_delete.vue"
 
@@ -63,6 +66,8 @@ export default {
   
   components: {
     //notifsnack,
+    forminsert,
+    detail,
     formupdate,
     formdelete,
     barover,
@@ -157,15 +162,23 @@ export default {
 
     detail(){;},
 
-    edit(objrow){
+    insert(){
+      //alert(JSON.stringify("insert"))
+      this.crudopt = "insert"
+      //set showform=true
+      this.show_dialog()
+    },
+
+    update(objrow){
       //alert(JSON.stringify(objrow))
-      this.crudopt = "edit"
+      this.crudopt = "update"
       this.objrow = objrow
+      //set showform=true
       this.show_dialog()
     },
 
     remove(objrow){
-      this.crudopt = "remove"
+      this.crudopt = "delete"
       this.objrow = objrow
       this.show_dialog()
     },

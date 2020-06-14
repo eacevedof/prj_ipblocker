@@ -50,7 +50,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="yellow accent-4t" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
+        <v-btn color="yellow accent-4" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
       </v-card-actions>
 
     </v-card>
