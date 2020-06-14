@@ -48,7 +48,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="red accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_accept">Accept</v-btn>
+        <v-btn v-if="isaccept" color="red accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_accept">Accept</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -71,10 +71,8 @@ export default {
   },
 
   props:{
-
     //si se muestra el form
     isvisible: Boolean,
-
     objrow: {},
   },
 
@@ -82,13 +80,15 @@ export default {
     {
       issubmitting: false,
       error:{title:"",mesage:""},
-      success:{title:"",message:""}
+      success:{title:"",message:""},
+      isaccept: true,
     }
   ),
 
   watch: {
 
   },
+
   //getters
   computed:{
     
@@ -133,6 +133,7 @@ export default {
     close(){
       this.reset_alerts()
       this.is_visible = false
+      this.isaccept = true
     },
 
     async_accept: async function(){
@@ -144,12 +145,13 @@ export default {
       
       if(result.error){  
         this.set_error("Error",result.error)        
-        this.$emit("evtremove","nok")
+        this.$emit("evtdelete","nok")
         return
       }
       
       this.set_success("Success",`Reults deleted ${result}`)
-      this.$emit("evtremove","ok")
+      this.isaccept = false
+      this.$emit("evtdelete","ok")
     },
   },
 }
