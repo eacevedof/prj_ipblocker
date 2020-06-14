@@ -14,7 +14,7 @@
         <v-text-field
           ref="username"
           v-model="username"
-          :error-messages="usernameErrors"
+          :error-messages="get_username_errors"
           :counter="10"
           label="Username"
           required
@@ -25,7 +25,7 @@
         <v-text-field
           ref="password"
           v-model="password"
-          :error-messages="passwordErrors"
+          :error-messages="get_password_errors"
           label="Password"
           type="password"
           required
@@ -78,14 +78,14 @@ export default {
   }),//data
 
   computed: {
-    usernameErrors () {
+    get_username_errors () {
       const errors = []
       if (!this.$v.username.$dirty) return errors
       !this.$v.username.maxLength && errors.push('username must be at most 10 characters long')
       !this.$v.username.required && errors.push('username is required.')
       return errors
     },
-    passwordErrors () {
+    get_password_errors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
       //!this.$v.password.minLength && errors.push('Min length of pass is 8')
