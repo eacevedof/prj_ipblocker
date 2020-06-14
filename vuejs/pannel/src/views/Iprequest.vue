@@ -15,7 +15,7 @@ import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../providers/api"
 import db from "../helpers/localdb"
 
-import Scrumbs from "@/components/navigation/Scrumbs.vue"
+import scrumbs from "@/components/navigation/scrumbs.vue"
 import list from "@/modules/iprequest/list.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
 
@@ -24,7 +24,7 @@ export default {
   name: "iprequest",
   
   components: {
-    Scrumbs,
+    scrumbs,
     list,
     notierror,
   },
