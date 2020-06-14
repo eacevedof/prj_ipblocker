@@ -2,7 +2,11 @@
   <div>
     <barover :isvisible="isfetching" />
 
-    <v-data-table v-if="!isfetching" :headers="headers" :search="search" :items="rows" class="elevation-3">
+    <v-data-table v-if="!isfetching" 
+      :headers="headers" :search="search" :items="rows" 
+      @click:row="on_rowclick"
+      class="elevation-3"
+    >
       <!-- inyecta en la cabecera de la tabla en la zona top-->
       <template v-slot:top>
         
@@ -95,8 +99,8 @@ export default {
       { text: 'Whois', value: 'whois' },
       { text: 'Domain', value: 'domain' },
       { text: 'R. URI', value: 'request_uri' },
-      { text: 'GET', value: 'get' },
-      { text: 'POST', value: 'post' },
+      { text: 'GET', value: 'hasget' },
+      { text: 'POST', value: 'haspost' },
       { text: 'In BL', value: 'inbl' },
       { text: 'Day', value: 'insert_date' },
     ],
@@ -161,6 +165,10 @@ export default {
     },
 
     detail(){;},
+
+    on_rowclick(value){
+      alert(JSON.stringify(value))
+    },
 
     insert(){
       //alert(JSON.stringify("insert"))
