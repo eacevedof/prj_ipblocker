@@ -153,10 +153,10 @@ const Api = {
       //pr(response,"async_insert")
       console.log("api.async_insert.response",response)
 
-      if(is_undefined(response.data.data.result))
-        throw new Error("Wrong data received from server. insert result")
+      if(is_undefined(response.data.data.lastid))
+        throw new Error("Wrong data received from server. insert lastid")
       //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
-      return response.data.data.result
+      return response.data.data.lastid
     } 
     catch (e) {
       console.error("ERROR: api.async_insert.url:",url,"e:",e)

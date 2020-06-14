@@ -11,30 +11,35 @@
 
       <v-card-text>
         <v-container>
-          <v-row v-if="error.title!='' || success.title!=''">
-            <v-col ms="12">
-              <notierror v-if="error.title!=''" :title="error.title"  :message="error.message" />
-              <notisuccess v-if="success.title!=''" :title="success.title"  :message="success.message" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>  
-              <v-text-field v-model="objrow.remote_ip" autofocus label="Rem. IP" />
-            </v-col>
-            <v-col>
-              <v-text-field v-model="objrow.domain" label="Domain" />
-            </v-col>
-            <v-col>
-              <v-text-field v-model="objrow.request_uri" label="Uri" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>  
-              <v-textarea rows="1" v-model="objrow.get" label="GET" />              
-              <v-textarea rows="1" v-model="objrow.post" label="POST" />              
-            </v-col>
-          </v-row>
-          <progressbar :isvisible="issubmitting" />
+          <v-form ref="form"
+            v-model="isformvalid"
+            lazy-validation
+          >
+            <v-row v-if="error.title!='' || success.title!=''">
+              <v-col ms="12">
+                <notierror v-if="error.title!=''" :title="error.title"  :message="error.message" />
+                <notisuccess v-if="success.title!=''" :title="success.title"  :message="success.message" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>  
+                <v-text-field ref="remote_ip" :rules="valrules.remote_ip" v-model="objrow.remote_ip" autofocus label="Rem. IP" />
+              </v-col>
+              <v-col>
+                <v-text-field v-model="objrow.domain" required label="Domain" />
+              </v-col>
+              <v-col>
+                <v-text-field v-model="objrow.request_uri" required label="Uri" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>  
+                <v-textarea rows="1" v-model="objrow.get" label="GET" />              
+                <v-textarea rows="1" v-model="objrow.post" label="POST" />              
+              </v-col>
+            </v-row>
+            <progressbar :isvisible="issubmitting" />
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -78,7 +83,15 @@ export default {
         domain: "",
         get: "",
         post: "",
-      },      
+      },
+
+      isformvalid:true,
+      valrules:{
+        remote_ip:[
+          v => !!v || 'Remote IP is required',
+          v => (v && v.length > 14) || 'Remote must be more than 14 characters',
+        ],
+      },  
     }
   ),
 
@@ -126,12 +139,27 @@ export default {
       this.set_success("","")
     },
 
+    reset_objrow(){
+      this.objrow = {
+        request_uri: "",
+        domain: "",
+        get: "",
+        post: "",        
+      }
+    },
+
     close(){
       this.reset_alerts()
       this.is_visible = false
     },
 
     async_save: async function (){
+      this.$refs.form.validate()
+      if(!this.isformvalid){
+        //alert(this.isformvalid)
+        return
+      }
+
       //this.loader = 'loading5'
       this.reset_alerts()
       this.issubmitting = true
@@ -145,8 +173,11 @@ export default {
         return
       }
       
-      this.set_success("Success",`Reults updated ${result}`)
+      this.set_success("Success",`Reg created ${result}`)
       this.$emit("evtinsert","ok")
+      this.reset_objrow()
+      this.$refs.remote_ip.focus()
+
     }// async
   }
 }
