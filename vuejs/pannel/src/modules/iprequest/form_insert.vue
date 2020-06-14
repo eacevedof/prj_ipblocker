@@ -4,7 +4,7 @@
 
 <script lang="ts">
 export default {
-  name: 'form-create',
+  name: 'iprequest-forminsert',
   
 
   props: {

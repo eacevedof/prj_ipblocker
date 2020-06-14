@@ -1,12 +1,10 @@
 <template>
   <v-dialog v-model="is_visible" max-width="700px">
-    
-    <v-card>
-      
-      <v-card-title class="yellow accent-4 blue-grey-darken-2--text">
-        <span class="headline">
-          <v-icon color="black">mdi-pencil</v-icon> <b>Editing IP Request:</b> {{get_dialogtitle}}
-          </span>
+    <v-card>    
+      <v-card-title class="red accent-4 white--text">
+        <span class="headline"> 
+          <v-icon color="white">mdi-trash-can-outline</v-icon> <b>Deleting IP Request!:</b> {{get_dialogtitle}}
+        </span>
       </v-card-title>
 
       <v-card-text>
@@ -19,28 +17,28 @@
           </v-row>
           <v-row>
             <v-col ms="5">
-              <v-text-field v-model="objrow.remote_ip" readonly label="R. IP" />
+              <v-text-field v-model="objrow.remote_ip" label="R. IP" disabled outlined dense />
             </v-col>
             <v-col ms="1">
-              <v-text-field v-model="objrow.country" readonly label="Country" />
+              <v-text-field v-model="objrow.country" disabled outlined dense label="Country" />
             </v-col>
             <v-col sm="6">
-              <v-text-field v-model="objrow.domain" label="Domain" />
+              <v-text-field v-model="objrow.domain" disabled outlined dense label="Domain" />
             </v-col>
           </v-row>
           <v-row>
             <v-col sm="12">
-              <v-text-field v-model="objrow.whois" readonly label="Whois" />
+              <v-text-field v-model="objrow.whois" disabled outlined dense label="Whois" />
             </v-col>                        
           </v-row>
           <v-row>
             <v-col>  
-              <v-text-field v-model="objrow.request_uri" label="Uri" />
-              <v-textarea rows="1" v-model="objrow.get" label="GET" />
+              <v-text-field v-model="objrow.request_uri" label="Uri" disabled outlined dense />
+              <v-textarea rows="1" v-model="objrow.get" label="GET" disabled outlined dense />
             </v-col>
             <v-col>
-              <v-textarea rows="1" v-model="objrow.post" label="POST" />
-              <v-text-field v-model="objrow.insert_date" readonly label="Date" />
+              <v-textarea rows="1" v-model="objrow.post" label="POST" disabled outlined dense />
+              <v-text-field v-model="objrow.insert_date" disabled label="Date" outlined dense />
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -50,12 +48,13 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="yellow accent-4t" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
+        <v-btn color="red accent-4" :disabled="issubmitting" class="ma-2 white--text" @click="async_accept">Accept</v-btn>
       </v-card-actions>
 
     </v-card>
   </v-dialog>
 </template>
+
 <script lang="ts">
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -63,7 +62,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 import api from "../../providers/api"
 export default {
 
-  name: "formedit",
+  name: "iprequest-formdelete",
 
   components:{
     progressbar,
@@ -136,23 +135,22 @@ export default {
       this.is_visible = false
     },
 
-    async_save: async function (){
-      //this.loader = 'loading5'
+    async_accept: async function(){
       this.reset_alerts()
       this.issubmitting = true
-      
-      const result = await api.async_update(this.objrow, ["id"])
-      
+
+      const result = await api.async_delete(this.objrow,["id"])
       this.issubmitting = false
+      
       if(result.error){  
         this.set_error("Error",result.error)        
-        this.$emit("evtedit","nok")
+        this.$emit("evtremove","nok")
         return
       }
       
-      this.set_success("Success",`Reults updated ${result}`)
-      this.$emit("evtedit","ok")
-    }// async
-  }
+      this.set_success("Success",`Reults deleted ${result}`)
+      this.$emit("evtremove","ok")
+    },
+  },
 }
 </script>
