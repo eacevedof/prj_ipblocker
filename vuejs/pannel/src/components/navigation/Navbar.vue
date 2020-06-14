@@ -46,13 +46,12 @@ export default Vue.extend({
     //setters
     ...mapMutations(["set_sidebar"]),
     set_now(){
-      if(this.ithread == -1){
-        const now = this.moment().format('YYYY-MM-DD H:m:s')
-        this.ithread = setInterval(()=>{
-          this.timeout = now
-        },1000)
-      }
-      console.log("set_now.this.ithread",this.ithread)
+      this.ithread = setInterval(()=>{
+        this.timeout = this.moment().format('YYYY-MM-DD H:m:s')
+        //console.log("navbar.set_now clearing interval: ",this.ithread)
+        clearInterval(this.ithread)
+      },1000)
+      //console.log("navbar.set_now.this.ithread",this.ithread)
     }
   }
 
