@@ -141,12 +141,12 @@ export default {
       this.issubmitting = false
       if(result.error){  
         this.set_error("Error",result.error)        
-        this.$emit("evtedit","nok")
+        this.$emit("evtinsert","nok")
         return
       }
       
       this.set_success("Success",`Reults updated ${result}`)
-      this.$emit("evtedit","ok")
+      this.$emit("evtinsert","ok")
     }// async
   }
 }

@@ -22,10 +22,10 @@
           <v-spacer></v-spacer>
 
           <!-- los hijos se comunican por eventos con los padres -->
-          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
-          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />          
-          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtedit="dialog_result" v-on:evtclose="showform=false" />
-          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtremove="dialog_result" v-on:evtclose="showform=false" />
+          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="dialog_result" v-on:evtclose="showform=false" />
+          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />          
+          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="dialog_result" v-on:evtclose="showform=false" />
+          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="dialog_result" v-on:evtclose="showform=false" />
 
         </v-toolbar>
 
