@@ -22,12 +22,12 @@
 
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import Scrumbs from "@/components/navigation/Scrumbs.vue"
+import scrumbs from "@/components/navigation/scrumbs.vue"
 export default {
   name: "home",
 
   components:{
-    Scrumbs,
+    scrumbs,
   },
 };
 </script>

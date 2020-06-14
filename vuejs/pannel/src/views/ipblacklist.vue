@@ -13,7 +13,7 @@ import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../providers/api"
 import db from "../helpers/localdb"
 
-import Scrumbs from "@/components/navigation/Scrumbs.vue"
+import scrumbs from "@/components/navigation/scrumbs.vue"
 import list from "@/modules/iprequest/list.vue"
 
 export default {
@@ -21,7 +21,7 @@ export default {
   name: "ipblacklist",
   
   components: {
-    Scrumbs,
+    scrumbs,
     list,
   },
 

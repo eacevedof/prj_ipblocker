@@ -25,7 +25,7 @@ import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
 
-  name: "Navbar",  
+  name: "navbar",  
 
   computed:{
     //state

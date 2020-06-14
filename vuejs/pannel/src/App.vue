@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Navbar from "@/components/navigation/Navbar.vue"
-import Sidebar from "@/components/navigation/Sidebar.vue"
+import navbar from "@/components/navigation/navbar.vue"
+import sidebar from "@/components/navigation/sidebar.vue"
 import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
@@ -27,8 +27,8 @@ export default Vue.extend({
   },
 
   components: {
-    Navbar,
-    Sidebar
+    navbar,
+    sidebar
   },
 
   data: () => ({
