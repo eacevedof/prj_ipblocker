@@ -101,12 +101,12 @@ export default {
   }),//data
 
   beforeMounted: async function(){
-    alert("iprequest.list.beofremounted de list ^^ nunca pasa por aqui?")
-    console.log("iprequest.list.beforeMount.islogged",this.islogged)
+    alert("iprequest.index.beofremounted de list ^^ nunca pasa por aqui?")
+    console.log("iprequest.index.beforeMount.islogged",this.islogged)
   },
 
   mounted: async function(){
-    console.log("iprequest.list.mounted.async_islogged.response islogged:",this.islogged)
+    console.log("iprequest.index.mounted.async_islogged.response islogged:",this.islogged)
     this.isfetching = true
     //is_logged comprueba el token y setea this.islogged
     //si ha dado error no desloguea
@@ -142,7 +142,7 @@ export default {
         const response = await api.async_get_ip_request()
         this.rows = response.result
         this.foundrows = response.foundrows
-        console.table("iprequest.list.async_loaddata.foundrows:",this.foundrows)
+        console.table("iprequest.index.async_loaddata.foundrows:",this.foundrows)
       }
     },
 

@@ -10,7 +10,7 @@ const pr = (mxvar,title="") => alert(title+":\n"+JSON.stringify(mxvar))
 
 const is_undefined = mxvar => (typeof mxvar == "undefined")
 
-const get_error = objerr => objerr.toString().replace("Error:","") 
+const get_error = objerr => ({"error": objerr.toString().replace("Error:","")})
 
 const Api = {
 
@@ -35,9 +35,7 @@ const Api = {
     } 
     catch (e) {
       console.error("ERROR: api.async_get_usertoken.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }
   },//async_get_usertoken
 
@@ -63,9 +61,7 @@ const Api = {
     } 
     catch (e) {
       console.error("ERROR: api.async_is_validtoken.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }    
   },
   
@@ -115,9 +111,7 @@ const Api = {
     } 
     catch (e) {
       console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }
   },
 
@@ -133,9 +127,7 @@ const Api = {
     }
     catch (e) {
       console.error("ERROR: api.async_get_fields.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }    
   },
 
@@ -150,6 +142,9 @@ const Api = {
       objupdate.table = "app_ip_request"
 
       const arfields = await Api.async_get_fields(objupdate.table)
+      if(arfields.error)
+        throw new Error(arfields.error)
+
       console.log("arfields",arfields)
       const onlyfields = arfields.data.data.map(objconf => objconf.field_name)
 
@@ -182,9 +177,7 @@ const Api = {
     } 
     catch (e) {
       console.error("ERROR: api.async_update.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }
   },
 
@@ -222,9 +215,7 @@ const Api = {
     } 
     catch (e) {
       console.error("ERROR: api.async_delete.url:",url,"e:",e)
-      return {
-        error: get_error(e)
-      }
+      return get_error(e)
     }
   }, //async_delete
 
