@@ -4,7 +4,7 @@
 
 <script lang="ts">
 export default {
-  name: 'detail',
+  name: 'iprequest-detail',
   
   props: {
     objrow: {
