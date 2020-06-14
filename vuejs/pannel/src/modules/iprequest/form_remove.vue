@@ -143,7 +143,7 @@ export default {
       this.issubmitting = false
       
       if(result.error){  
-        this.set_error("Error","Some error ocurred. " + result.error)        
+        this.set_error("Error",result.error)        
         this.$emit("evtremove","nok")
         return
       }
