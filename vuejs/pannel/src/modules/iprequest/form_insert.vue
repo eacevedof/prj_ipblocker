@@ -19,7 +19,7 @@
           </v-row>
           <v-row>
             <v-col>  
-              <v-text-field v-model="objrow.remote_ip" label="Rem. IP" />
+              <v-text-field v-model="objrow.remote_ip" autofocus label="Rem. IP" />
             </v-col>
             <v-col>
               <v-text-field v-model="objrow.domain" label="Domain" />
