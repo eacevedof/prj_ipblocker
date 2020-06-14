@@ -131,6 +131,39 @@ const Api = {
     }    
   },
 
+  async_insert: async(objrow) => {
+    const usertoken = db.select("usertoken")
+    const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
+    //hay que enviar header: apify-auth: token
+    try {
+      const objinsert = helpapify.insert
+      objinsert.reset()
+      objinsert.table = "app_ip_request"
+
+      const fields = Object.keys(objrow)
+      fields.forEach( field => {
+          objinsert.fields.push({k:field,v:objrow[field]})
+      })
+
+      const objform = objinsert.get_query()
+      objform.append("apify-usertoken",usertoken)
+
+      console.log("api.async_insert",url)
+      const response = await axios.post(url, objform)
+      pr(response,"async_insert")
+      console.log("api.async_insert.response",response)
+
+      if(is_undefined(response.data.data.result))
+        throw new Error("Wrong data received from server. insert result")
+      //alert(JSON.stringify(response.data.data)) esto viene con result: las filas, y numrows: el total
+      return response.data.data.result
+    } 
+    catch (e) {
+      console.error("ERROR: api.async_insert.url:",url,"e:",e)
+      return get_error(e)
+    }
+  },
+
   async_update: async(objrow, keys=[]) => {
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
@@ -220,5 +253,6 @@ const Api = {
   }, //async_delete
 
 }//Api
+
 
 export default Api;
