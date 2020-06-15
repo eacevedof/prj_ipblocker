@@ -37,10 +37,11 @@ export default {
     x:0,
     y:0,
     items: [
+      { title: 'Detail', evt:"detail" },
       { title: 'Clone', evt:"clone" },
       { title: 'Update', evt:"update" },
       { title: 'Delete', evt:"delete"},
-      { title: 'Detail', evt:"detail" },
+      
     ],
   }),
 
