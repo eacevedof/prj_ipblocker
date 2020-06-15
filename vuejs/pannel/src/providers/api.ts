@@ -77,7 +77,7 @@ const Api = {
 
       objselect.table = "app_ip_request r"
       objselect.foundrows = 1
-            
+      objselect.distinct = 1
       objselect.fields.push("r.id")
       objselect.fields.push("r.remote_ip")
       objselect.fields.push("i.country")
@@ -97,7 +97,7 @@ const Api = {
       if(id)
         objselect.where.push(`r.id=${id}`)
       objselect.orderby.push("r.id DESC")
-      objselect.limit.perpage = 5000
+      objselect.limit.perpage = 1000
       objselect.limit.regfrom = 0
 
 
