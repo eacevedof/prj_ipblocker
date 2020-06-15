@@ -2,33 +2,7 @@
   <div>
     <barover :isvisible="isfetching" />
 
-<v-row class="flex" justify="center">
-      <v-card
-        :ripple="false"
-        class="portrait"
-        img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
-        height="300px"
-        @click="submenu(e)"
-      ></v-card>
-    </v-row>
-
-    <v-menu
-      v-model="issubmenu"
-      :position-x="x"
-      :position-y="y"
-      absolute
-      offset-y
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-          @click="sumenu()"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+  <submenu :isvisible="issubmenu" />
 
     <v-data-table v-if="!isfetching" 
       :headers="headers" :search="search" :items="rows" 
@@ -102,7 +76,7 @@ export default {
   
   components: {
     //notifsnack,
-    //submenu,
+    submenu,
     forminsert,
     detail,
     formupdate,
