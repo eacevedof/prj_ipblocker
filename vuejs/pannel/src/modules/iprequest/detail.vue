@@ -39,7 +39,11 @@
             <v-col class="pa-0">
               <h4 :class="{'cyan--text':objrowdetail.inbl!=''}">Reason</h4>
               <p>{{objrowdetail.reason}}</p>                   
-            </v-col>                        
+            </v-col>  
+            <v-col class="pa-0">
+              <h4 :class="{'cyan--text':objrowdetail.bl_date!=''}">Date in BL</h4>
+              <p>{{objrowdetail.bl_date}}</p>                   
+            </v-col>                                    
           </v-row>
           <v-row>
             <v-col class="pa-0">

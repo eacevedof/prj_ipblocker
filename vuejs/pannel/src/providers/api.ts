@@ -89,13 +89,18 @@ const Api = {
       objselect.fields.push("r.post")
       objselect.fields.push("CASE WHEN r.`post`!='' THEN 'POST' ELSE '' END haspost")      
       objselect.fields.push("r.insert_date")
+      objselect.fields.push("bl.insert_date bl_date")
       objselect.fields.push("bl.reason")
       objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'INBL' END inbl")
+      
       objselect.joins.push("LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip")
       objselect.joins.push("LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip")
 
+      objselect.where.push("i.whois NOT LIKE '%google%'")
+      objselect.where.push("i.whois NOT LIKE '%msn%'")
       if(id)
         objselect.where.push(`r.id=${id}`)
+      
       objselect.orderby.push("r.id DESC")
       objselect.limit.perpage = 1000
       objselect.limit.regfrom = 0
