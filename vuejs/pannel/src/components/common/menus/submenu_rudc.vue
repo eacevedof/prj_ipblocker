@@ -34,13 +34,12 @@ export default {
   },
 
   data: () => ({
-    showMenu: false,
     x:0,
     y:0,
     items: [
       { title: 'Clone', evt:"clone" },
       { title: 'Update', evt:"update" },
-      { title: 'Delete', evt:"remove"},
+      { title: 'Delete', evt:"delete"},
       { title: 'Detail', evt:"detail" },
     ],
   }),
