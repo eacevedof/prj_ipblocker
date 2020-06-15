@@ -2,9 +2,9 @@
   <v-dialog v-model="is_visible" max-width="900px">
     
     <v-card>
-      <v-card-title class="yellow accent-4 blue-grey-darken-2--text">
+      <v-card-title class="cyan accent-4 cyan--text text--lighten-5">
         <span class="headline">
-          <v-icon color="black">mdi-pencil</v-icon> <b>Editing IP Request:</b> {{get_dialogtitle}}
+          <v-icon color="">mdi-eye-outline</v-icon> <b>Detail of IP Request:</b> {{get_dialogtitle}}
           </span>
       </v-card-title>
 
@@ -26,17 +26,25 @@
               <p>{{objrow.country}}</p>
             </v-col>
             <v-col class="pa-0">
-              <h4>Domain</h4>
-              <p>{{objrow.domain}}</p>              
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="pa-0">
               <h4>Whois</h4>
               <p>{{objrow.whois}}</p>
+            </v-col>
+          </v-row>
+          <v-row v-if="objrow.inbl!=''">
+            <v-col class="pa-0">
+              <h4 :class="{'cyan--text':objrow.inbl!=''}">In Blacklist</h4>
+              <p>{{objrow.inbl}}</p>            
+            </v-col>             
+            <v-col class="pa-0">
+              <h4 :class="{'cyan--text':objrow.inbl!=''}">Reason</h4>
+              <p>{{objrow.reason}}</p>                   
             </v-col>                        
           </v-row>
           <v-row>
+            <v-col class="pa-0">
+              <h4>Domain</h4>
+              <p>{{objrow.domain}}</p>                   
+            </v-col>             
             <v-col class="pa-0">
               <h4>Req. URI</h4>
               <p>{{objrow.request_uri}}</p>
@@ -45,13 +53,13 @@
           <v-row>
             <v-col class="pa-0">
               <h4>GET</h4>
-              <p>{{objrow.get}}</p>
+              <p :class="{fontcode:objrow.get!=''}">{{objrow.get}}</p>
             </v-col>            
           </v-row> 
           <v-row>
             <v-col class="pa-0">
               <h4>POST</h4>
-              <p style="font-family:'Lucida Console',courrier, monospace;">{{objrow.post}}</p>
+              <p :class="{fontcode:objrow.post!=''}">{{objrow.post}}</p>
             </v-col>            
           </v-row>                    
           <v-row>
@@ -67,7 +75,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="yellow accent-4" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
+        <v-btn color="cyan accent-4" :disabled="issubmitting" class="ma-2 cyan--text text--lighten-5" @click="async_detail">Refressh</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -89,10 +97,8 @@ export default {
   },
 
   props:{
-
     //si se muestra el form
     isvisible: Boolean,
-
     objrow: {},
   },
 
@@ -104,9 +110,6 @@ export default {
     }
   ),
 
-  watch: {
-
-  },
   //getters
   computed:{
     
@@ -133,6 +136,10 @@ export default {
   //setters 
   methods:{
 
+    set_objrow(objrow){
+      this.objrow.id = 10
+    },
+
     set_error(title,message){
       this.error.title = title
       this.error.message = message
@@ -153,23 +160,33 @@ export default {
       this.is_visible = false
     },
 
-    async_save: async function (){
+    async_detail: async function (){
       //this.loader = 'loading5'
       this.reset_alerts()
       this.issubmitting = true
       
-      const result = await api.async_update(this.objrow, ["id"])
-      
+      const result = await api.async_get_ip_request(this.objrow.id)
+      alert(JSON.stringify(result))
+
       this.issubmitting = false
       if(result.error){  
         this.set_error("Error",result.error)        
-        this.$emit("evtupdate","nok")
+        this.$emit("evtrefresh","nok")
         return
       }
+
       
-      this.set_success("Success",`Reults updated ${result}`)
-      this.$emit("evtupdate","ok")
+      this.set_objrow(result.result[0])
+      this.set_success("Success",`Reg refreshed ${result}`)
+      this.$emit("evtrefresh","ok")
     }// async
   }
 }
 </script>
+<style scoped>
+p.fontcode {
+  font-family: 'Lucida Console',courrier, monospace !important;
+  font-size: 0.95em;
+  border: 1px solid #00BCD4;
+}
+</style>

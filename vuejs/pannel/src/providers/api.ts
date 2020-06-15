@@ -65,7 +65,7 @@ const Api = {
     }    
   },
   
-  async_get_ip_request: async () => {
+  async_get_ip_request: async (id) => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
     const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
@@ -89,10 +89,13 @@ const Api = {
       objselect.fields.push("r.post")
       objselect.fields.push("CASE WHEN r.`post`!='' THEN 'POST' ELSE '' END haspost")      
       objselect.fields.push("r.insert_date")
-      objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'Y' END inbl")
+      objselect.fields.push("bl.reason")
+      objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'INBL' END inbl")
       objselect.joins.push("LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip")
       objselect.joins.push("LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip")
-      
+
+      if(id)
+        objselect.where.push(`r.id=${id}`)
       objselect.orderby.push("r.id DESC")
       objselect.limit.perpage = 250
       objselect.limit.regfrom = 0
