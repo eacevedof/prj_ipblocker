@@ -2,8 +2,8 @@
   <div>
     <v-menu
       v-model="is_visible"
-      :position-x="evtclick.x"
-      :position-y="evtclick.y"
+      :position-x="evtclick.x || x"
+      :position-y="evtclick.y || y"
       absolute
       offset-y
     >
