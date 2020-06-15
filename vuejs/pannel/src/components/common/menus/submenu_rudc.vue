@@ -58,7 +58,7 @@ export default {
 
   methods:{
     clickhandler(fncname){
-      this.$emit(fncname)
+      this.$emit("evtselected",fncname)
     },
   },
 
