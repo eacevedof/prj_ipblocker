@@ -51,32 +51,14 @@ export default {
         return this.isvisible
       },
       set(v){
-        this.$emit("update:isvisible",v)
+        this.$emit("evtclose",v)
       }
     }
   },
 
   methods:{
     clickhandler(fncname){
-      this[fncname]()
-    },
-    clone(){
-      alert("clone")
-      this.$emit("evtclone")
-    },
-
-    update(){
-      alert("update")
-      this.$emit("evtupdate")
-    },
-    remove(){
-      alert("remove")
-      this.$emit("evtdelete")
-    },
-
-    detail(){
-      alert("detail")
-      this.$emit("evtdetail")
+      this.$emit(fncname)
     },
   },
 
