@@ -88,7 +88,7 @@ export default {
   data: () => ({
 
     issubmenu: false,
-    evtsubmenu: null,
+    evtsubmenu: {x:0,y:0},
 
     isfetching: false,
     showform: false,

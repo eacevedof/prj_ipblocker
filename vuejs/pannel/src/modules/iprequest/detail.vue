@@ -148,8 +148,8 @@ export default {
       if(curr==true){
         this.objrowdetail = {...this.objrow}
       }
-      else
-        this.objrowdetail = {}
+      //else
+        //this.objrowdetail = {}
       console.log("detail.watch.isvisible",this.objrowdetail)
     }
 
@@ -180,6 +180,7 @@ export default {
     close(){
       console.log("detail.close.close",this.objrowdetail)
       this.objrowdetail = {}
+      this.objflag = {}
       this.reset_alerts()
       this.$emit("evtclose")
     },

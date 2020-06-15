@@ -97,7 +97,7 @@ const Api = {
       if(id)
         objselect.where.push(`r.id=${id}`)
       objselect.orderby.push("r.id DESC")
-      objselect.limit.perpage = 250
+      objselect.limit.perpage = 5000
       objselect.limit.regfrom = 0
 
 
