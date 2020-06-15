@@ -2,7 +2,7 @@
   <div>
     <barover :isvisible="isfetching" />
 
-    <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtupdate="crudopt='update';showform=true;" v-on:evtclose="issubmenu=false" />
+    <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
     <v-data-table v-if="!isfetching" 
       :headers="headers" :search="search" :items="rows" 
@@ -201,12 +201,18 @@ export default {
       this.show_dialog()
     },
 
-    submenu(){
+    submenu(objrow){
       const e = window.event
+      this.objrow = objrow
       this.issubmenu = true
       this.evtsubmenu = e
-      //alert("submenu: "+this.issubmenu)
 
+    },
+
+    submenu_selected(option){
+      alert(option)
+      this.crudopt= "update"
+      this.show_dialog()
     },
 
   }//methods  
