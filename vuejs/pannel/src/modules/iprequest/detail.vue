@@ -166,6 +166,7 @@ export default {
       this.reset_alerts()
       //function setter
       this.$emit("evtclose")
+      this.objrowdetail = {}
     },
 
     async_detail: async function (){
