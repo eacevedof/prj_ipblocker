@@ -41,11 +41,14 @@
       </template>
       <!-- fin cabecer tabla -->
 
+      <submenu :isvisible="issubmenu" />
       <!-- botones columna -->
       <template v-slot:item.colbuttons="{ item }">
+        <v-btn class="m4-2" fab dark small color="cyan" @click="issubmenu=true"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="cyan" @click="update(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
       </template>
+
 
       <!--
       <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
@@ -60,6 +63,7 @@ import api from "../../providers/api"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
+import submenu from "@/components/common/menus/submenu_rudc.vue"
 import detail from "@/modules/iprequest/detail.vue"
 import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
@@ -70,6 +74,7 @@ export default {
   
   components: {
     //notifsnack,
+    submenu,
     forminsert,
     detail,
     formupdate,
@@ -78,6 +83,7 @@ export default {
   },
 
   data: () => ({
+    issubmenu: false,
     isfetching: false,
     showform: false,
     crudopt: "",
@@ -167,7 +173,7 @@ export default {
     detail(){;},
 
     on_rowclick(value){
-      alert(JSON.stringify(value))
+      //alert(JSON.stringify(value))
     },
 
     insert(){
