@@ -165,7 +165,7 @@ export default {
       }
     },
 
-    show_dialog(){
+    show_form(){
       this.showform = true
     },
 
@@ -184,7 +184,7 @@ export default {
       //alert(JSON.stringify("insert"))
       this.crudopt = "insert"
       //set showform=true
-      this.show_dialog()
+      this.show_form()
     },
 
     update(objrow){
@@ -192,13 +192,13 @@ export default {
       this.crudopt = "update"
       this.objrow = objrow
       //set showform=true
-      this.show_dialog()
+      this.show_form()
     },
 
     remove(objrow){
       this.crudopt = "delete"
       this.objrow = objrow
-      this.show_dialog()
+      this.show_form()
     },
 
     submenu(objrow){
@@ -210,9 +210,8 @@ export default {
     },
 
     submenu_selected(option){
-      alert(option)
-      this.crudopt= "update"
-      this.show_dialog()
+      this.crudopt = option
+      this.show_form()
     },
 
   }//methods  
