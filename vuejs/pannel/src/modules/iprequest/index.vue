@@ -46,9 +46,11 @@
 
       <!-- botones columna -->
       <template v-slot:item.colbuttons="{ item }">
-        <v-btn class="m4-2" fab dark small color="orange" @click="submenu(item)"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
+        <v-btn class="m4-2" fab dark small color="cyan" @click="submenu(item)"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
+        <!--
         <v-btn class="m4-2" fab dark small color="cyan" @click="update(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
+        -->
       </template>
 
       <!--
