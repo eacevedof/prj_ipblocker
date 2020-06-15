@@ -2,8 +2,8 @@
   <div>
     <v-menu
       v-model="is_visible"
-      position-x="150"
-      position-y="150"
+      :position-x="evtclick.x"
+      :position-y="evtclick.y"
       absolute
       offset-y
     >
@@ -11,7 +11,7 @@
         <v-list-item
           v-for="(item, index) in items"
           :key="index"
-          @click="item.evt"
+          @click="clickhandler(item.evt)"
         >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
@@ -26,10 +26,11 @@ export default {
 
   props:{
     isvisible: Boolean,
+    evtclick: {},
   },
 
   created(){
-    alert("created")
+    console.log("evtclick",this.evtclick)
   },
 
   data: () => ({
@@ -56,11 +57,14 @@ export default {
   },
 
   methods:{
-   
+    clickhandler(fncname){
+      this[fncname]()
+    },
     clone(){
       alert("clone")
       this.$emit("evtclone")
     },
+
     update(){
       alert("update")
       this.$emit("evtupdate")
@@ -69,6 +73,7 @@ export default {
       alert("remove")
       this.$emit("evtdelete")
     },
+
     detail(){
       alert("detail")
       this.$emit("evtdetail")
