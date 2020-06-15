@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_visible" max-width="900px">
+  <v-dialog v-model="isvisible" max-width="900px">
     
     <v-card>
       <v-card-title class="cyan accent-4 cyan--text text--lighten-5">
@@ -19,53 +19,53 @@
           <v-row>
             <v-col class="pa-0">
               <h4>Remote IP</h4>
-              <p>{{objrow.remote_ip}}</p>
+              <p>{{objrowdetail.remote_ip}}</p>
             </v-col>
             <v-col class="pa-0">
               <h4>Country</h4>
-              <p>{{objrow.country}}</p>
+              <p>{{objrowdetail.country}}</p>
             </v-col>
             <v-col class="pa-0">
               <h4>Whois</h4>
-              <p>{{objrow.whois}}</p>
+              <p>{{objrowdetail.whois}}</p>
             </v-col>
           </v-row>
-          <v-row v-if="objrow.inbl!=''">
+          <v-row v-if="objrowdetail.inbl!=''">
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrow.inbl!=''}">In Blacklist</h4>
-              <p>{{objrow.inbl}}</p>            
+              <h4 :class="{'cyan--text':objrowdetail.inbl!=''}">In Blacklist</h4>
+              <p>{{objrowdetail.inbl}}</p>            
             </v-col>             
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrow.inbl!=''}">Reason</h4>
-              <p>{{objrow.reason}}</p>                   
+              <h4 :class="{'cyan--text':objrowdetail.inbl!=''}">Reason</h4>
+              <p>{{objrowdetail.reason}}</p>                   
             </v-col>                        
           </v-row>
           <v-row>
             <v-col class="pa-0">
               <h4>Domain</h4>
-              <p>{{objrow.domain}}</p>                   
+              <p>{{objrowdetail.domain}}</p>                   
             </v-col>             
             <v-col class="pa-0">
               <h4>Req. URI</h4>
-              <p>{{objrow.request_uri}}</p>
+              <p>{{objrowdetail.request_uri}}</p>
             </v-col>            
           </v-row>
           <v-row>
             <v-col class="pa-0">
               <h4>GET</h4>
-              <p :class="{fontcode:objrow.get!=''}">{{objrow.get}}</p>
+              <p :class="{fontcode:objrowdetail.get!=''}">{{objrowdetail.get}}</p>
             </v-col>            
           </v-row> 
           <v-row>
             <v-col class="pa-0">
               <h4>POST</h4>
-              <p :class="{fontcode:objrow.post!=''}">{{objrow.post}}</p>
+              <p :class="{fontcode:objrowdetail.post!=''}">{{objrowdetail.post}}</p>
             </v-col>            
           </v-row>                    
           <v-row>
             <v-col class="pa-0">
               <h4>Date</h4>
-              <p class="ma-0">{{objrow.insert_date}}</p>
+              <p class="ma-0">{{objrowdetail.insert_date}}</p>
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -99,14 +99,15 @@ export default {
   props:{
     //si se muestra el form
     isvisible: Boolean,
-    objrow: {},
+    objrow: Object,
   },
 
   data: ()=>(
     {
       issubmitting: false,
       error:{title:"",mesage:""},
-      success:{title:"",message:""}
+      success:{title:"",message:""},
+      objrowdetail:{},
     }
   ),
 
@@ -114,30 +115,34 @@ export default {
   computed:{
     
     get_dialogtitle(){
-      return `Nº:${this.objrow.id} - IP: ${this.objrow.remote_ip}`
-    },
-
-    is_visible:{
-      get(){
-        return this.isvisible
-      },
-      set(val){
-        //lanza un evento hacia afuera
-        this.$emit("evtclose",val)
-      }
+      return `Nº:${this.objrowdetail.id} - IP: ${this.objrowdetail.remote_ip}`
     },
 
     is_submitting(){
       return this.issubmitting
     }
-
   },
   
+  created(){
+    this.objrowdetail = {...this.objrow}
+  },
+
+  watch:{
+    isvisible: function(curr,old){
+      //alert("changed: "+curr+"|"+old)
+      //alert(JSON.stringify(this.objrow))
+      if(curr==true){
+        this.objrowdetail = {...this.objrow}
+      }
+    }
+
+  },
+
   //setters 
   methods:{
 
-    set_objrow(objrow){
-      this.objrow.id = 10
+    set_objrowdetail(objrow){
+      this.objrowdetail = {...objrow}
     },
 
     set_error(title,message){
@@ -157,7 +162,8 @@ export default {
 
     close(){
       this.reset_alerts()
-      this.is_visible = false
+      //function setter
+      this.$emit("evtclose")
     },
 
     async_detail: async function (){
@@ -165,8 +171,10 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
       
-      const result = await api.async_get_ip_request(this.objrow.id)
-      alert(JSON.stringify(result))
+      const result = await api.async_get_ip_request(this.objrowdetail.id)
+      //alert(JSON.stringify(this.objrowdetail))
+      const flag = await api.async_getflags([this.objrowdetail])
+      
 
       this.issubmitting = false
       if(result.error){  
@@ -176,7 +184,7 @@ export default {
       }
 
       
-      this.set_objrow(result.result[0])
+      this.set_objrowdetail(result.result[0])
       this.set_success("Success",`Reg refreshed ${result}`)
       this.$emit("evtrefresh","ok")
     }// async
