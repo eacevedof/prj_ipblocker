@@ -2,7 +2,7 @@
   <div>
     <barover :isvisible="isfetching" />
 
-    <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" />
+    <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtupdate="crudopt='update';showform=true;" v-on:evtclose="issubmenu=false" />
 
     <v-data-table v-if="!isfetching" 
       :headers="headers" :search="search" :items="rows" 
