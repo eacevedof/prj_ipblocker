@@ -44,7 +44,7 @@
       <submenu :isvisible="issubmenu" />
       <!-- botones columna -->
       <template v-slot:item.colbuttons="{ item }">
-        <v-btn class="m4-2" fab dark small color="cyan" @click="issubmenu=true"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
+        <v-btn class="m4-2" fab dark small color="cyan" @click="submenu(item)"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="cyan" @click="update(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
         <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
       </template>
@@ -83,7 +83,7 @@ export default {
   },
 
   data: () => ({
-    issubmenu: true,
+    issubmenu: false,
     isfetching: false,
     showform: false,
     crudopt: "",
@@ -195,6 +195,12 @@ export default {
       this.crudopt = "delete"
       this.objrow = objrow
       this.show_dialog()
+    },
+
+    submenu(){
+      this.issubmenu = true
+      alert("submenu: "+this.issubmenu)
+
     },
 
   }//methods  
