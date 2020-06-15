@@ -7,17 +7,11 @@
 
           <v-spacer></v-spacer>
 
-          <v-menu bottom left>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                dark
-                icon
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
+          <v-menu 
+            v-model="isvisible"
+            bottom left
+          >
+
 
             <v-list>
               <v-list-item
@@ -40,6 +34,11 @@
 <script>
 export default {
   name: "submenu-rudc",
+
+  props:{
+    isvisible: Boolean,
+  },
+
   data: () => ({
     items: [
       { title: 'Clone', evt:"clone" },
