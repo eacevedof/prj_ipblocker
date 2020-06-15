@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_visible" max-width="700px">
+  <v-dialog v-model="is_visible" max-width="700px" persistent>
     <v-card>    
       <v-card-title class="red accent-4 white--text">
         <span class="headline"> 

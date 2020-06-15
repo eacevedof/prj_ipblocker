@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isvisible" max-width="900px">
+  <v-dialog v-model="is_visible" max-width="900px" persistent>
     
     <v-card>
       <v-card-title class="cyan accent-4 cyan--text text--lighten-5">
@@ -120,12 +120,24 @@ export default {
       return `Nº:${this.objrowdetail.id} - IP: ${this.objrowdetail.remote_ip}`
     },
 
+    is_visible:{
+      get(){
+        return this.isvisible
+      },
+      set(v){
+
+      }
+    },
+
     is_submitting(){
       return this.issubmitting
-    }
+    },
+
+
   },
   
   created(){
+    console.log("detail.creatd",this.objrow)
     this.objrowdetail = {...this.objrow}
   },
 
@@ -136,6 +148,9 @@ export default {
       if(curr==true){
         this.objrowdetail = {...this.objrow}
       }
+      else
+        this.objrowdetail = {}
+      console.log("detail.watch.isvisible",this.objrowdetail)
     }
 
   },
@@ -163,10 +178,10 @@ export default {
     },
 
     close(){
-      this.reset_alerts()
-      //function setter
-      this.$emit("evtclose")
+      console.log("detail.close.close",this.objrowdetail)
       this.objrowdetail = {}
+      this.reset_alerts()
+      this.$emit("evtclose")
     },
 
     async_detail: async function (){

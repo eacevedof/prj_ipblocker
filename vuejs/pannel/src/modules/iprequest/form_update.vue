@@ -1,8 +1,6 @@
 <template>
-  <v-dialog v-model="is_visible" max-width="700px">
-    
-    <v-card>
-      
+  <v-dialog v-model="is_visible" max-width="700px" persistent>
+    <v-card>      
       <v-card-title class="yellow accent-4 blue-grey-darken-2--text">
         <span class="headline">
           <v-icon color="black">mdi-pencil</v-icon> <b>Editing IP Request:</b> {{get_dialogtitle}}
