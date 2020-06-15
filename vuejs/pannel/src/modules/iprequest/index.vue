@@ -83,7 +83,7 @@ export default {
   },
 
   data: () => ({
-    issubmenu: false,
+    issubmenu: true,
     isfetching: false,
     showform: false,
     crudopt: "",
