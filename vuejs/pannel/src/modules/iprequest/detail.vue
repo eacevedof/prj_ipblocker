@@ -23,7 +23,8 @@
             </v-col>
             <v-col class="pa-0">
               <h4>Country</h4>
-              <p>{{objrowdetail.country}}</p>
+              <p>{{objrowdetail.country}} {{objflag.name}}</p>
+              <v-img v-if="objflag.name" :src="objflag.flag" max-height="55" max-width="80" />
             </v-col>
             <v-col class="pa-0">
               <h4>Whois</h4>
@@ -108,6 +109,7 @@ export default {
       error:{title:"",mesage:""},
       success:{title:"",message:""},
       objrowdetail:{},
+      objflag:{},
     }
   ),
 
@@ -174,7 +176,7 @@ export default {
       const result = await api.async_get_ip_request(this.objrowdetail.id)
       //alert(JSON.stringify(this.objrowdetail))
       const flag = await api.async_getflags([this.objrowdetail])
-      
+      this.objflag = {...flag[0]}
 
       this.issubmitting = false
       if(result.error){  
@@ -183,9 +185,14 @@ export default {
         return
       }
 
+      if(!result.result[0]){  
+        this.set_error("Error","No result")        
+        this.$emit("evtrefresh","nok")
+        return
+      }      
       
       this.set_objrowdetail(result.result[0])
-      this.set_success("Success",`Reg refreshed ${result}`)
+      this.set_success("Success",`Reg refreshed ${this.objrowdetail.id}`)
       this.$emit("evtrefresh","ok")
     }// async
   }
