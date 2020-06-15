@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-menu
-      v-model="isvisible"
-      :position-x="x"
-      :position-y="y"
+      v-model="is_visible"
+      position-x="150"
+      position-y="150"
       absolute
       offset-y
     >
@@ -24,6 +24,10 @@
 export default {
   name: "submenu-rudc",
 
+  props:{
+    isvisible: Boolean,
+  },
+
   created(){
     alert("created")
   },
@@ -40,16 +44,14 @@ export default {
     ],
   }),
 
-  watch:{
-    isvisible: function(e){
-      alert("iiissssvvv")
-      e.preventDefault()
-      this.showMenu = false
-      this.x = e.clientX
-      this.y = e.clientY
-      this.$nextTick(() => {
-        this.showMenu = true
-      })
+  computed:{
+    is_visible:{
+      get(){
+        return this.isvisible
+      },
+      set(v){
+        this.$emit("update:isvisible",v)
+      }
     }
   },
 
