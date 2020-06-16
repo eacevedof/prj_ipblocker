@@ -1,5 +1,5 @@
 import helpapify from "@/helpers/apify"
-import {is_undefined, get_keys, isset} from "@/helpers/functions"
+import {is_defined, get_keys, isset, is_empty} from "@/helpers/functions"
 
 const objselect = helpapify.select
 
@@ -68,7 +68,6 @@ export const detail = (objparam={})=>{
   }
   
   return objselect
-
 }
 
 export const get_insert = (objparam={})=>{
@@ -76,10 +75,14 @@ export const get_insert = (objparam={})=>{
   objinsert.reset()
   objinsert.table = "app_ip_request"
 
-  const fields = get_keys(objparam)
-  fields.forEach( field => {
-      objinsert.fields.push({k:field,v:objrow[field]})
-  })  
+  if(!is_empty(objparam)){
+    const fields = get_keys(objparam.fields)
+    fields.forEach( field => {
+      objinsert.fields.push({k:field,v:objparam.fields[field]})
+    })  
+  }
+
+  return objinsert
 }
 
 export const get_update = ()=>{
