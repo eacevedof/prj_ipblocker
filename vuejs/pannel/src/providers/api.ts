@@ -9,6 +9,7 @@ BASE_URL = "http://localhost:3000"
 const pr = (mxvar,title="") => alert(title+":\n"+JSON.stringify(mxvar))
 
 const is_undefined = mxvar => (typeof mxvar == "undefined")
+const is_object = mxvar => (typeof mxvar == "object")
 
 const get_error = objerr => ({"error": objerr.toString().replace("Error:","").trim()})
 
@@ -65,7 +66,7 @@ const Api = {
     }    
   },
   
-  async_get_ip_request: async (id) => {
+  async_get_ip_request: async (objpage=null, id=null) => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
     const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
@@ -102,8 +103,15 @@ const Api = {
         objselect.where.push(`r.id=${id}`)
       
       objselect.orderby.push("r.id DESC")
+
       objselect.limit.perpage = 1000
       objselect.limit.regfrom = 0
+      if(objpage!==null)
+        if(Object.keys(objpage).length>0){
+          objselect.limit.perpage = objpage.ippage
+          objselect.limit.regfrom = objpage.ifrom
+        }
+
 
 
       const objform = objselect.get_query()

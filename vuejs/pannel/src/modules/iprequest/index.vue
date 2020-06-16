@@ -8,7 +8,7 @@
       :headers="headers" 
       :items="arrows"
       :page.sync="page.ipage"
-      :items-per-page="page.itemspage"
+      :items-per-page="page.ippage"
       hide-default-footer
       @page-count="page.ipages - $event"
       :search="search" 
@@ -66,12 +66,12 @@
     <div class="text-center pt-2">
       <v-pagination v-model="page.ipage" :length="page.ipages"></v-pagination>
       <v-text-field
-        :value="page.itemspage"
+        :value="page.ippage"
         label="Items per page"
         type="number"
         min="-1"
         max="15"
-        @input="page.itemspage = parseInt($event, 10)"
+        @input="page.ippage = parseInt($event, 10)"
       ></v-text-field>
     </div>    
   </div>
@@ -89,6 +89,7 @@ import detail from "@/modules/iprequest/detail.vue"
 import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
 import formdelete from "@/modules/iprequest/form_delete.vue"
+
 
 export default {
   name: "iprequest-index",
@@ -138,17 +139,27 @@ export default {
 
     page:{
       ipage: 1,
-      itemspage: 50,
+      ippage: 50,
       ipages: 0,
       foundrows:0,
     },
 
   }),//data
 
-  beforeMount: async function(){
-    //alert("iprequest.index.beofremounted de list ^^ nunca pasa por aqui?")
-    console.log("iprequest.index.beforeMount.islogged",this.islogged)
+  //no puede ser asincrono pq el ciclo de vida no aplica await
+  beforeMount(){
+    url.route = this.$route
+    console.log("iprequest.index.beforemount url.route",url.route)
+  },
+
+  //lo marco como async pq tengo que resolver peticiones
+  mounted: async function(){
+
+    console.log("iprequest.index.mounted.islogged antes de llamar a async_islogged",this.islogged)
+    //async_islogged comprueba el token en local si existe comprueba si es válido
+    //si pasa estos filtros this.islogged tendría el valor true
     const response = await this.async_islogged()
+    console.log("iprequest.index.mounted.islogged",this.islogged)
 
     if(!this.islogged){
       this.$router.push({name:"login"})
@@ -160,10 +171,9 @@ export default {
       this.$emit("evterror",response.error)
       return 
     }
-  },
 
-  mounted: async function(){
-    console.log("iprequest.index.mounted.async_islogged.response islogged:",this.islogged)
+
+    console.log("iprequest.index.mounted islogged:",this.islogged)
     this.isfetching = true
     await this.async_loaddata()
     this.isfetching = false
@@ -178,14 +188,20 @@ export default {
     ...mapActions(["async_islogged"]),
 
     async_loaddata: async function(){
-      url.route = this.$route
 
-      console.log("async_loaddata.router.params",url.get_param("page"))
-      console.log("async_loaddata.router.query",url.get_get("ip"))
-      const response = await api.async_get_ip_request(null)
+      const ippage = this.page.ippage
+      const ipage = this.get_page()
+      alert(ipage)
+      const ifrom = (ipage-1) * ippage
+      const objpage = {ippage,ifrom}
+      //console.log("async_loaddata.router.params",url.get_param("page"))
+      //console.log("async_loaddata.router.query",url.get_get("ip"))
+      const response = await api.async_get_ip_request(objpage)
       this.arrows = response.result
       this.page.foundrows = response.foundrows
-      this.page.ipages = Math.ceil(this.arrows.length/this.page.itemspage)
+      //this.page.ipages = Math.ceil(this.arrows.length/ippage)
+      this.page.ipages = Math.ceil(this.page.foundrows/ippage)
+      
       console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
       
     },
@@ -231,6 +247,14 @@ export default {
       this.crudopt = option
       this.show_form()
     },
+
+    get_page(){
+      const ipage = url.get_param("page") || 1
+      //alert(ipage)
+      if(isNaN(ipage)) return 1
+      return ipage
+    },
+
 
   }//methods  
 
