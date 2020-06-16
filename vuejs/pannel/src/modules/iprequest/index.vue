@@ -13,6 +13,7 @@
         total-visible="10"
       />
     </div>
+    
     <v-data-table v-if="!isfetching" 
       :headers="headers" 
       :items="arrows"
@@ -193,9 +194,8 @@ export default {
     async_loaddata: async function(page=null){
       this.isfetching = true
 
-      const ipage = page || this.get_page()
+      const ipage = parseInt(page) || this.get_page()
       this.page.ipage = ipage
-      alert(this.page.ipage)
       const ippage = this.page.ippage
       const ifrom = (ipage-1) * ippage
       const objpage = {ippage,ifrom}
@@ -258,7 +258,7 @@ export default {
       const ipage = url.get_param("page") || 1
       //alert(ipage)
       if(isNaN(ipage)) return 1
-      return ipage
+      return parseInt(ipage)
     },
 
     on_pagechange(ipage){
