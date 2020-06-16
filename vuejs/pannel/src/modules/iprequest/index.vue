@@ -7,7 +7,6 @@
     <v-data-table v-if="!isfetching" 
       :headers="headers" 
       :items="arrows"
-      :page.sync="page.ipage"
       :items-per-page="page.ippage"
       hide-default-footer
 
@@ -64,7 +63,12 @@
       -->
     </v-data-table>
     <div class="text-center pt-2">
-      <v-pagination v-model="page.ipage" :length="page.ipages" @input="on_pagechange"></v-pagination>
+      <v-pagination 
+        v-model="page.ipage" 
+        :page="page.ipage"
+        :length="page.ipages" 
+        @input="on_pagechange" 
+      />
     </div>    
   </div>
 </template>
@@ -130,10 +134,10 @@ export default {
     arrows: [],
 
     page:{
-      ipage: 1,
-      ippage: 100,
-      ipages: 0,
-      foundrows:0,
+      ipage: 1,     //pagina actual
+      ippage: 100,  //regs por pag
+      ipages: 0,    //num de paginas
+      foundrows:0,  //total de registros
     },
 
   }),//data
@@ -165,9 +169,8 @@ export default {
     }
 
     console.log("iprequest.index.mounted islogged:",this.islogged)
-    this.isfetching = true
+    
     await this.async_loaddata()
-    this.isfetching = false
   },
 
   computed:{
@@ -179,8 +182,10 @@ export default {
     ...mapActions(["async_islogged"]),
 
     async_loaddata: async function(page=null){
+      this.isfetching = true
 
       const ipage = page || this.get_page()
+      this.page.ipage = ipage
 
       const ippage = this.page.ippage
       const ifrom = (ipage-1) * ippage
@@ -195,7 +200,7 @@ export default {
       //alert(this.page.ipages)
 
       console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
-      
+      this.isfetching = false
     },
 
     show_form(){
