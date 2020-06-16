@@ -191,7 +191,6 @@ export default {
 
       const ippage = this.page.ippage
       const ipage = this.get_page()
-      alert(ipage)
       const ifrom = (ipage-1) * ippage
       const objpage = {ippage,ifrom}
       //console.log("async_loaddata.router.params",url.get_param("page"))
@@ -201,7 +200,8 @@ export default {
       this.page.foundrows = response.foundrows
       //this.page.ipages = Math.ceil(this.arrows.length/ippage)
       this.page.ipages = Math.ceil(this.page.foundrows/ippage)
-      
+      //alert(this.page.ipages)
+
       console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
       
     },
