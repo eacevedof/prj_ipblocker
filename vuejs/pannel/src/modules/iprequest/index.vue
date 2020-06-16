@@ -301,18 +301,18 @@ export default {
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
     },
 
-    on_dbsearch(e) {
+    on_dbsearch(text) {
       // cancel pending call
       clearTimeout(this.debounceid);
 
       this.issearching = true;
       // delay new call 500ms
       this.debounceid = setTimeout(() => {
-        console.log("E:",e)
+        console.log("E:",text)
         const ipage = this.get_page()
-        e = e.trim()
-        if(e!=="")
-          this.async_loaddata(ipage,[`country LIKE '%${e}%'`])
+        text = text.trim()
+        if(text!=="")
+          this.async_loaddata(ipage,[`country LIKE '%${text}%'`])
         else
           this.async_loaddata(ipage)
         this.issearching = false
