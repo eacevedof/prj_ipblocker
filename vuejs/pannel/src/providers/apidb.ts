@@ -9,6 +9,33 @@ BASE_URL = "http://localhost:3000"
 
 const Apidb = {
   
+  async_get_list: async objselect => {
+    const usertoken = db.select("usertoken")
+    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
+    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
+
+    //hay que enviar header: apify-auth: token
+    try {
+   
+      const objform = objselect.get_query()
+      objform.append("apify-usertoken",usertoken)
+
+      console.log("apidb.async_get_ip_request",url)
+      const response = await axios.post(url, objform)
+
+      console.log("apidb.async_get_ip_request.response",response)
+
+      if(is_undefined(response.data.data))
+        throw new Error("Wrong data received from server. Resultset")
+
+      return response.data.data
+    } 
+    catch (e) {
+      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
+      return get_error(e)
+    }
+  },
+
   async_get_ip_request: async (objpage=null, id=null, filters=[]) => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
@@ -59,8 +86,6 @@ const Apidb = {
           objselect.limit.regfrom = objpage.ifrom
         }
 
-
-
       const objform = objselect.get_query()
       objform.append("apify-usertoken",usertoken)
 
@@ -96,7 +121,7 @@ const Apidb = {
     }    
   },
 
-  async_insert: async(objrow) => {
+  async_insert: async (objinsert) => {
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
     //hay que enviar header: apify-auth: token
