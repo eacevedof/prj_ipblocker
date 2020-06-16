@@ -5,8 +5,14 @@
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
     <v-data-table v-if="!isfetching" 
-      :headers="headers" :search="search" :items="rows" 
-      @click:row="on_rowclick"
+      :headers="headers" 
+      :items="arrows"
+      :page.sync="page.ipage"
+      :items-per-page="page.itemspage"
+      hide-default-footer
+      @page-count="page.ipages - $event"
+      :search="search" 
+
       class="elevation-3"
     >
       <!-- inyecta en la cabecera de la tabla en la zona top-->
@@ -57,12 +63,24 @@
       <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
       -->
     </v-data-table>
+    <div class="text-center pt-2">
+      <v-pagination v-model="page.ipage" :length="page.ipages"></v-pagination>
+      <v-text-field
+        :value="page.itemspage"
+        label="Items per page"
+        type="number"
+        min="-1"
+        max="15"
+        @input="page.itemspage = parseInt($event, 10)"
+      ></v-text-field>
+    </div>    
   </div>
 </template>
 
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../../providers/api"
+import url from "../../helpers/url"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
@@ -116,34 +134,37 @@ export default {
       { text: 'In BL', value: 'inbl' },
       { text: 'Day', value: 'insert_date' },
     ],
-    rows: [],
-    foundrows: 0,
+    arrows: [],
+
+    page:{
+      ipage: 1,
+      itemspage: 50,
+      ipages: 0,
+      foundrows:0,
+    },
 
   }),//data
 
-  beforeMounted: async function(){
-    alert("iprequest.index.beofremounted de list ^^ nunca pasa por aqui?")
+  beforeMount: async function(){
+    //alert("iprequest.index.beofremounted de list ^^ nunca pasa por aqui?")
     console.log("iprequest.index.beforeMount.islogged",this.islogged)
-  },
-
-  mounted: async function(){
-    console.log("iprequest.index.mounted.async_islogged.response islogged:",this.islogged)
-    this.isfetching = true
-    //is_logged comprueba el token y setea this.islogged
-    //si ha dado error no desloguea
     const response = await this.async_islogged()
 
     if(!this.islogged){
       this.$router.push({name:"login"})
       return
-    }    
-    
+    }
+
     //error network
     if(response.error){
       this.$emit("evterror",response.error)
       return 
     }
+  },
 
+  mounted: async function(){
+    console.log("iprequest.index.mounted.async_islogged.response islogged:",this.islogged)
+    this.isfetching = true
     await this.async_loaddata()
     this.isfetching = false
   },
@@ -157,14 +178,16 @@ export default {
     ...mapActions(["async_islogged"]),
 
     async_loaddata: async function(){
-      console.log("list.methods.loaddata this.islogged: ",this.islogged)
-      if(this.islogged){
+      url.route = this.$route
 
-        const response = await api.async_get_ip_request()
-        this.rows = response.result
-        this.foundrows = response.foundrows
-        console.table("iprequest.index.async_loaddata.foundrows:",this.foundrows)
-      }
+      console.log("async_loaddata.router.params",url.get_param("page"))
+      console.log("async_loaddata.router.query",url.get_get("ip"))
+      const response = await api.async_get_ip_request(null)
+      this.arrows = response.result
+      this.page.foundrows = response.foundrows
+      this.page.ipages = Math.ceil(this.arrows.length/this.page.itemspage)
+      console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
+      
     },
 
     show_form(){
@@ -174,12 +197,6 @@ export default {
     dialog_result(val){
       //alert("dialog_result: "+val)
       this.async_loaddata()
-    },
-
-    detail(){;},
-
-    on_rowclick(value){
-      //alert(JSON.stringify(value))
     },
 
     insert(){
@@ -208,7 +225,6 @@ export default {
       this.objrow = objrow
       this.issubmenu = true
       this.evtsubmenu = e
-
     },
 
     submenu_selected(option){

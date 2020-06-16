@@ -24,7 +24,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/login.vue'),
   },
   {
-    path: '/ip-request',
+    path: '/ip-request/:page?',
     name: 'iprequest',
     meta:{
       title: "IP Requests"
