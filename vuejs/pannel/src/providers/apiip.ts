@@ -18,4 +18,5 @@ const Apiip = {
 
   }
 }
+
 export default Apiip;
