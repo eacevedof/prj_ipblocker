@@ -1,10 +1,6 @@
 import axios from "axios"
 import {is_undefined, get_error} from "@/helpers/functions"
 
-let BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "http://localhost:3000"
-
 const Apiflag = {
  
     async_getflags: async(arrows) => {
