@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import api from "../providers/api"
+import apidb from "../providers/api"
 import db from "../helpers/localdb"
 
 import scrumbs from "@/components/navigation/scrumbs.vue"

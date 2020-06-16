@@ -10,7 +10,7 @@ BASE_URL = "http://localhost:3000"
 const Apiip = {
   
   async_get_myip: async function(){
-    const url = "https://api.ipify.org?format=json"
+    const url = "https://apidb.ipify.org?format=json"
     const response = await axios.get(url)
     const ip = response.data.ip
     return ip

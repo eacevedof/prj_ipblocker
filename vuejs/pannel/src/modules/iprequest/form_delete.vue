@@ -59,7 +59,7 @@
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
-import api from "../../providers/apidb"
+import apidb from "../../providers/apidb"
 export default {
 
   name: "iprequest-formdelete",
@@ -140,7 +140,7 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
 
-      const result = await api.async_delete(this.objrow,["id"])
+      const result = await apidb.async_delete(this.objrow,["id"])
       this.issubmitting = false
       
       if(result.error){  

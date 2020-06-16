@@ -64,10 +64,10 @@ const Apidb = {
       const objform = objselect.get_query()
       objform.append("apify-usertoken",usertoken)
 
-      console.log("api.async_get_ip_request",url)
+      console.log("apidb.async_get_ip_request",url)
       const response = await axios.post(url, objform)
 
-      console.log("api.async_get_ip_request.response",response)
+      console.log("apidb.async_get_ip_request.response",response)
 
       if(is_undefined(response.data.data))
         throw new Error("Wrong data received from server. Resultset")
@@ -75,7 +75,7 @@ const Apidb = {
       return response.data.data
     } 
     catch (e) {
-      console.error("ERROR: api.async_get_ip_request.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -91,7 +91,7 @@ const Apidb = {
       return fields
     }
     catch (e) {
-      console.error("ERROR: api.async_get_fields.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_get_fields.url:",url,"e:",e)
       return get_error(e)
     }    
   },
@@ -113,10 +113,10 @@ const Apidb = {
       const objform = objinsert.get_query()
       objform.append("apify-usertoken",usertoken)
 
-      console.log("api.async_insert",url)
+      console.log("apidb.async_insert",url)
       const response = await axios.post(url, objform)
       //pr(response,"async_insert")
-      console.log("api.async_insert.response",response)
+      console.log("apidb.async_insert.response",response)
 
       if(is_undefined(response.data.data.lastid))
         throw new Error("Wrong data received from server. insert lastid")
@@ -124,7 +124,7 @@ const Apidb = {
       return response.data.data.lastid
     } 
     catch (e) {
-      console.error("ERROR: api.async_insert.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_insert.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -139,7 +139,7 @@ const Apidb = {
 
       objupdate.table = "app_ip_request"
 
-      const arfields = await Api.async_get_fields(objupdate.table)
+      const arfields = await apidb.async_get_fields(objupdate.table)
       if(arfields.error)
         throw new Error(arfields.error)
 
@@ -163,10 +163,10 @@ const Apidb = {
       const objform = objupdate.get_query()
       objform.append("apify-usertoken",usertoken)
 
-      console.log("api.async_update",url)
+      console.log("apidb.async_update",url)
       const response = await axios.post(url, objform)
 
-      console.log("api.async_update.response",response)
+      console.log("apidb.async_update.response",response)
 
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Update result")
@@ -174,7 +174,7 @@ const Apidb = {
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: api.async_update.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_update.url:",url,"e:",e)
       return get_error(e)
     }
   },
@@ -201,10 +201,10 @@ const Apidb = {
       const objform = objdelete.get_query()
       objform.append("apify-usertoken",usertoken)
 
-      console.log("api.async_delete",url)
+      console.log("apidb.async_delete",url)
       const response = await axios.post(url, objform)
 
-      console.log("api.async_delete.response",response)
+      console.log("apidb.async_delete.response",response)
       //devuelve el num de registros afectados
       if(is_undefined(response.data.data.result))
         throw new Error("Wrong data received from server. Delete result")
@@ -212,7 +212,7 @@ const Apidb = {
       return response.data.data.result
     } 
     catch (e) {
-      console.error("ERROR: api.async_delete.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_delete.url:",url,"e:",e)
       return get_error(e)
     }
   }, //async_delete
@@ -242,7 +242,7 @@ const Apidb = {
       return mindata
     } 
     catch (e) {
-      console.error("ERROR: api.async_getflags.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_getflags.url:",url,"e:",e)
       return get_error(e)
     }
   }, //async_getflags  

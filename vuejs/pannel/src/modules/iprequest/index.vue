@@ -101,7 +101,7 @@
 
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import api from "../../providers/apidb"
+import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
 import debounce from "../../helpers/debounce"
 
@@ -232,7 +232,7 @@ export default {
       const objpage = {ippage,ifrom}
       //console.log("async_loaddata.router.params",url.get_param("page"))
       //console.log("async_loaddata.router.query",url.get_get("ip"))
-      const response = await api.async_get_ip_request(objpage,null,filters)
+      const response = await apidb.async_get_ip_request(objpage,null,filters)
       this.arrows = response.result
       this.page.foundrows = response.foundrows
       //this.page.ipages = Math.ceil(this.arrows.length/ippage)
