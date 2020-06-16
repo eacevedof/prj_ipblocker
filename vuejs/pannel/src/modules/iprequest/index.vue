@@ -52,7 +52,7 @@
 
         <!-- barra busqueda -->
         <v-col>
-          <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details />
+          <v-text-field v-model="search" append-icon="search" label="Search in page result" single-line hide-details />
         </v-col>
 
       </template>
@@ -218,7 +218,8 @@ export default {
 
     dialog_result(val){
       //alert("dialog_result: "+val)
-      this.async_loaddata()
+      const ipage = url.get_param("page")
+      this.async_loaddata(ipage)
     },
 
     insert(){
