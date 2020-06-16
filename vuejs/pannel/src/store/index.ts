@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import api from "@/providers/api.ts"
+import {is_undefined} from "@/helpers/functions"
+import apiip from "@/providers/apiip"
+import auth from "@/providers/apiauth"
 import db from "@/helpers/localdb.ts"
 
 Vue.use(Vuex);
-
-const is_undefined = mxvar => (typeof mxvar == "undefined")
 
 export default new Vuex.Store({
   
@@ -37,12 +37,8 @@ export default new Vuex.Store({
   actions: {
 
     async_get_myip: async function({commit}){
-      await fetch('https://api.ipify.org?format=json')
-      .then(x => x.json())
-      .then(({ ip }) => {
-        console.log("get_async_ip",ip)
-        commit("set_myip",ip) 
-      });
+      const ip = await apiip.async_get_myip()
+      commit("set_myip",ip)
     },
 
     async_islogged: async function({commit}){
@@ -52,8 +48,7 @@ export default new Vuex.Store({
         return { error: "Not token found"}
       }
 
-      const response = await api.async_is_validtoken()
-      //alert("store.async_islogged.async_is_validtoken.response raw:"+JSON.stringify(response))
+      const response = await auth.async_is_validtoken()
       console.log("store.async_islogged.async_is_validtoken.response",response)
 
       if(!is_undefined(response.error)){

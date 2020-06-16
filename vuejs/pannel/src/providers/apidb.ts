@@ -7,7 +7,7 @@ let BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "http://localhost:3000"
 
-const Api = {
+const Apidb = {
   
   async_get_ip_request: async (objpage=null, id=null, filters=[]) => {
     const usertoken = db.select("usertoken")
@@ -247,7 +247,7 @@ const Api = {
     }
   }, //async_getflags  
 
-}//Api
+}//Apidb
 
 
-export default Api;
+export default Apidb;
