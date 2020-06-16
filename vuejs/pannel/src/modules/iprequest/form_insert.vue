@@ -54,7 +54,7 @@
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
-import api from "../../providers/api"
+import api from "../../providers/apidb"
 export default {
 
   name: "iprequest-forminsert",

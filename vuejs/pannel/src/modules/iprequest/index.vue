@@ -101,7 +101,7 @@
 
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import api from "../../providers/api"
+import api from "../../providers/apidb"
 import url from "../../helpers/url"
 import debounce from "../../helpers/debounce"
 

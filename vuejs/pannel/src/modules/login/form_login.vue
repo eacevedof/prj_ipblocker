@@ -48,7 +48,7 @@
 import {mapMutations} from "vuex"
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
-import api from "../../providers/api"
+import api from "../../providers/apidb"
 import apiauth from "../../providers/apiauth"
 import db from "../../helpers/localdb"
 import notificationerror from "@/components/common/notifications/notification_error.vue"
