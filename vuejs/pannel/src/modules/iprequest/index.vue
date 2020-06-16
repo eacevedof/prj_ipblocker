@@ -179,7 +179,7 @@ export default {
         return;
       }
 
-      this.on_search(val);
+      this.on_dbsearch(val);
     }
   },
 
@@ -222,7 +222,7 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
-    async_loaddata: async function(page=null){
+    async_loaddata: async function(page=null, filters=[]){
       this.isfetching = true
 
       const ipage = parseInt(page) || this.get_page()
@@ -232,7 +232,7 @@ export default {
       const objpage = {ippage,ifrom}
       //console.log("async_loaddata.router.params",url.get_param("page"))
       //console.log("async_loaddata.router.query",url.get_get("ip"))
-      const response = await api.async_get_ip_request(objpage)
+      const response = await api.async_get_ip_request(objpage,null,filters)
       this.arrows = response.result
       this.page.foundrows = response.foundrows
       //this.page.ipages = Math.ceil(this.arrows.length/ippage)
@@ -301,15 +301,21 @@ export default {
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
     },
 
-    on_search(e) {
+    on_dbsearch(e) {
       // cancel pending call
-      clearTimeout(this._timerId);
+      clearTimeout(this.debounceid);
 
-      this.isLoading = true;
+      this.issearching = true;
       // delay new call 500ms
-      this._timerId = setTimeout(() => {
+      this.debounceid = setTimeout(() => {
         console.log("E:",e)
-        this.isLoading = true
+        const ipage = this.get_page()
+        e = e.trim()
+        if(e!=="")
+          this.async_loaddata(ipage,[`country LIKE '%${e}%'`])
+        else
+          this.async_loaddata(ipage)
+        this.issearching = false
       }, 1000);
     },
     
