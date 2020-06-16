@@ -255,7 +255,6 @@ export default {
       return ipage
     },
 
-
   }//methods  
 
 };
