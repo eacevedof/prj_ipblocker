@@ -34,10 +34,10 @@
           <v-row>
             <v-col>  
               <v-text-field v-model="objrow.request_uri" label="Uri" />
-              <v-textarea rows="1" :value="objrow.get" label="GET" />
+              <v-textarea rows="1" v-model="objrow.get" :value="objrow.get" label="GET" />
             </v-col>
             <v-col>
-              <v-textarea rows="1" :value="objrow.post" label="POST" />
+              <v-textarea rows="1" v-model="objrow.post" :value="objrow.post" label="POST" />
               <v-text-field v-model="objrow.insert_date" readonly label="Date" />
             </v-col>
           </v-row>
@@ -139,6 +139,7 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
       
+      //alert(JSON.stringify(this.objrow))
       const result = await api.async_update(this.objrow, ["id"])
       
       this.issubmitting = false
