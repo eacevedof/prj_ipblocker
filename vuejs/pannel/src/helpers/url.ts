@@ -1,8 +1,4 @@
-
-const is_undefined = mxvar => (typeof mxvar == "undefined")
-
-const is_key = (obj,k) => Object.keys(obj).filter(ki=>ki==k).length>0
-
+import {is_undefined} from "./functions"
 
 const url = {
 
