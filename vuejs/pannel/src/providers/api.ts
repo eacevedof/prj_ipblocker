@@ -66,7 +66,7 @@ const Api = {
     }    
   },
   
-  async_get_ip_request: async (objpage=null, id=null) => {
+  async_get_ip_request: async (objpage=null, id=null, filters=[]) => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
     const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
@@ -99,6 +99,10 @@ const Api = {
 
       objselect.where.push("i.whois NOT LIKE '%google%'")
       objselect.where.push("i.whois NOT LIKE '%msn%'")
+      filters.forEach(filter => {
+        objselect.where.push(filter)
+      })
+
       if(id)
         objselect.where.push(`r.id=${id}`)
       
