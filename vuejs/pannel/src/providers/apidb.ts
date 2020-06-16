@@ -1,5 +1,5 @@
 import axios from "axios"
-import helpapify from "@/helpers/apify.ts"
+import helpapify from "@/helpers/apify"
 import db from "@/helpers/localdb"
 import {is_undefined, get_error} from "@/helpers/functions"
 
