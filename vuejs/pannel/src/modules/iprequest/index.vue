@@ -44,7 +44,7 @@
 
           <!-- los hijos se comunican por eventos con los padres -->
           <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="dialog_result" v-on:evtclose="showform=false" />
-          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />          
+          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
           <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="dialog_result" v-on:evtclose="showform=false" />
           <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="dialog_result" v-on:evtclose="showform=false" />
 
@@ -264,6 +264,9 @@ export default {
     on_pagechange(ipage){
       //alert("changepage"+JSON.stringify(ipage))
       this.async_loaddata(ipage)
+      //alert(this.$route.path)
+      if(this.$route.path !== `/ip-request/${ipage}`)
+        this.$router.push({ name: 'iprequest', params: { page: ipage } })
     },
 
   }//methods  
