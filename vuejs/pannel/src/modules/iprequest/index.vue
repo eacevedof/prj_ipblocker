@@ -10,7 +10,7 @@
       :page.sync="page.ipage"
       :items-per-page="page.ippage"
       hide-default-footer
-      @page-count="page.ipages - $event"
+
       :search="search" 
 
       class="elevation-3"
@@ -64,15 +64,7 @@
       -->
     </v-data-table>
     <div class="text-center pt-2">
-      <v-pagination v-model="page.ipage" :length="page.ipages"></v-pagination>
-      <v-text-field
-        :value="page.ippage"
-        label="Items per page"
-        type="number"
-        min="-1"
-        max="15"
-        @input="page.ippage = parseInt($event, 10)"
-      ></v-text-field>
+      <v-pagination v-model="page.ipage" :length="page.ipages" @input="on_pagechange"></v-pagination>
     </div>    
   </div>
 </template>
@@ -139,7 +131,7 @@ export default {
 
     page:{
       ipage: 1,
-      ippage: 50,
+      ippage: 100,
       ipages: 0,
       foundrows:0,
     },
@@ -172,7 +164,6 @@ export default {
       return 
     }
 
-
     console.log("iprequest.index.mounted islogged:",this.islogged)
     this.isfetching = true
     await this.async_loaddata()
@@ -187,10 +178,11 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
-    async_loaddata: async function(){
+    async_loaddata: async function(page=null){
+
+      const ipage = page || this.get_page()
 
       const ippage = this.page.ippage
-      const ipage = this.get_page()
       const ifrom = (ipage-1) * ippage
       const objpage = {ippage,ifrom}
       //console.log("async_loaddata.router.params",url.get_param("page"))
@@ -253,6 +245,11 @@ export default {
       //alert(ipage)
       if(isNaN(ipage)) return 1
       return ipage
+    },
+
+    on_pagechange(ipage){
+      //alert("changepage"+JSON.stringify(ipage))
+      this.async_loaddata(ipage)
     },
 
   }//methods  
