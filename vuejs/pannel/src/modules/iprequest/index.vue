@@ -4,6 +4,21 @@
 
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
+    <v-row>
+      <v-col
+        cols="10"
+        md="10"
+      >
+        <v-text-field
+          v-model="dbsearch"
+          label="Search"
+          append-icon="mdi-text-box-search-outline"
+          outlined
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
         v-model="page.ipage" 
@@ -88,6 +103,7 @@
 import {mapMutations, mapActions, mapState} from "vuex"
 import api from "../../providers/api"
 import url from "../../helpers/url"
+import debounce from "../../helpers/debounce"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
@@ -96,6 +112,7 @@ import detail from "@/modules/iprequest/detail.vue"
 import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
 import formdelete from "@/modules/iprequest/form_delete.vue"
+
 
 
 export default {
@@ -151,13 +168,27 @@ export default {
       foundrows:0,  //total de registros
     },
 
+    dbsearch:"",
+    debdbsearch: "",
+
   }),//data
+
+  watch:{
+    dbsearch(val) {
+      if (!val) {
+        return;
+      }
+
+      this.on_search(val);
+    }
+  },
 
   //no puede ser asincrono pq el ciclo de vida no aplica await
   beforeMount(){
     url.route = this.$route
     console.log("iprequest.index.beforemount url.route",url.route)
   },
+
 
   //lo marco como async pq tengo que resolver peticiones
   mounted: async function(){
@@ -270,6 +301,18 @@ export default {
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
     },
 
+    on_search(e) {
+      // cancel pending call
+      clearTimeout(this._timerId);
+
+      this.isLoading = true;
+      // delay new call 500ms
+      this._timerId = setTimeout(() => {
+        console.log("E:",e)
+        this.isLoading = true
+      }, 1000);
+    },
+    
   }//methods  
 
 };
