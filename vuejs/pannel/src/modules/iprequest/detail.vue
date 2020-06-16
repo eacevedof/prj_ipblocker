@@ -91,6 +91,7 @@ import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
 import apidb from "../../providers/apidb"
+import apiflag from "../../providers/apiflag"
 export default {
 
   name: "iprequest-formupdate",
@@ -196,7 +197,7 @@ export default {
       
       const result = await apidb.async_get_ip_request(null,this.objrowdetail.id)
       //alert(JSON.stringify(this.objrowdetail))
-      const flag = await apidb.async_getflags([this.objrowdetail])
+      const flag = await apiflag.async_getflags([this.objrowdetail])
       this.objflag = {...flag[0]}
 
       this.issubmitting = false
