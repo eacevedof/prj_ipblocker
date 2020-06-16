@@ -194,7 +194,7 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
       
-      const result = await api.async_get_ip_request(this.objrowdetail.id)
+      const result = await api.async_get_ip_request(null,this.objrowdetail.id)
       //alert(JSON.stringify(this.objrowdetail))
       const flag = await api.async_getflags([this.objrowdetail])
       this.objflag = {...flag[0]}

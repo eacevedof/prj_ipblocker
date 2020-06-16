@@ -1,15 +1,22 @@
 
 const is_undefined = mxvar => (typeof mxvar == "undefined")
 
+const is_key = (obj,k) => Object.keys(obj).filter(ki=>ki==k).length>0
+
+
 const url = {
 
   route: {},
 
   get_param(k){
-    //console.log("URL ROUTE",this.route)
-    if(is_undefined(this.route.params[k]))
+    //alert(JSON.stringify(this.route))
+    if(is_undefined(this.route.params))
       return null
-    return this.route.params[k]
+
+    if(is_key(this.route.params, k))
+      return this.route.params[k]
+
+    return null
   },   
 
   get_get(k){
