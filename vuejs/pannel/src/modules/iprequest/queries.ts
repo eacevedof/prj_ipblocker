@@ -73,7 +73,7 @@ export const detail = (objparam={})=>{
 export const get_insert = (objparam={})=>{
   const objinsert = helpapify.insert
   objinsert.reset()
-  objinsert.table = "app_ip_request"
+  objinsert.table = table
 
   if(!is_empty(objparam)){
     const fields = get_keys(objparam.fields)
@@ -85,8 +85,29 @@ export const get_insert = (objparam={})=>{
   return objinsert
 }
 
-export const get_update = ()=>{
+export const get_update = (objparam={},arfields=[])=>{
+  const objupdate = helpapify.update
+  objupdate.reset()
+  objupdate.table = table
+
+  if(is_defined(objparam.fields)){
+    const onlyfields = arfields.map(objconf => objconf.field_name)
+    const fields = get_keys(objparam.fields)
+
+    fields.forEach( field => {
+      if(!onlyfields.includes(field))
+        return
   
+      //si el campo es clave
+      if(objparam.keys.includes(field)){
+        objupdate.where.push(`${field}='${objparam.fields[field]}'`)
+      }
+      else
+        objupdate.fields.push({k:field,v:objparam.fields[field]})
+    })    
+  }
+  
+  return objupdate
 }
 
 export const get_detete = ()=>{
