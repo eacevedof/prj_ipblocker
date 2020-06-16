@@ -4,6 +4,15 @@
 
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
+    <div v-if="page.ipages>1" class="text-center pt-2">
+      <v-pagination 
+        v-model="page.ipage" 
+        :page="page.ipage"
+        :length="page.ipages" 
+        @input="on_pagechange"
+        total-visible="10"
+      />
+    </div>
     <v-data-table v-if="!isfetching" 
       :headers="headers" 
       :items="arrows"
@@ -62,14 +71,15 @@
       <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
       -->
     </v-data-table>
-    <div class="text-center pt-2">
+    <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
         v-model="page.ipage" 
         :page="page.ipage"
         :length="page.ipages" 
-        @input="on_pagechange" 
+        @input="on_pagechange"
+        total-visible="10"
       />
-    </div>    
+    </div>
   </div>
 </template>
 
@@ -169,7 +179,6 @@ export default {
     }
 
     console.log("iprequest.index.mounted islogged:",this.islogged)
-    
     await this.async_loaddata()
   },
 
@@ -186,7 +195,7 @@ export default {
 
       const ipage = page || this.get_page()
       this.page.ipage = ipage
-
+      alert(this.page.ipage)
       const ippage = this.page.ippage
       const ifrom = (ipage-1) * ippage
       const objpage = {ippage,ifrom}
