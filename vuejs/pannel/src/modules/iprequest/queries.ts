@@ -57,8 +57,7 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
 
   if(!is_empty(query.where)){
     query.where.forEach(cond => objselect.where.push(cond))
-  }
-  
+  } 
 
   objselect.limit.perpage = 1000
   objselect.limit.regfrom = 0
@@ -67,7 +66,6 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
     objselect.limit.perpage = objparam.page.ippage
     objselect.limit.regfrom = objparam.page.ifrom
   }
-
 
   objselect.orderby.push("r.id DESC")
   //pr(objselect,"get_obj_list.objselect")
