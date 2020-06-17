@@ -1,5 +1,5 @@
 import helpapify from "@/helpers/apify"
-import {is_defined, get_keys, isset, is_empty} from "@/helpers/functions"
+import {is_defined, get_keys, isset, is_empty, is_key} from "@/helpers/functions"
 
 const objselect = helpapify.select
 
@@ -25,7 +25,7 @@ const query = {
 
 }
 
-export const get_list = (objparam={})=>{
+export const get_list = (objparam={filter:{},page:{},orderby:{}})=>{
 
   objselect.reset()
 
@@ -35,7 +35,7 @@ export const get_list = (objparam={})=>{
   
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
-  if(isset(objparam.filter)){
+  if(!is_empty(objparam.filter)){
     const filters = get_keys(objparam.filter)
     const stror = filters.map(field => `${field} LIKE '%${objparam.filter[field]}%'`).join(" OR ")
     objselect.where.push(`(${stror})`)
@@ -43,7 +43,7 @@ export const get_list = (objparam={})=>{
 
   objselect.limit.perpage = 1000
   objselect.limit.regfrom = 0
-  if(isset(objparam.page)){
+  if(!is_empty(objparam.page)){
     objselect.limit.perpage = objparam.page.ippage
     objselect.limit.regfrom = objparam.page.ifrom
   }
@@ -53,7 +53,7 @@ export const get_list = (objparam={})=>{
   return objselect
 }//get_list
 
-export const detail = (objparam={})=>{
+export const detail = (objparam={filter:{}})=>{
   objselect.reset()
 
   objselect.table = `${table} r`
@@ -70,7 +70,7 @@ export const detail = (objparam={})=>{
   return objselect
 }
 
-export const get_insert = (objparam={})=>{
+export const get_insert = (objparam={fields:{}})=>{
   const objinsert = helpapify.insert
   objinsert.reset()
   objinsert.table = table
@@ -85,13 +85,13 @@ export const get_insert = (objparam={})=>{
   return objinsert
 }
 
-export const get_update = (objparam={},arfields=[])=>{
+export const get_update = (objparam={fields:{}},dbfields=[])=>{
   const objupdate = helpapify.update
   objupdate.reset()
   objupdate.table = table
 
   if(is_defined(objparam.fields)){
-    const onlyfields = arfields.map(objconf => objconf.field_name)
+    const onlyfields = dbfields.map(dbfield => dbfield.field_name)
     const fields = get_keys(objparam.fields)
 
     fields.forEach( field => {
@@ -106,12 +106,25 @@ export const get_update = (objparam={},arfields=[])=>{
         objupdate.fields.push({k:field,v:objparam.fields[field]})
     })    
   }
-  
+
   return objupdate
 }
 
-export const get_detete = ()=>{
+export const get_detete = (objparam={fields:{},keys:[]})=>{
+  const objdelete = helpapify.delete
+  objdelete.reset()
+  objdelete.table = table
   
+  if(isset(objparam.fields) && isset(objparam.fields)){
+    const fields = Object.keys(objparam.fields)
+    fields.forEach( field => {
+      if(!objparam.keys.includes(field))
+        return
+      objdelete.where.push(`${field}='${objparam.fields[field]}'`)
+    })  
+  }
+  
+  return objdelete
 }
 
 

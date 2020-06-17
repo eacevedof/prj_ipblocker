@@ -1,4 +1,4 @@
-export const is_undefined = mxvar => (typeof mxvar == "undefined")
+export const is_undefined = mxvar => (typeof mxvar === "undefined")
 
 export const is_defined = mxvar => (typeof mxvar !== "undefined")
 
@@ -12,6 +12,8 @@ export const is_object = mxvar => (typeof mxvar == "object")
 
 export const get_error = objerr => ({"error": objerr.toString().replace("Error:","").trim()})
 
-export const get_keys = objany => Object.keys(objany)
+export const is_objectlit = objany => is_defined(objany.constructor) ? objany.constructor == Object : false
 
-export const is_empty = objany => isset(objany) ? Object.keys(objany).length==0 : false
+export const get_keys = objany => objany==null || !is_objectlit(objany) ? [] : Object.keys(objany)
+
+export const is_empty = objany => isset(objany) ? get_keys(objany).length == 0 : false
