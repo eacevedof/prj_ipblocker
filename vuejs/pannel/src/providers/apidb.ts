@@ -20,10 +20,10 @@ const Apidb = {
       const objform = objselect.get_query()
       objform.append("apify-usertoken",usertoken)
 
-      console.log("apidb.async_get_ip_request",url)
+      console.log("apidb.async_get_list",url)
       const response = await axios.post(url, objform)
 
-      console.log("apidb.async_get_ip_request.response",response)
+      console.log("apidb.async_get_list.response",response)
 
       if(is_undefined(response.data.data))
         throw new Error("Wrong data received from server. Resultset")
@@ -31,109 +31,12 @@ const Apidb = {
       return response.data.data
     } 
     catch (e) {
-      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
+      console.error("ERROR: apidb.async_get_list.url:",url,"e:",e)
       return get_error(e)
     }
   },
 
-  async_get_ip_request_: async (objpage=null, id=null, filters=[]) => {
-    const usertoken = db.select("usertoken")
-    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
-    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
-
-    //hay que enviar header: apify-auth: token
-    try {
-      const objselect = helpapify.select
-      objselect.reset()
-
-      objselect.table = "app_ip_request r"
-      objselect.foundrows = 1
-      objselect.distinct = 1
-      objselect.fields.push("r.id")
-      objselect.fields.push("r.remote_ip")
-      objselect.fields.push("i.country")
-      objselect.fields.push("i.whois")
-      objselect.fields.push("r.domain")
-      objselect.fields.push("r.request_uri")
-      objselect.fields.push("r.`get`")
-      objselect.fields.push("CASE WHEN r.`get`!='' THEN 'GET' ELSE '' END hasget")
-      objselect.fields.push("r.post")
-      objselect.fields.push("CASE WHEN r.`post`!='' THEN 'POST' ELSE '' END haspost")      
-      objselect.fields.push("r.insert_date")
-      objselect.fields.push("bl.insert_date bl_date")
-      objselect.fields.push("bl.reason")
-      objselect.fields.push("CASE WHEN bl.id IS NULL THEN '' ELSE 'INBL' END inbl")
-      
-      objselect.joins.push("LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip")
-      objselect.joins.push("LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip")
-
-      objselect.where.push("i.whois NOT LIKE '%google%'")
-      objselect.where.push("i.whois NOT LIKE '%msn%'")
-      filters.forEach(filter => {
-        objselect.where.push(filter)
-      })
-
-      if(id)
-        objselect.where.push(`r.id=${id}`)
-      
-      objselect.orderby.push("r.id DESC")
-
-      objselect.limit.perpage = 1000
-      objselect.limit.regfrom = 0
-      if(objpage!==null)
-        if(Object.keys(objpage).length>0){
-          objselect.limit.perpage = objpage.ippage
-          objselect.limit.regfrom = objpage.ifrom
-        }
-
-      const objform = objselect.get_query()
-      objform.append("apify-usertoken",usertoken)
-
-      console.log("apidb.async_get_ip_request",url)
-      const response = await axios.post(url, objform)
-
-      console.log("apidb.async_get_ip_request.response",response)
-
-      if(is_undefined(response.data.data))
-        throw new Error("Wrong data received from server. Resultset")
-
-      return response.data.data
-    } 
-    catch (e) {
-      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
-      return get_error(e)
-    }
-  },
-
-  async_get_ip_request: async (objselect) => {
-    const usertoken = db.select("usertoken")
-    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
-    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
-
-    //hay que enviar header: apify-auth: token
-    try {
-
-      const objform = objselect.get_query()
-      //pr(objselect,"objform")
-      objform.append("apify-usertoken",usertoken)
-
-      console.log("apidb.async_get_ip_request",url)
-      const response = await axios.post(url, objform)
-
-      console.log("apidb.async_get_ip_request.response",response)
-
-      if(is_undefined(response.data.data))
-        throw new Error("Wrong data received from server. Resultset")
-
-      return response.data.data
-    } 
-    catch (e) {
-      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
-      return get_error(e)
-    }
-  },  
-
-  async_get_fields: async(table)=>{
+  async_get_fields: async (table) =>{
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/fields/c3/db_security/${table}`
 
@@ -192,7 +95,7 @@ const Apidb = {
 
       objupdate.table = "app_ip_request"
 
-      const arfields = await apidb.async_get_fields(objupdate.table)
+      const arfields = await Apidb.async_get_fields(objupdate.table)
       if(arfields.error)
         throw new Error(arfields.error)
 

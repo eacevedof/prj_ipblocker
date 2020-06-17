@@ -58,10 +58,10 @@
           <v-spacer></v-spacer>
 
           <!-- los hijos se comunican por eventos con los padres -->
-          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="dialog_result" v-on:evtclose="showform=false" />
+          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
           <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
-          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="dialog_result" v-on:evtclose="showform=false" />
-          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="dialog_result" v-on:evtclose="showform=false" />
+          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="form_result" v-on:evtclose="showform=false" />
+          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="form_result" v-on:evtclose="showform=false" />
 
         </v-toolbar>
 
@@ -223,28 +223,8 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
-    async_loaddata_: async function(page=null, filters=[]){
-      this.isfetching = true
 
-      const ipage = parseInt(page) || this.get_page()
-      this.page.ipage = ipage
-      const ippage = this.page.ippage
-      const ifrom = (ipage-1) * ippage
-      const objpage = {ippage,ifrom}
-      //console.log("async_loaddata.router.params",url.get_param("page"))
-      //console.log("async_loaddata.router.query",url.get_get("ip"))
-      const response = await apidb.async_get_ip_request(objpage,null,filters)
-      this.arrows = response.result
-      this.page.foundrows = response.foundrows
-      //this.page.ipages = Math.ceil(this.arrows.length/ippage)
-      this.page.ipages = Math.ceil(this.page.foundrows/ippage)
-      //alert(this.page.ipages)
-
-      console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
-      this.isfetching = false
-    },
-
-    async_loaddata: async function(objparam={page:null,filters:{}}){
+    async_loaddata: async function(objparam={page:{},filters:{}}){
       this.isfetching = true
 
       const ipage = parseInt(objparam.page) || this.get_page()
@@ -255,9 +235,7 @@ export default {
 
       const obinput =  {page:{ippage,ifrom},filters:objparam.filters}
       const objquery = get_obj_list(obinput)
-      //console.log("async_loaddata.router.params",url.get_param("page"))
-      //console.log("async_loaddata.router.query",url.get_get("ip"))
-      const response = await apidb.async_get_ip_request(objquery)
+      const response = await apidb.async_get_list(objquery)
       //pr(response,"response");return
       this.arrows = response.result
       this.page.foundrows = response.foundrows
@@ -273,10 +251,8 @@ export default {
       this.showform = true
     },
 
-    dialog_result(val){
-      //alert("dialog_result: "+val)
-      const ipage = url.get_param("page")
-      this.async_loaddata({page:ipage,filters:{}})
+    form_result(val){
+      this.async_loaddata({page:{},filters:{}})
     },
 
     insert(){
