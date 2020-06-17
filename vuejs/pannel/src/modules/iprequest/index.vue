@@ -239,12 +239,44 @@ export default {
       //pr(response,"response");return
       this.arrows = response.result
       this.page.foundrows = response.foundrows
-      //this.page.ipages = Math.ceil(this.arrows.length/ippage)
       this.page.ipages = Math.ceil(this.page.foundrows/ippage)
       //alert(this.page.ipages)
 
       console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
       this.isfetching = false
+    },    
+
+    get_page(){
+      const ipage = url.get_param("page") || 1
+      //alert(ipage)
+      if(isNaN(ipage)) return 1
+      return parseInt(ipage)
+    },
+
+    on_pagechange(ipage){
+      //alert("changepage"+JSON.stringify(ipage))
+      this.async_loaddata({page:ipage,filters:{}})
+      //alert(this.$route.path)
+      if(this.$route.path !== `/ip-request/${ipage}`)
+        this.$router.push({ name: 'iprequest', params: { page: ipage } })
+    },
+
+    on_dbsearch(text) {
+      // cancel pending call
+      clearTimeout(this.debounceid);
+
+      this.issearching = true;
+      // delay new call 500ms
+      this.debounceid = setTimeout(() => {
+        const ipage = this.get_page()
+        text = text.trim()
+        if(text!=="")
+          this.async_loaddata({page:{ipage:1,ippage:15}, filters:{country:`LIKE '%${text}%'`}})
+        else
+          this.async_loaddata({page:{}, filters:{}})
+        this.issearching = false
+      }, 1000);
+
     },    
 
     show_form(){
@@ -286,38 +318,6 @@ export default {
     submenu_selected(option){
       this.crudopt = option
       this.show_form()
-    },
-
-    get_page(){
-      const ipage = url.get_param("page") || 1
-      //alert(ipage)
-      if(isNaN(ipage)) return 1
-      return parseInt(ipage)
-    },
-
-    on_pagechange(ipage){
-      //alert("changepage"+JSON.stringify(ipage))
-      this.async_loaddata({page:ipage,filters:{}})
-      //alert(this.$route.path)
-      if(this.$route.path !== `/ip-request/${ipage}`)
-        this.$router.push({ name: 'iprequest', params: { page: ipage } })
-    },
-
-    on_dbsearch(text) {
-      // cancel pending call
-      clearTimeout(this.debounceid);
-
-      this.issearching = true;
-      // delay new call 500ms
-      this.debounceid = setTimeout(() => {
-        const ipage = this.get_page()
-        text = text.trim()
-        if(text!=="")
-          this.async_loaddata({page:ipage,filters:{country:`LIKE '%${text}%'`}})
-        else
-          this.async_loaddata({page:ipage,filters:{}})
-        this.issearching = false
-      }, 1000);
     },
     
   }//methods  
