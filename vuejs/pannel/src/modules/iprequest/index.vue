@@ -17,7 +17,7 @@
           label="Search"
           append-icon="mdi-text-box-search-outline"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="2">
         <p>{{page.foundrows}}</p>
