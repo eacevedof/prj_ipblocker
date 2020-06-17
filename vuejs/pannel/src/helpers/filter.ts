@@ -29,9 +29,9 @@ const get_field = (label, arconfig) => {
   return allfields
 }
 
-const filtercmd = (search, arconfig=[])=>{
-  if(search.trim()=="") return []
-  if( !search.includes(LS) || !search.includes(CS) ) return []
+const filtercmd = (search, arconfig=[]) => {
+  if( search.trim()=="" ) return []
+  if( !search.includes(LS) || !search.includes(CS) ) return filtersimple(search, arconfig)
 
   const commands = search.split(CS).map(strcmd => mini(strcmd))
   
@@ -60,8 +60,6 @@ const filtercmd = (search, arconfig=[])=>{
   //cl(r,"r")
   return r
   // Nº:1|get:xxx|post
-  //pr(labels,"labels")
-  
 }
 
 export const filtersimple = (search, arconfig) => {
@@ -77,6 +75,7 @@ export const filtersimple = (search, arconfig) => {
       allfields.push(obj)
     })
   })
+  pr(allfields,"filtersimple")
   return allfields
 }
 
