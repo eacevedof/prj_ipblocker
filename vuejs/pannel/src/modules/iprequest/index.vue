@@ -186,8 +186,7 @@ export default {
 
   //no puede ser asincrono pq el ciclo de vida no aplica await
   beforeMount(){
-    url.route = this.$route
-    console.log("iprequest.index.beforemount url.route",url.route)
+    console.log("iprequest.index.beforeMount")
   },
 
 
@@ -233,7 +232,7 @@ export default {
     ...mapActions(["async_islogged"]),
 
     get_page(){
-      const ipage = parseInt(url.get_param("page")) || 1
+      const ipage = parseInt(url.get_param("page",this.$route)) || 1
       const ippage = this.page.ippage
       const ifrom = (ipage-1) * ippage
 
@@ -281,9 +280,15 @@ export default {
       if(this.$route.path !== `/ip-request/${ipage}`)
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
 
-      
-      this.async_loaddata({page:ipage,filters:{}})
-      
+      const objpage = this.get_page()
+      //pr(objpage,`ipage: ${ipage}`)
+
+      this.page.ipage = objpage.ipage
+      const objparam = {
+        page: {...objpage},
+        filters: {}
+      }      
+      this.async_loaddata(objparam)
     },
 
     show_form(){

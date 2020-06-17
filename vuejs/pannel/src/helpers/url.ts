@@ -2,25 +2,24 @@ import {is_undefined, is_key} from "./functions"
 
 const url = {
 
-  route: {},
 
-  get_param(k){
+  get_param(k,route){
     //alert(JSON.stringify(this.route))
-    if(is_undefined(this.route.params))
+    if(is_undefined(route.params))
       return null
 
-    if(is_key(this.route.params, k))
-      return this.route.params[k]
+    if(is_key(route.params, k))
+      return route.params[k]
 
     return null
   },   
 
-  get_get(k){
+  get_get(k,route){
     let uri = window.location.href.split('?');
     //alert(JSON.stringify(uri))
-    if(is_undefined(this.route.query[k]))
+    if(is_undefined(route.query[k]))
       return null
-    return this.route.query[k]
+    return route.query[k]
   },
 
 }
