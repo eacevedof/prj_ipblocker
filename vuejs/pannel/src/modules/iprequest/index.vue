@@ -101,9 +101,10 @@
 
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
+import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
-import debounce from "../../helpers/debounce"
+import {get_obj_list} from "../../modules/iprequest/queries"
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
@@ -222,7 +223,7 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
-    async_loaddata: async function(page=null, filters=[]){
+    async_loaddata_: async function(page=null, filters=[]){
       this.isfetching = true
 
       const ipage = parseInt(page) || this.get_page()
@@ -243,6 +244,32 @@ export default {
       this.isfetching = false
     },
 
+    async_loaddata: async function(objparam={page:null,filters:{}}){
+      this.isfetching = true
+
+      const ipage = parseInt(objparam.page) || this.get_page()
+      this.page.ipage = ipage
+      const ippage = this.page.ippage
+      const ifrom = (ipage-1) * ippage
+      const objpage = {ippage,ifrom}
+
+      const obinput =  {page:ipage,filters:objparam.filters}
+      const objquery = get_obj_list(obinput)
+      //console.log("async_loaddata.router.params",url.get_param("page"))
+      //console.log("async_loaddata.router.query",url.get_get("ip"))
+      const response = await apidb.async_get_ip_request(objquery)
+      pr(response,"response")
+      return
+      this.arrows = response.result
+      this.page.foundrows = response.foundrows
+      //this.page.ipages = Math.ceil(this.arrows.length/ippage)
+      this.page.ipages = Math.ceil(this.page.foundrows/ippage)
+      //alert(this.page.ipages)
+
+      console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
+      this.isfetching = false
+    },    
+
     show_form(){
       this.showform = true
     },
@@ -250,7 +277,7 @@ export default {
     dialog_result(val){
       //alert("dialog_result: "+val)
       const ipage = url.get_param("page")
-      this.async_loaddata(ipage)
+      this.async_loaddata({page:ipage,filters:{}})
     },
 
     insert(){
@@ -295,7 +322,7 @@ export default {
 
     on_pagechange(ipage){
       //alert("changepage"+JSON.stringify(ipage))
-      this.async_loaddata(ipage)
+      this.async_loaddata({page:ipage,filters:{}})
       //alert(this.$route.path)
       if(this.$route.path !== `/ip-request/${ipage}`)
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
@@ -308,13 +335,12 @@ export default {
       this.issearching = true;
       // delay new call 500ms
       this.debounceid = setTimeout(() => {
-        console.log("E:",text)
         const ipage = this.get_page()
         text = text.trim()
         if(text!=="")
-          this.async_loaddata(ipage,[`country LIKE '%${text}%'`])
+          this.async_loaddata({page:ipage,filters:{country:`LIKE '%${text}%'`}})
         else
-          this.async_loaddata(ipage)
+          this.async_loaddata({page:ipage,filters:{}})
         this.issearching = false
       }, 1000);
     },
