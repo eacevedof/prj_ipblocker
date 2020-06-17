@@ -300,17 +300,13 @@ export default {
     },
 
     insert(){
-      //alert(JSON.stringify("insert"))
       this.crudopt = "insert"
-      //set showform=true
       this.show_form()
     },
 
     update(objrow){
-      //alert(JSON.stringify(objrow))
       this.crudopt = "update"
       this.objrow = objrow
-      //set showform=true
       this.show_form()
     },
 
