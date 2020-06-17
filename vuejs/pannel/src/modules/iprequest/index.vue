@@ -110,7 +110,9 @@ import {mapMutations, mapActions, mapState} from "vuex"
 import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
-import {get_obj_list} from "../../modules/iprequest/queries"
+import filter from "../../helpers/filter"
+import {get_obj_list, config} from "../../modules/iprequest/queries"
+
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
@@ -246,7 +248,9 @@ export default {
         ifrom: ifrom,
       }
     },
-
+///////////////////////////////////////////
+///////////////////////////////////////////
+///////////////////////////////////////////
     async_loaddata: async function(objparam={page:{},filter:{}}){
       this.isfetching = true
       const objquery = get_obj_list(objparam)
@@ -258,6 +262,7 @@ export default {
       this.page.foundrows = response.foundrows
       this.page.ipages = Math.ceil(this.page.foundrows/objparam.page.ippage)
       //alert(this.page.ipages)
+      filter(this.dbsearch,config)
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
