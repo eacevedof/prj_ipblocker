@@ -90,7 +90,7 @@
 import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
-import {get_obj_list} from "../../modules/iprequest/queries"
+import {get_obj_entity} from "../../modules/iprequest/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -204,7 +204,7 @@ export default {
           id:this.objrowdetail.id
         }
       }
-      const objquery = get_obj_list(objparam)
+      const objquery = get_obj_entity(objparam)
       const result = await apidb.async_get_list(objquery)
       //alert(JSON.stringify(this.objrowdetail))
       const flag = await apiflag.async_getflags([this.objrowdetail])
