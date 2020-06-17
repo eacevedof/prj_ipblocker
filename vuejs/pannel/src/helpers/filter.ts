@@ -31,9 +31,7 @@ const get_field = (label, arconfig) => {
 
 const filtercmd = (search, arconfig=[])=>{
   if(search.trim()=="") return []
-  cl(search,"SEARCH")
-  if( !search.includes(LS) && !search.includes(CS) ) return []
-  cl(search,"SEARCH-2")
+  if( !search.includes(LS) || !search.includes(CS) ) return []
 
   const commands = search.split(CS).map(strcmd => mini(strcmd))
   
@@ -59,11 +57,11 @@ const filtercmd = (search, arconfig=[])=>{
                 })
                 .filter(el => is_defined(el))
                 //.map(ar => ar[0])
-
-  cl(r,"r")
+  //cl(r,"r")
   return r
   // Nº:1|get:xxx|post
   //pr(labels,"labels")
+  
 }
 
 export const filtersimple = (search, arconfig) => {
