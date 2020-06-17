@@ -4,6 +4,12 @@
 
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
+<!-- los hijos se comunican por eventos con los padres -->
+    <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
+    <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
+    <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="form_result" v-on:evtclose="showform=false" />
+    <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="form_result" v-on:evtclose="showform=false" />
+
     <v-row
       justify="center" align="center"
     >
@@ -63,13 +69,6 @@
           <v-toolbar-title class="yellow--text font-weight-bold">
             IP Request
           </v-toolbar-title>
-
-          <!-- los hijos se comunican por eventos con los padres -->
-          <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
-          <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
-          <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="form_result" v-on:evtclose="showform=false" />
-          <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="form_result" v-on:evtclose="showform=false" />
-
         </v-toolbar>
 
         <!-- barra busqueda -->
@@ -323,7 +322,18 @@ export default {
     },
 
     form_result(val){
-      this.async_loaddata({page:{},filter:{}})
+      const objpage = this.get_page()
+      //pr(objpage,`ipage: ${ipage}`)
+
+      this.page.ipage = objpage.ipage
+      const objparam = {
+        page: {...objpage},
+        filter: {}
+      }      
+      if(this.dbsearch)
+        objparam.filter = {country:this.dbsearch}
+
+      this.async_loaddata(objparam)
     },
 
     insert(){
