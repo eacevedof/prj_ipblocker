@@ -62,7 +62,7 @@ const filtercmd = (search, arconfig=[]) => {
   // Nº:1|get:xxx|post
 }
 
-export const filtersimple = (search, arconfig) => {
+const filtersimple = (search, arconfig) => {
   //const table = arconfig.table.name
   const allfields = []
   arconfig.forEach(objtable => {
