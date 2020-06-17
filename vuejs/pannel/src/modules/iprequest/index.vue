@@ -216,7 +216,7 @@ export default {
     this.page.ipage = objpage.ipage
     const objparam = {
       page: {...objpage},
-      filters: {}
+      filter: {}
     }
 
     //pr(objparam,"objparam in async")
@@ -243,7 +243,7 @@ export default {
       }
     },
 
-    async_loaddata: async function(objparam={page:{},filters:{}}){
+    async_loaddata: async function(objparam={page:{},filter:{}}){
       this.isfetching = true
       const objquery = get_obj_list(objparam)
       //pr(objquery,"objquery")
@@ -257,7 +257,8 @@ export default {
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
-    },    
+
+    }, //async_loaddata
 
     on_dbsearch(text) {
       // cancel pending call
@@ -276,11 +277,12 @@ export default {
         this.page.ipage = objpage.ipage
         const objparam = {
           page: {...objpage},
-          filters: {}
+          filter: {}
         }
 
         if(text!==""){
-          objparam.filters = {country:`LIKE '%${text}%'`}
+          objparam.filter = {country:text}
+          //pr(objparam,"objparam")
           this.async_loaddata(objparam)
         }
         else
@@ -301,7 +303,7 @@ export default {
       this.page.ipage = objpage.ipage
       const objparam = {
         page: {...objpage},
-        filters: {}
+        filter: {}
       }      
       this.async_loaddata(objparam)
     },
@@ -311,7 +313,7 @@ export default {
     },
 
     form_result(val){
-      this.async_loaddata({page:{},filters:{}})
+      this.async_loaddata({page:{},filter:{}})
     },
 
     insert(){
