@@ -9,6 +9,22 @@ BASE_URL = "http://localhost:3000"
 
 const Apidb = {
   
+  async_get_fields: async (table) =>{
+    const usertoken = db.select("usertoken")
+    const url = `${BASE_URL}/apify/fields/c3/db_security/${table}`
+
+    try{
+      const objform = new FormData()
+      objform.append("apify-usertoken",usertoken)
+      const fields = await axios.post(url,objform)
+      return fields
+    }
+    catch (e) {
+      console.error("ERROR: apidb.async_get_fields.url:",url,"e:",e)
+      return get_error(e)
+    }    
+  },
+
   async_get_list: async objselect => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
@@ -36,36 +52,11 @@ const Apidb = {
     }
   },
 
-  async_get_fields: async (table) =>{
-    const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/fields/c3/db_security/${table}`
-
-    try{
-      const objform = new FormData()
-      objform.append("apify-usertoken",usertoken)
-      const fields = await axios.post(url,objform)
-      return fields
-    }
-    catch (e) {
-      console.error("ERROR: apidb.async_get_fields.url:",url,"e:",e)
-      return get_error(e)
-    }    
-  },
-
   async_insert: async (objinsert) => {
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
-    //hay que enviar header: apify-auth: token
+
     try {
-      const objinsert = helpapify.insert
-      objinsert.reset()
-      objinsert.table = "app_ip_request"
-
-      const fields = Object.keys(objrow)
-      fields.forEach( field => {
-          objinsert.fields.push({k:field,v:objrow[field]})
-      })
-
       const objform = objinsert.get_query()
       objform.append("apify-usertoken",usertoken)
 

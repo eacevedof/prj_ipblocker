@@ -51,10 +51,14 @@
   </v-dialog>
 </template>
 <script lang="ts">
+import apidb from "../../providers/apidb"
+import {get_obj_insert} from "../../modules/iprequest/queries"
+
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
-import apidb from "../../providers/apidb"
+
+
 export default {
 
   name: "iprequest-forminsert",
@@ -163,7 +167,12 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
       
-      const result = await apidb.async_insert(this.objrow)
+      const objparam = {
+        fields: this.objrow
+      }
+      
+      const objquery = get_obj_insert(objparam)
+      const result = await apidb.async_insert(objquery)
       
       this.issubmitting = false
       if(result.error){  

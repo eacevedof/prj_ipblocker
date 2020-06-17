@@ -94,13 +94,13 @@ export const get_obj_insert = (objparam={fields:{}})=>{
   objinsert.reset()
   objinsert.table = table
 
-  if(!is_empty(objparam)){
+  if(!is_empty(objparam.fields)){
     const fields = get_keys(objparam.fields)
     fields.forEach( field => {
       objinsert.fields.push({k:field,v:objparam.fields[field]})
     })  
   }
-
+  //pr(objinsert)
   return objinsert
 }
 
