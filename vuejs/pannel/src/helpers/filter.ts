@@ -75,7 +75,7 @@ const filtersimple = (search, arconfig) => {
       allfields.push(obj)
     })
   })
-  pr(allfields,"filtersimple")
+  //pr(allfields,"filtersimple")
   return allfields
 }
 
