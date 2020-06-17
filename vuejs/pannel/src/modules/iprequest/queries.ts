@@ -72,7 +72,7 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
   return objselect
 }//get_list
 
-export const detail = (objparam={filter:{}})=>{
+export const get_obj_entity = (objparam={filter:{}})=>{
   objselect.reset()
 
   objselect.table = `${table} r`
@@ -86,6 +86,14 @@ export const detail = (objparam={filter:{}})=>{
     filters.map(field => `${field}='${objparam.filter[field]}'`).forEach(cond => objselect.where.push(cond))
   }
   
+  if(!is_empty(query.joins)){
+    query.joins.forEach(join => objselect.joins.push(join))
+  }
+
+  if(!is_empty(query.where)){
+    query.where.forEach(cond => objselect.where.push(cond))
+  } 
+    
   return objselect
 }
 
