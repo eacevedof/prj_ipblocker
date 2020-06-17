@@ -126,25 +126,13 @@ const Apidb = {
     }
   },
 
-  async_delete: async(objrow, keys=[]) => {
+  async_delete: async(objdelete) => {
     //alert("async objrow: "+JSON.stringify(objrow))
     //return
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
     //hay que enviar header: apify-auth: token
     try {
-      const objdelete = helpapify.delete
-      objdelete.reset()
-
-      objdelete.table = "app_ip_request"
-
-      const fields = Object.keys(objrow)
-      fields.forEach( field => {
-        if(!keys.includes(field))
-          return
-        objdelete.where.push(`${field}='${objrow[field]}'`)
-      })
-
       const objform = objdelete.get_query()
       objform.append("apify-usertoken",usertoken)
 

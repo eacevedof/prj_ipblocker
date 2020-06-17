@@ -56,10 +56,13 @@
 </template>
 
 <script lang="ts">
+import apidb from "../../providers/apidb"
+import {get_obj_detete} from "../../modules/iprequest/queries"
+
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
-import apidb from "../../providers/apidb"
+
 export default {
 
   name: "iprequest-formdelete",
@@ -140,7 +143,13 @@ export default {
       this.reset_alerts()
       this.issubmitting = true
 
-      const result = await apidb.async_delete(this.objrow,["id"])
+      const objparam={
+        fields: this.objrow,
+        keys:["id"]
+      }
+      
+      const objquery = get_obj_detete(objparam)
+      const result = await apidb.async_delete(objquery)
       this.issubmitting = false
       
       if(result.error){  
