@@ -1,7 +1,7 @@
 import axios from "axios"
 import helpapify from "@/helpers/apify"
 import db from "@/helpers/localdb"
-import {is_undefined, get_error} from "@/helpers/functions"
+import {pr,is_undefined, get_error} from "@/helpers/functions"
 
 let BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "https://dbsapify.theframework.es"
@@ -36,7 +36,7 @@ const Apidb = {
     }
   },
 
-  async_get_ip_request: async (objpage=null, id=null, filters=[]) => {
+  async_get_ip_request_: async (objpage=null, id=null, filters=[]) => {
     const usertoken = db.select("usertoken")
     //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
     const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
@@ -104,6 +104,34 @@ const Apidb = {
       return get_error(e)
     }
   },
+
+  async_get_ip_request: async (objselect) => {
+    const usertoken = db.select("usertoken")
+    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
+    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
+
+    //hay que enviar header: apify-auth: token
+    try {
+
+      const objform = objselect.get_query()
+      pr(objselect,"objform")
+      objform.append("apify-usertoken",usertoken)
+
+      console.log("apidb.async_get_ip_request",url)
+      const response = await axios.post(url, objform)
+
+      console.log("apidb.async_get_ip_request.response",response)
+
+      if(is_undefined(response.data.data))
+        throw new Error("Wrong data received from server. Resultset")
+
+      return response.data.data
+    } 
+    catch (e) {
+      console.error("ERROR: apidb.async_get_ip_request.url:",url,"e:",e)
+      return get_error(e)
+    }
+  },  
 
   async_get_fields: async(table)=>{
     const usertoken = db.select("usertoken")

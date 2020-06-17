@@ -1,5 +1,5 @@
 import helpapify from "@/helpers/apify"
-import {is_defined, get_keys, isset, is_empty, is_key} from "@/helpers/functions"
+import {is_defined, get_keys, isset, is_empty, is_key, pr} from "@/helpers/functions"
 
 const objselect = helpapify.select
 
@@ -25,7 +25,7 @@ const query = {
 
 }
 
-export const get_list = (objparam={filter:{},page:{},orderby:{}})=>{
+export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
 
   objselect.reset()
 
@@ -49,7 +49,7 @@ export const get_list = (objparam={filter:{},page:{},orderby:{}})=>{
   }
 
   objselect.orderby.push("r.id DESC")
-  
+  pr(objselect,"get_obj_list.objselect")
   return objselect
 }//get_list
 
@@ -70,7 +70,7 @@ export const detail = (objparam={filter:{}})=>{
   return objselect
 }
 
-export const get_insert = (objparam={fields:{}})=>{
+export const get_obj_insert = (objparam={fields:{}})=>{
   const objinsert = helpapify.insert
   objinsert.reset()
   objinsert.table = table
@@ -85,7 +85,7 @@ export const get_insert = (objparam={fields:{}})=>{
   return objinsert
 }
 
-export const get_update = (objparam={fields:{}},dbfields=[])=>{
+export const get_obj_update = (objparam={fields:{}},dbfields=[])=>{
   const objupdate = helpapify.update
   objupdate.reset()
   objupdate.table = table
@@ -110,7 +110,7 @@ export const get_update = (objparam={fields:{}},dbfields=[])=>{
   return objupdate
 }
 
-export const get_detete = (objparam={fields:{},keys:[]})=>{
+export const get_obj_detete = (objparam={fields:{},keys:[]})=>{
   const objdelete = helpapify.delete
   objdelete.reset()
   objdelete.table = table
