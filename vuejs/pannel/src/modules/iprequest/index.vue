@@ -212,7 +212,16 @@ export default {
     }
 
     console.log("iprequest.index.mounted islogged:",this.islogged)
-    await this.async_loaddata()
+    const objpage = this.get_page()
+
+    this.page.ipage = objpage.ipage
+    const objparam = {
+      page: {...objpage},
+      filters: {}
+    }
+
+    //pr(objparam,"objparam in async")
+    await this.async_loaddata(objparam)
   },
 
   computed:{
@@ -223,43 +232,33 @@ export default {
     //setters
     ...mapActions(["async_islogged"]),
 
+    get_page(){
+      const ipage = parseInt(url.get_param("page")) || 1
+      const ippage = this.page.ippage
+      const ifrom = (ipage-1) * ippage
+
+      return {
+        ipage: ipage,
+        ippage: ippage,
+        ifrom: ifrom,
+      }
+    },
 
     async_loaddata: async function(objparam={page:{},filters:{}}){
       this.isfetching = true
-
-      const ipage = parseInt(objparam.page) || this.get_page()
-      this.page.ipage = ipage
-      const ippage = this.page.ippage
-      const ifrom = (ipage-1) * ippage
-      const objpage = {ippage,ifrom}
-
-      const obinput =  {page:{ippage,ifrom},filters:objparam.filters}
-      const objquery = get_obj_list(obinput)
+      const objquery = get_obj_list(objparam)
+      //pr(objquery,"objquery")
       const response = await apidb.async_get_list(objquery)
       //pr(response,"response");return
       this.arrows = response.result
+      this.page.ipage = objparam.page.ipage
       this.page.foundrows = response.foundrows
-      this.page.ipages = Math.ceil(this.page.foundrows/ippage)
+      this.page.ipages = Math.ceil(this.page.foundrows/objparam.page.ippage)
       //alert(this.page.ipages)
 
-      console.table("iprequest.index.async_loaddata.page.count:",this.page.foundrows)
+      console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
     },    
-
-    get_page(){
-      const ipage = url.get_param("page") || 1
-      //alert(ipage)
-      if(isNaN(ipage)) return 1
-      return parseInt(ipage)
-    },
-
-    on_pagechange(ipage){
-      //alert("changepage"+JSON.stringify(ipage))
-      this.async_loaddata({page:ipage,filters:{}})
-      //alert(this.$route.path)
-      if(this.$route.path !== `/ip-request/${ipage}`)
-        this.$router.push({ name: 'iprequest', params: { page: ipage } })
-    },
 
     on_dbsearch(text) {
       // cancel pending call
@@ -268,7 +267,6 @@ export default {
       this.issearching = true;
       // delay new call 500ms
       this.debounceid = setTimeout(() => {
-        const ipage = this.get_page()
         text = text.trim()
         if(text!=="")
           this.async_loaddata({page:{ipage:1,ippage:15}, filters:{country:`LIKE '%${text}%'`}})
@@ -277,7 +275,16 @@ export default {
         this.issearching = false
       }, 1000);
 
-    },    
+    },   
+
+    on_pagechange(ipage){
+      if(this.$route.path !== `/ip-request/${ipage}`)
+        this.$router.push({ name: 'iprequest', params: { page: ipage } })
+
+      
+      this.async_loaddata({page:ipage,filters:{}})
+      
+    },
 
     show_form(){
       this.showform = true
