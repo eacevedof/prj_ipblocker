@@ -114,7 +114,7 @@ const Apidb = {
     try {
 
       const objform = objselect.get_query()
-      pr(objselect,"objform")
+      //pr(objselect,"objform")
       objform.append("apify-usertoken",usertoken)
 
       console.log("apidb.async_get_ip_request",url)
