@@ -4,27 +4,33 @@
 
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
-    <v-row>
+    <v-row
+      justify="center" align="center"
+    >
       <v-col
         cols="10"
         md="10"
       >
         <v-text-field
+          ref="dbsearch"
           v-model="dbsearch"
           label="Search"
           append-icon="mdi-text-box-search-outline"
           outlined
         ></v-text-field>
       </v-col>
+      <v-col cols="2">
+        <p>{{page.foundrows}}</p>
+      </v-col>
     </v-row>
 
-
+    
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
         v-model="page.ipage" 
         :page="page.ipage"
         :length="page.ipages" 
-        @input="on_pagechange"
+        @input="on_paginate"
         total-visible="10"
       />
     </div>
@@ -54,8 +60,9 @@
           ><v-icon>mdi-plus</v-icon></v-btn>
 
           <v-divider class="mx-4" inset vertical/>
-          <v-toolbar-title class="yellow--text font-weight-bold">IP Request</v-toolbar-title>
-          <v-spacer></v-spacer>
+          <v-toolbar-title class="yellow--text font-weight-bold">
+            IP Request
+          </v-toolbar-title>
 
           <!-- los hijos se comunican por eventos con los padres -->
           <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
@@ -92,7 +99,7 @@
         v-model="page.ipage" 
         :page="page.ipage"
         :length="page.ipages" 
-        @input="on_pagechange"
+        @input="on_paginate"
         total-visible="10"
       />
     </div>
@@ -113,7 +120,6 @@ import detail from "@/modules/iprequest/detail.vue"
 import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
 import formdelete from "@/modules/iprequest/form_delete.vue"
-
 
 
 export default {
@@ -170,7 +176,6 @@ export default {
     },
 
     dbsearch:"",
-    debdbsearch: "",
 
   }),//data
 
@@ -257,6 +262,7 @@ export default {
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
+      this.$refs.dbsearch.focus()
 
     }, //async_loaddata
 
@@ -281,6 +287,7 @@ export default {
         }
 
         if(text!==""){
+          //this.dbsearch = text
           objparam.filter = {country:text}
           //pr(objparam,"objparam")
           this.async_loaddata(objparam)
@@ -293,7 +300,7 @@ export default {
 
     },   
 
-    on_pagechange(ipage){
+    on_paginate(ipage){
       if(this.$route.path !== `/ip-request/${ipage}`)
         this.$router.push({ name: 'iprequest', params: { page: ipage } })
 
@@ -305,6 +312,9 @@ export default {
         page: {...objpage},
         filter: {}
       }      
+      if(this.dbsearch)
+        objparam.filter = {country:this.dbsearch}
+
       this.async_loaddata(objparam)
     },
 
