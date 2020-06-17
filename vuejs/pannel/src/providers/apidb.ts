@@ -1,7 +1,7 @@
 import axios from "axios"
 import helpapify from "@/helpers/apify"
 import db from "@/helpers/localdb"
-import {pr,is_undefined, get_error} from "@/helpers/functions"
+import {pr,is_undefined, get_error, is_defined} from "@/helpers/functions"
 
 let BASE_URL = "https://dbsapify.theframework.es"
 BASE_URL = "https://dbsapify.theframework.es"
@@ -17,7 +17,10 @@ const Apidb = {
       const objform = new FormData()
       objform.append("apify-usertoken",usertoken)
       const fields = await axios.post(url,objform)
-      return fields
+      //pr(fields,"alert fields:")
+      if(is_undefined(fields.data.data))
+        throw new Error("Wrong data received from server. Get fields")
+      return fields.data.data
     }
     catch (e) {
       console.error("ERROR: apidb.async_get_fields.url:",url,"e:",e)
@@ -76,37 +79,12 @@ const Apidb = {
     }
   },
 
-  async_update: async(objrow, keys=[]) => {
+  async_update: async (objupdate) => {
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
     //hay que enviar header: apify-auth: token
     try {
-      const objupdate = helpapify.update
-      objupdate.reset()
-
-      objupdate.table = "app_ip_request"
-
-      const arfields = await Apidb.async_get_fields(objupdate.table)
-      if(arfields.error)
-        throw new Error(arfields.error)
-
-      console.log("arfields",arfields)
-      const onlyfields = arfields.data.data.map(objconf => objconf.field_name)
-
-
-      const fields = Object.keys(objrow)
-      fields.forEach( field => {
-        if(!onlyfields.includes(field))
-          return
-
-        //si el campo es clave
-        if(keys.includes(field)){
-          objupdate.where.push(`${field}='${objrow[field]}'`)
-        }
-        else
-          objupdate.fields.push({k:field,v:objrow[field]})
-      })
-
+ 
       const objform = objupdate.get_query()
       objform.append("apify-usertoken",usertoken)
 
@@ -127,11 +105,10 @@ const Apidb = {
   },
 
   async_delete: async(objdelete) => {
-    //alert("async objrow: "+JSON.stringify(objrow))
-    //return
+
     const usertoken = db.select("usertoken")
     const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
-    //hay que enviar header: apify-auth: token
+
     try {
       const objform = objdelete.get_query()
       objform.append("apify-usertoken",usertoken)

@@ -55,10 +55,14 @@
   </v-dialog>
 </template>
 <script lang="ts">
+import {pr} from "../../helpers/functions"
+import apidb from "../../providers/apidb"
+import {get_obj_update, table} from "../../modules/iprequest/queries"
+
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
-import apidb from "../../providers/apidb"
+
 export default {
 
   name: "iprequest-formupdate",
@@ -140,7 +144,14 @@ export default {
       this.issubmitting = true
       
       //alert(JSON.stringify(this.objrow))
-      const result = await apidb.async_update(this.objrow, ["id"])
+      const objparam = {
+        fields: this.objrow,
+        keys:["id"]
+      }
+
+      const tblconf = await apidb.async_get_fields(table)
+      const objquery = get_obj_update(objparam, tblconf)
+      const result = await apidb.async_update(objquery)
       
       this.issubmitting = false
       if(result.error){  
