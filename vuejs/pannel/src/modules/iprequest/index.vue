@@ -267,10 +267,25 @@ export default {
       // delay new call 500ms
       this.debounceid = setTimeout(() => {
         text = text.trim()
-        if(text!=="")
-          this.async_loaddata({page:{ipage:1,ippage:15}, filters:{country:`LIKE '%${text}%'`}})
+        if(this.$route.path !== `/ip-request/1`){
+          this.$router.push({ name: 'iprequest', params: { page: 1 } })      
+        }
+      
+        const objpage = this.get_page()
+
+        this.page.ipage = objpage.ipage
+        const objparam = {
+          page: {...objpage},
+          filters: {}
+        }
+
+        if(text!==""){
+          objparam.filters = {country:`LIKE '%${text}%'`}
+          this.async_loaddata(objparam)
+        }
         else
-          this.async_loaddata({page:{}, filters:{}})
+          this.async_loaddata(objparam)
+        
         this.issearching = false
       }, 1000);
 
