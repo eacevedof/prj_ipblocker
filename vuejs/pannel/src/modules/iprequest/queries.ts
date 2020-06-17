@@ -23,6 +23,16 @@ const query = {
     "CASE WHEN bl.id IS NULL THEN '' ELSE 'INBL' END inbl",
   ],
 
+  joins:[
+    "LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip",
+    "LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip",
+  ],
+
+  where:[
+    "i.whois NOT LIKE '%google%'",
+    "i.whois NOT LIKE '%msn%'"
+  ],
+
 }
 
 export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
@@ -41,15 +51,26 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
     objselect.where.push(`(${stror})`)
   }
 
+  if(!is_empty(query.joins)){
+    query.joins.forEach(join => objselect.joins.push(join))
+  }
+
+  if(!is_empty(query.where)){
+    query.where.forEach(cond => objselect.where.push(cond))
+  }
+  
+
   objselect.limit.perpage = 1000
   objselect.limit.regfrom = 0
   if(!is_empty(objparam.page)){
+    //pr(objparam.page,"page")
     objselect.limit.perpage = objparam.page.ippage
     objselect.limit.regfrom = objparam.page.ifrom
   }
 
+
   objselect.orderby.push("r.id DESC")
-  pr(objselect,"get_obj_list.objselect")
+  //pr(objselect,"get_obj_list.objselect")
   return objselect
 }//get_list
 

@@ -253,13 +253,12 @@ export default {
       const ifrom = (ipage-1) * ippage
       const objpage = {ippage,ifrom}
 
-      const obinput =  {page:ipage,filters:objparam.filters}
+      const obinput =  {page:{ippage,ifrom},filters:objparam.filters}
       const objquery = get_obj_list(obinput)
       //console.log("async_loaddata.router.params",url.get_param("page"))
       //console.log("async_loaddata.router.query",url.get_get("ip"))
       const response = await apidb.async_get_ip_request(objquery)
-      pr(response,"response")
-      return
+      //pr(response,"response");return
       this.arrows = response.result
       this.page.foundrows = response.foundrows
       //this.page.ipages = Math.ceil(this.arrows.length/ippage)
