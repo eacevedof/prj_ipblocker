@@ -31,7 +31,9 @@ const get_field = (label, arconfig) => {
 
 const filtercmd = (search, arconfig=[])=>{
   if(search.trim()=="") return []
-  if(!search.includes(LS)) return []
+  cl(search,"SEARCH")
+  if( !search.includes(LS) && !search.includes(CS) ) return []
+  cl(search,"SEARCH-2")
 
   const commands = search.split(CS).map(strcmd => mini(strcmd))
   
@@ -39,14 +41,28 @@ const filtercmd = (search, arconfig=[])=>{
     const parts = cmd.split(LS)
     return {
       label: parts[0],
-      cmd: parts[1] || ""
+      search: parts[1] || ""
     }
-  })
+  }).filter(objsrch => objsrch.label != "")
 
+  //cl(labels,"l")
   //pr(arconfig,"arconfig"); return
-  const r = labels.map(objcmd => get_field(objcmd.label, arconfig))
-  cl(r,"r")
+  const r = labels
+                .map(objsrch => {
+                  const arfield = get_field(objsrch.label, arconfig)
+                  if(objsrch.search=="") return
+                  if(arfield.length==0) return
+                  return {
+                    field:  arfield[0].field || "",
+                    value:  objsrch.search
+                  }
+                })
+                .filter(el => is_defined(el))
+                //.map(ar => ar[0])
 
+  cl(r,"r")
+  return r
+  // Nº:1|get:xxx|post
   //pr(labels,"labels")
 }
 
