@@ -5,6 +5,44 @@ const objselect = helpapify.select
 
 export const table = "app_ip_request"
 
+export const config = [
+  {
+    table:{
+      name: "app_ip_request",
+      alias: "r",
+      fields:[
+        {name: "id", label:"Nº"},
+        {name: "remote_ip", label:"Rem. IP"},
+        {name: "insert_date", label:"Date"},
+        {name: "domain", label:"Domain"},
+        {name: "request_uri", label:"R. URI"},
+        {name: "`get`", label:"GET"},
+        {name: "post", label:"POST"},
+      ]
+    }
+  },
+  {
+    table:{
+      name: "app_ip_blacklist",
+      alias: "bl",
+      fields:[
+        {name: "insert_date", label:"Date", alias:"bl_date"},
+        {name: "reason", label:"Reason"},
+      ]
+    }
+  },  
+  {
+    table:{
+      name: "app_ip",
+      alias: "i",
+      fields:[
+        {name: "country", label:"Country"},
+        {name: "whois", label:"Whois"},
+      ]
+    }
+  },  
+]
+
 const query = {
   fields:[
     "r.id",
@@ -32,7 +70,6 @@ const query = {
     "i.whois NOT LIKE '%google%'",
     "i.whois NOT LIKE '%msn%'"
   ],
-
 }
 
 export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
