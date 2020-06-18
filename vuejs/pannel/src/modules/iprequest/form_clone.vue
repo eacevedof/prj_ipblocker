@@ -10,8 +10,6 @@
        <v-card-text>
         <v-container>
           <v-form ref="form"
-            v-model="isformvalid"
-            lazy-validation
           >
             <v-row v-if="error.title!='' || success.title!=''">
               <v-col ms="12">
@@ -53,7 +51,7 @@
 <script lang="ts">
 import apidb from "../../providers/apidb"
 import {pr} from "../../helpers/functions"
-import {get_obj_clone, table} from "../../modules/iprequest/queries"
+import {get_obj_clone, get_obj_entity, table} from "../../modules/iprequest/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -85,7 +83,17 @@ export default {
     }
   ),
 
-  watch: {},
+  created(){
+    this.objrowform = {...this.objrow}
+  },
+
+  watch: {
+    isvisible: function(curr,old){
+      if(curr){
+        this.objrowform = {...this.objrow}
+      }
+    }
+  },
 
   //getters
   computed:{
@@ -124,32 +132,35 @@ export default {
       this.set_success("","")
     },
 
-    reset_objrow(){
-      this.objrow = {
-        request_uri: "",
-        domain: "",
-        get: "",
-        post: "",        
-      }
-    },
-
     close(){
       this.reset_alerts()
       this.is_visible = false
+    },
+
+    get_query(idval){
+            
+      const objparam = {
+        filters:{
+          op: "AND",
+          fields:[{field:"id", value:idval}]
+        }
+      }
+
+      return get_obj_entity(objparam)
     },
 
     async_save: async function (){
       this.reset_alerts()
       this.issubmitting = true
       
-      const objparam = {
+      let objparam = {
         fields: this.objrow
       }
       
       const dbfields = await apidb.async_get_fields(table)
       //pr(dbfields,"dbfields"); return
-      const objquery = get_obj_clone(objparam, dbfields)
-      const result = await apidb.async_insert(objquery)
+      let objquery = get_obj_clone(objparam, dbfields)
+      let result = await apidb.async_insert(objquery)
       
       this.issubmitting = false
       if(result.error){  
@@ -160,7 +171,10 @@ export default {
       
       this.set_success("Success",`Reg created ${result}`)
       this.$emit("evtclone","ok")
-      this.reset_objrow()
+
+      objquery = this.get_query(result)
+      result = await apidb.async_get_list(objquery)
+      pr(result)
     }// async
   }
 }
