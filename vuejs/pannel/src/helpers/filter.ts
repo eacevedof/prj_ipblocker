@@ -29,8 +29,9 @@ const get_field = (label, arconfig) => {
   return allfields
 }
 
-const filtercmd = (search, arconfig=[]) => {
+const get_filters = (search, arconfig=[]) => {
   if( search.trim()=="" ) return []
+  //filtersimple devuelve OR
   if( !search.includes(LS) || !search.includes(CS) ) return filtersimple(search, arconfig)
 
   const commands = search.split(CS).map(strcmd => mini(strcmd))
@@ -45,7 +46,7 @@ const filtercmd = (search, arconfig=[]) => {
 
   //cl(labels,"l")
   //pr(arconfig,"arconfig"); return
-  const r = labels
+  const filters = labels
                 .map(objsrch => {
                   const arfield = get_field(objsrch.label, arconfig)
                   if(objsrch.search=="") return
@@ -58,13 +59,16 @@ const filtercmd = (search, arconfig=[]) => {
                 .filter(el => is_defined(el))
                 //.map(ar => ar[0])
   //cl(r,"r")
-  return r
+  return {
+    op: "AND",
+    fields: filters
+  }
   // Nº:1|get:xxx|post
 }
 
 const filtersimple = (search, arconfig) => {
   //const table = arconfig.table.name
-  const allfields = []
+  const filters = []
   arconfig.forEach(objtable => {
     const alias = is_defined(objtable.table.alias) ? objtable.table.alias +".": ""
     objtable.table.fields.forEach( objf => {
@@ -72,11 +76,14 @@ const filtersimple = (search, arconfig) => {
         field: `${alias}${objf.name}`,
         value: search,
       }
-      allfields.push(obj)
+      filters.push(obj)
     })
   })
-  //pr(allfields,"filtersimple")
-  return allfields
+  //pr(filters,"filtersimple")
+  return {
+    op: "OR",
+    fields: filters
+  }
 }
 
-export default filtercmd;
+export default get_filters;
