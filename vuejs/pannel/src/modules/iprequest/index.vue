@@ -7,6 +7,7 @@
 <!-- los hijos se comunican por eventos con los padres -->
     <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
     <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
+    <formclone v-if="crudopt=='clone'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
     <formupdate v-if="crudopt=='update'" :objrow="objrow" :isvisible="showform" v-on:evtupdate="form_result" v-on:evtclose="showform=false" />
     <formdelete v-if="crudopt=='delete'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="form_result" v-on:evtclose="showform=false" />
 
@@ -120,6 +121,7 @@ import detail from "@/modules/iprequest/detail.vue"
 import forminsert from "@/modules/iprequest/form_insert.vue"
 import formupdate from "@/modules/iprequest/form_update.vue"
 import formdelete from "@/modules/iprequest/form_delete.vue"
+import formclone from "@/modules/iprequest/form_clone.vue"
 
 
 export default {
@@ -132,6 +134,7 @@ export default {
     detail,
     formupdate,
     formdelete,
+    formclone,
     barover,
   },
 
@@ -334,6 +337,12 @@ export default {
       this.objrow = objrow
       this.show_form()
     },
+
+    clone(objrow){
+      this.crudopt = "clone"
+      this.objrow = objrow
+      this.show_form()
+    },    
 
     remove(objrow){
       this.crudopt = "delete"

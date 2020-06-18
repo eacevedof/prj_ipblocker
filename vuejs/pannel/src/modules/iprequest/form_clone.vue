@@ -100,7 +100,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-detail",
+  name: "iprequest-formclone",
 
   components:{
     progressbar,
