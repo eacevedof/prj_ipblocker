@@ -70,8 +70,10 @@ export default {
 
   data: () => ({
     valid: true,
-    username: 'fulanito',
-    password: 'menganito',
+    //username: 'fulanito',
+    //password: 'menganito',
+    username: '',
+    password: '',
     error: {
       title: "",
       message: "",
