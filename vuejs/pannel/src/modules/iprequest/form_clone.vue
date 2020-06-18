@@ -86,21 +86,17 @@ export default {
         get: "",
         post: "",
       },
-
-
-
     }
   ),
 
-  watch: {
+  watch: {},
 
-  },
   //getters
   computed:{
     
-    get_dialogtitle(){
-      return ``
-    },
+    get_dialogtitle(){return ``},
+    
+    is_submitting(){return this.issubmitting},
 
     is_visible:{
       get(){
@@ -111,10 +107,6 @@ export default {
         this.$emit("evtclose",val)
       }
     },
-
-    is_submitting(){
-      return this.issubmitting
-    }
 
   },
   
@@ -151,9 +143,6 @@ export default {
     },
 
     async_save: async function (){
-      this.$refs.form.validate()
-
-      //this.loader = 'loading5'
       this.reset_alerts()
       this.issubmitting = true
       
@@ -174,7 +163,6 @@ export default {
       this.set_success("Success",`Reg created ${result}`)
       this.$emit("evtclone","ok")
       this.reset_objrow()
-      this.$refs.form.resetValidation()
     }// async
   }
 }
