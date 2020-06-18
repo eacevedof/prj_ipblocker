@@ -1,11 +1,7 @@
+import {BASE_URL} from "../config/constants"
 import axios from "axios"
 import {is_undefined, pr, get_error} from "@/helpers/functions"
 import db from "@/helpers/localdb"
-
-let BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "http://localhost:3000"
-
 
 const Apiauth = {
 

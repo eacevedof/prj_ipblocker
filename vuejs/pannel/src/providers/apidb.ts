@@ -1,17 +1,13 @@
+import {BASE_URL,CONTEXT,DB_NAME} from "../config/constants"
 import axios from "axios"
-import helpapify from "@/helpers/apify"
 import db from "@/helpers/localdb"
-import {pr,is_undefined, get_error, is_defined} from "@/helpers/functions"
-
-let BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "https://dbsapify.theframework.es"
-BASE_URL = "http://localhost:3000"
+import {pr,is_undefined, get_error} from "@/helpers/functions"
 
 const Apidb = {
   
   async_get_fields: async (table) =>{
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/fields/c3/db_security/${table}`
+    const url = `${BASE_URL}/apify/fields/${CONTEXT}/${DB_NAME}/${table}`
 
     try{
       const objform = new FormData()
@@ -30,8 +26,7 @@ const Apidb = {
 
   async_get_list: async objselect => {
     const usertoken = db.select("usertoken")
-    //const url = `${BASE_URL}/apify/read?context=c3&dbname=dbs433062`
-    const url = `${BASE_URL}/apify/read?context=c3&dbname=db_security`
+    const url = `${BASE_URL}/apify/read?context=${CONTEXT}&dbname=${DB_NAME}`
 
     //hay que enviar header: apify-auth: token
     try {
@@ -57,7 +52,7 @@ const Apidb = {
 
   async_insert: async (objinsert) => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
 
     try {
       const objform = objinsert.get_query()
@@ -81,7 +76,7 @@ const Apidb = {
 
   async_update: async (objupdate) => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
     //hay que enviar header: apify-auth: token
     try {
  
@@ -107,7 +102,7 @@ const Apidb = {
   async_delete: async(objdelete) => {
 
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=c3&dbname=db_security`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
 
     try {
       const objform = objdelete.get_query()
