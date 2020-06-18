@@ -72,7 +72,7 @@ const query = {
   ],
 }
 
-export const get_obj_list = (objparam={filters:[], page:{}, orderby:{}})=>{
+export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
 
   objselect.reset()
 
@@ -88,7 +88,7 @@ export const get_obj_list = (objparam={filters:[], page:{}, orderby:{}})=>{
                     .fields
                     .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
                     .join(` ${objparam.filters.op} `)
-                    
+
     //pr(stror,"stror")
     objselect.where.push(`(${stror})`)
   }
@@ -123,9 +123,15 @@ export const get_obj_entity = (objparam={filters:{}})=>{
     
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
-  if(isset(objparam.filters)){
-    const arfilters = get_keys(objparam.filters)
-    arfilters.map(field => `${field}='${objparam.filters[field]}'`).forEach(cond => objselect.where.push(cond))
+  if(!is_empty(objparam.filters.fields)){
+    //pr(objparam.filters,"objparam.filter")
+    const stror = objparam.filters
+                    .fields
+                    .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
+                    .join(` ${objparam.filters.op} `)
+
+    //pr(stror,"stror")
+    objselect.where.push(`(${stror})`)
   }
   
   if(!is_empty(query.joins)){
