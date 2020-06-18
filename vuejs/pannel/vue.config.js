@@ -1,5 +1,8 @@
 module.exports = {
-    devServer: {
-      host: 'localhost'
-    }
-  }
+  devServer: {
+    host: 'localhost'
+  },
+  //baseUrl: process.env.NODE_ENV === 'production'
+  //? '/pannel/'
+  //: '/'  
+}
