@@ -110,7 +110,7 @@ import {mapMutations, mapActions, mapState} from "vuex"
 import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
-import filter from "../../helpers/filter"
+import get_filters from "../../helpers/filter"
 import {get_obj_list, config} from "../../modules/iprequest/queries"
 
 
@@ -222,7 +222,7 @@ export default {
     this.page.ipage = objpage.ipage
     const objparam = {
       page: {...objpage},
-      filter: {}
+      filters: []
     }
 
     //pr(objparam,"objparam in async")
@@ -248,10 +248,10 @@ export default {
         ifrom: ifrom,
       }
     },
-///////////////////////////////////////////
-///////////////////////////////////////////
-///////////////////////////////////////////
-    async_loaddata: async function(objparam={page:{},filter:{}}){
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+    async_loaddata: async function(objparam={page:{},filters:[]}){
       this.isfetching = true
       const objquery = get_obj_list(objparam)
       //pr(objquery,"objquery")
@@ -262,14 +262,16 @@ export default {
       this.page.foundrows = response.foundrows
       this.page.ipages = Math.ceil(this.page.foundrows/objparam.page.ippage)
       //alert(this.page.ipages)
-      filter(this.dbsearch,config)
+      //filter(this.dbsearch,config)
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
       this.$refs.dbsearch.focus()
 
     }, //async_loaddata
-
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
     on_dbsearch(text) {
       // cancel pending call
       clearTimeout(this.debounceid);
@@ -287,12 +289,14 @@ export default {
         this.page.ipage = objpage.ipage
         const objparam = {
           page: {...objpage},
-          filter: {}
+          filters: []
         }
 
         if(text!==""){
+          const f = get_filters(text, config)
+          //pr(f,"f:")
           //this.dbsearch = text
-          objparam.filter = {country:text}
+          objparam.filters = f
           //pr(objparam,"objparam")
           this.async_loaddata(objparam)
         }
@@ -314,10 +318,10 @@ export default {
       this.page.ipage = objpage.ipage
       const objparam = {
         page: {...objpage},
-        filter: {}
+        filters: []
       }      
       if(this.dbsearch)
-        objparam.filter = {country:this.dbsearch}
+        objparam.filters = {country:this.dbsearch}
 
       this.async_loaddata(objparam)
     },
@@ -333,10 +337,10 @@ export default {
       this.page.ipage = objpage.ipage
       const objparam = {
         page: {...objpage},
-        filter: {}
+        filters: []
       }      
       if(this.dbsearch)
-        objparam.filter = {country:this.dbsearch}
+        objparam.filters= {country:this.dbsearch}
 
       this.async_loaddata(objparam)
     },

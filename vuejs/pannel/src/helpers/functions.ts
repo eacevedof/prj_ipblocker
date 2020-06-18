@@ -16,6 +16,6 @@ export const is_objectlit = objany => isset(objany) ? is_defined(objany.construc
 
 export const get_keys = objany => !is_objectlit(objany) ? [] : Object.keys(objany)
 
-export const is_empty = objany => !isset(objany) ? true : (is_objectlit(objany) && get_keys(objany).length == 0)
+export const is_empty = objany => !isset(objany) ? true : ( is_defined(objany.length) ? objany.length===0 : (is_objectlit(objany) && get_keys(objany).length == 0) )
 
 export const cl = (objany, title="") => console.log(title, objany)
