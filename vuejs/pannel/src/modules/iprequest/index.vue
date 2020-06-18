@@ -222,7 +222,7 @@ export default {
     this.page.ipage = objpage.ipage
     const objparam = {
       page: {...objpage},
-      filters: []
+      filters: {}
     }
 
     //pr(objparam,"objparam in async")
@@ -251,7 +251,7 @@ export default {
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
-    async_loaddata: async function(objparam={page:{},filters:[]}){
+    async_loaddata: async function(objparam={page:{},filters:{}}){
       this.isfetching = true
       const objquery = get_obj_list(objparam)
       //pr(objquery,"objquery")
@@ -289,14 +289,11 @@ export default {
         this.page.ipage = objpage.ipage
         const objparam = {
           page: {...objpage},
-          filters: []
+          filters: {}
         }
 
         if(text!==""){
-          const f = get_filters(text, config)
-          //pr(f,"f:")
-          //this.dbsearch = text
-          objparam.filters = f
+          objparam.filters = get_filters(text, config)
           //pr(objparam,"objparam")
           this.async_loaddata(objparam)
         }
@@ -318,10 +315,10 @@ export default {
       this.page.ipage = objpage.ipage
       const objparam = {
         page: {...objpage},
-        filters: []
+        filters: {}
       }      
       if(this.dbsearch)
-        objparam.filters = {country:this.dbsearch}
+        objparam.filters = get_filters(this.dbsearch, config)
 
       this.async_loaddata(objparam)
     },
@@ -337,10 +334,10 @@ export default {
       this.page.ipage = objpage.ipage
       const objparam = {
         page: {...objpage},
-        filters: []
+        filters: {}
       }      
       if(this.dbsearch)
-        objparam.filters= {country:this.dbsearch}
+        objparam.filters = get_filters(this.dbsearch, config)
 
       this.async_loaddata(objparam)
     },

@@ -90,7 +90,9 @@
 import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
-import {get_obj_entity} from "../../modules/iprequest/queries"
+
+import {get_obj_entity, config} from "../../modules/iprequest/queries"
+import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -201,7 +203,8 @@ export default {
       
       const objparam = {
         filters:{
-          id:this.objrowdetail.id
+          op: "AND",
+          fields:[{field:"id", value:this.objrowdetail.id}]
         }
       }
       const objquery = get_obj_entity(objparam)
@@ -227,6 +230,8 @@ export default {
       this.set_success("Success",`Reg refreshed ${this.objrowdetail.id}`)
       this.$emit("evtrefresh","ok")
     }// async
+
+
   }
 }
 </script>
