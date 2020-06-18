@@ -72,7 +72,7 @@ const query = {
   ],
 }
 
-export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
+export const get_obj_list = (objparam={filters:{},page:{},orderby:{}})=>{
 
   objselect.reset()
 
@@ -82,9 +82,10 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
   
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
-  if(!is_empty(objparam.filter)){
-    const filters = get_keys(objparam.filter)
-    const stror = filters.map(field => `${field} LIKE '%${objparam.filter[field]}%'`).join(" OR ")
+  if(!is_empty(objparam.filters)){
+    //pr(objparam.filters,"objparam.filter")
+    const stror = objparam.filters.map(filter => `${filter.field} LIKE '%${filter.value}%'`).join(" OR ")
+    //pr(stror,"stror")
     objselect.where.push(`(${stror})`)
   }
 
@@ -109,7 +110,7 @@ export const get_obj_list = (objparam={filter:{},page:{},orderby:{}})=>{
   return objselect
 }//get_list
 
-export const get_obj_entity = (objparam={filter:{}})=>{
+export const get_obj_entity = (objparam={filters:{}})=>{
   objselect.reset()
 
   objselect.table = `${table} r`
@@ -118,9 +119,9 @@ export const get_obj_entity = (objparam={filter:{}})=>{
     
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
-  if(isset(objparam.filter)){
-    const filters = get_keys(objparam.filter)
-    filters.map(field => `${field}='${objparam.filter[field]}'`).forEach(cond => objselect.where.push(cond))
+  if(isset(objparam.filters)){
+    const arfilters = get_keys(objparam.filters)
+    arfilters.map(field => `${field}='${objparam.filters[field]}'`).forEach(cond => objselect.where.push(cond))
   }
   
   if(!is_empty(query.joins)){
