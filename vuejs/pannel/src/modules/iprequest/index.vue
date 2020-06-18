@@ -14,8 +14,8 @@
       justify="center" align="center"
     >
       <v-col
-        cols="10"
-        md="10"
+        cols="8"
+        md="8"
       >
         <v-text-field
           ref="dbsearch"
@@ -23,10 +23,10 @@
           label="Search"
           append-icon="mdi-text-box-search-outline"
           outlined
+          hide-details="true"
+          color="secondary"
         />
-      </v-col>
-      <v-col cols="2">
-        <p>{{page.foundrows}}</p>
+        <sub>regs:{{page.foundrows}}</sub>
       </v-col>
     </v-row>
 
