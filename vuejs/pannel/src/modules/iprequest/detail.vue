@@ -19,58 +19,58 @@
           <v-row>
             <v-col class="pa-0">
               <h4>Remote IP</h4>
-              <p>{{objrowdetail.remote_ip}}</p>
+              <p>{{objrowform.remote_ip}}</p>
             </v-col>
             <v-col class="pa-0">
               <h4>Country</h4>
-              <p>{{objrowdetail.country}} {{objflag.name}}</p>
+              <p>{{objrowform.country}} {{objflag.name}}</p>
               <v-img v-if="objflag.name" :src="objflag.flag" max-height="55" max-width="80" />
             </v-col>
             <v-col class="pa-0">
               <h4>Whois</h4>
-              <p>{{objrowdetail.whois}}</p>
+              <p>{{objrowform.whois}}</p>
             </v-col>
           </v-row>
-          <v-row v-if="objrowdetail.inbl!=''">
+          <v-row v-if="objrowform.inbl!=''">
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowdetail.inbl!=''}">In Blacklist</h4>
-              <p>{{objrowdetail.inbl}}</p>            
+              <h4 :class="{'cyan--text':objrowform.inbl!=''}">In Blacklist</h4>
+              <p>{{objrowform.inbl}}</p>            
             </v-col>             
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowdetail.inbl!=''}">Reason</h4>
-              <p>{{objrowdetail.reason}}</p>                   
+              <h4 :class="{'cyan--text':objrowform.inbl!=''}">Reason</h4>
+              <p>{{objrowform.reason}}</p>                   
             </v-col>  
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowdetail.bl_date!=''}">Date in BL</h4>
-              <p>{{objrowdetail.bl_date}}</p>                   
+              <h4 :class="{'cyan--text':objrowform.bl_date!=''}">Date in BL</h4>
+              <p>{{objrowform.bl_date}}</p>                   
             </v-col>                                    
           </v-row>
           <v-row>
             <v-col class="pa-0">
               <h4>Domain</h4>
-              <p>{{objrowdetail.domain}}</p>                   
+              <p>{{objrowform.domain}}</p>                   
             </v-col>             
             <v-col class="pa-0">
               <h4>Req. URI</h4>
-              <p>{{objrowdetail.request_uri}}</p>
+              <p>{{objrowform.request_uri}}</p>
             </v-col>            
           </v-row>
           <v-row>
             <v-col class="pa-0">
               <h4>GET</h4>
-              <p :class="{fontcode:objrowdetail.get!=''}">{{objrowdetail.get}}</p>
+              <p :class="{fontcode:objrowform.get!=''}">{{objrowform.get}}</p>
             </v-col>            
           </v-row> 
           <v-row>
             <v-col class="pa-0">
               <h4>POST</h4>
-              <p :class="{fontcode:objrowdetail.post!=''}">{{objrowdetail.post}}</p>
+              <p :class="{fontcode:objrowform.post!=''}">{{objrowform.post}}</p>
             </v-col>            
           </v-row>                    
           <v-row>
             <v-col class="pa-0">
               <h4>Date</h4>
-              <p class="ma-0">{{objrowdetail.insert_date}}</p>
+              <p class="ma-0">{{objrowform.insert_date}}</p>
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -119,7 +119,7 @@ export default {
       issubmitting: false,
       error:{title:"",mesage:""},
       success:{title:"",message:""},
-      objrowdetail:{},
+      objrowform:{},
       objflag:{},
     }
   ),
@@ -128,7 +128,7 @@ export default {
   computed:{
     
     get_dialogtitle(){
-      return `Nº:${this.objrowdetail.id} - IP: ${this.objrowdetail.remote_ip}`
+      return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`
     },
 
     is_visible:{
@@ -149,7 +149,7 @@ export default {
   
   created(){
     console.log("detail.creatd",this.objrow)
-    this.objrowdetail = {...this.objrow}
+    this.objrowform = {...this.objrow}
   },
 
   watch:{
@@ -157,11 +157,11 @@ export default {
       //alert("changed: "+curr+"|"+old)
       //alert(JSON.stringify(this.objrow))
       if(curr==true){
-        this.objrowdetail = {...this.objrow}
+        this.objrowform = {...this.objrow}
       }
       //else
-        //this.objrowdetail = {}
-      console.log("detail.watch.isvisible",this.objrowdetail)
+        //this.objrowform = {}
+      console.log("detail.watch.isvisible",this.objrowform)
     }
 
   },
@@ -169,8 +169,8 @@ export default {
   //setters 
   methods:{
 
-    set_objrowdetail(objrow){
-      this.objrowdetail = {...objrow}
+    set_objrowform(objrow){
+      this.objrowform = {...objrow}
     },
 
     set_error(title,message){
@@ -189,8 +189,8 @@ export default {
     },
 
     close(){
-      console.log("detail.close.close",this.objrowdetail)
-      this.objrowdetail = {}
+      console.log("detail.close.close",this.objrowform)
+      this.objrowform = {}
       this.objflag = {}
       this.reset_alerts()
       this.$emit("evtclose")
@@ -204,13 +204,13 @@ export default {
       const objparam = {
         filters:{
           op: "AND",
-          fields:[{field:"id", value:this.objrowdetail.id}]
+          fields:[{field:"r.id", value:this.objrowform.id}]
         }
       }
       const objquery = get_obj_entity(objparam)
       const result = await apidb.async_get_list(objquery)
-      //alert(JSON.stringify(this.objrowdetail))
-      const flag = await apiflag.async_getflags([this.objrowdetail])
+      //alert(JSON.stringify(this.objrowform))
+      const flag = await apiflag.async_getflags([this.objrowform])
       this.objflag = {...flag[0]}
 
       this.issubmitting = false
@@ -226,8 +226,8 @@ export default {
         return
       }      
       
-      this.set_objrowdetail(result.result[0])
-      this.set_success("Success",`Reg refreshed ${this.objrowdetail.id}`)
+      this.set_objrowform(result.result[0])
+      this.set_success("Success",`Reg refreshed ${this.objrowform.id}`)
       this.$emit("evtrefresh","ok")
     }// async
 
