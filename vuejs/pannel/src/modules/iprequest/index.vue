@@ -21,7 +21,7 @@
           ref="dbsearch"
           v-model="dbsearch"
           label="Search"
-          append-icon="mdi-text-box-search-outline"
+          append-icon="mdi-shield-search"
           outlined
           hide-details="true"
           color="secondary"
@@ -29,7 +29,6 @@
         <sub>regs:{{page.foundrows}}</sub>
       </v-col>
     </v-row>
-
     
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
