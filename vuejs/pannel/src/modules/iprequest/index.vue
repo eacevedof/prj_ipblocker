@@ -111,7 +111,7 @@ import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
 import get_filters from "../../helpers/filter"
-import {get_obj_list, config} from "../../modules/iprequest/queries"
+import {get_obj_list, config, grid} from "../../modules/iprequest/queries"
 
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
@@ -149,29 +149,12 @@ export default {
     
     objrow: {},
 
-    headers: [
-      {
-        text: 'nº',
-        align: 'start',
-        sortable: true,
-        value: 'id',
-      },
-      { text: 'Action', value: 'colbuttons' },
-      { text: 'Rem. IP', value: 'remote_ip' },
-      { text: 'Country', value: 'country' },
-      { text: 'Whois', value: 'whois' },
-      { text: 'Domain', value: 'domain' },
-      { text: 'R. URI', value: 'request_uri' },
-      { text: 'GET', value: 'hasget' },
-      { text: 'POST', value: 'haspost' },
-      { text: 'In BL', value: 'inbl' },
-      { text: 'Day', value: 'insert_date' },
-    ],
+    headers: grid.headers,
     arrows: [],
 
     page:{
       ipage: 1,     //pagina actual
-      ippage: 100,  //regs por pag
+      ippage: 50,  //regs por pag
       ipages: 0,    //num de paginas
       foundrows:0,  //total de registros
     },
