@@ -105,13 +105,13 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
   
   if(!is_empty(objparam.filters.fields)){
     //pr(objparam.filters,"objparam.filter")
-    const stror = objparam.filters
+    const strcond = objparam.filters
                     .fields
                     .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
                     .join(` ${objparam.filters.op} `)
 
-    //pr(stror,"stror")
-    objselect.where.push(`(${stror})`)
+    //pr(strcond,"strcond")
+    objselect.where.push(`(${strcond})`)
   }
 
   if(!is_empty(query.joins)){
@@ -143,16 +143,15 @@ export const get_obj_entity = (objparam={filters:{}})=>{
   objselect.distinct = 1  //que aplique distinct
     
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
-  
+    
   if(!is_empty(objparam.filters.fields)){
     //pr(objparam.filters,"objparam.filter")
-    const stror = objparam.filters
+    const strcond = objparam.filters
                     .fields
-                    .map(filter => `${filter.field} LIKE '%${filter.value}%'`)
+                    .map(filter => `${filter.field}='${filter.value}'`)
                     .join(` ${objparam.filters.op} `)
-
-    //pr(stror,"stror")
-    objselect.where.push(`(${stror})`)
+    //pr(strcond,"strcond")
+    objselect.where.push(`(${strcond})`)
   }
   
   if(!is_empty(query.joins)){
