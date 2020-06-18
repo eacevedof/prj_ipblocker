@@ -1,7 +1,6 @@
 <template>
   <div>
-    
-
+    <barover :isvisible="isfetching && !showform" />
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
 <!-- los hijos se comunican por eventos con los padres -->
@@ -30,8 +29,6 @@
         <sub>regs:{{page.foundrows}}</sub>
       </v-col>
     </v-row>
-    
-    <barover :isvisible="isfetching" />
     
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
@@ -81,20 +78,15 @@
       </template>
       <!-- fin cabecer tabla -->
 
-
       <!-- botones columna -->
       <template v-slot:item.colbuttons="{ item }">
-        <v-btn class="m4-2" fab dark small color="cyan" @click="submenu(item)"><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
-        <!--
-        <v-btn class="m4-2" fab dark small color="cyan" @click="update(item)"><v-icon dark>mdi-pencil</v-icon></v-btn>
-        <v-btn class="m4-2" fab dark small color="error" @click="remove(item)"><v-icon dark>mdi-delete</v-icon></v-btn>
-        -->
+        <v-btn class="m4-2" fab dark small color="cyan" @click="submenu(item)">
+          <v-icon dark>mdi-dots-vertical</v-icon>
+        </v-btn>
       </template>
-
-      <!--
-      <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
-      -->
     </v-data-table>
+    
+    <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
         v-model="page.ipage" 
