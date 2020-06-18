@@ -19,6 +19,9 @@
             </v-row>
             <v-row>
               <v-col>  
+                <v-text-field v-model="objrowform.id" disabled label="Nº" />
+              </v-col>              
+              <v-col>  
                 <v-text-field v-model="objrowform.remote_ip" disabled label="Rem. IP" />
               </v-col>
               <v-col>
@@ -142,7 +145,7 @@ export default {
       const objparam = {
         filters:{
           op: "AND",
-          fields:[{field:"id", value:idval}]
+          fields:[{field:"r.id", value:idval}]
         }
       }
 
@@ -174,7 +177,8 @@ export default {
 
       objquery = this.get_query(result)
       result = await apidb.async_get_list(objquery)
-      pr(result)
+      this.objrowform = result.result[0]
+      
     }// async
   }
 }
