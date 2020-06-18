@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_visible" max-width="700px" persistent>
+  <v-dialog v-model="is_visible" max-width="700px" style="z-index:99999;" persistent>
     <v-card>
       <v-card-title class="light-green accent-4 blue-grey-darken-2--text">
         <span class="headline">
@@ -79,7 +79,7 @@ export default {
       issubmitting: false,
       error:{title:"",mesage:""},
       success:{title:"",message:""},
-      
+
       objrow: {
         request_uri: "",
         domain: "",
