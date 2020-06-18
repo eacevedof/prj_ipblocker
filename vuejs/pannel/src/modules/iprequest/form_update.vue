@@ -17,28 +17,28 @@
           </v-row>
           <v-row>
             <v-col ms="5">
-              <v-text-field v-model="objrow.remote_ip" readonly label="R. IP" />
+              <v-text-field v-model="objrowform.remote_ip" readonly label="R. IP" />
             </v-col>
             <v-col ms="1">
-              <v-text-field v-model="objrow.country" readonly label="Country" />
+              <v-text-field v-model="objrowform.country" readonly label="Country" />
             </v-col>
             <v-col sm="6">
-              <v-text-field v-model="objrow.domain" label="Domain" />
+              <v-text-field v-model="objrowform.domain" label="Domain" />
             </v-col>
           </v-row>
           <v-row>
             <v-col sm="12">
-              <v-text-field v-model="objrow.whois" readonly label="Whois" />
+              <v-text-field v-model="objrowform.whois" readonly label="Whois" />
             </v-col>                        
           </v-row>
           <v-row>
             <v-col>  
-              <v-text-field v-model="objrow.request_uri" label="Uri" />
-              <v-textarea rows="1" v-model="objrow.get" :value="objrow.get" label="GET" />
+              <v-text-field v-model="objrowform.request_uri" label="Uri" />
+              <v-textarea rows="1" v-model="objrowform.get" :value="objrowform.get" label="GET" />
             </v-col>
             <v-col>
-              <v-textarea rows="1" v-model="objrow.post" :value="objrow.post" label="POST" />
-              <v-text-field v-model="objrow.insert_date" readonly label="Date" />
+              <v-textarea rows="1" v-model="objrowform.post" :value="objrowform.post" label="POST" />
+              <v-text-field v-model="objrowform.insert_date" readonly label="Date" />
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -74,29 +74,36 @@ export default {
   },
 
   props:{
-
-    //si se muestra el form
     isvisible: Boolean,
-
-    objrow: {},
+    objrow: Object,
   },
 
   data: ()=>(
     {
       issubmitting: false,
       error:{title:"",mesage:""},
-      success:{title:"",message:""}
+      success:{title:"",message:""},
+      objrowform: {}
     }
   ),
 
-  watch: {
-
+  created(){
+    this.objrowform = {...this.objrow}
   },
+
+  watch: {
+    isvisible: function(curr,old){
+      if(curr){
+        this.objrowform = {...this.objrow}
+      }
+    }
+  },
+
   //getters
   computed:{
     
     get_dialogtitle(){
-      return `Nº:${this.objrow.id} - IP: ${this.objrow.remote_ip}`
+      return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`
     },
 
     is_visible:{
@@ -145,7 +152,7 @@ export default {
       
       //alert(JSON.stringify(this.objrow))
       const objparam = {
-        fields: this.objrow,
+        fields: this.objrowform,
         keys:["id"]
       }
 

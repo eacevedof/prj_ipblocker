@@ -85,8 +85,9 @@
         </v-btn>
       </template>
     </v-data-table>
+
+    <notifsnack :showsnack="snack.isvisible" :innertext="snack.innertext" v-on:evtclose="snack.isvisible=false" />
     
-    <notifsnack :showsnack="showsnack" :innertext="textsnack" v-on:evtclose="showsnack=false" />
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
         v-model="page.ipage" 
@@ -122,7 +123,7 @@ export default {
   name: "iprequest-index",
   
   components: {
-    //notifsnack,
+    notifsnack,
     submenu,
     forminsert,
     detail,
@@ -147,6 +148,11 @@ export default {
 
     headers: grid.headers,
     arrows: [],
+
+    snack:{
+      isvisible:false,
+      innertext: "",
+    },
 
     page:{
       ipage: 1,     //pagina actual

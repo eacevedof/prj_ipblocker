@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="is_visible" max-width="700px" style="z-index:99999;" persistent>
+  <v-dialog v-model="is_visible" max-width="700px" persistent>
     <v-card>
       <v-card-title class="teal accent-4 blue-grey-darken-2--text">
         <span class="headline">
@@ -21,19 +21,19 @@
             </v-row>
             <v-row>
               <v-col>  
-                <v-text-field v-model="objrow.remote_ip" disabled label="Rem. IP" />
+                <v-text-field v-model="objrowform.remote_ip" disabled label="Rem. IP" />
               </v-col>
               <v-col>
-                <v-text-field v-model="objrow.domain" disabled label="Domain" />
+                <v-text-field v-model="objrowform.domain" disabled label="Domain" />
               </v-col>
               <v-col>
-                <v-text-field v-model="objrow.request_uri" disabled label="Uri" />
+                <v-text-field v-model="objrowform.request_uri" disabled label="Uri" />
               </v-col>
             </v-row>
             <v-row>
               <v-col>  
-                <v-textarea rows="1" v-model="objrow.get" disabled label="GET" />              
-                <v-textarea rows="1" v-model="objrow.post" disabled label="POST" />              
+                <v-textarea rows="1" v-model="objrowform.get" disabled label="GET" />              
+                <v-textarea rows="1" v-model="objrowform.post" disabled label="POST" />              
               </v-col>
             </v-row>
             <progressbar :isvisible="issubmitting" />
@@ -44,7 +44,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Save</v-btn>
+        <v-btn color="teal accent-4" :disabled="issubmitting" class="ma-2 blue-grey-darken-2--tex" @click="async_save">Accept</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -52,7 +52,8 @@
 </template>
 <script lang="ts">
 import apidb from "../../providers/apidb"
-import {get_obj_insert} from "../../modules/iprequest/queries"
+import {pr} from "../../helpers/functions"
+import {get_obj_clone, table} from "../../modules/iprequest/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -72,6 +73,7 @@ export default {
   props:{
     //si se muestra el form
     isvisible: Boolean, 
+    objrow: Object,
   },
 
   data: ()=>(
@@ -79,13 +81,7 @@ export default {
       issubmitting: false,
       error:{title:"",mesage:""},
       success:{title:"",message:""},
-
-      objrow: {
-        request_uri: "",
-        domain: "",
-        get: "",
-        post: "",
-      },
+      objrowform: {},
     }
   ),
 
@@ -150,7 +146,9 @@ export default {
         fields: this.objrow
       }
       
-      const objquery = get_obj_insert(objparam)
+      const dbfields = await apidb.async_get_fields(table)
+      //pr(dbfields,"dbfields"); return
+      const objquery = get_obj_clone(objparam, dbfields)
       const result = await apidb.async_insert(objquery)
       
       this.issubmitting = false
