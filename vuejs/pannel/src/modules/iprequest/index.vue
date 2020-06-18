@@ -1,6 +1,6 @@
 <template>
   <div>
-    <barover :isvisible="isfetching" />
+    
 
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
@@ -30,6 +30,8 @@
         <sub>regs:{{page.foundrows}}</sub>
       </v-col>
     </v-row>
+    
+    <barover :isvisible="isfetching" />
     
     <div v-if="page.ipages>1" class="text-center pt-2">
       <v-pagination 
@@ -251,7 +253,10 @@ export default {
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
-      this.$refs.dbsearch.focus()
+
+      //si hay un formulario en pantalla no se le aplica el foco a esto
+      if(!this.showform)
+        this.$refs.dbsearch.focus()
 
     }, //async_loaddata
 //////////////////////////////////////////////////////////////////////////////////////

@@ -207,6 +207,7 @@ export default {
           fields:[{field:"id", value:this.objrowdetail.id}]
         }
       }
+      
       const objquery = get_obj_entity(objparam)
       const result = await apidb.async_get_list(objquery)
       //alert(JSON.stringify(this.objrowdetail))
