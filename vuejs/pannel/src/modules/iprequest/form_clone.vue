@@ -21,19 +21,19 @@
             </v-row>
             <v-row>
               <v-col>  
-                <v-text-field ref="remote_ip" :rules="valrules.remote_ip" v-model="objrow.remote_ip" readonly autofocus label="Rem. IP" />
+                <v-text-field v-model="objrow.remote_ip" disabled label="Rem. IP" />
               </v-col>
               <v-col>
-                <v-text-field :rules="valrules.domain" v-model="objrow.domain" readonly required label="Domain" />
+                <v-text-field v-model="objrow.domain" disabled label="Domain" />
               </v-col>
               <v-col>
-                <v-text-field :rules="valrules.request_uri" v-model="objrow.request_uri" readonly required label="Uri" />
+                <v-text-field v-model="objrow.request_uri" disabled label="Uri" />
               </v-col>
             </v-row>
             <v-row>
               <v-col>  
-                <v-textarea rows="1" v-model="objrow.get" label="GET" />              
-                <v-textarea rows="1" v-model="objrow.post" label="POST" />              
+                <v-textarea rows="1" v-model="objrow.get" disabled label="GET" />              
+                <v-textarea rows="1" v-model="objrow.post" disabled label="POST" />              
               </v-col>
             </v-row>
             <progressbar :isvisible="issubmitting" />
@@ -87,15 +87,8 @@ export default {
         post: "",
       },
 
-      isformvalid:true,
-      valrules:{
-        remote_ip:[
-          v => !!v || 'Remote IP is required',
-          v => (v && v.length > 14) || 'Remote must be more than 14 characters',
-        ],
-        domain:[v => !!v || 'Domain is required',],
-        request_uri:[v => !!v || 'Uri is required',],
-      },  
+
+
     }
   ),
 
@@ -159,10 +152,6 @@ export default {
 
     async_save: async function (){
       this.$refs.form.validate()
-      if(!this.isformvalid){
-        //alert(this.isformvalid)
-        return
-      }
 
       //this.loader = 'loading5'
       this.reset_alerts()
