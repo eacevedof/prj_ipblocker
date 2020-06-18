@@ -38,7 +38,7 @@
             </v-col>             
             <v-col class="pa-0">
               <h4 :class="{'cyan--text':objrowform.inbl!=''}">Reason</h4>
-              <p>{{objrowform.reason}}</p>                   
+              <p :class="{fontcode:objrowform.reason!=''}">{{objrowform.reason}}</p>                   
             </v-col>  
             <v-col class="pa-0">
               <h4 :class="{'cyan--text':objrowform.bl_date!=''}">Date in BL</h4>
