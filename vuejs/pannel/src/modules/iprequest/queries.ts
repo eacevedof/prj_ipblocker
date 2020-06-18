@@ -89,7 +89,8 @@ const query = {
 
   where:[
     "i.whois NOT LIKE '%google%'",
-    "i.whois NOT LIKE '%msn%'"
+    "i.whois NOT LIKE '%msn%'",
+    "i.whois NOT LIKE '%sitelock.com%'"
   ],
 }
 
