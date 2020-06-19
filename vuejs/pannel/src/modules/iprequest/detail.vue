@@ -154,16 +154,11 @@ export default {
 
   watch:{
     isvisible: function(curr,old){
-      //alert("changed: "+curr+"|"+old)
-      //alert(JSON.stringify(this.objrow))
       if(curr==true){
         this.objrowform = {...this.objrow}
       }
-      //else
-        //this.objrowform = {}
       console.log("detail.watch.isvisible",this.objrowform)
     }
-
   },
 
   //setters 
@@ -197,7 +192,6 @@ export default {
     },
 
     async_detail: async function (){
-      //this.loader = 'loading5'
       this.reset_alerts()
       this.issubmitting = true
       
@@ -230,8 +224,6 @@ export default {
       this.set_success("Success",`Reg refreshed ${this.objrowform.id}`)
       this.$emit("evtrefresh","ok")
     }// async
-
-
   }
 }
 </script>
