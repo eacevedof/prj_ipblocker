@@ -9,9 +9,7 @@
     <v-spacer />
     <v-toolbar-items >
       <v-row align="center">
-        <v-col cols="3" class="d-flex justify-end">
-          <sub> <b>{{ myip }}</b></sub>
-        </v-col>
+        <sub> <b>{{ myip }}</b> | {{version}}</sub>
       </v-row>
     </v-toolbar-items>
   </v-app-bar>
@@ -20,6 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {APP_VERSION} from "../../config/constants"
 import {mapMutations, mapActions, mapState} from "vuex"
 
 export default Vue.extend({
@@ -27,9 +26,10 @@ export default Vue.extend({
   name: "navbar",  
   data(){
     return {
-
+      version: APP_VERSION
     }
   },
+
 
   computed:{
     //state

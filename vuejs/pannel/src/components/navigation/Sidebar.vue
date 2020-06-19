@@ -11,7 +11,7 @@
       :to="homehref"
     >
       <v-list-item-avatar>
-        <v-img src="https://pbs.twimg.com/profile_images/1325817320/Calamardo_reasonably_small.gif"></v-img>
+        <v-img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/128x128/c34d70188cc11e108b37e84dd97894e0/image.png" />
       </v-list-item-avatar>
 
       <v-list-item-content>
@@ -27,7 +27,7 @@
     <v-divider></v-divider>
 
     <v-list dense>
-      
+
       <v-list-item
         v-for="item in get_links"
         :key="item.title"
