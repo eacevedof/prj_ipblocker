@@ -239,15 +239,12 @@ export default {
     async_loaddata: async function(objparam={page:{},filters:{}}){
       this.isfetching = true
       const objquery = get_obj_list(objparam)
-      //pr(objquery,"objquery")
       const response = await apidb.async_get_list(objquery)
-      //pr(response,"response");return
+
       this.arrows = response.result
       this.page.ipage = objparam.page.ipage
       this.page.foundrows = response.foundrows
       this.page.ipages = Math.ceil(this.page.foundrows/objparam.page.ippage)
-      //alert(this.page.ipages)
-      //filter(this.dbsearch,config)
 
       console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
