@@ -83,7 +83,7 @@
         <p>
           Es opcional.  Al ser 3 tablas no implica mucho esfuerzo hacer la gestión de las mismas por consola. <br/>
           No obstante para facilitar este trabajo me he decantado por Vue y Vuex apoyandome en un mini-framework PHP
-          <a href="https://github.com/eacevedof/prj_phpapify/tree/master/backend" class="black--text" target="_blank"><b>PHP Apify - Github</b></a><br/>
+          <a href="https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify#apify" class="black--text" target="_blank"><b>PHP Apify - Github</b></a><br/>
           "PHPApify" publica una <b>BD</b> en mysql en forma de <b>API</b>
         </p>
         <h4>Ejemplos de la UI:</h4>
