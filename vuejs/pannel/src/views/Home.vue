@@ -72,8 +72,64 @@
             />
           </a>
         </p>
-
+        <p>
+          En los próximos intentos recibiría un mensaje como el siguiente:<br/>
+          <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png" 
+            width="500"
+            height="200"
+          />
+        </p>
+        <h3>- El Frontend Vue y Vuex</h3>
+        <p>
+          Es opcional.  Al ser 3 tablas no implica mucho esfuerzo hacer la gestión de las mismas por consola. <br/>
+          No obstante para facilitar este trabajo me he decantado por Vue y Vuex apoyandome en un mini-framework PHP
+          <a href="https://github.com/eacevedof/prj_phpapify/tree/master/backend" class="black--text" target="_blank"><b>PHP Apify - Github</b></a><br/>
+          "PHPApify" publica una <b>BD</b> en mysql en forma de <b>API</b>
+        </p>
+        <h4>Ejemplos de la UI:</h4>
+        <ul>
+          <li>
+            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/9688d9bfaddaa06bfaa69e23cc7f13dd/image.png" 
+              width="500"
+              height="100"
+            />
+          </li>
+          <li>
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1009x666/a95ad1c570f3deb86bd568546851ff10/image.png" 
+              width="500"
+              height="400"
+            />
+          </li>     
+          <li>
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/939x667/7fe4dde5babfa2abed70257bfe399bdc/image.png" 
+              width="500"
+              height="400"
+            />
+          </li>
+          <li>
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1084x796/a0c414df2995286a63d54d459e0192cb/image.png" 
+              width="500"
+              height="400"
+            />
+          </li>          
+        </ul>
       </v-col>
+    </v-row>
+    <v-row>
+        <v-btn
+            v-scroll="onScroll"
+            v-show="fab"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            color="primary"
+            class="black--text"
+            @click="toTop"
+          >
+          <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -87,5 +143,27 @@ export default {
   components:{
     scrumbs,
   },
+
+  data: () => ({
+    fab: false
+  }),
+
+  methods: {
+    to_top(){
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    },  
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
+    }
+  }  
 };
 </script>
