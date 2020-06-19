@@ -18,11 +18,16 @@
         <v-list-item-title>I'm watching you</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
+    <v-list-item>       
+      <v-list-item-content>
+        <v-list-item-title>{{get_now}}</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>    
 
     <v-divider></v-divider>
 
     <v-list dense>
-
+      
       <v-list-item
         v-for="item in get_links"
         :key="item.title"
@@ -52,6 +57,10 @@ export default {
   name: "sidebar",
 
   data: () => ({
+    
+    ithread: -1,
+    timeout: "",
+    
     homehref: "/",
     links:[
       {
@@ -104,12 +113,23 @@ export default {
       
       return this.links.filter(link => !link.logged)
       
-    }
+    },
+    get_now(){
+      this.set_now()
+      return this.timeout      
+    }    
 
   },
 
   methods:{
- 
+    set_now(){
+      this.ithread = setInterval(()=>{
+        this.timeout = this.moment().format('YYYY-MM-DD H:m:ss')
+        //console.log("navbar.set_now clearing interval: ",this.ithread)
+        clearInterval(this.ithread)
+      },1000)
+      //console.log("navbar.set_now.this.ithread",this.ithread)
+    } 
   }
 }
 </script>
