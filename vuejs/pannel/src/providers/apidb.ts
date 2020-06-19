@@ -26,7 +26,7 @@ const Apidb = {
 
   async_get_list: async objselect => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/read?context=${CONTEXT}&dbname=${DB_NAME}`
+    const url = `${BASE_URL}/apify/read?context=${CONTEXT}&schemainfo=${DB_NAME}`
 
     //hay que enviar header: apify-auth: token
     try {
@@ -52,7 +52,7 @@ const Apidb = {
 
   async_insert: async (objinsert) => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&schemainfo=${DB_NAME}`
 
     try {
       const objform = objinsert.get_query()
@@ -76,7 +76,7 @@ const Apidb = {
 
   async_update: async (objupdate) => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&schemainfo=${DB_NAME}`
     //hay que enviar header: apify-auth: token
     try {
  
@@ -102,7 +102,7 @@ const Apidb = {
   async_delete: async(objdelete) => {
 
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&dbname=${DB_NAME}`
+    const url = `${BASE_URL}/apify/write?context=${CONTEXT}&schemainfo=${DB_NAME}`
 
     try {
       const objform = objdelete.get_query()
