@@ -42,13 +42,13 @@
             </v-col>  
             <v-col class="pa-0">
               <h4 :class="{'cyan--text':objrowform.bl_date!=''}">Date in BL</h4>
-              <p>{{objrowform.bl_date}}</p>                   
+              <p>{{objrowform.bl_date}}</p>
             </v-col>                                    
           </v-row>
           <v-row>
             <v-col class="pa-0">
               <h4>Domain</h4>
-              <p>{{objrowform.domain}}</p>                   
+              <p>{{objrowform.domain}}</p>
             </v-col>             
             <v-col class="pa-0">
               <h4>Req. URI</h4>
@@ -73,6 +73,22 @@
               <p class="ma-0">{{objrowform.insert_date}}</p>
             </v-col>
           </v-row>
+          <v-row>
+            <ul>
+              <li v-for="(item,i) in requestsbyip"
+                  :key="i">
+                g:{{item.g}} p:{{item.p}} d:{{item.domain}} r:{{item.requri}}
+              </li>
+            </ul>            
+          </v-row>
+          <v-row>
+            <ul>
+              <li v-for="(item,i) in requestsperday"
+                  :key="i">
+                g:{{item.g}} 
+              </li>
+            </ul>            
+          </v-row>          
           <progressbar :isvisible="issubmitting" />
         </v-container>
       </v-card-text>
@@ -93,7 +109,7 @@ import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
 import {get_obj_entity, config} from "../../modules/iprequest/queries"
-import {get_requests_by_ip, get_reqs_per_day, get_into_blacklist} from "../../modules/iprequest/queries_detail"
+import {get_requests_by_ip, get_requests_per_day, get_into_blacklist} from "../../modules/iprequest/queries_detail"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -119,46 +135,40 @@ export default {
   data: ()=>(
     {
       issubmitting: false,
-      error:{title:"",mesage:""},
-      success:{title:"",message:""},
-      objrowform:{},
-      objflag:{},
-      requestsbyip:[]
+      error: {title:"",mesage:""},
+      success: {title:"",message:""},
+      objrowform: {},
+      objflag: {},
+      requestsbyip:[],
+      requestsperday:[]
     }
   ),
 
   //getters
   computed:{
     
-    get_dialogtitle(){
-      return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`
-    },
+    get_dialogtitle(){return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`},
 
     is_visible:{
-      get(){
-        return this.isvisible
-      },
-      set(v){
-
-      }
+      get(){ return this.isvisible},
+      set(v){}
     },
 
-    is_submitting(){
-      return this.issubmitting
-    },
-
-
+    is_submitting(){return this.issubmitting},
   },
   
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
+
+    this.async_detail()
   },
 
   watch:{
     isvisible: function(curr,old){
       if(curr==true){
         this.objrowform = {...this.objrow}
+        this.async_detail()
       }
       console.log("detail.watch.isvisible",this.objrowform)
     }
@@ -210,14 +220,18 @@ export default {
 
       const objq1 = get_requests_by_ip(this.objrowform.remote_ip)
       const r1 = await apidb.async_get_list(objq1)
+      //pr(r1,"r1")
+      this.requestsbyip = r1.result
 
-      const objq2 = get_reqs_per_day(this.objrowform.remote_ip)
-      const r2 = await apidb.async_get_list(objq1)      
+      const objq2 = get_requests_per_day(this.objrowform.remote_ip)
+      const r2 = await apidb.async_get_list(objq1)
+      //pr(r2,"r2")
+      this.requestsperday = r2.result
     
       const objq3 = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
-      const r3 = await apidb.async_insert(objq3)
+      //const r3 = await apidb.async_insert(objq3)
 
-      pr(r3,"R3")
+      //pr(r3,"R3")
       const flag = await apiflag.async_getflags([this.objrowform])
       this.objflag = {...flag[0]}
 
@@ -237,7 +251,8 @@ export default {
       this.set_objrowform(result.result[0])
       this.set_success("Success",`Reg refreshed ${this.objrowform.id}`)
       this.$emit("evtrefresh","ok")
-    }// async
+    },// async
+
   }
 }
 </script>
