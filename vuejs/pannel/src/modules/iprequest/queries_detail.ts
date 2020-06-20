@@ -123,7 +123,7 @@ export const get_requests_by_ip = (remoteip)=>{
 }//get_requests_by_ip
 
 
-export const get_reqs_per_day = (remoteip)=>{
+export const get_requests_per_day = (remoteip)=>{
 
   const query = query_req_per_day
   objselect.reset()
@@ -166,7 +166,7 @@ export const get_reqs_per_day = (remoteip)=>{
 
   return objselect
 
-}//get_reqs_per_day
+}//get_requests_per_day
 
 export const get_into_blacklist = ({remote_ip,reason})=>{
   const objinsert = helpapify.insert
