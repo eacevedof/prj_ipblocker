@@ -67,12 +67,16 @@ const query_req_per_day = {
   ],
 
   groupby:[
-    "GROUP BY DATE_FORMAT(insert_date,'%Y%m%d')",
+    "DATE_FORMAT(insert_date,'%Y%m%d')",
   ],
 
   orderby:[
     "insert_date DESC"
   ]
+}
+
+const query_into_blacklist = {
+  table : "app_ip_blacklist",
 }
 
 
@@ -134,7 +138,7 @@ export const get_reqs_per_day = (remoteip)=>{
     filters:{
       op: "AND",
       fields:[
-        {field:"r.remote_ip",value:remoteip}
+        {field:"remote_ip",value:remoteip}
       ]
     }
   }
@@ -163,3 +167,16 @@ export const get_reqs_per_day = (remoteip)=>{
   return objselect
 
 }//get_reqs_per_day
+
+export const get_into_blacklist = ({remote_ip,reason})=>{
+  const objinsert = helpapify.insert
+  const query = query_into_blacklist
+
+  objinsert.reset()
+  objinsert.table = query.table
+  objinsert.fields.push({k:"remote_ip",v:remote_ip})
+  objinsert.fields.push({k:"reason",v:reason})
+ 
+  //pr(objinsert)
+  return objinsert
+}

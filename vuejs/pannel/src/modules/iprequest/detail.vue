@@ -93,7 +93,7 @@ import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
 import {get_obj_entity, config} from "../../modules/iprequest/queries"
-import {get_requests_by_ip, get_reqs_per_day} from "../../modules/iprequest/queries_detail"
+import {get_requests_by_ip, get_reqs_per_day, get_into_blacklist} from "../../modules/iprequest/queries_detail"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -123,6 +123,7 @@ export default {
       success:{title:"",message:""},
       objrowform:{},
       objflag:{},
+      requestsbyip:[]
     }
   ),
 
@@ -208,11 +209,15 @@ export default {
       const result = await apidb.async_get_list(objquery)
 
       const objq1 = get_requests_by_ip(this.objrowform.remote_ip)
-      pr(objq1,"obj1")
       const r1 = await apidb.async_get_list(objq1)
-      pr(r1,"R1")
+
+      const objq2 = get_reqs_per_day(this.objrowform.remote_ip)
+      const r2 = await apidb.async_get_list(objq1)      
     
-      //alert(JSON.stringify(this.objrowform))
+      const objq3 = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
+      const r3 = await apidb.async_insert(objq3)
+
+      pr(r3,"R3")
       const flag = await apiflag.async_getflags([this.objrowform])
       this.objflag = {...flag[0]}
 
