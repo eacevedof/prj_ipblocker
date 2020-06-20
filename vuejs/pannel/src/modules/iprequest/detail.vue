@@ -87,11 +87,13 @@
   </v-dialog>
 </template>
 <script lang="ts">
+import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
 import {get_obj_entity, config} from "../../modules/iprequest/queries"
+import {get_requests_by_ip, get_reqs_per_day} from "../../modules/iprequest/queries_detail"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -201,8 +203,15 @@ export default {
           fields:[{field:"r.id", value:this.objrowform.id}]
         }
       }
+
       const objquery = get_obj_entity(objparam)
       const result = await apidb.async_get_list(objquery)
+
+      const objq1 = get_requests_by_ip(this.objrowform.remote_ip)
+      pr(objq1,"obj1")
+      const r1 = await apidb.async_get_list(objq1)
+      pr(r1,"R1")
+    
       //alert(JSON.stringify(this.objrowform))
       const flag = await apiflag.async_getflags([this.objrowform])
       this.objflag = {...flag[0]}
