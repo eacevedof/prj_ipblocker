@@ -1,11 +1,9 @@
 import helpapify from "@/helpers/apify"
-import {is_defined, get_keys, isset, is_empty, is_key, pr} from "@/helpers/functions"
+import {is_empty, pr} from "@/helpers/functions"
 
 const objselect = helpapify.select
 
 /**
- * 
- * 
 SELECT DISTINCT r.insert_date
 , SUBSTRING(r.`get`,1,25) g
 , SUBSTRING(r.post,1,50) p
@@ -22,6 +20,7 @@ AND (r.`get`!='' OR r.post!='')
 ORDER BY r.insert_date DESC
 LIMIT 250
 
+
 SELECT DATE_FORMAT(insert_date,'%Y-%m-%d') d
 , COUNT(id) i
 FROM app_ip_request
@@ -29,8 +28,7 @@ WHERE 1
 AND remote_ip='184.154.76.20'
 GROUP BY DATE_FORMAT(insert_date,'%Y%m%d')
 ORDER BY insert_date DESC
- * 
- */
+*/
 
 const query_reqpostget = {
   table: "app_ip_request r",
@@ -50,7 +48,31 @@ const query_reqpostget = {
   where:[
     "AND (r.`get`!='' OR r.post!='')",
   ],
-  
+
+  orderby:[
+    "r.insert_date DESC"
+  ]
+}
+
+const query_req_per_day = {
+  table: "app_ip_request",
+
+  fields:[
+    "DATE_FORMAT(insert_date,'%Y-%m-%d') d",
+    "COUNT(id) i",
+  ],
+
+  where:[
+    //"AND (r.`get`!='' OR r.post!='')",
+  ],
+
+  groupby:[
+    "GROUP BY DATE_FORMAT(insert_date,'%Y%m%d')",
+  ],
+
+  orderby:[
+    "insert_date DESC"
+  ]
 }
 
 
@@ -76,7 +98,7 @@ export const get_requests_by_ip = (remoteip)=>{
   if(!is_empty(objparam.filters.fields)){
     const strcond = objparam.filters
                     .fields
-                    .map(filter => `${filter.field} = '%${filter.value}%'`)
+                    .map(filter => `${filter.field} = '${filter.value}'`)
                     .join(` ${objparam.filters.op} `)
 
     objselect.where.push(`(${strcond})`)
@@ -86,7 +108,10 @@ export const get_requests_by_ip = (remoteip)=>{
     query.joins.forEach(join => objselect.joins.push(join))
   }
 
-  objselect.orderby.push("r.insert_date DESC")
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  }
+
   objselect.limit.perpage = 250
 
   return objselect
@@ -105,7 +130,7 @@ export const get_reqs_per_day = (remoteip)=>{
   
   query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
   
-  const objparam= {
+  const objparam = {
     filters:{
       op: "AND",
       fields:[
@@ -113,11 +138,11 @@ export const get_reqs_per_day = (remoteip)=>{
       ]
     }
   }
-  
+
   if(!is_empty(objparam.filters.fields)){
     const strcond = objparam.filters
                     .fields
-                    .map(filter => `${filter.field} = '%${filter.value}%'`)
+                    .map(filter => `${filter.field} = '${filter.value}'`)
                     .join(` ${objparam.filters.op} `)
 
     objselect.where.push(`(${strcond})`)
@@ -131,6 +156,10 @@ export const get_reqs_per_day = (remoteip)=>{
     query.groupby.forEach(groupby => objselect.groupby.push(groupby))
   }  
 
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  }
+
   return objselect
 
-}//get_requests_by_ip
+}//get_reqs_per_day
