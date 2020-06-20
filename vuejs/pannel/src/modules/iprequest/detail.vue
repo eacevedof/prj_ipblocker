@@ -74,18 +74,20 @@
             </v-col>
           </v-row>
           <v-row>
-            <ul>
+            <h5>Requests from this ip</h5>
+            <ul class="fontcode">
               <li v-for="(item,i) in requestsbyip"
                   :key="i">
-                g:{{item.g}} p:{{item.p}} d:{{item.domain}} r:{{item.requri}}
+                {{item.insert_date}} {{item.domain}}{{item.requri}} | g:{{item.g}}| p:{{item.p}}
               </li>
             </ul>            
           </v-row>
           <v-row>
-            <ul>
+            <h5>Requests per day</h5>
+            <ul class="fontcode" >
               <li v-for="(item,i) in requestsperday"
                   :key="i">
-                g:{{item.g}} 
+                {{item.d}} - {{item.i}}
               </li>
             </ul>            
           </v-row>          
@@ -160,7 +162,6 @@ export default {
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
-
     this.async_detail()
   },
 
@@ -261,5 +262,10 @@ p.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
   font-size: 0.95em;
   border: 1px solid #00BCD4;
+}
+ul.fontcode {
+  font-family: 'Lucida Console',courrier, monospace !important;
+  font-size: 0.95em;
+  border: 1px solid #00BCD4;  
 }
 </style>
