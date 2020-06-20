@@ -51,7 +51,8 @@ const Apify = {
       });      
 
       if(thisselect.limit.perpage){
-        oform.append(`queryparts[limit][perpage]`,thisselect.limit.perpage)
+        if(thisselect.limit.perpage!==null)
+          oform.append(`queryparts[limit][perpage]`,thisselect.limit.perpage)
         oform.append(`queryparts[limit][regfrom]`,thisselect.limit.regfrom)
       }
       
