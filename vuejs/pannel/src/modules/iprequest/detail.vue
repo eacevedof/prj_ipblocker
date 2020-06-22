@@ -70,27 +70,58 @@
           <v-row>
             <v-col class="pa-0">
               <h4>Date</h4>
-              <p class="ma-0">{{objrowform.insert_date}}</p>
+              <p class="ma-0">{{objrowform.insert_date}} | (now: {{moment().format('YYYY-MM-DD H:mm')}})</p>
             </v-col>
           </v-row>
           <v-row>
-            <h5>Requests from this ip</h5>
-            <ul class="fontcode">
-              <li v-for="(item,i) in requestsbyip"
-                  :key="i">
-                {{item.insert_date}} {{item.domain}}{{item.requri}} | g:{{item.g}}| p:{{item.p}}
-              </li>
-            </ul>            
-          </v-row>
-          <v-row>
-            <h5>Requests per day</h5>
-            <ul class="fontcode" >
-              <li v-for="(item,i) in requestsperday"
-                  :key="i">
-                {{item.d}} - {{item.i}}
-              </li>
-            </ul>            
+            <v-col class="pa-0">
+              <h5>Requests per sec</h5>
+              <ul class="borderleft" >
+                <li v-for="(item,i) in requestsby.sec"
+                    :key="i">
+                  {{item.d}} - {{item.i}}
+                </li>
+              </ul>
+            </v-col>              
+            <v-col class="pa-0">
+              <h5>Requests per min</h5>
+              <ul class="borderleft" >
+                <li v-for="(item,i) in requestsby.min"
+                    :key="i">
+                  {{item.d}} - {{item.i}}
+                </li>
+              </ul>
+            </v-col>
+            <v-col class="pa-0">
+              <h5>Requests per hour</h5>
+              <ul class="borderleft" >
+                <li v-for="(item,i) in requestsby.hour"
+                    :key="i">
+                  {{item.d}} - {{item.i}}
+                </li>
+              </ul>
+            </v-col>            
+            <v-col class="pa-0">
+              <h5>Requests per day</h5>
+              <ul class="borderleft" >
+                <li v-for="(item,i) in requestsby.day"
+                    :key="i">
+                  {{item.d}} - {{item.i}}
+                </li>
+              </ul>
+            </v-col>          
           </v-row>          
+          <v-row>
+            <v-col class="pa-0">
+              <h5>Requests from this ip</h5>
+              <ul class="fontcode">
+                <li v-for="(item,i) in requestsby.ip"
+                    :key="i">
+                  <span :class="{'dateblue':objrowform.bl_date==item.insert_date}">{{item.insert_date}}</span> {{item.domain}}{{item.requri}} |<b>g</b>:{{item.g}} |<b>p</b>:{{item.p}}
+                </li>
+              </ul>            
+            </v-col>
+          </v-row>
           <progressbar :isvisible="issubmitting" />
         </v-container>
       </v-card-text>
@@ -98,7 +129,8 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
-        <v-btn color="cyan accent-4" :disabled="issubmitting" class="ma-2 cyan--text text--lighten-5" @click="async_detail">Refressh</v-btn>
+        <v-btn color="cyan accent-4" :disabled="issubmitting" class="ma-2 cyan--text text--lighten-5" @click="async_refresh">Refressh</v-btn>
+        <v-btn color="red accent-4" :disabled="issubmitting" class="ma-2 red--text text--lighten-5" @click="async_ban">Ban</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -111,7 +143,7 @@ import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
 import {get_obj_entity, config} from "../../modules/iprequest/queries"
-import {get_requests_by_ip, get_requests_per_day, get_into_blacklist} from "../../modules/iprequest/queries_detail"
+import {get_requests_by_ip, get_requests_per_day, get_requests_per_hour, get_into_blacklist, get_requests_per_min, get_requests_per_sec} from "../../modules/iprequest/queries_detail"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -141,8 +173,13 @@ export default {
       success: {title:"",message:""},
       objrowform: {},
       objflag: {},
-      requestsbyip:[],
-      requestsperday:[]
+      requestsby:{
+        ip:[],
+        day:[],
+        hour:[],
+        min:[],
+        sec:[],
+      }     
     }
   ),
 
@@ -162,14 +199,14 @@ export default {
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
-    this.async_detail()
+    this.async_refresh()
   },
 
   watch:{
     isvisible: function(curr,old){
       if(curr==true){
         this.objrowform = {...this.objrow}
-        this.async_detail()
+        this.async_refresh()
       }
       console.log("detail.watch.isvisible",this.objrowform)
     }
@@ -205,7 +242,7 @@ export default {
       this.$emit("evtclose")
     },
 
-    async_detail: async function (){
+    async_refresh: async function (){
       this.reset_alerts()
       this.issubmitting = true
       
@@ -221,15 +258,26 @@ export default {
 
       const objq1 = get_requests_by_ip(this.objrowform.remote_ip)
       const r1 = await apidb.async_get_list(objq1)
-      //pr(r1,"r1")
-      this.requestsbyip = r1.result
+      this.requestsby.ip = r1.result
 
       const objq2 = get_requests_per_day(this.objrowform.remote_ip)
-      const r2 = await apidb.async_get_list(objq1)
-      //pr(r2,"r2")
-      this.requestsperday = r2.result
+      const r2 = await apidb.async_get_list(objq2)
+      this.requestsby.day = r2.result
     
-      const objq3 = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
+      const objq3 = get_requests_per_hour(this.objrowform.remote_ip)
+      const r3 = await apidb.async_get_list(objq3)
+      this.requestsby.hour = r3.result
+
+      const objq4 = get_requests_per_min(this.objrowform.remote_ip)
+      const r4 = await apidb.async_get_list(objq4)
+      this.requestsby.min = r4.result
+
+      const objq5 = get_requests_per_sec(this.objrowform.remote_ip)
+      const r5 = await apidb.async_get_list(objq5)
+      this.requestsby.sec = r5.result
+
+
+      //const objq3 = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
       //const r3 = await apidb.async_insert(objq3)
 
       //pr(r3,"R3")
@@ -265,7 +313,16 @@ p.fontcode {
 }
 ul.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
-  font-size: 0.95em;
-  border: 1px solid #00BCD4;  
+  font-size: 0.80em;
+  border: 1px solid #00BCD4;
+}
+ul.borderleft {
+  font-family: 'Lucida Console',courrier, monospace !important;
+  font-size: 0.80em;  
+  border-left: 1px dashed #00BCD4;
+}
+li > span.dateblue {
+  font-weight: bold;
+  font-color:cyan;
 }
 </style>

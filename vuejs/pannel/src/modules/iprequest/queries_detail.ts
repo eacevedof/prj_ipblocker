@@ -62,17 +62,76 @@ const query_req_per_day = {
     "COUNT(id) i",
   ],
 
-  where:[
-    //"AND (r.`get`!='' OR r.post!='')",
-  ],
-
   groupby:[
     "DATE_FORMAT(insert_date,'%Y%m%d')",
   ],
 
   orderby:[
-    "insert_date DESC"
-  ]
+    "DATE_FORMAT(insert_date,'%Y%m%d') DESC",
+    "i DESC"
+  ],
+
+  having:[],  
+}
+
+const query_req_per_hour = {
+  table: "app_ip_request",
+
+  fields:[
+    "DATE_FORMAT(insert_date,'%Y-%m-%d %H') d",
+    "COUNT(id) i",
+  ],
+
+  groupby:[
+    "DATE_FORMAT(insert_date,'%Y%m%d%H')",
+  ],
+
+  orderby:[
+    "DATE_FORMAT(insert_date,'%Y%m%d%H') DESC",
+    "i DESC"
+  ],
+
+  having:[
+    "COUNT(id) > 2"
+  ],
+}
+
+const query_req_per_min = {
+  table: "app_ip_request",
+
+  fields:[
+    "DATE_FORMAT(insert_date,'%Y-%m-%d %H:%i') d",
+    "COUNT(id) i",
+  ],
+
+  groupby:[
+    "DATE_FORMAT(insert_date,'%Y%m%d%H%i')",
+  ],
+
+  orderby:[
+    "DATE_FORMAT(insert_date,'%Y%m%d%H%i') DESC",
+    "i DESC"
+  ],
+
+  having:[
+    "COUNT(id) > 2"
+  ],
+}
+
+const query_req_per_sec = {
+  table: "app_ip_request",
+
+  fields:[
+    "DATE_FORMAT(insert_date,'%Y-%m-%d %H:%i:%s') d",
+    "COUNT(id) i",
+  ],
+  groupby:[
+    "DATE_FORMAT(insert_date,'%Y%m%d%H%i%s')",
+  ],
+
+  having:[
+    "COUNT(id) > 2"
+  ],
 }
 
 const query_into_blacklist = {
@@ -122,6 +181,19 @@ export const get_requests_by_ip = (remoteip)=>{
 
 }//get_requests_by_ip
 
+export const get_into_blacklist = ({remote_ip,reason})=>{
+  const objinsert = helpapify.insert
+  const query = query_into_blacklist
+
+  objinsert.reset()
+  objinsert.table = query.table
+  objinsert.fields.push({k:"remote_ip",v:remote_ip})
+  objinsert.fields.push({k:"reason",v:reason})
+ 
+  //pr(objinsert)
+  return objinsert
+}
+
 
 export const get_requests_per_day = (remoteip)=>{
 
@@ -152,13 +224,21 @@ export const get_requests_per_day = (remoteip)=>{
     objselect.where.push(`(${strcond})`)
   }
 
+  if(!is_empty(query.where)){
+    query.where.forEach(cond => objselect.where.push(cond))
+  }
+
   if(!is_empty(query.joins)){
     query.joins.forEach(join => objselect.joins.push(join))
   }
 
   if(!is_empty(query.groupby)){
     query.groupby.forEach(groupby => objselect.groupby.push(groupby))
-  }  
+  }
+
+  if(!is_empty(query.having)){
+    query.having.forEach(having => objselect.having.push(having))
+  }
 
   if(!is_empty(query.orderby)){
     query.orderby.forEach(orderby => objselect.orderby.push(orderby))
@@ -168,15 +248,145 @@ export const get_requests_per_day = (remoteip)=>{
 
 }//get_requests_per_day
 
-export const get_into_blacklist = ({remote_ip,reason})=>{
-  const objinsert = helpapify.insert
-  const query = query_into_blacklist
+export const get_requests_per_hour = remoteip => {
 
-  objinsert.reset()
-  objinsert.table = query.table
-  objinsert.fields.push({k:"remote_ip",v:remote_ip})
-  objinsert.fields.push({k:"reason",v:reason})
- 
-  //pr(objinsert)
-  return objinsert
-}
+  const query = query_req_per_hour
+  objselect.reset()
+
+  objselect.table = query.table
+  objselect.foundrows = 1 //que devuelva el total de filas
+  
+  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
+  
+  const objparam = {
+    filters:{
+      op: "AND",
+      fields:[
+        {field:"remote_ip",value:remoteip}
+      ]
+    }
+  }
+
+  if(!is_empty(objparam.filters.fields)){
+    const strcond = objparam.filters
+                    .fields
+                    .map(filter => `${filter.field} = '${filter.value}'`)
+                    .join(` ${objparam.filters.op} `)
+
+    objselect.where.push(`(${strcond})`)
+  }
+
+  if(!is_empty(query.joins)){
+    query.joins.forEach(join => objselect.joins.push(join))
+  }
+
+  if(!is_empty(query.groupby)){
+    query.groupby.forEach(groupby => objselect.groupby.push(groupby))
+  }  
+
+  if(!is_empty(query.having)){
+    query.having.forEach(having => objselect.having.push(having))
+  }  
+
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  }
+
+  return objselect
+
+}//get_requests_per_hour
+
+export const get_requests_per_min = remoteip => {
+
+  const query = query_req_per_min
+  objselect.reset()
+
+  objselect.table = query.table
+  objselect.foundrows = 1 //que devuelva el total de filas
+  
+  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
+  
+  const objparam = {
+    filters:{
+      op: "AND",
+      fields:[
+        {field:"remote_ip",value:remoteip}
+      ]
+    }
+  }
+
+  if(!is_empty(objparam.filters.fields)){
+    const strcond = objparam.filters
+                    .fields
+                    .map(filter => `${filter.field} = '${filter.value}'`)
+                    .join(` ${objparam.filters.op} `)
+
+    objselect.where.push(`(${strcond})`)
+  }
+
+  if(!is_empty(query.joins)){
+    query.joins.forEach(join => objselect.joins.push(join))
+  }
+
+  if(!is_empty(query.groupby)){
+    query.groupby.forEach(groupby => objselect.groupby.push(groupby))
+  }  
+
+  if(!is_empty(query.having)){
+    query.having.forEach(having => objselect.having.push(having))
+  }  
+
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  }
+
+  return objselect
+
+}//get_requests_per_min
+
+export const get_requests_per_sec = (remoteip)=>{
+
+  const query = query_req_per_sec
+  objselect.reset()
+
+  objselect.table = query.table
+  objselect.foundrows = 1 //que devuelva el total de filas
+  
+  query.fields.forEach(fieldconf => objselect.fields.push(fieldconf))
+  
+  const objparam = {
+    filters:{
+      op: "AND",
+      fields:[
+        {field:"remote_ip",value:remoteip}
+      ]
+    }
+  }
+
+  if(!is_empty(objparam.filters.fields)){
+    const strcond = objparam.filters
+                    .fields
+                    .map(filter => `${filter.field} = '${filter.value}'`)
+                    .join(` ${objparam.filters.op} `)
+
+    objselect.where.push(`(${strcond})`)
+  }
+
+  if(!is_empty(query.joins)){
+    query.joins.forEach(join => objselect.joins.push(join))
+  }
+
+  if(!is_empty(query.groupby)){
+    query.groupby.forEach(groupby => objselect.groupby.push(groupby))
+  }  
+  if(!is_empty(query.having)){
+    query.having.forEach(having => objselect.having.push(having))
+  }  
+
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  }
+
+  return objselect
+
+}//get_requests_per_sec
