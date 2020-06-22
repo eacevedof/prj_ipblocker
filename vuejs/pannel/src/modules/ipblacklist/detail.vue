@@ -33,44 +33,16 @@
           </v-row>
           <v-row v-if="objrowform.is_blocked=='1'">
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.is_blocked=='1'}">In Blacklist</h4>
+              <h4 :class="{'red--text':objrowform.is_blocked=='1'}">In Blacklist</h4>
               <p>{{objrowform.is_blocked}}</p>            
             </v-col>             
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.is_blocked=='1'}">Reason</h4>
+              <h4 :class="{'red--text':objrowform.is_blocked=='1'}">Reason</h4>
               <p :class="{fontcode:objrowform.reason!=''}">{{objrowform.reason}}</p>                   
             </v-col>  
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.insert_date!=''}">Date in BL</h4>
+              <h4 :class="{'red--text':objrowform.insert_date!=''}">Date in BL</h4>
               <p>{{objrowform.insert_date}}</p>                   
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="pa-0">
-              <h4>Domain</h4>
-              <p>{{objrowform.domain}}</p>                   
-            </v-col>             
-            <v-col class="pa-0">
-              <h4>Req. URI</h4>
-              <p>{{objrowform.request_uri}}</p>
-            </v-col>            
-          </v-row>
-          <v-row>
-            <v-col class="pa-0">
-              <h4>GET</h4>
-              <p :class="{fontcode:objrowform.get!=''}">{{objrowform.get}}</p>
-            </v-col>            
-          </v-row> 
-          <v-row>
-            <v-col class="pa-0">
-              <h4>POST</h4>
-              <p :class="{fontcode:objrowform.post!=''}">{{objrowform.post}}</p>
-            </v-col>            
-          </v-row>                    
-          <v-row>
-            <v-col class="pa-0">
-              <h4>Date</h4>
-              <p class="ma-0">{{objrowform.insert_date}}</p>
             </v-col>
           </v-row>
           <progressbar :isvisible="issubmitting" />
@@ -224,6 +196,6 @@ export default {
 p.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
   font-size: 0.85em;
-  border: 1px dashed #00BCD4;
+  border: 1px dashed red;
 }
 </style>
