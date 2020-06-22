@@ -323,6 +323,6 @@ ul.borderleft {
 }
 li > span.dateblue {
   font-weight: bold;
-  font-color:cyan;
+  color:red;
 }
 </style>
