@@ -67,7 +67,7 @@
 
           <v-divider class="mx-4" inset vertical/>
           <v-toolbar-title class="yellow--text font-weight-bold">
-            IP Request
+            IP Blacklist
           </v-toolbar-title>
         </v-toolbar>
 
@@ -265,7 +265,7 @@ export default {
       // delay new call 500ms
       this.debounceid = setTimeout(() => {
         text = text.trim()
-        if(this.$route.path !== `/ip-request/1`){
+        if(this.$route.path !== `/ip-blacklist/1`){
           this.$router.push({ name: 'ipblacklist', params: { page: 1 } })      
         }
       
@@ -291,7 +291,7 @@ export default {
     },   
 
     on_paginate(ipage){
-      if(this.$route.path !== `/ip-request/${ipage}`)
+      if(this.$route.path !== `/ip-blacklist/${ipage}`)
         this.$router.push({ name: 'ipblacklist', params: { page: ipage } })
 
       const objpage = this.get_page()

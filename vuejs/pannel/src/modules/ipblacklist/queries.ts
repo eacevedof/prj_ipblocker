@@ -143,7 +143,7 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
 export const get_obj_entity = (objparam={filters:{}})=>{
   objselect.reset()
 
-  objselect.table = `${table} r`
+  objselect.table = `${table} bl`
   objselect.foundrows = 1 //que devuelva el total de filas
   objselect.distinct = 1  //que aplique distinct
     
