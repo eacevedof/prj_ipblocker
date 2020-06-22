@@ -31,19 +31,19 @@
               <p>{{objrowform.whois}}</p>
             </v-col>
           </v-row>
-          <v-row v-if="objrowform.inbl!=''">
+          <v-row v-if="objrowform.is_blocked=='1'">
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.inbl!=''}">In Blacklist</h4>
-              <p>{{objrowform.inbl}}</p>            
+              <h4 :class="{'cyan--text':objrowform.is_blocked=='1'}">In Blacklist</h4>
+              <p>{{objrowform.is_blocked}}</p>            
             </v-col>             
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.inbl!=''}">Reason</h4>
+              <h4 :class="{'cyan--text':objrowform.is_blocked=='1'}">Reason</h4>
               <p :class="{fontcode:objrowform.reason!=''}">{{objrowform.reason}}</p>                   
             </v-col>  
             <v-col class="pa-0">
-              <h4 :class="{'cyan--text':objrowform.bl_date!=''}">Date in BL</h4>
-              <p>{{objrowform.bl_date}}</p>                   
-            </v-col>                                    
+              <h4 :class="{'cyan--text':objrowform.insert_date!=''}">Date in BL</h4>
+              <p>{{objrowform.insert_date}}</p>                   
+            </v-col>
           </v-row>
           <v-row>
             <v-col class="pa-0">
@@ -127,29 +127,22 @@ export default {
   //getters
   computed:{
     
-    get_dialogtitle(){
-      return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`
-    },
+    get_dialogtitle(){return `Nº:${this.objrowform.id} - IP: ${this.objrowform.remote_ip}`},
 
     is_visible:{
-      get(){
-        return this.isvisible
-      },
-      set(v){
-
-      }
+      get(){return this.isvisible},
+      set(v){}
     },
 
     is_submitting(){
       return this.issubmitting
     },
-
-
   },
   
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
+    this.async_detail()
   },
 
   watch:{
@@ -230,7 +223,7 @@ export default {
 <style scoped>
 p.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
-  font-size: 0.95em;
-  border: 1px solid #00BCD4;
+  font-size: 0.85em;
+  border: 1px dashed #00BCD4;
 }
 </style>
