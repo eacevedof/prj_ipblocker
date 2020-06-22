@@ -63,6 +63,7 @@
 </div>
 </template>
 <script lang="ts">
+import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
@@ -214,8 +215,10 @@ export default {
       
       const objquery = get_obj_detete(objparam)
       const result = await apidb.async_delete(objquery)
+      this.$emit("evtdelete","ok") //refresca el grid
+      this.$emit("evtclose","ok") //cierra el form
       this.issubmitting = false
-      this.async_refresh()
+      await this.async_refresh()
 
     }// async_unban
 
