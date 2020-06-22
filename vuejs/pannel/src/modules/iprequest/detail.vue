@@ -1,6 +1,6 @@
 <template>
 <div>
-  <noticonfirm :isvisible="isconfirm"   title="x" message="mm" v-on:evtoption="async_ban" />
+  <noticonfirm :isvisible="isconfirm"   title="Confirm" message="Are you sure to continue?" v-on:evtoption="async_ban" />
   <v-dialog v-model="is_visible" max-width="900px" persistent>
       <v-card>
         <v-card-title class="cyan accent-4 cyan--text text--lighten-5">
@@ -209,7 +209,6 @@ export default {
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
-    this.blockdate.full = this.objrowform.bl_date
     this.async_refresh()
   },
 
@@ -217,7 +216,6 @@ export default {
     isvisible: function(curr,old){
       if(curr==true){
         this.objrowform = {...this.objrow}
-        this.blockdate.full = this.objrowform.bl_date
         this.async_refresh()
       }
       console.log("detail.watch.isvisible",this.objrowform)
@@ -239,6 +237,7 @@ export default {
 
     set_objrowform(objrow){
       this.objrowform = {...objrow}
+      this.blockdate.full = this.objrowform.bl_date
     },
 
     set_error(title,message){
@@ -326,11 +325,12 @@ export default {
 
     async_ban: async function (option){
       this.isconfirm = false
-      //return
+      //pr(option)
+      if(option!=="accept") return
+      
       const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
-      pr(objq,"objq")
-      //const r = await apidb.async_insert(objq)
-
+      const r = await apidb.async_insert(objq)
+      this.async_refresh()
     }
   }
 }
