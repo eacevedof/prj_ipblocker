@@ -5,6 +5,26 @@ const objselect = helpapify.select
 
 export const table = "app_ip_request"
 
+
+/*
+SELECT 
+bl.id,
+bl.remote_ip,
+bl.insert_date,
+-- bl.update_date,
+ip.country,
+SUBSTRING(ip.whois,1,50) whois,
+SUBSTRING(bl.reason,1,50) reason,
+bl.is_blocked
+
+FROM app_ip_blacklist bl
+LEFT JOIN app_ip ip
+ON bl.remote_ip = ip.remote_ip
+
+WHERE 1
+
+ORDER BY bl.insert_date DESC
+*/
 export const grid = {
   headers:[
     {
@@ -17,48 +37,33 @@ export const grid = {
     { text: 'Rem. IP', value: 'remote_ip' },
     { text: 'Country', value: 'country' },
     { text: 'Whois', value: 'whois' },
-    { text: 'Domain', value: 'domain' },
-    { text: 'R. URI', value: 'request_uri' },
-    { text: 'GET', value: 'hasget' },
-    { text: 'POST', value: 'haspost' },
-    { text: 'In BL', value: 'inbl' },
+    { text: 'Blocked', value: 'is_blocked' },
     { text: 'Day', value: 'insert_date' },
   ]
 }
 
+
 export const config = [
-  {
-    table:{
-      name: "app_ip_request",
-      alias: "r",
-      fields:[
-        {name: "id", label:"Nº"},
-        {name: "remote_ip", label:"Rem. IP"},
-        {name: "insert_date", label:"Date"},
-        {name: "domain", label:"Domain"},
-        {name: "request_uri", label:"R. URI"},
-        {name: "`get`", label:"GET"},
-        {name: "post", label:"POST"},
-      ]
-    }
-  },
   {
     table:{
       name: "app_ip_blacklist",
       alias: "bl",
       fields:[
-        {name: "insert_date", label:"Date", alias:"bl_date"},
-        {name: "reason", label:"Reason"},
+        {name: "id", label:"Nº"},
+        {name: "remote_ip", label:"Rem. IP"},
+        {name: "insert_date", label:"Date"},
+        {name: "is_blocked", label:"Blocked"},
       ]
     }
-  },  
+  },
   {
     table:{
       name: "app_ip",
-      alias: "i",
+      alias: "ip",
       fields:[
         {name: "country", label:"Country"},
         {name: "whois", label:"Whois"},
+        {name: "reason", label:"Reason"},
       ]
     }
   },  
@@ -66,32 +71,26 @@ export const config = [
 
 const query = {
   fields:[
-    "r.id",
-    "r.remote_ip",
-    "i.country",
-    "i.whois",
-    "r.domain",
-    "r.request_uri",
-    "r.`get`",
-    "CASE WHEN r.`get`!='' THEN 'GET' ELSE '' END hasget",
-    "r.post",
-    "CASE WHEN r.`post`!='' THEN 'POST' ELSE '' END haspost",      
-    "r.insert_date",
-    "bl.insert_date bl_date",
-    "bl.reason",
-    "CASE WHEN bl.id IS NULL THEN '' ELSE 'INBL' END inbl",
+    "bl.id",
+    "bl.remote_ip",
+    "bl.insert_date",
+    "ip.country",
+    "bl.is_blocked",
+    "SUBSTRING(bl.reason,1,50) reason",
+    "SUBSTRING(ip.whois,1,50) whois",
   ],
 
   joins:[
-    "LEFT JOIN app_ip_blacklist bl ON r.remote_ip = bl.remote_ip",
-    "LEFT JOIN app_ip i ON r.remote_ip = i.remote_ip",
+    "LEFT JOIN app_ip ip ON bl.remote_ip = ip.remote_ip",
   ],
 
   where:[
-    "i.whois NOT LIKE '%google%'",
-    "i.whois NOT LIKE '%msn%'",
-    "i.whois NOT LIKE '%sitelock.com%'"
+
+    
   ],
+  orderby:[
+    "bl.insert_date DESC"
+  ]
 }
 
 export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
@@ -123,6 +122,10 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
     query.where.forEach(cond => objselect.where.push(cond))
   } 
 
+  if(!is_empty(query.orderby)){
+    query.orderby.forEach(orderby => objselect.orderby.push(orderby))
+  } 
+
   objselect.limit.perpage = 1000
   objselect.limit.regfrom = 0
   if(!is_empty(objparam.page)){
@@ -131,8 +134,6 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
     objselect.limit.regfrom = objparam.page.ifrom
   }
 
-  objselect.orderby.push("r.id DESC")
-  //pr(objselect,"get_obj_list.objselect")
   return objselect
 }//get_list
 
