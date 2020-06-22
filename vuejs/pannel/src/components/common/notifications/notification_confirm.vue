@@ -55,7 +55,7 @@ export default {
   },
   methods:{
     action(type){
-      this.$emit("evtaction",type)
+      this.$emit("evtoption",type)
     }
   }
 }
