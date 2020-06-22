@@ -1,4 +1,6 @@
 <template>
+<div>
+  <noticonfirm :isvisible="isconfirm"   title="Confirm" message="Are you sure to continue?" v-on:evtoption="async_unban" />
   <v-dialog v-model="is_visible" max-width="900px" persistent>
     
     <v-card>
@@ -53,10 +55,12 @@
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
         <v-btn color="cyan accent-4" :disabled="issubmitting" class="ma-2 cyan--text text--lighten-5" @click="async_detail">Refressh</v-btn>
+        <v-btn v-if="blockdate.full==null || blockdate.full==''" color="green accent-4" :disabled="issubmitting" class="ma-2 green--text text--lighten-5" @click="show_confirm">Unban</v-btn>        
       </v-card-actions>
 
     </v-card>
   </v-dialog>
+</div>
 </template>
 <script lang="ts">
 import apidb from "../../providers/apidb"
@@ -69,6 +73,7 @@ import get_filters from "../../helpers/filter"
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
 import notierror from "@/components/common/notifications/notification_error.vue"
+import noticonfirm from "@/components/common/notifications/notification_confirm.vue"
 
 export default {
 
@@ -78,6 +83,7 @@ export default {
     progressbar,
     notisuccess,
     notierror,
+    noticonfirm,
   },
 
   props:{
@@ -88,11 +94,15 @@ export default {
 
   data: ()=>(
     {
+      isconfirm: false,
       issubmitting: false,
       error:{title:"",mesage:""},
       success:{title:"",message:""},
       objrowform:{},
       objflag:{},
+      blockdate:{
+        full: "",
+      },
     }
   ),
 
@@ -109,6 +119,7 @@ export default {
     is_submitting(){
       return this.issubmitting
     },
+
   },
   
   created(){
@@ -129,9 +140,7 @@ export default {
   //setters 
   methods:{
 
-    set_objrowform(objrow){
-      this.objrowform = {...objrow}
-    },
+    set_objrowform(objrow){ this.objrowform = {...objrow}},
 
     set_error(title,message){
       this.error.title = title
@@ -155,7 +164,9 @@ export default {
       this.reset_alerts()
       this.$emit("evtclose")
     },
-
+    show_confirm(){
+      this.isconfirm = true
+    },
     async_detail: async function (){
       this.reset_alerts()
       this.issubmitting = true
@@ -188,7 +199,17 @@ export default {
       this.set_objrowform(result.result[0])
       this.set_success("Success",`Reg refreshed ${this.objrowform.id}`)
       this.$emit("evtrefresh","ok")
-    }// async
+    },// async
+
+    async_unban: async function (option){
+      this.isconfirm = false
+      //pr(option)
+      if(option!=="accept") return
+      
+      //const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual suspicious"})
+      //const r = await apidb.async_insert(objq)
+      this.async_refresh()
+    }    
   }
 }
 </script>
