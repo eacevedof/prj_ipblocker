@@ -328,7 +328,7 @@ export default {
       //pr(option)
       if(option!=="accept") return
       
-      const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
+      const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual suspicious"})
       const r = await apidb.async_insert(objq)
       this.async_refresh()
     }
