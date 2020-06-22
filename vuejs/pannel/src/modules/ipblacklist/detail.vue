@@ -67,7 +67,7 @@ import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
-import {get_obj_entity, config} from "../../modules/ipblacklist/queries"
+import {get_obj_entity, config, get_obj_detete} from "../../modules/ipblacklist/queries"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -205,13 +205,23 @@ export default {
       this.isconfirm = false
       //pr(option)
       if(option!=="accept") return
+      this.issubmitting = true
       
-      //const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual suspicious"})
-      //const r = await apidb.async_insert(objq)
+      const objparam={
+        fields: this.objrowform,
+        keys:["id"]
+      }
+      
+      const objquery = get_obj_detete(objparam)
+      const result = await apidb.async_delete(objquery)
+      this.issubmitting = false
       this.async_refresh()
-    }    
-  }
-}
+
+    }// async_unban
+
+  }//methods
+
+}//vue
 </script>
 <style scoped>
 p.fontcode {
