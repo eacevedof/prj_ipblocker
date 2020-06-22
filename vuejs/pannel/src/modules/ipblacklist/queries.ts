@@ -1,9 +1,9 @@
 import helpapify from "@/helpers/apify"
-import {is_defined, get_keys, isset, is_empty, is_key, pr} from "@/helpers/functions"
+import {is_defined, get_keys, isset, is_empty, pr} from "@/helpers/functions"
 
 const objselect = helpapify.select
 
-export const table = "app_ip_request"
+export const table = "app_ip_blacklist"
 
 
 /*
@@ -37,6 +37,7 @@ export const grid = {
     { text: 'Rem. IP', value: 'remote_ip' },
     { text: 'Country', value: 'country' },
     { text: 'Whois', value: 'whois' },
+    { text: 'Reason', value: 'reason' },
     { text: 'Blocked', value: 'is_blocked' },
     { text: 'Day', value: 'insert_date' },
   ]
@@ -70,6 +71,8 @@ export const config = [
 ]
 
 const query = {
+  table: "app_ip_blacklist",
+
   fields:[
     "bl.id",
     "bl.remote_ip",
@@ -97,7 +100,7 @@ export const get_obj_list = (objparam={filters:{}, page:{}, orderby:{}})=>{
 
   objselect.reset()
 
-  objselect.table = `${table} r`
+  objselect.table = `${query.table} bl`
   objselect.foundrows = 1 //que devuelva el total de filas
   objselect.distinct = 1  //que aplique distinct
   

@@ -52,7 +52,7 @@
 </template>
 <script lang="ts">
 import apidb from "../../providers/apidb"
-import {get_obj_insert} from "../../modules/iprequest/queries"
+import {get_obj_insert} from "../../modules/ipblacklist/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -61,7 +61,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-forminsert",
+  name: "ipblacklist-forminsert",
 
   components:{
     progressbar,

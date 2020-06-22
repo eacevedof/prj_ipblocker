@@ -54,7 +54,7 @@
 <script lang="ts">
 import apidb from "../../providers/apidb"
 import {pr} from "../../helpers/functions"
-import {get_obj_clone, get_obj_entity, table} from "../../modules/iprequest/queries"
+import {get_obj_clone, get_obj_entity, table} from "../../modules/ipblacklist/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -63,7 +63,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-formclone",
+  name: "ipblacklist-formclone",
 
   components:{
     progressbar,

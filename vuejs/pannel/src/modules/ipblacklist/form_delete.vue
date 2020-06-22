@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import apidb from "../../providers/apidb"
-import {get_obj_detete} from "../../modules/iprequest/queries"
+import {get_obj_detete} from "../../modules/ipblacklist/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -65,7 +65,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-formdelete",
+  name: "ipblacklist-formdelete",
 
   components:{
     progressbar,
