@@ -73,13 +73,14 @@
               <p class="ma-0">{{objrowform.insert_date}} | (now: {{moment().format('YYYY-MM-DD H:mm')}})</p>
             </v-col>
           </v-row>
+          <!-- contadores -->
           <v-row>
             <v-col class="pa-0">
               <h5>Requests per sec</h5>
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.sec"
                     :key="i">
-                  {{item.d}} - {{item.i}}
+                  <span :class="[ (get_blockdate('sec')==item.d) ? 'datered': '']">{{item.d}}</span> - {{item.i}}
                 </li>
               </ul>
             </v-col>              
@@ -88,7 +89,7 @@
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.min"
                     :key="i">
-                  {{item.d}} - {{item.i}}
+                  <span :class="[ (get_blockdate('min')==item.d) ? 'datered': '']">{{item.d}}</span>  - {{item.i}}
                 </li>
               </ul>
             </v-col>
@@ -97,7 +98,7 @@
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.hour"
                     :key="i">
-                  {{item.d}} - {{item.i}}
+                  <span :class="[ (get_blockdate('hour')==item.d) ? 'datered': '']">{{item.d}}</span>  - {{item.i}}
                 </li>
               </ul>
             </v-col>            
@@ -106,7 +107,7 @@
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.day"
                     :key="i">
-                  {{item.d}} - {{item.i}}
+                  <span :class="[ (get_blockdate('day')==item.d) ? 'datered': '']">{{item.d}}</span>  - {{item.i}}
                 </li>
               </ul>
             </v-col>          
@@ -117,7 +118,7 @@
               <ul class="fontcode">
                 <li v-for="(item,i) in requestsby.ip"
                     :key="i">
-                  <span :class="[ (get_blockdate('full')==item.insert_date) ? 'dateblue': '']">{{item.insert_date}}</span> {{item.domain}}{{item.requri}} |<b>g</b>:{{item.g}} |<b>p</b>:{{item.p}}
+                  <span :class="[ (get_blockdate('full')==item.insert_date) ? 'datered': '']">{{item.insert_date}}</span> {{item.domain}}{{item.requri}} |<b>g</b>:{{item.g}} |<b>p</b>:{{item.p}}
                 </li>
               </ul>            
             </v-col>
@@ -223,10 +224,10 @@ export default {
 
     get_blockdate(format="full"){
       if(!format || format==="full") return this.blockdate.full
-      if(format=="day") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm:ss")
-      if(format=="hour") return this.moment(this.blockdate.full).format("YYYY-MM-DD h")
-      if(format=="min") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm")
-      if(format=="sec") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm:ss")
+      if(format=="day") return (this.moment(this.blockdate.full).format("YYYY-MM-DD"))
+      if(format=="hour") return (this.moment(this.blockdate.full).format("YYYY-MM-DD HH"))
+      if(format=="min") return this.moment(this.blockdate.full).format("YYYY-MM-DD HH:mm")
+      if(format=="sec") return this.moment(this.blockdate.full).format("YYYY-MM-DD HH:mm:ss")
       return this.moment().format("YYYYMMDD hmmss")
     },
 
@@ -336,7 +337,7 @@ ul.borderleft {
   font-size: 0.80em;  
   border-left: 1px dashed #00BCD4;
 }
-li > span.dateblue {
+li > span.datered {
   font-weight: bold;
   color:red;
 }
