@@ -325,8 +325,10 @@ export default {
     },// async
 
     async_ban: async function (option){
-      pr(option,"option")
+      this.isconfirm = false
+      //return
       const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
+      pr(objq,"objq")
       //const r = await apidb.async_insert(objq)
 
     }
