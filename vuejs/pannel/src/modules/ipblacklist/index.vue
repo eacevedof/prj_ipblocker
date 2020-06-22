@@ -3,7 +3,7 @@
     <barover :isvisible="isfetching && !showform" />
     <submenu :isvisible="issubmenu" :evtclick="evtsubmenu" v-on:evtselected="submenu_selected" v-on:evtclose="issubmenu=false" />
 
-    <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtclose="showform=false" />
+    <detail v-if="crudopt=='detail'" :objrow="objrow" :isvisible="showform" v-on:evtdelete="form_result" v-on:evtclose="showform=false" />
 <!-- los hijos se comunican por eventos con los padres --
     <forminsert v-if="crudopt=='insert'" :isvisible="showform" v-on:evtinsert="form_result" v-on:evtclose="showform=false" />
     
