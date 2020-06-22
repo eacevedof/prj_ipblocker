@@ -91,7 +91,7 @@ import apidb from "../../providers/apidb"
 import apiip from "../../providers/apiip"
 import apiflag from "../../providers/apiflag"
 
-import {get_obj_entity, config} from "../../modules/iprequest/queries"
+import {get_obj_entity, config} from "../../modules/ipblacklist/queries"
 import get_filters from "../../helpers/filter"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
@@ -100,7 +100,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-detail",
+  name: "ipblacklist-detail",
 
   components:{
     progressbar,

@@ -107,20 +107,20 @@ import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
 import url from "../../helpers/url"
 import get_filters from "../../helpers/filter"
-import {get_obj_list, config, grid} from "../../modules/iprequest/queries"
+import {get_obj_list, config, grid} from "../../modules/ipblacklist/queries"
 
 
 import notifsnack from "@/components/common/notifications/notification_snackbar.vue"
 import barover from "@/components/common/bars/progress_barover.vue"
 import submenu from "@/components/common/menus/submenu_rudc.vue"
-import detail from "@/modules/iprequest/detail.vue"
-//import forminsert from "@/modules/iprequest/form_insert.vue"
-//import formupdate from "@/modules/iprequest/form_update.vue"
-//import formdelete from "@/modules/iprequest/form_delete.vue"
-//import formclone from "@/modules/iprequest/form_clone.vue"
+import detail from "@/modules/ipblacklist/detail.vue"
+//import forminsert from "@/modules/ipblacklist/form_insert.vue"
+//import formupdate from "@/modules/ipblacklist/form_update.vue"
+//import formdelete from "@/modules/ipblacklist/form_delete.vue"
+//import formclone from "@/modules/ipblacklist/form_clone.vue"
 
 export default {
-  name: "iprequest-index",
+  name: "ipblacklist-index",
   
   components: {
     notifsnack,
@@ -177,18 +177,18 @@ export default {
 
   //no puede ser asincrono pq el ciclo de vida no aplica await
   beforeMount(){
-    console.log("iprequest.index.beforeMount")
+    console.log("ipblacklist.index.beforeMount")
   },
 
 
   //lo marco como async pq tengo que resolver peticiones
   mounted: async function(){
 
-    console.log("iprequest.index.mounted.islogged antes de llamar a async_islogged",this.islogged)
+    console.log("ipblacklist.index.mounted.islogged antes de llamar a async_islogged",this.islogged)
     //async_islogged comprueba el token en local si existe comprueba si es válido
     //si pasa estos filtros this.islogged tendría el valor true
     const response = await this.async_islogged()
-    console.log("iprequest.index.mounted.islogged",this.islogged)
+    console.log("ipblacklist.index.mounted.islogged",this.islogged)
 
     if(!this.islogged){
       this.$router.push({name:"login"})
@@ -201,7 +201,7 @@ export default {
       return 
     }
 
-    console.log("iprequest.index.mounted islogged:",this.islogged)
+    console.log("ipblacklist.index.mounted islogged:",this.islogged)
     const objpage = this.get_page()
 
     this.page.ipage = objpage.ipage
@@ -246,7 +246,7 @@ export default {
       this.page.foundrows = response.foundrows
       this.page.ipages = Math.ceil(this.page.foundrows/objparam.page.ippage)
 
-      console.table("iprequest.index.async_loaddata.page.foundrows:",this.page.foundrows)
+      console.table("ipblacklist.index.async_loaddata.page.foundrows:",this.page.foundrows)
       this.isfetching = false
 
       //si hay un formulario en pantalla no se le aplica el foco a esto
@@ -266,7 +266,7 @@ export default {
       this.debounceid = setTimeout(() => {
         text = text.trim()
         if(this.$route.path !== `/ip-request/1`){
-          this.$router.push({ name: 'iprequest', params: { page: 1 } })      
+          this.$router.push({ name: 'ipblacklist', params: { page: 1 } })      
         }
       
         const objpage = this.get_page()
@@ -292,7 +292,7 @@ export default {
 
     on_paginate(ipage){
       if(this.$route.path !== `/ip-request/${ipage}`)
-        this.$router.push({ name: 'iprequest', params: { page: ipage } })
+        this.$router.push({ name: 'ipblacklist', params: { page: ipage } })
 
       const objpage = this.get_page()
       //pr(objpage,`ipage: ${ipage}`)

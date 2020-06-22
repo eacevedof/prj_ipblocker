@@ -57,7 +57,7 @@
 <script lang="ts">
 import {pr} from "../../helpers/functions"
 import apidb from "../../providers/apidb"
-import {get_obj_update, table} from "../../modules/iprequest/queries"
+import {get_obj_update, table} from "../../modules/ipblacklist/queries"
 
 import progressbar from "@/components/common/bars/progress_bar.vue"
 import notisuccess from "@/components/common/notifications/notification_success.vue"
@@ -65,7 +65,7 @@ import notierror from "@/components/common/notifications/notification_error.vue"
 
 export default {
 
-  name: "iprequest-formupdate",
+  name: "ipblacklist-formupdate",
 
   components:{
     progressbar,
