@@ -14,19 +14,16 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          color="yellow darken-1"
-          text
           @click="action('cancel')"
         >
-          Disagree
+          Cancel
         </v-btn>
-
+        <v-spacer></v-spacer>
         <v-btn
-          color="black darken-1"
-          text
-          @click="action('ok')"
+          class="mr-4 primary--text" color="secondary" 
+          @click="action('accept')"
         >
-          Agree
+          Accept
         </v-btn>
       </v-card-actions>
     </v-card>
