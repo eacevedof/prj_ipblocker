@@ -42,7 +42,7 @@
             </v-col>  
             <v-col class="pa-0">
               <h4 :class="{'cyan--text':objrowform.bl_date!=''}">Date in BL</h4>
-              <p>{{objrowform.bl_date}}</p>
+              <span class="datered">{{objrowform.bl_date}}</span>
             </v-col>                                    
           </v-row>
           <v-row>
@@ -76,7 +76,7 @@
           <!-- contadores -->
           <v-row>
             <v-col class="pa-0">
-              <h5>Requests per sec</h5>
+              <h5>Requests per sec (>2)</h5>
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.sec"
                     :key="i">
@@ -85,7 +85,7 @@
               </ul>
             </v-col>              
             <v-col class="pa-0">
-              <h5>Requests per min</h5>
+              <h5>Requests per min (>2)</h5>
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.min"
                     :key="i">
@@ -94,7 +94,7 @@
               </ul>
             </v-col>
             <v-col class="pa-0">
-              <h5>Requests per hour</h5>
+              <h5>Requests per hour (>2)</h5>
               <ul class="borderleft" >
                 <li v-for="(item,i) in requestsby.hour"
                     :key="i">
@@ -131,7 +131,7 @@
         <v-spacer />
         <v-btn color="blue-grey" :disabled="issubmitting" class="ma-2 white--text" @click="close">Close</v-btn>
         <v-btn color="cyan accent-4" :disabled="issubmitting" class="ma-2 cyan--text text--lighten-5" @click="async_refresh">Refressh</v-btn>
-        <v-btn color="red accent-4" :disabled="issubmitting" class="ma-2 red--text text--lighten-5" @click="async_ban">Ban</v-btn>
+        <v-btn v-if="blockdate.full==null || blockdate.full==''" color="red accent-4" :disabled="issubmitting" class="ma-2 red--text text--lighten-5" @click="async_ban">Ban</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -223,6 +223,7 @@ export default {
   methods:{
 
     get_blockdate(format="full"){
+      //pr(this.blockdate.full,"full")
       if(!format || format==="full") return this.blockdate.full
       if(format=="day") return (this.moment(this.blockdate.full).format("YYYY-MM-DD"))
       if(format=="hour") return (this.moment(this.blockdate.full).format("YYYY-MM-DD HH"))
@@ -292,10 +293,6 @@ export default {
       const r5 = await apidb.async_get_list(objq5)
       this.requestsby.sec = r5.result
 
-
-      //const objq3 = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
-      //const r3 = await apidb.async_insert(objq3)
-
       //pr(r3,"R3")
       const flag = await apiflag.async_getflags([this.objrowform])
       this.objflag = {...flag[0]}
@@ -318,6 +315,12 @@ export default {
       this.$emit("evtrefresh","ok")
     },// async
 
+    async_ban: async function (){
+
+      const objq = get_into_blacklist({remote_ip:this.objrowform.remote_ip,reason:"manual"})
+      const r = await apidb.async_insert(objq)
+
+    }
   }
 }
 </script>
@@ -325,7 +328,7 @@ export default {
 p.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
   font-size: 0.95em;
-  border: 1px solid #00BCD4;
+  border: 1px dashed #00BCD4;
 }
 ul.fontcode {
   font-family: 'Lucida Console',courrier, monospace !important;
@@ -337,7 +340,7 @@ ul.borderleft {
   font-size: 0.80em;  
   border-left: 1px dashed #00BCD4;
 }
-li > span.datered {
+span.datered {
   font-weight: bold;
   color:red;
 }
