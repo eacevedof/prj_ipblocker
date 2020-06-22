@@ -117,7 +117,7 @@
               <ul class="fontcode">
                 <li v-for="(item,i) in requestsby.ip"
                     :key="i">
-                  <span :class="{'dateblue':objrowform.bl_date==item.insert_date}">{{item.insert_date}}</span> {{item.domain}}{{item.requri}} |<b>g</b>:{{item.g}} |<b>p</b>:{{item.p}}
+                  <span :class="[ (get_blockdate('full')==item.insert_date) ? 'dateblue': '']">{{item.insert_date}}</span> {{item.domain}}{{item.requri}} |<b>g</b>:{{item.g}} |<b>p</b>:{{item.p}}
                 </li>
               </ul>            
             </v-col>
@@ -179,7 +179,10 @@ export default {
         hour:[],
         min:[],
         sec:[],
-      }     
+      },
+      blockdate:{
+        full: "",
+      }
     }
   ),
 
@@ -194,11 +197,13 @@ export default {
     },
 
     is_submitting(){return this.issubmitting},
+
   },
   
   created(){
     console.log("detail.creatd",this.objrow)
     this.objrowform = {...this.objrow}
+    this.blockdate.full = this.objrowform.bl_date
     this.async_refresh()
   },
 
@@ -206,6 +211,7 @@ export default {
     isvisible: function(curr,old){
       if(curr==true){
         this.objrowform = {...this.objrow}
+        this.blockdate.full = this.objrowform.bl_date
         this.async_refresh()
       }
       console.log("detail.watch.isvisible",this.objrowform)
@@ -214,6 +220,15 @@ export default {
 
   //setters 
   methods:{
+
+    get_blockdate(format="full"){
+      if(!format || format==="full") return this.blockdate.full
+      if(format=="day") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm:ss")
+      if(format=="hour") return this.moment(this.blockdate.full).format("YYYY-MM-DD h")
+      if(format=="min") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm")
+      if(format=="sec") return this.moment(this.blockdate.full).format("YYYY-MM-DD h:mm:ss")
+      return this.moment().format("YYYYMMDD hmmss")
+    },
 
     set_objrowform(objrow){
       this.objrowform = {...objrow}
