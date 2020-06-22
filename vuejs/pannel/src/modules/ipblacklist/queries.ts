@@ -54,6 +54,7 @@ export const config = [
         {name: "remote_ip", label:"Rem. IP"},
         {name: "insert_date", label:"Date"},
         {name: "is_blocked", label:"Blocked"},
+        {name: "reason", label:"Reason"},        
       ]
     }
   },
@@ -64,7 +65,6 @@ export const config = [
       fields:[
         {name: "country", label:"Country"},
         {name: "whois", label:"Whois"},
-        {name: "reason", label:"Reason"},
       ]
     }
   },  
