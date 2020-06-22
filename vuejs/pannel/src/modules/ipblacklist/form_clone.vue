@@ -145,7 +145,7 @@ export default {
       const objparam = {
         filters:{
           op: "AND",
-          fields:[{field:"r.id", value:idval}]
+          fields:[{field:"bl.id", value:idval}]
         }
       }
 

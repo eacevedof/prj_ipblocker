@@ -198,7 +198,7 @@ export default {
       const objparam = {
         filters:{
           op: "AND",
-          fields:[{field:"r.id", value:this.objrowform.id}]
+          fields:[{field:"bl.id", value:this.objrowform.id}]
         }
       }
       const objquery = get_obj_entity(objparam)
