@@ -10,11 +10,8 @@
 </template>
 <script lang="ts">
 import {mapMutations, mapActions, mapState} from "vuex"
-import apidb from "../providers/api"
-import db from "../helpers/localdb"
-
 import scrumbs from "@/components/navigation/scrumbs.vue"
-import index from "@/modules/iprequest/index.vue"
+import index from "@/modules/ipblacklist/index.vue"
 
 export default {
 
@@ -34,9 +31,6 @@ export default {
 
   mounted: async function(){
     console.log("ipblacklist mounted")
-    //await this.async_islogged()
-    //if(!this.islogged)
-      //this.$router.push({name:"login"})
   },
 
   computed:{
