@@ -1,9 +1,9 @@
 ## PRJ_IPBLOCKER
 
 
-## recursos:
+## recursos
 
-### database
+###database
 - [db](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
 
 ### library
