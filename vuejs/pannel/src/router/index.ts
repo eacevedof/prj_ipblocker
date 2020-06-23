@@ -32,7 +32,7 @@ const routes = [
     component: () => import('../views/iprequest.vue'),
   },
   {
-    path: '/ip-blacklist',
+    path: '/ip-blacklist/:page?',
     name: 'ipblacklist',
     meta:{
       title: "IP Blacklist"
