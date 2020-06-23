@@ -6,10 +6,7 @@ TRUNCATE TABLE app_ip;
 TRUNCATE TABLE app_ip_blacklist;
 TRUNCATE TABLE app_ip_request;
 ```
-```s
-py.sh dump ipblocker
-py.sh deploy.dbrestore ipblocker
-```
+
 - [prod mysql console](https://trello.com/c/G9OArwWO/9-ionos-conectar-por-consola)
 ### php
 - [prod include](https://trello.com/c/5qbASalI/10-ipblocker)
