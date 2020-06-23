@@ -17,7 +17,7 @@ Esta era una solución más genérica.  Tenía centralizada todas las peticiones
 Así, si una IP ha atacado un dominio se bloquea para todos.
 
 ## ¿Qué es?
-Es una mini librería **<100K** realizada en **php** y gestonada (de forma opcional) con **Vue**.
+Es una mini librería **size < 100K** realizada en **php** y gestonada (de forma opcional) con **Vue**.
 Su objetivo principal es el rastreo de peticiones **POST, GET y FILES** realizadas sobre nuestros distintos dominios.
 Como es de esperar estos dominios deben de tener una **webapp** realizada en php y de ser posible contar con un *frontcontroller*
 ya que al ser este el único punto de entrada hace más sencilla su configuración
@@ -59,22 +59,40 @@ if ($_SERVER['APP_DEBUG']) {
   - Primero en **app_ip** se guarda la ip (si no existiera), el país de origen y a quien pertenece
   - Si está en **app_ip_blacklist** directamente se aplica el exit con un mensaje: `ComponentIpblocker.pr()` con lo cual
   nos ahorramos la ejecución del resto del código
-  - ![](https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png)
+    - ![](https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png)
+  - Si no estuviera en *blacklist* y no cumple con alguna regla terminará almacenandose en app_ip_blacklist
   
 ## Configuración
-- 
+- Hay que retocar dos ficheros dentro de la carpeta config:
+  - **contexts.json** (link más abajo)
+    - Acceso a la bd (mysql) donde se almacenarán todas las peticiones
+  - **keywords.json** (link más abajo)
+    - Lista de acceso. Las reglas que se aplicarán a cada petición según dominio y endpoint
 
+## El frontend Vue y Vuex
+No es obligatorio el despliegue de Vue. Se puede gestionar desde la consola de mysql.<br/>
+La interfaz tiene una dependencia. Esta es: [phpapify](https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify) una librería que publica una bd como una **pseudo-api**
+Con **phpapify** configurado. (solo hay que configurar el contexto que es el acceso a la bd de ipblocker). <br/>
+Hecho esto ya podríamos consumir la bd de ipblocker usando cualquier cliente por medio del protcolo **HTTP/S**.
+
+### Ejemplos de la interfaz
+- ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/7b0e29bae06e1aa4b376804cc0f662f8/image.png)
+- ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/e799e918478493b2ef1d46443416f09c/image.png)
+- ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/d7415ae08cfabe2b0d5f9e6ead908f35/image.png)
+- ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/c973859c6a2800ff6088deab6b0e3e86/image.png)
 
 ## recursos
 
 ### db
 - [mysql](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
+- [config file: contexts.json](https://github.com/eacevedof/prj_ipblocker/blob/master/config/contexts.json)
 
 ### library
 - [php - ipblocker](https://github.com/eacevedof/prj_ipblocker/tree/master/php)
+- [ACL config file: keywords.json](https://github.com/eacevedof/prj_ipblocker/blob/master/config/keywords.json)
 
 ### frontend
-- [php apifyer](https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify)
+- [phpapify](https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify)
 - [vue & nextjs](https://github.com/eacevedof/prj_ipblocker/tree/master/vuejs)
 
 ### deploy (python)
