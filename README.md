@@ -1,16 +1,18 @@
 ## PRJ_IPBLOCKER
 
-## database - mysql
+
+## recursos:
+### database - mysql
 - [db](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
 
-## library
+### library
 - [php - ipblocker](https://github.com/eacevedof/prj_ipblocker/tree/master/php)
 
-## frontend
+### frontend
 - [php apifyer][https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify]
 - [vue & nextjs](https://github.com/eacevedof/prj_ipblocker/tree/master/vuejs)
 
-## deploy (python)
+### deploy (python)
 - [py.sh - help](https://github.com/eacevedof/prj_bash/blob/master/py/help.py)
 ```js
 // db
