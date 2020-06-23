@@ -1,4 +1,4 @@
-# php_ipblocker
+## db - ipblocker
 
 ### db:
 ```sql
@@ -6,14 +6,7 @@ TRUNCATE TABLE app_ip;
 TRUNCATE TABLE app_ip_blacklist;
 TRUNCATE TABLE app_ip_request;
 ```
-
 - [prod mysql console](https://trello.com/c/G9OArwWO/9-ionos-conectar-por-consola)
-### php
-- [prod include](https://trello.com/c/5qbASalI/10-ipblocker)
-```php
-if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
-    include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
-```
 
 ### Sql check:
 - [ipgeolocation](https://ipgeolocation.io/ip-location/34.241.107.14)
