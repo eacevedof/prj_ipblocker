@@ -3,6 +3,15 @@
 - email: eacevedof@hotmail.com
 
 ### IP Blocker
+## ¿Por qué esta herramienta?
+Cada vez tengo más proyectos web realizados en php. Mi proveedor de Hosting registra en logs todo lo que entra y sale en relación a estos proyectos. 
+De vez en cuando le echo un vistazo.  Sucede que hace unos dos meses monte un **Wordpress** sobre un dominio que tiene cierto tráfico y vi que sus logs tenían un tamaño más grande de lo normal.
+Empecé a comprobar peticiones y habian muchas que tenían que ver con **exploits** de wp.  Afortunadamente suelo tener el wp actualizado con lo cual los probé y daban **404** pero algun fallo en la última version si que había.  Concretamente con la API del wp. Ya metido en arena, decidí revisar mis otros sitios y fue la locura. **spam**, **pruebas de exploits** inyección SQL y peticiones en binario, bots que iban haciendo un fullscan de vulnerabilidad en todos mis sitios.  Conclusión, mal rollo. <br/>
+
+Instalo algún plugin en los wp para bloqueo de ip (que hay unos cuantos) y los que no estaban con wp?, algun bundle en Symfony o Laravel... y al final como suelo ir por el camino más largo, decidí hacer esta mini librería. <br/>
+
+Con lo cual tenía centralizada todas las peticiones de todos los dominios y según los ataques configuraría unas reglas y otras.  Así, si una IP ha atacado un dominio se bloquea para todos.
+
 ## ¿Qué es?
 Es una mini librería **<100K** realizada en **php** y gestonada con **Vue**.
 Su objetivo principal es la gestión de peticiones **POST, GET y FILES** realizadas sobre nuestros distintos dominios.
@@ -18,7 +27,7 @@ Son un conjunto de archivos php (v7.4.1) que están *bundelizados* en un único 
 //public/ipblocker.php
 $pathboot = realpath(__DIR__."/../boot");
 include("$pathboot/appbootstrap.php");
-use \TheFramework\Components\ComponentIpblocker;<br/>
+use \TheFramework\Components\ComponentIpblocker;
 (new ComponentIpblocker())->handle_request();
 ```
 Este (ipblocker.php) se incuirá en el **frontcontroller** en sus primeras lineas. Algo así:
