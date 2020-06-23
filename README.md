@@ -2,10 +2,9 @@
 
 
 ## recursos
-- 
 
-### mysql
-- [db](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
+### db
+- [mysql](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
 
 ### library
 - [php - ipblocker](https://github.com/eacevedof/prj_ipblocker/tree/master/php)
