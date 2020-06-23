@@ -82,7 +82,7 @@ Hecho esto ya podríamos consumir la bd de ipblocker usando cualquier cliente po
 - ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/c973859c6a2800ff6088deab6b0e3e86/image.png)
 
 ## Lista blanca:
-- El archivo: **/php/lib/component_searchbots.php** tiene configurado un array de buscadores que pueden hacer un rastreo completo del sitio con cualquier llamada POST o GET
+- El archivo: **/php/lib/component_searchbots.php** tiene configurado dos arrays de buscadores. Uno va por dominio y el otro por IPS. Toda ip y/o dominio que esté en estos arrays podrán hacer un rastreo completo del sitio con cualquier llamada POST o GET.
 ```php
 private static $botsns = [
     "baidu1"=>".crawl.baidu.com",
