@@ -26,7 +26,7 @@ Yo concretamente lo tengo configurado en sitios con: Symfony y Laravel pero se p
 Las webs con wordpress también se pueden proteger.
 
 ## El backend
-Son un conjunto de archivos php (v7.4.1) que están *bundelizados* en un único archivo **`public/ipblocker.php`** 
+Es un conjunto de archivos php (v7.4.1) que están *bundelizados* en un único fichero: **`public/ipblocker.php`** 
 ```php
 //public/ipblocker.php
 $pathboot = realpath(__DIR__."/../boot");
@@ -54,10 +54,15 @@ if ($_SERVER['APP_DEBUG']) {
 ...
 ```
 ### ¿Qué se consigue con esta inyección?
-- Cuando ocurre una petición HTTP/S hacia el dominio ocurren varias cosas:
-  - Se registra en bd el **POST, GET y FILES** en las tablas: **app_ip y app_ip_request**
-
-
+- Cuando ocurre una petición **HTTP | S** hacia el dominio ocurren varias cosas:
+  - Se registra en bd el **POST, GET y FILES** en las tablas: **app_ip y app_ip_request** 
+  - Primero en **app_ip** se guarda la ip (si no existiera), el país de origen y a quien pertenece
+  - Si está en **app_ip_blacklist** directamente se aplica el exit con un mensaje: `ComponentIpblocker.pr()` con lo cual
+  nos ahorramos la ejecución del resto del código
+  - ![](https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png)
+  
+## Configuración
+- 
 
 
 ## recursos
