@@ -81,6 +81,41 @@ Hecho esto ya podríamos consumir la bd de ipblocker usando cualquier cliente po
 - ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/d7415ae08cfabe2b0d5f9e6ead908f35/image.png)
 - ![](https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/c973859c6a2800ff6088deab6b0e3e86/image.png)
 
+## Lista blanca:
+- El archivo: **/php/lib/component_searchbots.php** tiene configurado un array de buscadores que pueden hacer un rastreo completo del sitio con cualquier llamada POST o GET
+```php
+private static $botsns = [
+    "baidu1"=>".crawl.baidu.com",
+    "baidu2"=>".crawl.baidu.jp",
+    "msn"=>".msn.com",
+    "google1"=>".google.com",
+    "google2"=>".googlebot.com",
+    "google3-user"=>".googleusercontent.com",
+    "yahoo1"=>".crawl.yahoo.net",
+    "yandex1"=>".yandex.ru",
+    "yandex2"=>".yandex.net",
+    "yandex3"=>".yandex.com",
+];
+
+private static $botsip = [
+    //https://help.duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/
+      "duckduckgo" => [
+        "23.21.227.69",
+        "40.88.21.235",
+        "50.16.241.113",
+        "50.16.241.114",
+        "50.16.241.117",
+        "50.16.247.234",
+        "52.204.97.54",
+        "52.5.190.19",
+        "54.197.234.188",
+        "54.208.100.253",
+        "54.208.102.37",
+        "107.21.1.8",
+      ]
+];
+```
+
 ## recursos
 
 ### db
