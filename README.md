@@ -4,17 +4,21 @@
 
 ### IP Blocker
 ## ¿Por qué esta herramienta?
-Cada vez tengo más proyectos web realizados en php. Mi proveedor de Hosting registra en logs todo lo que entra y sale en relación a estos proyectos. 
-De vez en cuando le echo un vistazo.  Sucede que hace unos dos meses monte un **Wordpress** sobre un dominio que tiene cierto tráfico y vi que sus logs tenían un tamaño más grande de lo normal.
-Empecé a comprobar peticiones y habian muchas que tenían que ver con **exploits** de wp.  Afortunadamente suelo tener el wp actualizado con lo cual los probé y daban **404** pero algun fallo en la última version si que había.  Concretamente con la API del wp. Ya metido en arena, decidí revisar mis otros sitios y fue la locura. **spam**, **pruebas de exploits** inyección SQL y peticiones en binario, bots que iban haciendo un fullscan de vulnerabilidad en todos mis sitios.  Conclusión, mal rollo. <br/>
+Cada vez tengo más proyectos web realizados en php. Mi proveedor de Hosting registra en logs todo lo que entra y sale en relación a estos proyectos. <br/>
+De vez en cuando le echo un vistazo.  Sucede que hace unos dos meses (hoy: 23 Jun 2020) monté un **Wordpress** sobre un dominio que tiene cierto tráfico y vi que sus logs tenían un tamaño más grande de lo normal.<br/><br/>
 
-Instalo algún plugin en los wp para bloqueo de ip (que hay unos cuantos) y los que no estaban con wp?, algun bundle en Symfony o Laravel... y al final como suelo ir por el camino más largo, decidí hacer esta mini librería. <br/>
+Empecé a comprobar peticiones y habian muchas que tenían que ver con **exploits** de wp.  Afortunadamente suelo tener el wp actualizado con lo cual los probé y daban **404** pero algún fallo en la última version si que había.  Concretamente con la API del wp. <br/>
+Ya metido en arena, decidí revisar mis otros sitios y fue la locura. **spam**, **pruebas de exploits** inyección SQL y peticiones en binario, bots que iban haciendo un fullscan de vulnerabilidad en todos mis sitios.  Conclusión, mal rollo. <br/><br/>
 
-Con lo cual tenía centralizada todas las peticiones de todos los dominios y según los ataques configuraría unas reglas y otras.  Así, si una IP ha atacado un dominio se bloquea para todos.
+Instalo algún plugin en los wp para bloqueo de ip (que hay unos cuantos) y los que no estaban con wp?, algun bundle en Symfony o Laravel... pero pensar en que tengo que gestionar el bloqueo en cada uno por separado no me agradaba mucho la idea. <br/> 
+Al final la cabra tira al monte, decidí hacer esta mini librería. <br/><br/>
+
+Esta era una solución más genérica.  Tenía centralizada todas las peticiones de todos los dominios y según los ataques configuraría unas reglas u otras.  
+Así, si una IP ha atacado un dominio se bloquea para todos.
 
 ## ¿Qué es?
-Es una mini librería **<100K** realizada en **php** y gestonada con **Vue**.
-Su objetivo principal es la gestión de peticiones **POST, GET y FILES** realizadas sobre nuestros distintos dominios.
+Es una mini librería **<100K** realizada en **php** y gestonada (de forma opcional) con **Vue**.
+Su objetivo principal es el rastreo de peticiones **POST, GET y FILES** realizadas sobre nuestros distintos dominios.
 Como es de esperar estos dominios deben de tener una **webapp** realizada en php y de ser posible contar con un *frontcontroller*
 ya que al ser este el único punto de entrada hace más sencilla su configuración
 
