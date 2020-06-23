@@ -2,6 +2,8 @@
 
 
 ## recursos:
+- 
+
 ### database - mysql
 - [db](https://github.com/eacevedof/prj_ipblocker/tree/master/db)
 
@@ -9,7 +11,7 @@
 - [php - ipblocker](https://github.com/eacevedof/prj_ipblocker/tree/master/php)
 
 ### frontend
-- [php apifyer][https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify]
+- [php apifyer](https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify)
 - [vue & nextjs](https://github.com/eacevedof/prj_ipblocker/tree/master/vuejs)
 
 ### deploy (python)
