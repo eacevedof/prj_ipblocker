@@ -272,7 +272,7 @@ class ProviderKeywords
         //comprobar bloqueo por pais
         if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
 
-        //comprobar si requri es palicable
+        //comprobar si requri es aplicable
         $requri = $this->_in_requris();
         if(!$requri)  return false;
 
