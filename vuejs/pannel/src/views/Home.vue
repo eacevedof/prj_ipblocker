@@ -49,24 +49,24 @@
         <h4>¿Qué se consigue con esta inyección?</h4>
         <p>
           Principalmente que se registren todas las peticiones a los dominios configurados en
-          <a href="https://github.com/eacevedof/prj_ipblocker/blob/master/config/keywords.json" class="black--text" target="_blank">
-            <b>config/keywords.json</b> (configuración ACL)
+          <a href="https://github.com/eacevedof/prj_ipblocker/blob/master/config/rulez.json" class="black--text" target="_blank">
+            <b>config/rulez.json</b> (configuración ACL)
           </a><br/><br/>
           Ejemplo:<br/>
           <a href="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/53a7a0438b19f6597a9b956620f962e8/image.png" target="_blank">
-            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/53a7a0438b19f6597a9b956620f962e8/image.png" 
+            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/53a7a0438b19f6597a9b956620f962e8/image.png"
               width="500"
               height="300"
             />
           </a>
         </p>
         <p>
-          En base a estas peticiones y la configuración de <b>keywords.json</b> Se alimentará la tabla <b>app_ip_request</b>
+          En base a estas peticiones y la configuración de <b>rulez.json</b> Se alimentará la tabla <b>app_ip_request</b>
           si esta petición no cumple con la <b>ACL</b> se agregará la ip de origen en <b>app_ip_blacklist</b> quedando así bloqueada
           para futuros accesos.<br/><br/>
           Ejemplo:<br/>
           <a href="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/aa15adf40814f851d9777db766ffff6c/image.png" target="_blank">
-            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/aa15adf40814f851d9777db766ffff6c/image.png" 
+            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/aa15adf40814f851d9777db766ffff6c/image.png"
               width="500"
               height="300"
             />
@@ -74,7 +74,7 @@
         </p>
         <p>
           En los próximos intentos recibiría un mensaje como el siguiente:<br/>
-          <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png" 
+          <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/632x214/14ff372f5163fa979870db1e2248e851/image.png"
             width="500"
             height="200"
           />
@@ -89,29 +89,29 @@
         <h4>Ejemplos de la UI:</h4>
         <ul>
           <li>
-            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/9688d9bfaddaa06bfaa69e23cc7f13dd/image.png" 
+            <img src="https://trello-attachments.s3.amazonaws.com/569bbf4d1fa18d93a4e89813/5ed40bd5cb5f856d00a8a3f5/9688d9bfaddaa06bfaa69e23cc7f13dd/image.png"
               width="500"
               height="100"
             />
           </li>
           <li>
-            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1009x666/a95ad1c570f3deb86bd568546851ff10/image.png" 
-              width="500"
-              height="400"
-            />
-          </li>     
-          <li>
-            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/939x667/7fe4dde5babfa2abed70257bfe399bdc/image.png" 
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1009x666/a95ad1c570f3deb86bd568546851ff10/image.png"
               width="500"
               height="400"
             />
           </li>
           <li>
-            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1084x796/a0c414df2995286a63d54d459e0192cb/image.png" 
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/939x667/7fe4dde5babfa2abed70257bfe399bdc/image.png"
               width="500"
               height="400"
             />
-          </li>          
+          </li>
+          <li>
+            <img src="https://trello-attachments.s3.amazonaws.com/5ed40bd5cb5f856d00a8a3f5/1084x796/a0c414df2995286a63d54d459e0192cb/image.png"
+              width="500"
+              height="400"
+            />
+          </li>
         </ul>
       </v-col>
     </v-row>
@@ -155,7 +155,7 @@ export default {
         left: 0,
         behavior: 'smooth'
       });
-    },  
+    },
     onScroll (e) {
       if (typeof window === 'undefined') return
       const top = window.pageYOffset ||   e.target.scrollTop || 0
@@ -164,6 +164,6 @@ export default {
     toTop () {
       this.$vuetify.goTo(0)
     }
-  }  
+  }
 };
 </script>

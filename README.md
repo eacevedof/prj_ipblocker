@@ -66,7 +66,7 @@ if ($_SERVER['APP_DEBUG']) {
 - Hay que retocar dos ficheros dentro de la carpeta config:
   - **contexts.json** (link más abajo)
     - Acceso a la bd (mysql) donde se almacenarán todas las peticiones
-  - **keywords.json** (link más abajo)
+  - **rulez.json** (link más abajo)
     - Lista de acceso. Las reglas que se aplicarán a cada petición según dominio y endpoint
 
 ## El frontend Vue y Vuex
@@ -124,7 +124,7 @@ private static $botsip = [
 
 ### library
 - [php - ipblocker](https://github.com/eacevedof/prj_ipblocker/tree/master/php)
-- [ACL config file: keywords.json](https://github.com/eacevedof/prj_ipblocker/blob/master/config/keywords.json)
+- [ACL config file: rulez.json](https://github.com/eacevedof/prj_ipblocker/blob/master/config/rulez.json)
 
 ### frontend
 - [phpapify](https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify)
