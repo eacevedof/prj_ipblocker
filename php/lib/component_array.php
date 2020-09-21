@@ -3,14 +3,17 @@ namespace TheFramework\Components;
 
 class ComponentArray
 {
-    private array $keys;
     private array $array;
+    private array $keys;
+    private array $values;
+
     private string $matches;
 
     public function __construct(array $array)
     {
         $this->array = $array;
         $this->keys = array_keys($array);
+        $this->values = array_values($array);
     }
 
     private function _in_string($search, $string){
@@ -28,6 +31,13 @@ class ComponentArray
             if(in_array($mx, $array))
                 return true;
         return false;
+    }
+
+    private function _has_all(array $array, array $search){
+        foreach ($search as $mx)
+            if(!in_array($mx, $array))
+                return false;
+        return true;
     }
 
     public function has_somek(array $keys=[])
@@ -63,27 +73,22 @@ class ComponentArray
         return $r;
     }
 
-    public function is_equal($string) {return $this->array === $string;}
+    public function is_equal($array) {return $this->array === $array;}
 
     public function get_matches(){return $this->matches;}
 
-    public function starts_with($string)
-    {
-        if(strpos($this->array, $string)===0) return true;
-        return false;
-    }
+    public function is_larger($array){return count($this->array)>count($array);}
 
-    public function is_larger($string){return strlen($this->array)>strlen($string);}
+    public function is_shorter($array){return count($this->array)<count($array);}
 
-    public function is_shorter($string){return strlen($this->array)<strlen($string);}
+    public function samesize($string){return count($this->array)==count($string);}
 
-    public function samelen($string){return strlen($this->array)==strlen($string);}
+    public function is_firstk($key){return $this->keys[0] === $key;}
 
-    public function ends_with($string)
-    {
-        if($this->is_shorter($string) || $this->samelen($string)) return false;
-        $ipos = strpos($this->array, $string);
-        if(!$ipos) return false;
-        return (($ipos + strlen($string)) === strlen($this->array));
-    }
+    public function is_firstv($val){return $this->values[0] === $val;}
+
+    public function is_lastk($key){return end($this->keys) === $key;}
+
+    public function is_lastv($val){return end($this->values[]) === $val;}
+
 }
