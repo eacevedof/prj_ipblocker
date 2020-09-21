@@ -9,7 +9,7 @@ class ComponentConfig
             "prod"=>IPB_PATH_CONFIG."/contexts.json",
         ],
         "keywords" => [
-            "local" => IPB_PATH_CONFIG."/keywords.local.json",
+            "local" => IPB_PATH_CONFIG."/rulez.local.json",
             "prod"=>IPB_PATH_CONFIG."/keywords.json",
         ],
     ];

@@ -1,0 +1,78 @@
+{
+  "domains": {
+    "*": {
+      "public": [],
+
+      "countries": {
+        "allowed": [],
+        "forbidden": ["ru","ua","cn","by"],
+      },
+
+      "rules": {
+        "or": {
+          "post":[
+            ".link/"," dating ","-sex ", "hairybeautypics.com", "judpharmacy.com","datanumen.com","virussprotection.com",
+            "datanumen.com","hairypussypix.com","topcasinos.","https://t.co/","ipcamerasoftware.cam","ome-security-camera.com",
+            "simpleloanslimited.com","kamagra-oraljelly100.com","keafmo.rbxrewards.club","ixiqwhoes.trextokenss.com","prancegoldholdings.com",
+            "hdclaps.me/", "furnitopia.com","monkeydigital.co","dropbox.com/s/","<img src=","<a href="
+          ],
+          "get": [
+            "ftp://",
+            "die(@md5(","\"user/login\""
+          ]
+        },
+        "and": {
+          "post":  [
+            ["http","<a ","href="], ["http://",".ru/"], [".ru\""], ["https://",".ru/"],
+            ["http://"," sex "], ["https://"," sex "], ["http://"," offer "],["https://"," offer "], ["http://","walmart.com"],
+            [" viagra "],
+            ["https://","walmart.com"], ["u0430u043b"," u0434u"], ["\u0430\u043b"," \u0434"], ["ал","д"], ["pussy"," pics "],["http",".xyz/"]
+          ],
+
+          "get": [
+
+          ]
+        }
+      }
+    },
+
+    "theframework.es": {
+      "public": [
+        {
+          "requri": "/en/contact/", "post": ["hidAction"], "get": null
+        },
+        {
+          "requri": "/en/blog/", "post": ["hidAction"], "get": null
+        },
+        {
+          "requri": "/en/ajax/newsletter/insert/", "post": ["chkPolicy"], "get": null
+        },
+        {
+          "requri": "/en/post-null/", "post": null, "get": ["s"]
+        },
+        {
+          "requri": "/en/blocked-or-post/"
+        }
+      ]
+    },
+
+    "gracestyle.es": {
+      "public":[
+        {
+          "requri": "/es/contacto/","post": ["hidAction"], "get": null
+        },
+        {
+          "requri": "/en/ajax/newsletter/insert/", "post": ["chkPolicy"], "get": null
+        }
+      ]
+    },
+    
+    "eduardoaf.com": {
+      "public": [
+        {
+          "requri":"/", "get": null
+        }
+      ]
+    }
+  }
+}
