@@ -3,12 +3,14 @@ namespace TheFramework\Components;
 
 class ComponentArray
 {
-    private string $array;
+    private array $keys;
+    private array $array;
     private string $matches;
 
     public function __construct(array $array)
     {
         $this->array = $array;
+        $this->keys = array_keys($array);
     }
 
     private function _in_string($search, $string){
@@ -17,14 +19,30 @@ class ComponentArray
         return false;
     }
 
-    public function has_some(array $substr=[])
-    {
-        if(!$substr) return true;
-        foreach ($substr as $search)
-            if($this->_in_string($search, $this->array))
+    public function is_empty(){return count($this->keys)===0;}
+
+    public function in_keys($string){ return in_array($string, $this->keys);}
+
+    private function _has_some(array $array, array $search){
+        foreach ($search as $mx)
+            if(in_array($mx, $array))
                 return true;
         return false;
     }
+
+    public function has_somek(array $keys=[])
+    {
+        if(!$keys) return true;
+        return $this->_has_some($this->keys, $keys);
+    }
+
+    public function has_somev(array $values=[])
+    {
+        if(!$values) return true;
+        return $this->_has_some($this->values, $values);
+    }
+
+
 
     //!has_all => is_none
     public function has_all(array $substr=[])
@@ -35,8 +53,6 @@ class ComponentArray
                 return false;
         return true;
     }
-
-    public function is_empty(){ return $this->array==="" || $this->array===null;}
 
     public function match($pattern)
     {
