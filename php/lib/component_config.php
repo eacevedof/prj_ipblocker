@@ -10,7 +10,7 @@ class ComponentConfig
         ],
         "keywords" => [
             "local" => IPB_PATH_CONFIG."/rulez.local.json",
-            "prod"=>IPB_PATH_CONFIG."/keywords.json",
+            "prod"=>IPB_PATH_CONFIG."/rulez.json",
         ],
     ];
 
