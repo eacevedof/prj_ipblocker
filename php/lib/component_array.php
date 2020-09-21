@@ -26,6 +26,8 @@ class ComponentArray
 
     public function in_keys($string){ return in_array($string, $this->keys);}
 
+    public function in_values($string){ return in_array($string, $this->values);}
+
     private function _has_some(array $array, array $search){
         foreach ($search as $mx)
             if(in_array($mx, $array))
@@ -40,37 +42,52 @@ class ComponentArray
         return true;
     }
 
-    public function has_somek(array $keys=[])
+    public function has_somek(array $keys)
     {
         if(!$keys) return true;
         return $this->_has_some($this->keys, $keys);
     }
 
-    public function has_somev(array $values=[])
+    public function has_somev(array $values)
     {
         if(!$values) return true;
         return $this->_has_some($this->values, $values);
     }
 
-
-
-    //!has_all => is_none
-    public function has_all(array $substr=[])
+    public function has_allk(array $keys)
     {
-        if(!$substr) return true;
-        foreach ($substr as $search)
-            if(!$this->_in_string($search, $this->array))
-                return false;
-        return true;
+        if(!$keys) return true;
+        return $this->_has_all($this->keys, $keys);
     }
 
-    public function match($pattern)
+    public function has_allv(array $values)
+    {
+        if(!$values) return true;
+        return $this->_has_all($this->values, $values);
+    }
+
+    private function _match($pattern, $string)
     {
         $pattern = "/$pattern/im";
         $matches = [];
-        $r = preg_match($pattern, $this->array, $matches);
-        if($r) $this->matches[][$pattern] = $matches;
+        $r = preg_match($pattern, $string, $matches);
+        if($r) $this->matches[] = ["string"=>$string,"pattern"=>$pattern, "matches"=>$matches];
         return $r;
+    }
+
+    public function match_somek($pattern){
+        foreach ($this->keys as $key)
+            if($this->_match($pattern, $key))
+                return true;
+        return false;
+    }
+
+    public function match_somev($pattern){
+        foreach ($this->values as $value)
+            if(is_string($value))
+                if($this->_match($pattern, $value))
+                    return true;
+        return false;
     }
 
     public function is_equal($array) {return $this->array === $array;}
