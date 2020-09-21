@@ -50,4 +50,24 @@ class ComponentString
     public function is_equal($string) {return $this->string === $string;}
 
     public function get_matches(){return $this->matches;}
+
+    public function starts_with($string)
+    {
+        if(strpos($this->string, $string)===0) return true;
+        return false;
+    }
+
+    public function is_larger($string){return strlen($this->string)>strlen($string);}
+
+    public function is_shorter($string){return strlen($this->string)<strlen($string);}
+
+    public function samelen($string){return strlen($this->string)==strlen($string);}
+
+    public function ends_with($string)
+    {
+        if($this->is_shorter($string) || $this->samelen($string)) return false;
+        $ipos = strpos($this->string, $string);
+        if(!$ipos) return false;
+        return (($ipos + strlen($string)) === strlen($this->string));
+    }
 }
