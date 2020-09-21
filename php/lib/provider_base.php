@@ -73,6 +73,16 @@ class ProviderBase
         return $id;
     }
 
+    public function is_untracked()
+    {
+        $sql = "
+        -- is_untracked
+        SELECT id FROM app_ip_untracked WHERE remote_ip='$this->remoteip' AND is_enabled=1";
+        $id = $this->db->query($sql,0,0);
+        //print_r($id);
+        return $id;
+    }
+
     public function is_registered()
     {
         $sql = "

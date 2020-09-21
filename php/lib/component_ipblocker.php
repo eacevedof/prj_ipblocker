@@ -11,7 +11,7 @@ class ComponentIpblocker
 {
     use TraitLog;
 
-    private $req = null;
+    private $req;
     private $prov;
 
     public function __construct()
@@ -23,6 +23,12 @@ class ComponentIpblocker
     private function _is_search_bot()
     {
         return sb::get_name($this->req->get_remoteip());
+    }
+
+    private function _is_ipuntracked()
+    {
+        $isuntracked = $this->prov->is_untracked();
+        return $isuntracked;
     }
 
     private function _is_ipblacklisted()
@@ -85,6 +91,9 @@ class ComponentIpblocker
 
     public function test_handle_request($m="")
     {
+        //si no se debe guardar ningun tipo de registro de esta ip
+        if($this->_is_ipuntracked()) return;
+
         $this->prov->save_request();
         if($this->_is_search_bot()) return;
         $this->_check_forbidden_content();
