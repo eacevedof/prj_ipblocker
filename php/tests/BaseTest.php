@@ -1,7 +1,7 @@
 <?php
 namespace Tests;
 
-$pathboot = realpath(__DIR__."/../boot");
+$pathboot = realpath(__DIR__ . "/../boot");
 include("$pathboot/appbootstrap.php");
 
 use TheFramework\Helpers\HelperRequest;

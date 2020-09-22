@@ -2,5 +2,12 @@
     "name": "theframework/ipblocker",
     "description": "IP Blocker",
     "license": "MIT",
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "Ipblocker\\": "src/"
+        },
+        "files": [
+            "app/functions/date.php"
+        ]
+    }
 }
