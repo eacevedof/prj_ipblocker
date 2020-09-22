@@ -1,4 +1,5 @@
 .idea
 config/contexts.local.json
 config/rulez.local.json
+php/vendor
 logs
