@@ -8,11 +8,12 @@
  * @observations
  */
 namespace Ipblocker\Components\Db;
-use Theframework\Traits\TraitLog;
+
+use Theframework\Traits\LogTrait;
 
 class ComponentMysql
 {
-    use TraitLog;
+    use LogTrait;
 
     private $arConn;
     private $isError;

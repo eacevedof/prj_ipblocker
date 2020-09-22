@@ -5,11 +5,11 @@ use Ipblocker\Components\ComponentSearchbots as sb;
 use Ipblocker\Helpers\HelperRequest as req;
 use Ipblocker\Providers\ProviderBase;
 use Theframework\Providers\ProviderKeywords;
-use Theframework\Traits\TraitLog;
+use Theframework\Traits\LogTrait;
 
 class ComponentIpblocker
 {
-    use TraitLog;
+    use LogTrait;
 
     private $req;
     private $prov;

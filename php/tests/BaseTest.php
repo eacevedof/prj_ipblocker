@@ -5,12 +5,12 @@ $pathboot = realpath(__DIR__ . "/../boot");
 include("$pathboot/appbootstrap.php");
 
 use Ipblocker\Helpers\HelperRequest;
-use Theframework\Traits\TraitLog;
+use Theframework\Traits\LogTrait;
 use Ipblocker\Components\ComponentIpblocker;
 
 abstract class BaseTest
 {
-    use TraitLog;
+    use LogTrait;
 
     public function __construct()
     {

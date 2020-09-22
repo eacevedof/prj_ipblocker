@@ -2,7 +2,7 @@
 namespace Theframework\Traits;
 use Theframework\Components\ComponentLog As L;
 
-trait TraitLog
+trait LogTrait
 {
     protected function log($mxVar,$sTitle=NULL)
     {

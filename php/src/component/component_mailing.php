@@ -1,7 +1,6 @@
 <?php
 namespace Ipblocker\Components;
 
-
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
