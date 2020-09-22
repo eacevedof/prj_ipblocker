@@ -6,5 +6,5 @@ require __DIR__."/../vendor/autoload.php";
 //$pathboot = realpath(__DIR__ . "/../boot");
 //include("$pathboot/appbootstrap.php");
 
-//use \Ipblocker\Components\ComponentIpblocker;
+//use \Ipblocker\Component\ComponentIpblocker;
 //(new ComponentIpblocker())->handle_request();

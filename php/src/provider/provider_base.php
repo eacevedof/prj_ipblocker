@@ -1,9 +1,9 @@
 <?php
 namespace Ipblocker\Provider;
 
-use Ipblocker\Components\ComponentSearchbots as sb;
-use Ipblocker\Components\ComponentConfig as cfg;
-use Ipblocker\Components\Db\ComponentMysql;
+use Ipblocker\Component\ComponentSearchbots as sb;
+use Ipblocker\Component\ComponentConfig as cfg;
+use Ipblocker\Component\Db\ComponentMysql;
 use Ipblocker\Traits\LogTrait;
 use Ipblocker\Helpers\HelperRequest as req;
 

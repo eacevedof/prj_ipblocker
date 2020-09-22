@@ -1,5 +1,5 @@
 <?php
-namespace Ipblocker\Helpers;
+namespace Ipblocker\Helper;
 
 final class HelperRequest
 {

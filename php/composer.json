@@ -6,7 +6,10 @@
         "psr-4": {
             "Ipblocker\\": "src/",
             "Ipblocker\\Component": "src/component",
-            "Ipblocker\\Component\\Rulez": "src/component/rulez"
+            "Ipblocker\\Component\\Rulez": "src/component/rulez",
+            "Ipblocker\\Controller": "src/controller",
+            "Ipblocker\\Helper": "src/helper",
+            "Ipblocker\\Traits": "src/traits"
         },
         "files": [
             "src/boot/appbootstrap.php"

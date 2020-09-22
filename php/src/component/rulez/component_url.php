@@ -2,8 +2,8 @@
 namespace Ipblocker\Rulez;
 use Ipblocker\Rulez;
 
-use Ipblocker\Components\ComponentString;
-use Ipblocker\Components\ComponentArray;
+use Ipblocker\Component\ComponentString;
+use Ipblocker\Component\ComponentArray;
 
 class ComponentUrl implements IRulez
 {

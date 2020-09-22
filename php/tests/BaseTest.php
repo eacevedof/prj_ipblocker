@@ -6,7 +6,7 @@ include("$pathboot/appbootstrap.php");
 
 use Ipblocker\Helpers\HelperRequest;
 use Ipblocker\Traits\LogTrait;
-use Ipblocker\Components\ComponentIpblocker;
+use Ipblocker\Component\ComponentIpblocker;
 
 abstract class BaseTest
 {

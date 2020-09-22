@@ -1,8 +1,8 @@
 <?php
 include("BaseTest.php");
 use Tests\BaseTest;
-use Ipblocker\Components\ComponentIpblocker;
-use Ipblocker\Components\ComponentSearchbots as sb;
+use Ipblocker\Component\ComponentIpblocker;
+use Ipblocker\Component\ComponentSearchbots as sb;
 
 final class RefillwhoisTest extends BaseTest
 {
