@@ -3,9 +3,9 @@ namespace Ipblocker\Components;
 
 use Ipblocker\Components\ComponentSearchbots as sb;
 use Ipblocker\Helpers\HelperRequest as req;
-use Ipblocker\Providers\ProviderBase;
-use Theframework\Providers\ProviderKeywords;
-use Theframework\Traits\LogTrait;
+use Ipblocker\Provider\ProviderBase;
+use Ipblocker\Provider\ProviderKeywords;
+use Ipblocker\Traits\LogTrait;
 
 class ComponentIpblocker
 {

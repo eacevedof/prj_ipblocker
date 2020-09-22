@@ -1,10 +1,10 @@
 <?php
-namespace Ipblocker\Providers;
+namespace Ipblocker\Provider;
 
 use Ipblocker\Components\ComponentSearchbots as sb;
 use Ipblocker\Components\ComponentConfig as cfg;
 use Ipblocker\Components\Db\ComponentMysql;
-use Theframework\Traits\LogTrait;
+use Ipblocker\Traits\LogTrait;
 use Ipblocker\Helpers\HelperRequest as req;
 
 class ProviderBase

@@ -1,5 +1,5 @@
 <?php
-namespace Theframework\Components;
+namespace Ipblocker\Components;
 
 class ComponentLog
 {

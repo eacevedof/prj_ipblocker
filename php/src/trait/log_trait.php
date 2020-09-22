@@ -1,6 +1,6 @@
 <?php
-namespace Theframework\Traits;
-use Theframework\Components\ComponentLog As L;
+namespace Ipblocker\Traits;
+use Ipblocker\Components\ComponentLog As L;
 
 trait LogTrait
 {

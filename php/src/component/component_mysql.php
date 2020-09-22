@@ -9,7 +9,7 @@
  */
 namespace Ipblocker\Components\Db;
 
-use Theframework\Traits\LogTrait;
+use Ipblocker\Traits\LogTrait;
 
 class ComponentMysql
 {
