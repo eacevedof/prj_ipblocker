@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Controller;
+namespace Ipblocker\Controllers;
 
-use Ipblocker\Component\ComponentSearchbots as sb;
+use Ipblocker\Components\ComponentsSearchbots as sb;
 use Ipblocker\Helpers\HelperRequest as req;
 use Ipblocker\Provider\ProviderBase;
 use Ipblocker\Provider\ProviderKeywords;

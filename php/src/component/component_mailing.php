@@ -1,5 +1,5 @@
 <?php
-namespace Ipblocker\Components;
+namespace Ipblocker\Componentss;
 
 /**
  * @author Eduardo Acevedo Farje.

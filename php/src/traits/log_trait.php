@@ -1,6 +1,6 @@
 <?php
 namespace Ipblocker\Traits;
-use Ipblocker\Component\ComponentLog As L;
+use Ipblocker\Components\ComponentsLog As L;
 
 trait LogTrait
 {

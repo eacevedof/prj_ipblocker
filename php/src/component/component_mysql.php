@@ -2,12 +2,12 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name Ipblocker\Component\Db\ComponentMysql
+ * @name Ipblocker\Components\Db\ComponentsMysql
  * @file component_mysql.php v2.1.2
  * @date 29-06-2019 17:08 SPAIN
  * @observations
  */
-namespace Ipblocker\Component\Db;
+namespace Ipblocker\Components\Db;
 
 use Ipblocker\Traits\LogTrait;
 

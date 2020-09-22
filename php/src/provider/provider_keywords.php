@@ -1,7 +1,7 @@
 <?php
 namespace Ipblocker\Provider;
 
-use Ipblocker\Component\ComponentConfig as cfg;
+use Ipblocker\Components\ComponentsConfig as cfg;
 use Ipblocker\Helpers\HelperRequest as req;
 
 class ProviderKeywords
