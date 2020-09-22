@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
-class ComponentArray
+class ArrayComponent
 {
     private array $array;
     private array $keys;

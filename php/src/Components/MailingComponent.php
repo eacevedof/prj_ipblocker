@@ -1,5 +1,5 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
 /**
  * @author Eduardo Acevedo Farje.
@@ -10,7 +10,7 @@ namespace Ipblocker\Componentss;
  * @date 30-06-2018 07:58 (SPAIN)
  */
 
-class ComponentMailing
+class MailingComponent
 {
     private $sFromTitle;
     private $sEmailFrom;

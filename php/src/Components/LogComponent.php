@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
-class ComponentLog
+class LogComponent
 {
     const DS = DIRECTORY_SEPARATOR;
 

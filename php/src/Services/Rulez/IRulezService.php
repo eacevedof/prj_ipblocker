@@ -1,7 +1,5 @@
 <?php
-namespace Ipblocker\Rulez;
-
-
+namespace Ipblocker\Services\Rulez;
 
 interface IRulez
 {

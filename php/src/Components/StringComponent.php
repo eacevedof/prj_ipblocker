@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
-class ComponentString
+class StringComponent
 {
     private string $string;
     private string $matches;

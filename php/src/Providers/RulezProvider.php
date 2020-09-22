@@ -1,14 +1,14 @@
 <?php
-namespace Ipblocker\Provider;
+namespace Ipblocker\Providers;
 
-use Ipblocker\Components\ComponentsConfig as cfg;
-use Ipblocker\Helpers\HelperRequest as req;
+use Ipblocker\Components\ConfigComponent as cfg;
+use Ipblocker\Helpers\RequestHelper as req;
 
-class ProviderKeywords
+class RulezProvider
 {
     private $data;
     /**
-     * @var HelperRequest
+     * @var RequestHelper
      */
     private $req;
 

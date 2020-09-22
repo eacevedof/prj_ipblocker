@@ -2,7 +2,7 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name Ipblocker\Components\Db\ComponentsMysql
+ * @name Ipblocker\Components\Db\MysqlComponent
  * @file component_mysql.php v2.1.2
  * @date 29-06-2019 17:08 SPAIN
  * @observations
@@ -11,7 +11,7 @@ namespace Ipblocker\Components\Db;
 
 use Ipblocker\Traits\LogTrait;
 
-class ComponentMysql
+class MysqlComponent
 {
     use LogTrait;
 
@@ -73,7 +73,7 @@ class ComponentMysql
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
                 ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
             $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-            $this->log($sSQL,"ComponentMysql.query");
+            $this->log($sSQL,"MysqlComponent.query");
             $oCursor = $oPdo->query($sSQL);
             if($oCursor===FALSE)
             {
@@ -94,7 +94,7 @@ class ComponentMysql
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
-            $this->log($sSQL,"ComponentMysql.query error: $sMessage");
+            $this->log($sSQL,"MysqlComponent.query error: $sMessage");
         }
         return $arResult;
     }//query
@@ -108,7 +108,7 @@ class ComponentMysql
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
                 ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
             $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-            $this->log($sSQL,"ComponentMysql.exec");
+            $this->log($sSQL,"MysqlComponent.exec");
             $mxR = $oPdo->exec($sSQL);
 
             $this->iAffected = $mxR;
@@ -122,7 +122,7 @@ class ComponentMysql
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
-            $this->log($sSQL,"ComponentMysql.exec error: $sMessage");
+            $this->log($sSQL,"MysqlComponent.exec error: $sMessage");
         }
     }//exec
 
@@ -138,4 +138,4 @@ class ComponentMysql
     public function get_conn($k){return $this->arConn[$k];}
     public function get_affected(){return $this->iAffected;}
 
-}//ComponentMysql
+}//MysqlComponent

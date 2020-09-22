@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
-class ComponentSearchbots
+class SearchbotsComponent
 {
     private static $botsns = [
         "baidu1"=>".crawl.baidu.com",

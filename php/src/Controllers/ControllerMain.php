@@ -1,10 +1,10 @@
 <?php
 namespace Ipblocker\Controllers;
 
-use Ipblocker\Components\ComponentsSearchbots as sb;
-use Ipblocker\Helpers\HelperRequest as req;
-use Ipblocker\Provider\ProviderBase;
-use Ipblocker\Provider\ProviderKeywords;
+use Ipblocker\Components\SearchbotsComponent as sb;
+use Ipblocker\Helpers\RequestHelper as req;
+use Ipblocker\Providers\BaseProvider;
+use Ipblocker\Providers\RulezProvider;
 use Ipblocker\Traits\LogTrait;
 
 class ControllerMain
@@ -17,7 +17,7 @@ class ControllerMain
     public function __construct()
     {
         $this->req = req::getInstance();
-        $this->prov = new ProviderBase($this->req->get_remoteip());
+        $this->prov = new BaseProvider($this->req->get_remoteip());
     }
 
     private function _is_search_bot()
@@ -41,7 +41,7 @@ class ControllerMain
     {
         if($this->_is_ipblacklisted())
             return;
-        $words = (new ProviderKeywords())->is_forbidden();
+        $words = (new RulezProvider())->is_forbidden();
         if($words)
             $this->prov->add_to_blacklist($words);
     }

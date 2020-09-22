@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Helper;
+namespace Ipblocker\Helpers;
 
-final class HelperRequest
+final class RequestHelper
 {
     private $remoteip;
     private $domain;
@@ -14,7 +14,7 @@ final class HelperRequest
 
     /**
      * is not allowed to call from outside to prevent from creating multiple instances,
-     * to use the HelperRequest, you have to obtain the instance from HelperRequest::getInstance() instead
+     * to use the RequestHelper, you have to obtain the instance from RequestHelper::getInstance() instead
      */
     private function __construct()
     {
@@ -29,9 +29,9 @@ final class HelperRequest
     }
 
     /**
-     * @return HelperRequest
+     * @return RequestHelper
      */
-    public static function getInstance(): HelperRequest
+    public static function getInstance(): RequestHelper
     {
         if (static::$thisself === null) static::$thisself = new static();
         return static::$thisself;

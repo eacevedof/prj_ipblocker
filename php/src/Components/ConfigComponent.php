@@ -1,7 +1,7 @@
 <?php
-namespace Ipblocker\Componentss;
+namespace Ipblocker\Components;
 
-class ComponentConfig
+class ConfigComponent
 {
     private const FILES = [
         "contexts" => [

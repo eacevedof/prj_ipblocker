@@ -1,13 +1,13 @@
 <?php
-namespace Ipblocker\Provider;
+namespace Ipblocker\Providers;
 
-use Ipblocker\Components\ComponentsSearchbots as sb;
-use Ipblocker\Components\ComponentsConfig as cfg;
-use Ipblocker\Components\Db\ComponentsMysql;
+use Ipblocker\Components\SearchbotsComponent as sb;
+use Ipblocker\Components\ConfigComponent as cfg;
+use Ipblocker\Components\Db\MysqlComponent;
 use Ipblocker\Traits\LogTrait;
-use Ipblocker\Helpers\HelperRequest as req;
+use Ipblocker\Helpers\RequestHelper as req;
 
-class ProviderBase
+class BaseProvider
 {
     use LogTrait;
 
@@ -19,7 +19,7 @@ class ProviderBase
     {
         $dbname = $this->_get_dbname_by_env();
         $config = cfg::get_schema("c1", $dbname);
-        $this->db = new ComponentMysql($config);
+        $this->db = new MysqlComponent($config);
         $this->req = req::getInstance();
         $this->remoteip = $this->req->get_remoteip();
     }
