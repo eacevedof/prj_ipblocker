@@ -1,5 +1,5 @@
 <?php
-namespace Ipblocker\Components;
+namespace Ipblocker\Controller;
 
 use Ipblocker\Components\ComponentSearchbots as sb;
 use Ipblocker\Helpers\HelperRequest as req;
@@ -7,7 +7,7 @@ use Ipblocker\Provider\ProviderBase;
 use Ipblocker\Provider\ProviderKeywords;
 use Ipblocker\Traits\LogTrait;
 
-class ComponentIpblocker
+class MainController
 {
     use LogTrait;
 
