@@ -4,9 +4,9 @@ namespace Tests;
 $pathboot = realpath(__DIR__ . "/../boot");
 include("$pathboot/appbootstrap.php");
 
-use TheFramework\Helpers\HelperRequest;
+use Ipblocker\Helpers\HelperRequest;
 use Theframework\Traits\TraitLog;
-use TheFramework\Components\ComponentIpblocker;
+use Ipblocker\Components\ComponentIpblocker;
 
 abstract class BaseTest
 {

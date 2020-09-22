@@ -2,12 +2,12 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name TheFramework\Components\Db\ComponentMysql
+ * @name Ipblocker\Components\Db\ComponentMysql
  * @file component_mysql.php v2.1.2
  * @date 29-06-2019 17:08 SPAIN
  * @observations
  */
-namespace TheFramework\Components\Db;
+namespace Ipblocker\Components\Db;
 use Theframework\Traits\TraitLog;
 
 class ComponentMysql

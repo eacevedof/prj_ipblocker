@@ -1,5 +1,5 @@
 <?php
-namespace TheFramework\Rulez;
+namespace Ipblocker\Rulez;
 
 
 

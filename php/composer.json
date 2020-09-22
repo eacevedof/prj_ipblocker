@@ -4,10 +4,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Ipblocker\\": "src/"
+            "Ipblocker\\": "src/",
+            "Ipblocker\\Component": "src/component",
+            "Ipblocker\\Component\\Rulez": "src/component/rulez"
         },
         "files": [
-            "app/functions/date.php"
+            "src/boot/appbootstrap.php"
         ]
     }
 }

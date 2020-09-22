@@ -1,9 +1,9 @@
 <?php
-namespace TheFramework\Components;
+namespace Ipblocker\Components;
 
-use TheFramework\Components\ComponentSearchbots as sb;
-use TheFramework\Helpers\HelperRequest as req;
-use TheFramework\Providers\ProviderBase;
+use Ipblocker\Components\ComponentSearchbots as sb;
+use Ipblocker\Helpers\HelperRequest as req;
+use Ipblocker\Providers\ProviderBase;
 use Theframework\Providers\ProviderKeywords;
 use Theframework\Traits\TraitLog;
 

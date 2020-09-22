@@ -1,8 +1,8 @@
 <?php
 namespace Theframework\Providers;
 
-use TheFramework\Components\ComponentConfig as cfg;
-use TheFramework\Helpers\HelperRequest as req;
+use Ipblocker\Components\ComponentConfig as cfg;
+use Ipblocker\Helpers\HelperRequest as req;
 
 class ProviderKeywords
 {

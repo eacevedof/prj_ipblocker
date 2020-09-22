@@ -1,5 +1,5 @@
 <?php
-namespace TheFramework\Components;
+namespace Ipblocker\Components;
 
 class ComponentString
 {

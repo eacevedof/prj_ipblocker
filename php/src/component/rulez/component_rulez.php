@@ -1,7 +1,7 @@
 <?php
-namespace TheFramework\Rulez;
+namespace Ipblocker\Rulez;
 
-use TheFramework\IRulez;
+use Ipblocker\IRulez;
 
 class ComponentRulez
 {

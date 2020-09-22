@@ -1,9 +1,9 @@
 <?php
-namespace TheFramework\Rulez;
-use TheFramework\Rulez;
+namespace Ipblocker\Rulez;
+use Ipblocker\Rulez;
 
-use TheFramework\Components\ComponentString;
-use TheFramework\Components\ComponentArray;
+use Ipblocker\Components\ComponentString;
+use Ipblocker\Components\ComponentArray;
 
 class ComponentUrl implements IRulez
 {
