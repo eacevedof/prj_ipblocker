@@ -275,7 +275,7 @@ class RulezProvider
 
         //comprobar si requri es aplicable
         $requri = $this->_in_requris();
-        if(!$requri)  return false;
+        if(!$requri) return false;
 
         //comprobar obligatoriedad de nulos
         $isok = $this->_are_nulls_ok($requri);
