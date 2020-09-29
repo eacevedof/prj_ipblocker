@@ -45,10 +45,8 @@ class ConfigComponent
         {
             if($arcfg["id"] == $id) {
                 $schemas = $arcfg["schemas"];
-                foreach ($schemas as $arschm)
-                {
-                    if($arschm["database"] == $database)
-                    {
+                foreach ($schemas as $arschm) {
+                    if($arschm["database"] == $database) {
                         return [
                             "server" => $arcfg["server"],
                             "port" => $arcfg["port"] ?? "3306",
