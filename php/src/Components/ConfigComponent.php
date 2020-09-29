@@ -5,12 +5,13 @@ class ConfigComponent
 {
     private const FILES = [
         "contexts" => [
-            "local" => IPB_PATH_CONFIG."/contexts.local.json",
-            "prod"=>IPB_PATH_CONFIG."/contexts.json",
+            "local" =>  IPB_PATH_CONFIG."/contexts.local.json",
+            "prod"  =>  IPB_PATH_CONFIG."/contexts.json",
         ],
-        "keywords" => [
-            "local" => IPB_PATH_CONFIG."/rulez.local.json",
-            "prod"=>IPB_PATH_CONFIG."/rulez.json",
+
+        "rulez" => [
+            "local" =>  IPB_PATH_CONFIG."/rulez.local.json",
+            "prod"  =>  IPB_PATH_CONFIG."/rulez.json",
         ],
     ];
 
@@ -62,8 +63,8 @@ class ConfigComponent
         return [];
     }
 
-    public static function get_keywords()
+    public static function get_rulez()
     {
-        return self::_get_array_from_json("keywords");
+        return self::_get_array_from_json("rulez");
     }
 }

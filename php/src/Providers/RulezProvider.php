@@ -15,7 +15,7 @@ class RulezProvider
 
     public function __construct()
     {
-        $this->data = cfg::get_keywords();
+        $this->data = cfg::get_rulez();
         $this->req = req::getInstance();
     }
 
