@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Tests\Unit;
 
+use Ipblocker\Components\ConfigComponent as cfg;
+use Ipblocker\Components\Db\MysqlComponent;
 use PHPUnit\Framework\TestCase;
 use Ipblocker\Traits\LogTrait as Log;
 
@@ -11,6 +13,8 @@ use Ipblocker\Component\ComponentIpblocker;
 abstract class BaseTest extends TestCase
 {
     use Log;
+
+    private const DB_NAME = "db_security";
 
     public function setUp(): void
     {
@@ -64,6 +68,12 @@ abstract class BaseTest extends TestCase
         unset($_POST,$_GET,$_FILES,$_SERVER);
         $_POST=[]; $_GET=[]; $_FILES=[]; $_SERVER = [];
         return $this;
+    }
+
+    protected function _get_db()
+    {
+        $config = cfg::get_schema("c1", self::DB_NAME);
+        return new MysqlComponent($config);
     }
 
     protected function _execute_ipblocker($m)

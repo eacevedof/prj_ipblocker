@@ -4,12 +4,12 @@ namespace Ipblocker\Providers;
 use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Components\Db\MysqlComponent;
-use Ipblocker\Traits\LogTrait;
+use Ipblocker\Traits\LogTrait as Log;
 use Ipblocker\Helpers\RequestHelper as req;
 
 class BaseProvider
 {
-    use LogTrait;
+    use Log;
 
     private $req;
     private $db;
