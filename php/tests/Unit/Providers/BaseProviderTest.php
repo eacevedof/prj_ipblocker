@@ -18,6 +18,7 @@ class BaseProviderTest extends BaseTest
         if($db->is_error())
             $this->logd($db->get_errors(),"_add_untracked.errors");
     }
+
     public function test_isuntracked()
     {
         $this->_add_untracked();
@@ -26,7 +27,17 @@ class BaseProviderTest extends BaseTest
         $r = $prov->is_untracked();
         $this->assertTrue(($r>0));
     }
-    
+
+    public function test_tracked()
+    {
+        $this->reset_all();
+        $_SERVER["REMOTE_ADDR"] = "fake-ip";
+        $prov = new BaseProvider();
+        $r = $prov->is_untracked();
+        //print_r("r:");print_r($r);die;
+        $this->assertEmpty($r);
+    }
+
     public function est_ipblocker()
     {
         $this->_add_untracked();

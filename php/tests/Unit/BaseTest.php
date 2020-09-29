@@ -7,7 +7,7 @@ use Ipblocker\Components\Db\MysqlComponent;
 use PHPUnit\Framework\TestCase;
 use Ipblocker\Traits\LogTrait as Log;
 
-use Ipblocker\Helpers\HelperRequest;
+use Ipblocker\Helpers\RequestHelper;
 use Ipblocker\Component\ComponentIpblocker;
 
 abstract class BaseTest extends TestCase
@@ -22,6 +22,7 @@ abstract class BaseTest extends TestCase
         $_FILES = [];
         $_GET = [];
         $_SERVER = [];
+
     }
 
     protected function log_globals()
@@ -56,6 +57,12 @@ abstract class BaseTest extends TestCase
         return $this;
     }
 
+    protected function reset_server()
+    {
+        $_SERVER = [];
+        return $this;
+    }
+
     protected function add_server($k,$v)
     {
         if(is_string($k)) $_SERVER[$k] = $v;
@@ -64,7 +71,7 @@ abstract class BaseTest extends TestCase
 
     protected function reset_all()
     {
-        HelperRequest::reset();
+        RequestHelper::reset();
         unset($_POST,$_GET,$_FILES,$_SERVER);
         $_POST=[]; $_GET=[]; $_FILES=[]; $_SERVER = [];
         return $this;
