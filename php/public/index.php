@@ -2,8 +2,9 @@
 //ipblocker.php
 require __DIR__."/../vendor/autoload.php";
 
-print_r(get_included_files());die;
-//use Ipblocker\Controller\ControllerMain; (new ControllerMain)->handle_request();
+//pp(get_included_files());
+use Ipblocker\Controller\ControllerMain;
+(new ControllerMain)->handle_request();
 
 
 //$pathboot = realpath(__DIR__ . "/../boot");
