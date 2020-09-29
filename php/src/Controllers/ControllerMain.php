@@ -5,7 +5,7 @@ use function Ipblocker\Functions\send_httpstatus;
 use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\BaseProvider;
-use Ipblocker\Providers\RulezProvider;
+use Ipblocker\Services\RulezChecker;
 use Ipblocker\Traits\LogTrait;
 
 class ControllerMain
@@ -42,7 +42,7 @@ class ControllerMain
     {
         if($this->_is_ipblacklisted())
             return;
-        $words = (new RulezProvider())->is_forbidden();
+        $words = (new RulezChecker())->is_forbidden();
         if($words)
             $this->prov->add_to_blacklist($words);
     }

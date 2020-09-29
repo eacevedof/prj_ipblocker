@@ -1,11 +1,11 @@
 <?php
-namespace Ipblocker\Providers;
+namespace Ipblocker\Services;
 
 use function Ipblocker\Functions\pp;
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
 
-class RulezProvider
+class RulezChecker
 {
     private $data;
     /**
