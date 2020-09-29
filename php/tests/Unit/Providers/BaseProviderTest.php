@@ -15,7 +15,8 @@ class BaseProviderTest extends BaseTest
         $arsql[] = sprintf("INSERT INTO app_ip_untracked (remote_ip) VALUES('%s')",self::IP_UNATRACKED);
         $sql = implode(";",$arsql);
         $db->exec($sql);
-        $this->logd($db->get_errors(),"_add_untracked.errors");
+        if($db->is_error())
+            $this->logd($db->get_errors(),"_add_untracked.errors");
     }
     public function test_isuntracked()
     {
