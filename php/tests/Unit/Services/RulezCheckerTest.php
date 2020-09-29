@@ -6,9 +6,12 @@ use Ipblocker\Services\RulezChecker;
 
 class RulezCheckerTest extends BaseTest
 {
-
-
-    public function test_rulez(){
-
+    public function test_empty_request()
+    {
+        $serv = new RulezChecker();
+        $r = $serv->is_forbidden();
+        $this->assertFalse($r);
     }
+
+
 }
