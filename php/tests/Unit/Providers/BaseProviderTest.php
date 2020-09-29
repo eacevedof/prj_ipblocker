@@ -9,6 +9,7 @@ class BaseProviderTest extends BaseTest
     private const IP_UNATRACKED = "127.0.0.U";
     private const IP_BLACKLISTED = "127.0.0.B";
     private const IP_NOTBLACKLISTED = "127.0.0.NB";
+    private const IP_NOTREGISTERED = "127.0.0.NR";
 
     private function _add_untracked()
     {
@@ -39,7 +40,8 @@ class BaseProviderTest extends BaseTest
     public function test_isuntracked()
     {
         $this->_add_untracked();
-        $_SERVER["REMOTE_ADDR"] = self::IP_UNATRACKED;
+        $this->_add_server("REMOTE_ADDR", self::IP_UNATRACKED);
+
         $prov = new BaseProvider();
         $r = $prov->is_untracked();
         $this->assertTrue(($r>0));
@@ -48,7 +50,8 @@ class BaseProviderTest extends BaseTest
     public function test_tracked()
     {
         $this->_reset_fullrequest();
-        $_SERVER["REMOTE_ADDR"] = "fake-ip";
+        $this->_add_server("REMOTE_ADDR", "fake-ip");
+
         $prov = new BaseProvider();
         $r = $prov->is_untracked();
         //print_r("r:");print_r($r);die;
@@ -58,8 +61,9 @@ class BaseProviderTest extends BaseTest
     public function test_isblacklisted()
     {
         $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR", self::IP_BLACKLISTED);
+
         $this->_add_blacklist();
-        $_SERVER["REMOTE_ADDR"] = self::IP_BLACKLISTED;
         $prov = new BaseProvider();
         $r = $prov->is_blacklisted();
         $this->assertTrue($r>0);
@@ -68,10 +72,20 @@ class BaseProviderTest extends BaseTest
     public function test_isnot_blacklisted()
     {
         $this->_reset_fullrequest();
-        $this->_add_blacklist();
-        $_SERVER["REMOTE_ADDR"] = self::IP_NOTBLACKLISTED;
+        $this->_add_server("REMOTE_ADDR", self::IP_NOTBLACKLISTED);
+
         $prov = new BaseProvider();
         $r = $prov->is_blacklisted();
+        $this->assertEmpty($r);
+    }
+
+    public function test_isnot_registered()
+    {
+        $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR", self::IP_NOTREGISTERED);
+
+        $prov = new BaseProvider();
+        $r = $prov->is_registered();
         $this->assertEmpty($r);
     }
 }

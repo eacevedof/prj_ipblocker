@@ -63,7 +63,7 @@ abstract class BaseTest extends TestCase
         return $this;
     }
 
-    protected function add_server($k,$v)
+    protected function _add_server($k,$v)
     {
         if(is_string($k)) $_SERVER[$k] = $v;
         return $this;
