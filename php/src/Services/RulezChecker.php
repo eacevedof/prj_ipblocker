@@ -7,7 +7,7 @@ use Ipblocker\Helpers\RequestHelper as req;
 
 class RulezChecker
 {
-    private $data;
+    private $acl;
     /**
      * @var RequestHelper
      */
@@ -15,16 +15,16 @@ class RulezChecker
 
     public function __construct()
     {
-        $this->data = cfg::get_rulez();
+        $this->acl = cfg::get_rulez();
         $this->req = req::getInstance();
     }
 
     private function _get_uris_by_domain($domain)
     {
-        $domains = array_keys($this->data["domains"] ?? []);
+        $domains = array_keys($this->acl["domains"] ?? []);
 //pp($domains,"domains");die;
         if(!in_array($domain, $domains)) return [];
-        $urispublic = $this->data["domains"][$domain]["public"] ?? [];
+        $urispublic = $this->acl["domains"][$domain]["public"] ?? [];
  //pp($urispublic,"urispublic");die;
         return $urispublic;
     }
@@ -192,7 +192,7 @@ class RulezChecker
 
     private function _get_rules($andor,$method)
     {
-        $rules = $this->data["domains"]["*"]["rules"] ?? [];
+        $rules = $this->acl["domains"]["*"]["rules"] ?? [];
         return $rules[$andor][$method] ?? [];
     }
 
@@ -260,7 +260,7 @@ class RulezChecker
     {
         $country = $this->req->get_whois("country");
         $country = strtoupper($country);
-        $countries = $this->data["domains"]["*"]["countries"]["forbidden"] ?? [];
+        $countries = $this->acl["domains"]["*"]["countries"]["forbidden"] ?? [];
         $countries = array_flip($countries);
         $countries = array_change_key_case($countries, CASE_UPPER);
         $countries = array_flip($countries);
