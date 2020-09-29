@@ -28,6 +28,7 @@ class RulezCheckerTest extends BaseTest
         $this->assertEquals("country:RU",$r);
     }
 
+    //todo esto debería devolver error
     public function test_alldomains_forbidden_post()
     {
         $this->_reset_fullrequest();

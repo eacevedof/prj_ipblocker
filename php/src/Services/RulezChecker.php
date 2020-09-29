@@ -24,20 +24,20 @@ class RulezChecker
     private function _get_uris_by_domain($domain)
     {
         $domains = array_keys($this->acl["domains"] ?? []);
-//pp($domains,"domains");die;
+//cp($domains,"domains");
         if(!in_array($domain, $domains)) return [];
         $urispublic = $this->acl["domains"][$domain]["public"] ?? [];
- //pp($urispublic,"urispublic");die;
+ //cp($urispublic,"urispublic");
         return $urispublic;
     }
 
     private function _get_requris_by_domain()
     {
         $domain = $this->req->get_domain();
-//pp($domain,"domain");die;
+//cp($domain,"domain");
         if($domain==="*") return [];
         $urispublic = $this->_get_uris_by_domain($domain);
-//pp($urispublic,"urispublic");die;
+//cp($urispublic,"urispublic");
         if(!$urispublic) return [];
         $requris =  array_column($urispublic,"requri");
         rsort($requris);
@@ -55,12 +55,11 @@ class RulezChecker
     private function _in_requris()
     {
         $requri = $this->req->get_requri();
-        cp("requri: $requri");
-//pp($requri,"requri");
+//cp("requri: $requri","_in_requris");
         $urisbydom = $this->_get_requris_by_domain();
-//pp($urisbydom,"urisbydom");
+//cp($urisbydom,"urisbydom");
         $exact = $this->_get_exact_uri($requri, $urisbydom);
-//pp($exact,"exact");die;
+//cp($exact,"exact");
         return $exact;
     }
 
@@ -68,7 +67,7 @@ class RulezChecker
     {
         $domain = $this->req->get_domain();
         $urisbydom = $this->_get_uris_by_domain($domain);
-        //pp($urisbydom,"urisbydom uris of $requri");die;
+        //cp($urisbydom,"urisbydom uris of $requri");
         foreach ($urisbydom as $arrequri)
         {
             if($arrequri["requri"]==$requri)
@@ -103,7 +102,7 @@ class RulezChecker
     private function _get_pub_post($requri)
     {
         $uriconf = $this->_get_uriconfig($requri);
-//pp($uriconf,"uriconf post $requri");
+//cp($uriconf,"uriconf post $requri");
         return $uriconf["post"] ?? [];
     }
 
@@ -124,13 +123,13 @@ class RulezChecker
         if(!$this->req->get_post()) return false;
         $pubpost = $this->_get_pub_post($requri);
 //cp($_POST,"POST");
-cp($pubpost,"_is_postnok");
+//cp($pubpost,"_is_postnok");
         if(!$pubpost) return false;
         foreach ($pubpost as $f) {
-            //pp($f,"f");
-            //pp($this->req->is_key($f,"post"),"is f in post");
+            //cp($f,"f");
+            //cp($this->req->is_key($f,"post"),"is f in post");
             $inpost = $this->req->is_key($f,"post");
-            //pp($inpost,"IN POST");
+            //cp($inpost,"IN POST");
             if(!$inpost) return $f;
 
             $valpost = $this->req->get_key($f,"post");
@@ -178,7 +177,7 @@ cp($pubpost,"_is_postnok");
 
     private function _is_and_string($arsearch,$string)
     {
-//pp($arsearch,"arsearch");die;
+//cp($arsearch,"arsearch");
         foreach ($arsearch as $arwords)
             if($this->_is_and($arwords,$string))
                 return implode("|",$arwords);
@@ -206,7 +205,7 @@ cp($pubpost,"_is_postnok");
         elseif($method=="get") $toscan = $this->req->get_get();
         elseif($method=="files")
             $toscan = $this->req->get_files();
-cp($toscan,"_get_rules_scan");
+//cp($toscan,"_get_rules_scan");
         foreach ($toscan as $k => $fieldval)
         {
             if(!is_string($fieldval)) continue;
@@ -238,7 +237,7 @@ cp($toscan,"_get_rules_scan");
         $isnok = $this->_is_get_nok($requri);
         if($isnok) return $isnok;
         $isnok = $this->_is_post_nok($requri);
-        //pp($isnok,"isnok");die;
+        //cp($isnok,"isnok");
         if($isnok) return $isnok;
         $isnok = $this->_is_files_nok($requri);
         if($isnok) return $isnok;
@@ -247,7 +246,7 @@ cp($toscan,"_get_rules_scan");
 
     private function _is_rules_nok()
     {
-cp("is_rules_nok");
+//cp("is_rules_nok");
         //comprobar reglas en los valores de los campos
         $mxnok = $this->_get_rules_scan("post");
         if($mxnok) return $mxnok;
@@ -268,8 +267,17 @@ cp("is_rules_nok");
         $countries = array_flip($countries);
         $countries = array_change_key_case($countries, CASE_UPPER);
         $countries = array_flip($countries);
-        //pp($countries,"COUNTRIES of $country");die;
+        //cp($countries,"COUNTRIES of $country");
         return in_array($country, $countries);
+    }
+
+    private function _check_all_domains()
+    {
+        $r = false;
+        //comprobar país
+
+
+        return $r;
     }
 
     public function is_forbidden()
