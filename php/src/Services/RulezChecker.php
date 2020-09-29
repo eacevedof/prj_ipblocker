@@ -280,7 +280,7 @@ cp("is_rules_nok");
         //comprobar si requri es aplicable
         $requri = $this->_in_requris();
         if(!$requri) return false;
-//die("is_forbidden after inrequiris");
+cp("is_forbidden after inrequiris");
         //comprobar obligatoriedad de nulos
         $isok = $this->_are_nulls_ok($requri);
         if(!$isok) return "not null in get or post";
