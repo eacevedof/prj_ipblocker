@@ -69,7 +69,7 @@ abstract class BaseTest extends TestCase
         return $this;
     }
 
-    protected function reset_all()
+    protected function _reset_fullrequest()
     {
         RequestHelper::reset();
         unset($_POST,$_GET,$_FILES,$_SERVER);
