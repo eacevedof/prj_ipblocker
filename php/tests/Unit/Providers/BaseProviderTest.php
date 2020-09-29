@@ -23,8 +23,7 @@ class BaseProviderTest extends BaseTest
         $_SERVER["REMOTE_ADDR"] = self::IP_UNATRACKED;
         $prov = new BaseProvider();
         $r = $prov->is_untracked();
-        $this->logd($r,"test_isuntracked");
-        $this->assertTrue($r);
+        $this->assertTrue(($r>0));
     }
     
     public function est_ipblocker()
