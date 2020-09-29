@@ -25,8 +25,6 @@ class MysqlComponentTest extends BaseTest
         AND table_name =  'app_ip';
         ";
         $r = $o->query($sql);
-        //print_r("logs:".IPB_ENABLE_LOGS);die;
-        //print_r($o->get_errors());die;
         $this->logd($o->get_errors(),"test_connection");
         $this->assertEquals(false,$o->is_error());
     }
