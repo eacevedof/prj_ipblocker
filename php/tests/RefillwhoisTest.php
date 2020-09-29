@@ -1,5 +1,4 @@
 <?php
-include("BaseTest.php");
 use Tests\BaseTest;
 use Ipblocker\Component\ComponentIpblocker;
 use Ipblocker\Component\ComponentSearchbots as sb;

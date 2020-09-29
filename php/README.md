@@ -8,6 +8,11 @@ php -S localhost:3100 -t php/public
 if(is_file("~/mi_common/prj_ipblocker/php/public/ipblocker.php"))
     include("~/mi_common/prj_ipblocker/php/public/ipblocker.php");
 ```
+#### tests
+```
+vendor/bin/phpunit
+vendor/bin/phpunit --migrate-configuration
+```
 
 ### Historial
 - Agrego tabla untracked ips para que no se guarde ninguna información de ciertas ips

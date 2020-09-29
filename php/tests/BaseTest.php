@@ -1,9 +1,6 @@
 <?php
 namespace Tests;
 
-$pathboot = realpath(__DIR__ . "/../boot");
-include("$pathboot/appbootstrap.php");
-
 use Ipblocker\Helpers\HelperRequest;
 use Ipblocker\Traits\LogTrait;
 use Ipblocker\Component\ComponentIpblocker;

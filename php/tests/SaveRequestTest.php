@@ -1,5 +1,4 @@
 <?php
-include("BaseTest.php");
 use Tests\BaseTest;
 
 final class SaveRequestTest extends BaseTest
