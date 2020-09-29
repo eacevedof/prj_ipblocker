@@ -3,7 +3,7 @@
 require __DIR__."/../vendor/autoload.php";
 
 //pp(get_included_files());
-use Ipblocker\Controller\ControllerMain;
+use Ipblocker\Controllers\ControllerMain;
 (new ControllerMain)->handle_request();
 
 

@@ -20,7 +20,7 @@ class RulezProvider
 
     private function _get_uris_by_domain($domain)
     {
-        $domains = array_keys($this->data["domains"]);
+        $domains = array_keys($this->data["domains"] ?? []);
 //pp($domains,"domains");die;
         if(!in_array($domain, $domains)) return [];
         $urispublic = $this->data["domains"][$domain]["public"] ?? [];
