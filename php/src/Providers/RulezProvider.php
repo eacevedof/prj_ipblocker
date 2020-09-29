@@ -1,6 +1,7 @@
 <?php
 namespace Ipblocker\Providers;
 
+use function Ipblocker\Functions\pp;
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
 
@@ -21,7 +22,7 @@ class RulezProvider
     private function _get_uris_by_domain($domain)
     {
         $domains = array_keys($this->data["domains"] ?? []);
-//pp($domains,"domains");die;
+        pp($domains,"domains");die;
         if(!in_array($domain, $domains)) return [];
         $urispublic = $this->data["domains"][$domain]["public"] ?? [];
  //pp($urispublic,"urispublic");die;

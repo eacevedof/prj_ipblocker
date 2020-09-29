@@ -1,6 +1,7 @@
 <?php
 namespace Ipblocker\Controllers;
 
+use function Ipblocker\Functions\send_httpstatus;
 use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\BaseProvider;
@@ -48,6 +49,7 @@ class ControllerMain
 
     private function _response_headers()
     {
+        //send_hhtpstatus configura headers: header($http[$num]);
         $codes = send_httpstatus(403);
     }
 
