@@ -3,4 +3,5 @@ config/contexts.local.json
 config/rulez.local.json
 php/vendor
 php/temp
+php/.phpunit.result.cache
 logs

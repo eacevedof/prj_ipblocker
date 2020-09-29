@@ -1,15 +1,18 @@
 <?php
-namespace Tests;
+declare(strict_types=1);
+namespace App\Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+use Ipblocker\Traits\LogTrait as Log;
 
 use Ipblocker\Helpers\HelperRequest;
-use Ipblocker\Traits\LogTrait;
 use Ipblocker\Component\ComponentIpblocker;
 
-abstract class BaseTest
+abstract class BaseTest extends TestCase
 {
-    use LogTrait;
+    use Log;
 
-    public function __construct()
+    public function setUp(): void
     {
         $_POST = [];
         $_FILES = [];
@@ -62,8 +65,6 @@ abstract class BaseTest
         $_POST=[]; $_GET=[]; $_FILES=[]; $_SERVER = [];
         return $this;
     }
-
-    public abstract function run();
 
     protected function _execute_ipblocker($m)
     {

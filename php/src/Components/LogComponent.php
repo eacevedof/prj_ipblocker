@@ -30,6 +30,7 @@ class LogComponent
     {
         $sLogFolder = $this->sPathFolder.self::DS
             .$this->sSubfType.self::DS;
+        //print_r($sLogFolder);die;
         if(!is_dir($sLogFolder)) @mkdir($sLogFolder);
     }
 
