@@ -1,6 +1,6 @@
 <?php
-include("constants.php");
-include("functions.php");
+include("./constants.php");
+include("./functions.php");
 
 include(IPB_PATH_LIB."/functions.php");
 include(IPB_PATH_LIB . "/component_log.php");
