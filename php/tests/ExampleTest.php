@@ -3,7 +3,7 @@
 // ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests/ExampleTest.php --color=auto
 // ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests
 
-
+// ./vendor/bin/phpunit ./tests/ExampleTest.php --color=auto
 use PHPUnit\Framework\TestCase;
 use TheFramework\Components\ComponentLog;
 use TheFramework\Components\Db\ComponentMysql;
