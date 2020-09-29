@@ -1,6 +1,6 @@
 # ipblocker - PHP
 Gestion de bloqueo de ips en php  
-php -S localhost:3100 -t public
+php -S localhost:3100 -t php/public
 
 ### php
 - [prod include](https://trello.com/c/5qbASalI/10-ipblocker)
