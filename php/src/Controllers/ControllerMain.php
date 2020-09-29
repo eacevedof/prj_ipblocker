@@ -74,7 +74,7 @@ class ControllerMain
 
     public function handle_request()
     {
-        if($this->_is_ipuntracked()) return;
+        //if($this->_is_ipuntracked()) return;
         $this->prov->save_request();
         if($this->_is_search_bot()) return;
         //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
