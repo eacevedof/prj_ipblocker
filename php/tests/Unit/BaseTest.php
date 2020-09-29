@@ -22,10 +22,9 @@ abstract class BaseTest extends TestCase
         $_FILES = [];
         $_GET = [];
         $_SERVER = [];
-
     }
 
-    protected function log_globals()
+    protected function _log_globals()
     {
         $this->logd($_POST,"POST");
         $this->logd($_GET,"GET");
@@ -33,31 +32,31 @@ abstract class BaseTest extends TestCase
         $this->logd($_SERVER,"SERVER");
     }
 
-    protected function add_post($k,$v)
+    protected function _add_post($k,$v)
     {
         if(is_string($k))  $_POST[$k] = $v;
         return $this;
     }
 
-    protected function add_get($k,$v)
+    protected function _add_get($k,$v)
     {
         if(is_string($k)) $_GET[$k] = $v;
         return $this;
     }
 
-    protected function reset_post()
+    protected function _reset_post()
     {
         $_POST = [];
         return $this;
     }
 
-    protected function reset_get()
+    protected function _reset_get()
     {
         $_GET = [];
         return $this;
     }
 
-    protected function reset_server()
+    protected function _reset_server()
     {
         $_SERVER = [];
         return $this;
