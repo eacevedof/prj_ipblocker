@@ -2,6 +2,8 @@
 namespace Ipblocker\Services;
 
 use function Ipblocker\Functions\pp;
+use function Ipblocker\Functions\cp;
+
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
 
@@ -53,6 +55,7 @@ class RulezChecker
     private function _in_requris()
     {
         $requri = $this->req->get_requri();
+        cp("requri: $requri");
 //pp($requri,"requri");
         $urisbydom = $this->_get_requris_by_domain();
 //pp($urisbydom,"urisbydom");
@@ -120,8 +123,8 @@ class RulezChecker
     {
         if(!$this->req->get_post()) return false;
         $pubpost = $this->_get_pub_post($requri);
-        //pp($_POST,"POST");
-        //pp($pubpost,"_is_postnok");
+//cp($_POST,"POST");
+cp($pubpost,"_is_postnok");
         if(!$pubpost) return false;
         foreach ($pubpost as $f) {
             //pp($f,"f");
@@ -203,7 +206,7 @@ class RulezChecker
         elseif($method=="get") $toscan = $this->req->get_get();
         elseif($method=="files")
             $toscan = $this->req->get_files();
-
+cp($toscan,"_get_rules_scan");
         foreach ($toscan as $k => $fieldval)
         {
             if(!is_string($fieldval)) continue;
@@ -244,6 +247,7 @@ class RulezChecker
 
     private function _is_rules_nok()
     {
+cp("is_rules_nok");
         //comprobar reglas en los valores de los campos
         $mxnok = $this->_get_rules_scan("post");
         if($mxnok) return $mxnok;
@@ -272,11 +276,11 @@ class RulezChecker
     {
         //comprobar bloqueo por pais
         if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
-
+//cp("is_forbidden after countrenok");
         //comprobar si requri es aplicable
         $requri = $this->_in_requris();
         if(!$requri) return false;
-
+//die("is_forbidden after inrequiris");
         //comprobar obligatoriedad de nulos
         $isok = $this->_are_nulls_ok($requri);
         if(!$isok) return "not null in get or post";

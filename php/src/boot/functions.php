@@ -12,6 +12,16 @@ function pp($mxvar,$title="",$die=0)
     echo "\n</pre>";
 }
 
+function cp($mxvar,$title="",$die=1)
+{
+    $str = var_export($mxvar,1);
+    echo "\n===============================";
+    if($title) echo "\n- <b>$title:</b>\n";
+    echo "\n$str";
+    if($die)
+        die("\n===============================");
+}
+
 function send_httpstatus($num) {
     $http = array(
         100 => 'HTTP/1.1 100 Continue',
