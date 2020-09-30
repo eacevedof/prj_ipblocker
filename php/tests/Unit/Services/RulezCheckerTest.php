@@ -1,4 +1,5 @@
 <?php
+// vendor/bin/phpunit tests/Unit/Services
 namespace App\Tests\Unit\Services;
 
 use function Ipblocker\Functions\cp;
@@ -56,4 +57,5 @@ class RulezCheckerTest extends BaseTest
         $this->assertEquals("country:ES",$r);
     }
 
+    //ip without country: 154.57.3.132
 }
