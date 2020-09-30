@@ -14,10 +14,12 @@ function pp($mxvar,$title="",$die=0)
 
 function cp($mxvar,$title="",$die=1)
 {
+    $isstr = is_string($mxvar);
     $str = var_export($mxvar,1);
     echo "\n===============================";
-    if($title) echo "\n- <b>$title:</b>\n";
-    echo "\n$str";
+    if($title) echo "\n- $title:";
+    if($isstr) echo "\n $str";
+    else echo "\n    $str";
     if($die)
         die("\n===============================");
 }

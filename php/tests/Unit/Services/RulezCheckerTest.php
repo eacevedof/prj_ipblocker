@@ -29,7 +29,7 @@ class RulezCheckerTest extends BaseTest
     }
 
     //todo esto debería devolver error
-    public function test_alldomains_forbidden_post()
+    public function _test_alldomains_forbidden_post()
     {
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR",self::IP_VALID);
@@ -42,5 +42,18 @@ class RulezCheckerTest extends BaseTest
         $this->assertEquals("country:ES",$r);
     }
 
+    public function test_somedomain_forbidden_post()
+    {
+        $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR",self::IP_VALID);
+        $this->_add_server("HTTP_HOST", "theframewokr.es");
+        $this->_add_server("REQUEST_URI","/en/contact/");
+        $this->_add_post("any-field","topcasinos");
+
+        $r = (new RulezChecker())->is_forbidden();
+        cp($r,"test_somedomain_forbidden_post");
+        $this->assertNotEmpty($r);
+        $this->assertEquals("country:ES",$r);
+    }
 
 }
