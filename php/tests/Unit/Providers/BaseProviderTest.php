@@ -88,4 +88,6 @@ class BaseProviderTest extends BaseTest
         $r = $prov->is_registered();
         $this->assertEmpty($r);
     }
+
+
 }

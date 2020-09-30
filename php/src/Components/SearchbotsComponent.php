@@ -1,6 +1,8 @@
 <?php
 namespace Ipblocker\Components;
 
+use function Ipblocker\Functions\cp;
+
 class SearchbotsComponent
 {
     private static $botsns = [
@@ -52,6 +54,7 @@ class SearchbotsComponent
 
     private static function _get_whoisarray($output)
     {
+//cp($output,"whois output");
         $arwhois = [];
         foreach ($output as $i=> $strdata)
         {
@@ -66,6 +69,7 @@ class SearchbotsComponent
     {
         $output = [];
         exec("host $remoteip",$output);
+//cp($output,"get_host.output");
         $parts = explode(" ",$output[0] ?? "n.f");
         return trim(end($parts));
     }
@@ -103,6 +107,7 @@ class SearchbotsComponent
         $output = [];
         exec("whois $remoteip",$output);
         $arwhois = self::_get_whoisarray($output);
+cp($arwhois,"get_whois.arwhois ($remoteip)",0);
         return [
             "country" => $arwhois["country"] ?? "n.a",
             "whois" => self::_get_whois($arwhois),
