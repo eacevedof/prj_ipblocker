@@ -1,6 +1,8 @@
 <?php
 namespace Ipblocker\Helpers;
 
+use function Ipblocker\Functions\cp;
+
 final class RequestHelper
 {
     private $remoteip;
@@ -18,6 +20,7 @@ final class RequestHelper
      */
     private function __construct()
     {
+//cp($_SERVER,"reqhelper.construct.server",0);
         $this->remoteip = $_SERVER["REMOTE_ADDR"] ?? "127.0.0.1";
         $this->domain = $_SERVER["HTTP_HOST"] ?? "*";
         $this->requri = $_SERVER["REQUEST_URI"] ?? "";
@@ -41,7 +44,8 @@ final class RequestHelper
      * @return mixed|string
      */
     public function get_requri($qs=0){
-        if($qs) return $this->requri;
+//cp($this->requri,"get_requri. this->requri querystring:$qs",0);
+        if(!$qs) return $this->requri;
         $parts = explode("?",$this->requri);
         return $parts[0];
     }

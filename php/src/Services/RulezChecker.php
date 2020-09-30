@@ -24,7 +24,7 @@ class RulezChecker
     private function _get_uris_by_domain($domain)
     {
         $domains = array_keys($this->acl["domains"] ?? []);
-//cp($domains,"domains");
+//cp($domains,"_get_uris_by_domain.domains - $domain",0);
         if(!in_array($domain, $domains)) return [];
         $urispublic = $this->acl["domains"][$domain]["public"] ?? [];
  //cp($urispublic,"urispublic");
@@ -34,10 +34,10 @@ class RulezChecker
     private function _get_requris_by_domain()
     {
         $domain = $this->req->get_domain();
-//cp($domain,"domain");
+//cp($domain,"domain",0);
         if($domain==="*") return [];
         $urispublic = $this->_get_uris_by_domain($domain);
-//cp($urispublic,"urispublic");
+//cp($urispublic,"urispublic",0);
         if(!$urispublic) return [];
         $requris =  array_column($urispublic,"requri");
         rsort($requris);
@@ -55,9 +55,9 @@ class RulezChecker
     private function _in_requris()
     {
         $requri = $this->req->get_requri();
-//cp("requri: $requri","_in_requris");
+//cp("requri: $requri","_in_requris",0);
         $urisbydom = $this->_get_requris_by_domain();
-//cp($urisbydom,"urisbydom");
+//cp($urisbydom,"urisbydom",0);
         $exact = $this->_get_exact_uri($requri, $urisbydom);
 //cp($exact,"exact");
         return $exact;
@@ -287,8 +287,9 @@ class RulezChecker
 //cp("is_forbidden after countrenok");
         //comprobar si requri es aplicable
         $requri = $this->_in_requris();
+//cp($requri,"is_forbiddden.requir");
         if(!$requri) return false;
-cp("is_forbidden after inrequiris");
+//cp("is_forbidden after inrequiris");
         //comprobar obligatoriedad de nulos
         $isok = $this->_are_nulls_ok($requri);
         if(!$isok) return "not null in get or post";
