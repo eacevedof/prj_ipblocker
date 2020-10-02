@@ -9,7 +9,7 @@ use Ipblocker\Components\SearchbotsComponent as sb;
 
 class SearchbotsComponentTest extends BaseTest
 {
-
+    private const NOT_APPLICABLE = "n.a";
     private const IP_COUNTRY_GREECE = "154.57.3.132";//no detecta el país
     private const IP_COUNTRY_BRASIL = "177.8.225.26";
 
@@ -17,8 +17,8 @@ class SearchbotsComponentTest extends BaseTest
     {
         $arwhois = sb::get_whois(self::IP_COUNTRY_GREECE);
 //cp($arwhois,"arwhois",0);
-        $country = "n.a";
-        if($arwhois["country"]) $country = $arwhois["country"];
+
+        $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
         $this->assertNotEmpty($country);
         $this->assertEquals("n.a",$country);
     }
@@ -27,8 +27,8 @@ class SearchbotsComponentTest extends BaseTest
     {
         $arwhois = sb::get_whois(self::IP_COUNTRY_BRASIL);
 //cp($arwhois,"arwhois",0);
-        $country = "n.a";
-        if($arwhois["country"]) $country = $arwhois["country"];
+
+        $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
         $this->assertNotEmpty($country);
         $this->assertEquals("BR",$country);
     }
