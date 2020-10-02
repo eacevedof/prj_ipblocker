@@ -36,6 +36,8 @@ class SearchbotsComponent
          ]
     ];
 
+    private const NOT_APPLICABLE = "n.a";
+
     public static function get_name($remoteip)
     {
         $output = [];
@@ -85,8 +87,9 @@ class SearchbotsComponent
             ]
         ];
 
-        $netname = "n.a";
-        $organisation = "n.a";
+        $netname = self::NOT_APPLICABLE;
+        $organisation = self::NOT_APPLICABLE;
+
         foreach ($config["netname"] as $alias)
             if(isset($arwhois[$alias])){
                 $netname = trim($arwhois[$alias]);
@@ -102,14 +105,33 @@ class SearchbotsComponent
         return "$netname | $organisation";
     }
 
+    private static function _ends_with($string, $sufix)
+    {
+        $length = strlen($sufix);
+        if(!$length) return true;
+
+        return substr($string, -$length ) === $sufix;
+    }
+
+    private static function _get_country($arwhois)
+    {
+        $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
+        if($country==self::NOT_APPLICABLE){
+            $name = $arwhois["nserver"] ?? "";
+            if(!$name) $name = $arwhois["netname"] ?? "";
+            if(self::_ends_with($name,".br")) $country == "BR";
+        }
+        return $country;
+    }
+
     public static function get_whois($remoteip)
     {
         $output = [];
         exec("whois $remoteip",$output);
         $arwhois = self::_get_whoisarray($output);
-cp($arwhois,"get_whois.arwhois ($remoteip)",0);
+//cp($arwhois,"get_whois.arwhois ($remoteip)",0);
         return [
-            "country" => $arwhois["country"] ?? "n.a",
+            "country" => self::_get_country($arwhois),
             "whois" => self::_get_whois($arwhois),
         ];
     }
