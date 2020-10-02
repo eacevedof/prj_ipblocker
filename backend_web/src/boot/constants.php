@@ -1,7 +1,7 @@
 <?php
 //constants.php
-$pathconfig = realpath(__DIR__ . "/../../../config");
-$pathlogs = realpath(__DIR__ . "/../../../logs");
+$pathconfig = realpath(__DIR__ . "/../../config");
+$pathlogs = realpath(__DIR__ . "/../../logs");
 //echo is_dir($pathlogs);die($pathlogs);
 define("IPB_PATH_CONFIG",$pathconfig);
 define("IPB_PATH_LOGS",$pathlogs);
