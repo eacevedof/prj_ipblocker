@@ -13,12 +13,12 @@ class ControllerMain
     use LogTrait;
 
     private $req;
-    private $prov;
+    private $provider;
 
     public function __construct()
     {
         $this->req = req::getInstance();
-        $this->prov = new DbProvider($this->req->get_remoteip());
+        $this->dbprovider = new DbProvider($this->req->get_remoteip());
     }
 
     private function _is_search_bot()
@@ -28,13 +28,13 @@ class ControllerMain
 
     private function _is_ipuntracked()
     {
-        $isuntracked = $this->prov->is_untracked();
+        $isuntracked = $this->dbprovider->is_untracked();
         return $isuntracked;
     }
 
     private function _is_ipblacklisted()
     {
-        $isblocked = $this->prov->is_blacklisted();
+        $isblocked = $this->dbprovider->is_blacklisted();
         return $isblocked;
     }
 
@@ -44,7 +44,7 @@ class ControllerMain
             return;
         $words = (new RulezChecker())->is_forbidden();
         if($words)
-            $this->prov->add_to_blacklist($words);
+            $this->dbprovider->add_to_blacklist($words);
     }
 
     private function _response_headers()
@@ -75,7 +75,7 @@ class ControllerMain
     public function handle_request()
     {
         if($this->_is_ipuntracked()) return;
-        $this->prov->save_request();
+        $this->dbprovider->save_request();
         if($this->_is_search_bot()) return;
         //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
         $this->_check_forbidden_content();
@@ -90,7 +90,7 @@ class ControllerMain
 
     public function refill_whois()
     {
-        $this->prov->refill_whois();
+        $this->dbprovider->refill_whois();
     }
 
     public function test_handle_request($m="")
@@ -98,7 +98,7 @@ class ControllerMain
         //si no se debe guardar ningun tipo de registro de esta ip
         if($this->_is_ipuntracked()) return;
 
-        $this->prov->save_request();
+        $this->dbprovider->save_request();
         if($this->_is_search_bot()) return;
         $this->_check_forbidden_content();
 
