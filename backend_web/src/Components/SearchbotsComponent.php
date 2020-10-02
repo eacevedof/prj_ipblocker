@@ -105,12 +105,12 @@ class SearchbotsComponent
         return "$netname | $organisation";
     }
 
-    private static function _ends_with($string, $sufix)
+    private static function _ends_with($string, $suffix)
     {
-        $length = strlen($sufix);
+        $length = strlen($suffix);
         if(!$length) return true;
 
-        return substr($string, -$length ) === $sufix;
+        return substr($string, -$length ) === $suffix;
     }
 
     private static function _get_country($arwhois)
