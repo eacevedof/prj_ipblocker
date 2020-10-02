@@ -1,8 +1,8 @@
 <?php
 // vendor/bin/phpunit ./tests/ExampleTest.php
-namespace App\Tests\Unit\Components\Db;
+namespace Tests\Unit\Components\Db;
 
-use App\Tests\Unit\BaseTest;
+use Tests\Unit\BaseTest;
 use Ipblocker\Components\Db\MysqlComponent;
 
 class MysqlComponentTest extends BaseTest

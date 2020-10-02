@@ -1,10 +1,10 @@
 <?php
 // vendor/bin/phpunit tests/Unit/Components
-namespace App\Tests\Unit\Components;
+namespace Tests\Unit\Components;
 
 use function Ipblocker\Functions\cp;
 
-use App\Tests\Unit\BaseTest;
+use Tests\Unit\BaseTest;
 use Ipblocker\Components\SearchbotsComponent as sb;
 
 class SearchbotsComponentTest extends BaseTest

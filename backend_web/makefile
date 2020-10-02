@@ -10,8 +10,8 @@ start: ## Start server in socket 0.0.0.0:3100
 startpriv: ## Start server in socket localhost:3100
   php -S localhost:3100 -t ./public
 
-test: ## Run tests
+t: ## Run tests
 	./vendor/bin/phpunit ./tests/
 
-test.unit:
+t.unit:
 	./vendor/bin/phpunit ./tests/unit

@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Tests\Unit;
+namespace Tests\Unit;
 
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Components\Db\MysqlComponent;

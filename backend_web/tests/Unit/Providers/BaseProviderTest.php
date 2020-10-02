@@ -1,7 +1,7 @@
 <?php
-namespace App\Tests\Unit\Providers;
+namespace Tests\Unit\Providers;
 
-use App\Tests\Unit\BaseTest;
+use Tests\Unit\BaseTest;
 use Ipblocker\Providers\BaseProvider;
 
 class BaseProviderTest extends BaseTest

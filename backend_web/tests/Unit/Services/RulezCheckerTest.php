@@ -1,10 +1,10 @@
 <?php
 // vendor/bin/phpunit tests/Unit/Services
-namespace App\Tests\Unit\Services;
+namespace Tests\Unit\Services;
 
 use function Ipblocker\Functions\cp;
 
-use App\Tests\Unit\BaseTest;
+use Tests\Unit\BaseTest;
 use Ipblocker\Services\RulezChecker;
 
 class RulezCheckerTest extends BaseTest
