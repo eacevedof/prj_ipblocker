@@ -4,7 +4,7 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
-rlogs: ## remove all logs
+rmlogs: ## remove all logs
 	rm -fr ./logs/*
 
 start: ## Start server in socket 0.0.0.0:3100
