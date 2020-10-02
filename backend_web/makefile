@@ -4,11 +4,15 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
+rlogs: ## remove all logs
+	rm -fr ./logs/*
+
 start: ## Start server in socket 0.0.0.0:3100
 	php -S 0.0.0.0:3100 -t ./public
 
 startpriv: ## Start server in socket localhost:3100
   php -S localhost:3100 -t ./public
+
 
 t: ## Run tests
 	./vendor/bin/phpunit ./tests
