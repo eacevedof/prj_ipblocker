@@ -83,7 +83,7 @@ class SearchbotsComponent
                 "netname","nserver",
             ],
             "organisation" => [
-                "organisation","owner"
+                "organisation","owner","ownerid"
             ]
         ];
 
