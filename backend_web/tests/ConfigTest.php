@@ -3,11 +3,11 @@
 use PHPUnit\Framework\TestCase;
 use Ipblocker\Traits\LogTrait as Log;
 
-class ExampleTest extends TestCase
+class ConfigTest extends TestCase
 {
     use Log;
 
-    public function test_exists_config_file()
+    public function test_exists_contexts_json()
     {
         $sFile = IPB_PATH_CONFIG."/contexts.json";
         //$this->log($sFile);
@@ -16,19 +16,14 @@ class ExampleTest extends TestCase
     }
 
     /**
-     *  @depends test_exists_config_file
+     *  @depends test_exists_contexts_json
      */
-    public function est_is_env_prod()
+    public function test_exists_rules_json()
     {
-
+        $sFile = IPB_PATH_CONFIG."/rulez.json";
+        //$this->log($sFile);
+        $isFile = is_file($sFile);
+        $this->assertEquals(TRUE,$isFile);
     }
 
-    /**
-     *  @depends test_exists_config_file
-     */
-    public function est_connection()
-    {
-
-    }
-
-}//ExampleTest
+}//ConfigTest
