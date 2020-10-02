@@ -13,7 +13,7 @@ class ControllerMain
     use LogTrait;
 
     private $req;
-    private $provider;
+    private $dbprovider;
 
     public function __construct()
     {
@@ -67,7 +67,7 @@ class ControllerMain
         so we can enable your ip again sooner.
         </pre>
         <p>
-        Powered by: <b>prj_ipblocker</b>
+        Powered by: <b>IP Blocker </b>
         </p>
         ";
     }
@@ -86,26 +86,5 @@ class ControllerMain
             die();
         }
         return true;
-    }
-
-    public function refill_whois()
-    {
-        $this->dbprovider->_refill_whois_na();
-    }
-
-    public function test_handle_request()
-    {
-        //si no se debe guardar ningun tipo de registro de esta ip
-        if($this->_is_ipuntracked()) return;
-
-        $this->dbprovider->save_request();
-        if($this->_is_search_bot()) return;
-        $this->_check_forbidden_content();
-
-        if($this->_is_ipblacklisted())
-            //echo "\nthis ip is blacklisted";
-            return print("\n result: blocked //");
-
-        echo "\n result: no-blocked //";
     }
 }

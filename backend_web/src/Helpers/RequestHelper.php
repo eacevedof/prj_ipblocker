@@ -8,8 +8,11 @@ final class RequestHelper
     private $remoteip;
     private $domain;
     private $requri;
+    private $useragent;
+
     private $get;
     private $post;
+    private $files;
     private $whois;
 
     private static $thisself = null;
@@ -24,6 +27,7 @@ final class RequestHelper
         $this->remoteip = $_SERVER["REMOTE_ADDR"] ?? "127.0.0.1";
         $this->domain = $_SERVER["HTTP_HOST"] ?? "*";
         $this->requri = $_SERVER["REQUEST_URI"] ?? "";
+        $this->useragent = $_SERVER["HTTP_USER_AGENT"] ?? "";
 
         $this->get = $_GET ?? [];
         $this->post = $_POST ?? [];
@@ -83,13 +87,14 @@ final class RequestHelper
         return false;
     }
 
-    public function get_key($k,$in="post")
+    public function get_key($k, $in="post")
     {
         if($in=="post") return $this->post[$k] ?? null;
         if($in=="get") return $this->get[$k] ?? null;
         if($in=="files") return $this->files[$k] ?? null;
     }
 
+    public function get_useragent(){return $this->useragent;}
 
     private function _get_whoisarray($output)
     {
@@ -103,10 +108,10 @@ final class RequestHelper
         return $arwhois;
     }
 
-    private function _get_whois($remoteip)
+    private function _get_whois()
     {
         $output = [];
-        exec("whois $remoteip",$output);
+        exec("whois $this->remoteip",$output);
         $arwhois = $this->_get_whoisarray($output);
         return [
             "country" => $arwhois["country"] ?? "n.a",
@@ -116,11 +121,11 @@ final class RequestHelper
 
     private function _load_whois()
     {
-        $remoteip = $this->remoteip;
-        $this->whois = $this->_get_whois($remoteip);
+        $this->whois = $this->_get_whois($this->remoteip);
     }
 
-    public function get_whois($k=null){
+    public function get_whois($k=null)
+    {
         if($k) return $this->whois[$k] ?? "";
         return $this->whois;
     }

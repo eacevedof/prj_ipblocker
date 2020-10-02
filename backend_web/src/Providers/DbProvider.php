@@ -98,16 +98,19 @@ class DbProvider
 
         $requesturi = addslashes($this->req->get_requri());
         $domain = $this->req->get_domain();
-        $get = $this->_to_json($_GET);
-        $post = $_POST;
+        $get = $this->req->get_get();
+        $post = $this->req->get_post();
+        $files = $this->req->get_files();
         if(isset($post["password"])) $post["password"] = "****";
+
+        $get = $this->_to_json($get);
         $post = $this->_to_json($post);
-        $files = $this->_to_json($_FILES);
+        $files = $this->_to_json($files);
 
         $sql = "
         -- save_request
-        INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files`) 
-        VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files')";
+        INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files`,`user_agent`) 
+        VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files','')";
         $this->db->exec($sql);
     }
 
