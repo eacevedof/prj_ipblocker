@@ -11,7 +11,16 @@ startpriv: ## Start server in socket localhost:3100
   php -S localhost:3100 -t ./public
 
 t: ## Run tests
-	./vendor/bin/phpunit ./tests/
+	./vendor/bin/phpunit ./tests
 
 t.unit:
-	./vendor/bin/phpunit ./tests/unit
+	./vendor/bin/phpunit ./tests/Unit
+
+t.unit.components:
+	./vendor/bin/phpunit ./tests/Unit/Components
+
+t.unit.providers:
+	./vendor/bin/phpunit ./tests/Unit/Providers
+
+t.unit.services:
+	./vendor/bin/phpunit ./tests/Unit/Services

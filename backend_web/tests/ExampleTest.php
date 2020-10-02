@@ -1,5 +1,4 @@
 <?php
-// en: /<project>/php
 // ./vendor/bin/phpunit ./tests/ExampleTest.php --color=auto
 use PHPUnit\Framework\TestCase;
 use Ipblocker\Traits\LogTrait as Log;
