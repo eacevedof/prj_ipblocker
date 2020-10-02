@@ -128,12 +128,10 @@ class BaseProvider
         $arupdates = [];
         foreach ($ips as $ip)
         {
-            $country = "n.a";
-            //$botname = sb::get_name($ip);
             $host = sb::get_host($ip);
             $arwhois = sb::get_whois($ip);
 
-            if($arwhois["country"]) $country = $arwhois["country"];
+            $country = $arwhois["country"];
             $whois = "host:$host, org:{$arwhois["whois"]}";
 
             $sql = "UPDATE app_ip SET country='$country', whois='$whois' WHERE 1 AND remote_ip='$ip'";

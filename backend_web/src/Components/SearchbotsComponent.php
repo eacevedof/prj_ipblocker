@@ -131,8 +131,8 @@ class SearchbotsComponent
         $arwhois = self::_get_whoisarray($output);
 //cp($arwhois,"get_whois.arwhois ($remoteip)",0);
         return [
-            "country" => self::_get_country($arwhois),
-            "whois" => self::_get_whois($arwhois),
+            "country"   => self::_get_country($arwhois),
+            "whois"     => self::_get_whois($arwhois),
         ];
     }
 

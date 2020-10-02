@@ -53,7 +53,7 @@ class ControllerMain
         $codes = send_httpstatus(403);
     }
 
-    private function pr()
+    private function _pr()
     {
         $ip = $this->req->get_remoteip();
         $now = date("Ymd His");
@@ -82,9 +82,10 @@ class ControllerMain
 
         if($this->_is_ipblacklisted()){
             $this->_response_headers();
-            $this->pr();
+            $this->_pr();
             die();
         }
+        return true;
     }
 
     public function refill_whois()
