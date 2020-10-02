@@ -9,7 +9,7 @@ class ExampleTest extends TestCase
 
     public function test_exists_config_file()
     {
-        $sFile = __DIR__ . "/../../config/contexts.json";
+        $sFile = IPB_PATH_CONFIG."/contexts.json";
         //$this->log($sFile);
         $isFile = is_file($sFile);
         $this->assertEquals(TRUE,$isFile);
