@@ -20,7 +20,7 @@ class SearchbotsComponentTest extends BaseTest
 
         $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
         $this->assertNotEmpty($country);
-        $this->assertEquals("n.a",$country);
+        $this->assertEquals(self::NOT_APPLICABLE, $country);
     }
 
     public function test_has_country_br()
@@ -30,6 +30,6 @@ class SearchbotsComponentTest extends BaseTest
 
         $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
         $this->assertNotEmpty($country);
-        $this->assertEquals("BR",$country);
+        $this->assertEquals("BR", $country);
     }
 }
