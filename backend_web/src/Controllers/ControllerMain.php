@@ -18,7 +18,7 @@ class ControllerMain
     public function __construct()
     {
         $this->req = req::getInstance();
-        $this->dbprovider = new DbProvider($this->req->get_remoteip());
+        $this->dbprovider = new DbProvider();
     }
 
     private function _is_search_bot()
