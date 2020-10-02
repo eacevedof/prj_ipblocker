@@ -116,7 +116,7 @@ class SearchbotsComponent
     private static function _get_country($arwhois)
     {
         $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
-        if($country==self::NOT_APPLICABLE){
+        if($country == self::NOT_APPLICABLE){
             $name = $arwhois["nserver"] ?? "";
             if(!$name) $name = $arwhois["netname"] ?? "";
             if(self::_ends_with($name,".br")) $country == "BR";
