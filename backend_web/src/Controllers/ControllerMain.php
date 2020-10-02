@@ -90,10 +90,10 @@ class ControllerMain
 
     public function refill_whois()
     {
-        $this->dbprovider->refill_whois();
+        $this->dbprovider->_refill_whois_na();
     }
 
-    public function test_handle_request($m="")
+    public function test_handle_request()
     {
         //si no se debe guardar ningun tipo de registro de esta ip
         if($this->_is_ipuntracked()) return;

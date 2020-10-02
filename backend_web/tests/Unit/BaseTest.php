@@ -81,12 +81,4 @@ abstract class BaseTest extends TestCase
         $config = cfg::get_schema("c1", self::DB_NAME);
         return new MysqlComponent($config);
     }
-
-    protected function _execute_ipblocker($m)
-    {
-        echo "\n==================\n";
-        echo "$m";
-        echo "\n==================\n";
-        (new ComponentIpblocker())->test_handle_request($m);
-    }
 }

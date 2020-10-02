@@ -120,9 +120,9 @@ class DbProvider
         $this->db->exec($sql);
     }
 
-    public function refill_whois()
+    public function refill_whois_na()
     {
-        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois IS NULL ORDER BY id DESC LIMIT 31";
+        $sql = "SELECT remote_ip FROM app_ip WHERE 1 AND whois='n.a|n.a' ORDER BY id DESC LIMIT 31";
         $ips = $this->db->query($sql);
         $ips = array_column($ips,"remote_ip");
         $arupdates = [];
