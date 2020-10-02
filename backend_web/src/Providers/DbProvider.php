@@ -7,7 +7,7 @@ use Ipblocker\Components\Db\MysqlComponent;
 use Ipblocker\Traits\LogTrait as Log;
 use Ipblocker\Helpers\RequestHelper as req;
 
-class BaseProvider
+class DbProvider
 {
     use Log;
 

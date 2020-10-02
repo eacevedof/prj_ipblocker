@@ -4,7 +4,7 @@ namespace Ipblocker\Controllers;
 use function Ipblocker\Functions\send_httpstatus;
 use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Helpers\RequestHelper as req;
-use Ipblocker\Providers\BaseProvider;
+use Ipblocker\Providers\DbProvider;
 use Ipblocker\Services\RulezChecker;
 use Ipblocker\Traits\LogTrait;
 
@@ -18,7 +18,7 @@ class ControllerMain
     public function __construct()
     {
         $this->req = req::getInstance();
-        $this->prov = new BaseProvider($this->req->get_remoteip());
+        $this->prov = new DbProvider($this->req->get_remoteip());
     }
 
     private function _is_search_bot()

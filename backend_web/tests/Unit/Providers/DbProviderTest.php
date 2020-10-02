@@ -2,9 +2,9 @@
 namespace Tests\Unit\Providers;
 
 use Tests\Unit\BaseTest;
-use Ipblocker\Providers\BaseProvider;
+use Ipblocker\Providers\DbProvider;
 
-class BaseProviderTest extends BaseTest
+class DbProviderTest extends BaseTest
 {
     private const IP_UNATRACKED = "127.0.0.U";
     private const IP_BLACKLISTED = "127.0.0.B";
@@ -42,7 +42,7 @@ class BaseProviderTest extends BaseTest
         $this->_add_untracked();
         $this->_add_server("REMOTE_ADDR", self::IP_UNATRACKED);
 
-        $prov = new BaseProvider();
+        $prov = new DbProvider();
         $r = $prov->is_untracked();
         $this->assertTrue(($r>0));
     }
@@ -52,7 +52,7 @@ class BaseProviderTest extends BaseTest
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR", "fake-ip");
 
-        $prov = new BaseProvider();
+        $prov = new DbProvider();
         $r = $prov->is_untracked();
         //print_r("r:");print_r($r);die;
         $this->assertEmpty($r);
@@ -64,7 +64,7 @@ class BaseProviderTest extends BaseTest
         $this->_add_server("REMOTE_ADDR", self::IP_BLACKLISTED);
 
         $this->_add_blacklist();
-        $prov = new BaseProvider();
+        $prov = new DbProvider();
         $r = $prov->is_blacklisted();
         $this->assertTrue($r>0);
     }
@@ -74,7 +74,7 @@ class BaseProviderTest extends BaseTest
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR", self::IP_NOTBLACKLISTED);
 
-        $prov = new BaseProvider();
+        $prov = new DbProvider();
         $r = $prov->is_blacklisted();
         $this->assertEmpty($r);
     }
@@ -84,7 +84,7 @@ class BaseProviderTest extends BaseTest
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR", self::IP_NOTREGISTERED);
 
-        $prov = new BaseProvider();
+        $prov = new DbProvider();
         $r = $prov->is_registered();
         $this->assertEmpty($r);
     }
