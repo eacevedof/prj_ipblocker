@@ -18,9 +18,9 @@ jobs:
 
       - name: Set PHPUnit Version
         run: |
-          $content = Get-Content -Path 'composer.json' | ConvertFrom-Json
+          $content = Get-Content -Path 'backend_web/composer.json' | ConvertFrom-Json
           $content.{require-dev}.{phpunit/phpunit} = "^9.3"
-          $content | ConvertTo-Json  | Set-Content -Path 'composer.json'
+          $content | ConvertTo-Json  | Set-Content -Path 'backend_web/composer.json'
         shell: pwsh
 
       - name: Composer dependencies
