@@ -20,7 +20,9 @@ jobs:
           tools: composer:v2
       - name: Check PHP Version
         run: php -v
+      - name: Which php
+        run: which php
       - name: Composer Install en backend_web
         run: cd backend_web; composer install
-      - name: Run phpunit exampletest
-        run: /bin/bash/php ./vendor/bin/phpunit ./tests/ExampleTest.php > result_test.txt
+      #- name: Run phpunit exampletest
+      #run: /bin/bash/php ./vendor/bin/phpunit ./tests/ExampleTest.php > result_test.txt
