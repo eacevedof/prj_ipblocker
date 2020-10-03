@@ -2,20 +2,22 @@
 namespace Ipblocker\Components;
 
 use function Ipblocker\Functions\cp;
+use Ipblocker\Providers\CmdComponent as cmd;
 
 class SearchbotsComponent
 {
+
     private static $botsns = [
-        "baidu1"=>".crawl.baidu.com",
-        "baidu2"=>".crawl.baidu.jp",
-        "msn"=>".msn.com",
-        "google1"=>".google.com",
-        "google2"=>".googlebot.com",
-        "google3-user"=>".googleusercontent.com",
-        "yahoo1"=>".crawl.yahoo.net",
-        "yandex1"=>".yandex.ru",
-        "yandex2"=>".yandex.net",
-        "yandex3"=>".yandex.com",
+        "baidu1"        => ".crawl.baidu.com",
+        "baidu2"        => ".crawl.baidu.jp",
+        "msn"           => ".msn.com",
+        "google1"       => ".google.com",
+        "google2"       => ".googlebot.com",
+        "google3-user"  => ".googleusercontent.com",
+        "yahoo1"        => ".crawl.yahoo.net",
+        "yandex1"       => ".yandex.ru",
+        "yandex2"       => ".yandex.net",
+        "yandex3"       => ".yandex.com",
     ];
 
     private static $botsip = [
@@ -36,104 +38,25 @@ class SearchbotsComponent
          ]
     ];
 
-    private const NOT_APPLICABLE = "n.a";
+    private const CMD_WHOIS = "whois %";
 
-    public static function get_name($remoteip)
+    public static function get_name($remoteip) : string
     {
-        $output = [];
-        exec("host $remoteip",$output);
+        $cmd = sprintf(self::CMD_WHOIS, $remoteip);
+        $output = cmd::exec($cmd);
         $output = trim($output[0]);
+
+        //busco por nombre de servidor
         foreach (self::$botsns as $botname => $ns)
-            if(strstr($output,$ns))
+            if(strstr($output, $ns))
                 return $botname;
 
+        //busco por su ip
         foreach (self::$botsip as $botname => $arips)
-            if(in_array($remoteip,$arips))
+            if(in_array($remoteip, $arips))
                 return $botname;
 
         return "";
-    }
-
-    private static function _get_whoisarray($output)
-    {
-//cp($output,"whois output");
-        $arwhois = [];
-        foreach ($output as $i=> $strdata)
-        {
-            $parts = explode(": ",$strdata);
-            if(count($parts) >1 )
-                $arwhois[trim(strtolower($parts[0]))] = trim($parts[1]);
-        }
-        return $arwhois;
-    }
-
-    public static function get_host($remoteip)
-    {
-        $output = [];
-        exec("host $remoteip",$output);
-//cp($output,"get_host.output");
-        $parts = explode(" ",$output[0] ?? "n.f");
-        return trim(end($parts));
-    }
-
-    private static function _get_whois($arwhois)
-    {
-        $config = [
-            "netname" => [
-                "netname","nserver",
-            ],
-            "organisation" => [
-                "organisation","owner","ownerid"
-            ]
-        ];
-
-        $netname = self::NOT_APPLICABLE;
-        $organisation = self::NOT_APPLICABLE;
-
-        foreach ($config["netname"] as $alias)
-            if(isset($arwhois[$alias])){
-                $netname = trim($arwhois[$alias]);
-                break;
-            }
-
-        foreach ($config["organisation"] as $alias)
-            if(isset($arwhois[$alias])){
-                $organisation = trim($arwhois[$alias]);
-                break;
-            }
-
-        return "$netname | $organisation";
-    }
-
-    private static function _ends_with($string, $suffix)
-    {
-        $length = strlen($suffix);
-        if(!$length) return true;
-
-        return substr($string, -$length ) === $suffix;
-    }
-
-    private static function _get_country($arwhois)
-    {
-        $country = $arwhois["country"] ?? self::NOT_APPLICABLE;
-        if($country == self::NOT_APPLICABLE){
-            $name = $arwhois["nserver"] ?? "";
-            if(!$name) $name = $arwhois["netname"] ?? "";
-            if(self::_ends_with($name,".br")) $country == "BR";
-        }
-        return $country;
-    }
-
-    public static function get_whois($remoteip)
-    {
-        $output = [];
-        exec("whois $remoteip",$output);
-        $arwhois = self::_get_whoisarray($output);
-//cp($arwhois,"get_whois.arwhois ($remoteip)",0);
-        return [
-            "country"   => self::_get_country($arwhois),
-            "whois"     => self::_get_whois($arwhois),
-        ];
     }
 
 }

@@ -2,7 +2,7 @@
 namespace Ipblocker\Functions;
 //functions.php
 
-function pp($mxvar,$title="",$die=0)
+function pp($mxvar, $title="", $die=0)
 {
     $str = var_export($mxvar,1);
     echo "<pre>\n";
@@ -12,7 +12,7 @@ function pp($mxvar,$title="",$die=0)
     echo "\n</pre>";
 }
 
-function cp($mxvar,$title="",$die=1)
+function cp($mxvar, $title="", $die=1)
 {
     $isstr = is_string($mxvar);
     $str = var_export($mxvar,1);
@@ -74,4 +74,14 @@ function send_httpstatus($num) {
         'code' => $num,
         'error' => $http[$num],
     ];
+}
+
+function startswith(string $string, string $start)
+{
+    return substr_compare($string, $start, 0, strlen($start)) === 0;
+}
+
+function endswith(string $string, string $end)
+{
+    return substr_compare($string, $end, -strlen($end)) === 0;
 }
