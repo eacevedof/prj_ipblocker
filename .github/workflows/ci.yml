@@ -20,8 +20,11 @@ jobs:
           tools: composer:v2
       - name: System dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install -y whois
           sudo apt-get install -y host
+          whois 139.47.67.18
+          host 139.47.67.18
       - name: Check PHP Version
         run: php -v
       - name: Which php
