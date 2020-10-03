@@ -13,7 +13,7 @@ class CmdComponent
     private const CMD_HOST = "host %";
     //public const NOT_APPLICABLE = "n.a";
 
-    public static function exec($cmd)
+    public static function exec($cmd): array
     {
         $output = [];
         exec($cmd,$output);

@@ -15,6 +15,7 @@ class SearchbotsComponent
         "google2"       => ".googlebot.com",
         "google3-user"  => ".googleusercontent.com",
         "yahoo1"        => ".crawl.yahoo.net",
+        "yahoo2"        => ".yahoo.com",
         "yandex1"       => ".yandex.ru",
         "yandex2"       => ".yandex.net",
         "yandex3"       => ".yandex.com",
@@ -38,15 +39,16 @@ class SearchbotsComponent
          ]
     ];
 
-    private const CMD_WHOIS = "whois %s";
+    private const CMD_HOST = "host %s";
 
     public static function get_name($remoteip) : string
     {
-        $cmd = sprintf(self::CMD_WHOIS, $remoteip);
+        $cmd = sprintf(self::CMD_HOST, $remoteip);
 //cp($cmd,"sb:get_name");
         $output = cmd::exec($cmd);
+        //output: 210.79.249.66.in-addr.arpa domain name pointer crawl-66-249-79-210.googlebot.com
         $output = trim($output[0]);
-
+//cp($output,"get_name.output");
         //busco por nombre de servidor
         foreach (self::$botsns as $botname => $ns)
             if(strstr($output, $ns))
