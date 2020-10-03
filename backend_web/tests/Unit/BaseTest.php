@@ -83,7 +83,7 @@ abstract class BaseTest extends TestCase
     private function _get_dbname_by_env()
     {
         $env = cfg::get_env();
-        if($env=="local") return "db_security";
+        if($env=="local") return "db_ipblocker";
         if($env=="prod") return "dbs433062";
         if($env=="test") return "dbXXXX";
     }

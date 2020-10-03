@@ -1,8 +1,9 @@
 /*
 SQLyog Community v12.1 (32 bit)
-MySQL - 10.4.11-MariaDB-1:10.4.11+maria~bionic : Database - db_security
+MySQL - 10.4.11-MariaDB-1:10.4.11+maria~bionic : Database - db_ipblocker
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,9 +13,9 @@ MySQL - 10.4.11-MariaDB-1:10.4.11+maria~bionic : Database - db_security
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_security` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_ipblocker` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `db_security`;
+USE `db_ipblocker`;
 
 /*Table structure for table `app_ip` */
 
