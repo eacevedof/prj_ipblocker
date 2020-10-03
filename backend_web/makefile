@@ -16,7 +16,7 @@ startpriv: ## Start server in socket localhost:3100
 refillna: ## Search 50 app_ip.whois=na
 	php ./public/refillwhoisna.php
 
-tests: ## Run tests
+test: ## Run tests
 	./vendor/bin/phpunit ./tests
 
 t: ## Run tests
