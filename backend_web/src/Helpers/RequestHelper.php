@@ -13,7 +13,6 @@ final class RequestHelper
     private $get;
     private $post;
     private $files;
-    private $whois;
 
     private static $thisself = null;
 
@@ -96,41 +95,7 @@ final class RequestHelper
 
     public function get_useragent(){return $this->useragent;}
 
-    private function _get_whoisarray($output)
-    {
-        $arwhois = [];
-        foreach ($output as $i=> $strdata)
-        {
-            $parts = explode(": ",$strdata);
-            if(count($parts) >1 )
-                $arwhois[trim(strtolower($parts[0]))] = trim($parts[1]);
-        }
-        return $arwhois;
-    }
-
-    private function _get_whois()
-    {
-        $output = [];
-        exec("whois $this->remoteip",$output);
-        $arwhois = $this->_get_whoisarray($output);
-        return [
-            "country" => $arwhois["country"] ?? "n.a",
-            "whois" => ($arwhois["netname"] ?? "n.a"). "|" . ($arwhois["organisation"] ?? "n.a"),
-        ];
-    }
-
-    private function _load_whois()
-    {
-        $this->whois = $this->_get_whois($this->remoteip);
-    }
-
-    public function get_whois($k=null)
-    {
-        if($k) return $this->whois[$k] ?? "";
-        return $this->whois;
-    }
-
-    public static function reset()
+     public static function reset()
     {
         self::$thisself = null;
     }

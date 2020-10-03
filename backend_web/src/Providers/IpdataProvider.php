@@ -97,4 +97,7 @@ class IpdataProvider
         return sb::get_name($this->remoteip);
     }
 
+    public function get_ip(){return $this->remoteip;}
+
+    public function get_host(){return end($this->arhost["pieces"]);}
 }

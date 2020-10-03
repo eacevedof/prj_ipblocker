@@ -1,7 +1,6 @@
 <?php
 namespace Ipblocker\Providers;
 
-use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Components\Db\MysqlComponent;
 use Ipblocker\Traits\LogTrait as Log;
@@ -13,7 +12,7 @@ class DbProvider
 
     private $req;
     private $db;
-    private $remoteip;
+    private $ipprovider;
 
     public function __construct()
     {
@@ -21,12 +20,7 @@ class DbProvider
         $config = cfg::get_schema("c1", $dbname);
         $this->db = new MysqlComponent($config);
         $this->req = req::getInstance();
-        $this->remoteip = $this->req->get_remoteip();
-    }
-
-    private function _get_searchbot()
-    {
-        return sb::get_name($this->remoteip);
+        $this->ipprovider = new IpdataProvider($this->req->get_remoteip());
     }
 
     private function _get_dbname_by_env()
@@ -39,16 +33,20 @@ class DbProvider
 
     private function _save_app_ip()
     {
-        $whois = $this->req->get_whois();
         $sql = "
         -- save_app_ip 1
-        INSERT INTO app_ip (remote_ip, country, whois) VALUES('$this->remoteip','{$whois["country"]}','{$whois["whois"]}')";
+        INSERT INTO app_ip (remote_ip, country, whois) VALUES('s%','s%','s%')";
+        $sql = sprintf($sql,
+                $this->ipprovider->get_ip(),$this->ipprovider->get_country(),$this->ipprovider->get_whois());
 
-        $searchbot = $this->_get_searchbot();
-        if($searchbot)
+        $searchbot = $this->ipprovider->get_searchbot();
+        if($searchbot) {
             $sql = "
             -- save_app_ip 2
-            INSERT INTO app_ip (remote_ip, country, whois) VALUES('$this->remoteip','{$whois["country"]}','host:$searchbot')";
+            INSERT INTO app_ip (remote_ip, country, whois) VALUES('s%','s%','s%')";
+            $sql = sprintf($sql,
+                    $this->ipprovider->get_ip(),$this->ipprovider->get_country(),$searchbot);
+        }
 
         $this->db->exec($sql);
     }
@@ -67,7 +65,7 @@ class DbProvider
     {
         $sql = "
         -- is_blacklisted
-        SELECT id FROM app_ip_blacklist WHERE remote_ip='$this->remoteip' AND is_blocked=1";
+        SELECT id FROM app_ip_blacklist WHERE remote_ip='{$this->ipprovider->get_ip()}' AND is_blocked=1";
         $id = $this->db->query($sql,0,0);
         //print_r($id);
         return $id;
@@ -77,7 +75,7 @@ class DbProvider
     {
         $sql = "
         -- is_untracked
-        SELECT id FROM app_ip_untracked WHERE remote_ip='$this->remoteip' AND is_enabled=1";
+        SELECT id FROM app_ip_untracked WHERE remote_ip='{$this->ipprovider->get_ip()}' AND is_enabled=1";
         $id = $this->db->query($sql,0,0);
         //print_r($id);
         return $id;
@@ -87,7 +85,7 @@ class DbProvider
     {
         $sql = "
         -- is_registered
-        SELECT id FROM app_ip WHERE remote_ip='$this->remoteip'";
+        SELECT id FROM app_ip WHERE remote_ip='{$this->ipprovider->get_ip()}'";
         $id = $this->db->query($sql,0,0);
         return $id;
     }
@@ -110,7 +108,7 @@ class DbProvider
         $sql = "
         -- save_request
         INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files`,`user_agent`) 
-        VALUES ('$this->remoteip','$domain','$requesturi','$post','$get','$files','')";
+        VALUES ('{$this->ipprovider->get_ip()}','$domain','$requesturi','$post','$get','$files','')";
         $this->db->exec($sql);
     }
 
@@ -119,7 +117,7 @@ class DbProvider
         $sql = "
         -- add_to_blacklist
         INSERT INTO app_ip_blacklist (`remote_ip`,`reason`) 
-        VALUES ('$this->remoteip','rules: $kws')";
+        VALUES ('{$this->ipprovider->get_ip()}','rules: $kws')";
         $this->db->exec($sql);
     }
 
@@ -131,11 +129,10 @@ class DbProvider
         $arupdates = [];
         foreach ($ips as $ip)
         {
-            $host = sb::get_host($ip);
-            $arwhois = sb::get_whois($ip);
-
-            $country = $arwhois["country"];
-            $whois = "host:$host, org:{$arwhois["whois"]}";
+            $ipprov = new IpdataProvider($ip);
+            $host = $ipprov->get_host();
+            $country = $ipprov->get_country();
+            $whois = "host:$host, org:{$ipprov->get_whois()}";
 
             $sql = "UPDATE app_ip SET country='$country', whois='$whois' WHERE 1 AND remote_ip='$ip'";
             $arupdates[] = $sql;
