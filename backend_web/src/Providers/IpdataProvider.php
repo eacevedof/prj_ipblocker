@@ -1,7 +1,7 @@
 <?php
 namespace Ipblocker\Providers;
 
-use function Ipblocker\Functions\endswith;
+use function Ipblocker\Functions\cp;
 use Ipblocker\Components\CmdComponent as cmd;
 use Ipblocker\Components\SearchbotsComponent as sb;
 
@@ -31,10 +31,13 @@ class IpdataProvider
     {
         $pieces = explode(" ",$hostraw);
         $lastone = end($pieces);
+//cp($lastone,"_get_host_country ($hostraw)");
         if(strstr($lastone,".")) {
             //lastone: projelmec.static.gvt.net.br.
             $pieces = explode(".", $lastone);
-            $pieces = array_pop($pieces);
+//cp($pieces,"_get_host_country.pieces ($hostraw)");
+            array_pop($pieces);
+//cp($pieces,"_get_host_country.pieces 2 ($hostraw)");
             $lastone = end($pieces);
             return strtoupper($lastone);
         }

@@ -12,14 +12,14 @@ class RulescheckerServiceTest extends BaseTest
     private const IP_BANNED = "5.188.84.59";
     private const IP_VALID = "176.83.68.84";
 
-    public function _test_empty_request()
+    public function test_empty_request()
     {
         $serv = new RulescheckerService();
         $r = $serv->is_forbidden();
         $this->assertFalse($r);
     }
 
-    public function _test_alldomains_blocked_by_country()
+    public function test_alldomains_blocked_by_country()
     {
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR",self::IP_BANNED);
@@ -30,7 +30,7 @@ class RulescheckerServiceTest extends BaseTest
     }
 
     //todo esto debería devolver error
-    public function _test_alldomains_forbidden_post()
+    public function __est_alldomains_forbidden_post()
     {
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR",self::IP_VALID);
@@ -38,8 +38,8 @@ class RulescheckerServiceTest extends BaseTest
         $this->_add_post("any-field","topcasinos");
 
         $r = (new RulescheckerService())->is_forbidden();
-        //print_r($r);die;
-        $this->assertNotEmpty($r);
+//r===false pero tndría que devolver un error de regla
+//cp($r,"test_alldomains_forbidden_post is_forbidden?");
         $this->assertEquals("country:ES",$r);
     }
 

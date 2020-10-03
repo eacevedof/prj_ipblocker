@@ -48,7 +48,7 @@ class RulescheckerService
         return  $requris;
     }
 
-    private function _get_exact_uri($requri, $urisbydom)
+    private function _get_exact_uri(string $requri, array $urisbydom)
     {
         foreach ($urisbydom as $puburi)
             if($requri===$puburi)
