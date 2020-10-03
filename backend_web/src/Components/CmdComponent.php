@@ -2,15 +2,14 @@
 namespace Ipblocker\Components;
 
 use Ipblocker\Traits\LogTrait as Log;
-use function Ipblocker\Functions\endswith;
-
+use function Ipblocker\Functions\cp;
 
 class CmdComponent
 {
     use Log;
 
-    private const CMD_WHOIS = "whois %";
-    private const CMD_HOST = "host %";
+    private const CMD_WHOIS = "whois %s";
+    private const CMD_HOST = "host %s";
     //public const NOT_APPLICABLE = "n.a";
 
     public static function exec($cmd): array
@@ -36,7 +35,7 @@ class CmdComponent
     public static function get_host($remoteip) :string
     {
         $cmd = sprintf(self::CMD_HOST, $remoteip);
-cp($cmd,"get_host");
+//cp($cmd,"get_host");
         $output = self::exec($cmd);
         return $output[0] ?? "";
         //$parts = explode(" ",$output[0] ?? "n.f");

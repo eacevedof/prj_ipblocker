@@ -22,6 +22,9 @@ t: ## Run tests
 t.unit:
 	./vendor/bin/phpunit ./tests/Unit
 
+t.unit.helpers:
+	./vendor/bin/phpunit ./tests/Unit/Helpers
+
 t.unit.components:
 	./vendor/bin/phpunit ./tests/Unit/Components
 

@@ -31,7 +31,6 @@ final class RequestHelper
         $this->get = $_GET ?? [];
         $this->post = $_POST ?? [];
         $this->files = $_FILES ?? [];
-        $this->_load_whois();
     }
 
     /**

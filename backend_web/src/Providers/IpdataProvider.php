@@ -31,12 +31,14 @@ class IpdataProvider
     {
         $pieces = explode(" ",$hostraw);
         $lastone = end($pieces);
-
-        //lastone: projelmec.static.gvt.net.br.
-        $pieces = explode(".",$lastone);
-        $pieces = array_pop($pieces);
-        $lastone = end($pieces);
-        return strtoupper($lastone);
+        if(strstr($lastone,".")) {
+            //lastone: projelmec.static.gvt.net.br.
+            $pieces = explode(".", $lastone);
+            $pieces = array_pop($pieces);
+            $lastone = end($pieces);
+            return strtoupper($lastone);
+        }
+        return self::NOT_APPLICABLE;
     }
 
     private function _load_host()
