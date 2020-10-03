@@ -17,25 +17,25 @@ refillna: ## Search 50 app_ip.whois=na
 	php ./public/refillwhoisna.php
 
 test: ## Run tests
-	./vendor/bin/phpunit ./tests
+	php ./vendor/bin/phpunit ./tests
 
 t: ## Run tests
-	./vendor/bin/phpunit ./tests
+	php ./vendor/bin/phpunit ./tests
 
 t.unit:
-	./vendor/bin/phpunit ./tests/Unit
+	php ./vendor/bin/phpunit ./tests/Unit
 
 t.unit.helpers:
-	./vendor/bin/phpunit ./tests/Unit/Helpers
+	php ./vendor/bin/phpunit ./tests/Unit/Helpers
 
 t.unit.components:
-	./vendor/bin/phpunit ./tests/Unit/Components
+	php ./vendor/bin/phpunit ./tests/Unit/Components
 
 t.unit.providers:
-	./vendor/bin/phpunit ./tests/Unit/Providers
+	php ./vendor/bin/phpunit ./tests/Unit/Providers
 
 t.unit.services:
-	./vendor/bin/phpunit ./tests/Unit/Services
+	php ./vendor/bin/phpunit ./tests/Unit/Services
 
 t.unit.controllers:
-	./vendor/bin/phpunit --stderr ./tests/Unit/Controllers
+	php ./vendor/bin/phpunit --stderr ./tests/Unit/Controllers
