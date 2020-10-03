@@ -9,9 +9,37 @@ jobs:
       - uses: php-actions/composer@v1 # or alternative dependency management
       - uses: php-actions/phpunit@v9
 
-  unit-tests:
-    - name: PHPUnit tests
-      uses: php-actions/phpunit@v9
-      with:
-        configuration: backend_web/phpunit.xml.dist
-        memory_limit: 256M
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: 7.4
+          extensions: mbstring
+          coverage: xdebug
+
+      - name: Set PHPUnit Version
+        run: |
+          $content = Get-Content -Path 'composer.json' | ConvertFrom-Json
+          $content.{require-dev}.{phpunit/phpunit} = "^9.3"
+          $content | ConvertTo-Json  | Set-Content -Path 'composer.json'
+        shell: pwsh
+
+      - name: Composer dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Configure tests for the current PHPUnit version (Non-Windows)
+        run: |
+          V=$(./vendor/bin/phpunit --version)
+          sed -i.bak "s/%%VERSION%%/$V/" test/states-test.phpt
+        if: "!startsWith(matrix.os, 'windows')"
+
+      - name: Configure tests for the current PHPUnit version (Windows)
+        id: phpunit-windows
+        run: |
+          $V = (.\vendor\bin\phpunit --version | Out-String).trim()
+          $content = Get-Content -Path 'test/states-test.phpt'
+          $newContent = $content -replace '%%VERSION%%', $V
+          $newContent | Set-Content -Path 'test/states-test.phpt'
+        if: "startsWith(matrix.os, 'windows')"
+
+      - name: Run phpunit
+        run: ./vendor/bin/phpunit
