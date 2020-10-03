@@ -7,7 +7,7 @@ use function Ipblocker\Functions\cp;
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
 
-class RulezChecker
+class RulescheckerService
 {
     private $acl;
     /**

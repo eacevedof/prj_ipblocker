@@ -5,7 +5,7 @@ use function Ipblocker\Functions\send_httpstatus;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\DbProvider;
 use Ipblocker\Providers\IpdataProvider;
-use Ipblocker\Services\RulezChecker;
+use Ipblocker\Services\RulescheckerService;
 use Ipblocker\Traits\LogTrait;
 
 class ControllerMain
@@ -44,7 +44,7 @@ class ControllerMain
     {
         if($this->_is_ipblacklisted())
             return;
-        $words = (new RulezChecker())->is_forbidden();
+        $words = (new RulescheckerService())->is_forbidden();
         if($words)
             $this->dbprovider->add_to_blacklist($words);
     }

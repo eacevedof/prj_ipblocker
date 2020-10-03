@@ -5,16 +5,16 @@ namespace Tests\Unit\Services;
 use function Ipblocker\Functions\cp;
 
 use Tests\Unit\BaseTest;
-use Ipblocker\Services\RulezChecker;
+use Ipblocker\Services\RulescheckerService;
 
-class RulezCheckerTest extends BaseTest
+class RulescheckerServiceTest extends BaseTest
 {
     private const IP_BANNED = "5.188.84.59";
     private const IP_VALID = "176.83.68.84";
 
     public function _test_empty_request()
     {
-        $serv = new RulezChecker();
+        $serv = new RulescheckerService();
         $r = $serv->is_forbidden();
         $this->assertFalse($r);
     }
@@ -24,7 +24,7 @@ class RulezCheckerTest extends BaseTest
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR",self::IP_BANNED);
 
-        $r = (new RulezChecker())->is_forbidden();
+        $r = (new RulescheckerService())->is_forbidden();
         $this->assertNotEmpty($r);
         $this->assertEquals("country:RU",$r);
     }
@@ -37,7 +37,7 @@ class RulezCheckerTest extends BaseTest
         $this->_add_server("HTTP_HOST", "anydomain.com");
         $this->_add_post("any-field","topcasinos");
 
-        $r = (new RulezChecker())->is_forbidden();
+        $r = (new RulescheckerService())->is_forbidden();
         //print_r($r);die;
         $this->assertNotEmpty($r);
         $this->assertEquals("country:ES",$r);
@@ -51,7 +51,7 @@ class RulezCheckerTest extends BaseTest
         $this->_add_server("REQUEST_URI","/en/contact/");
         $this->_add_post("any-field","topcasinos");
 //cp($_SERVER,"test.server",0);
-        $r = (new RulezChecker())->is_forbidden();
+        $r = (new RulescheckerService())->is_forbidden();
 //cp($r,"test_somedomain_forbidden_post");
         $this->assertNotEmpty($r);
         $this->assertEquals("reqfields hidAction",$r);
