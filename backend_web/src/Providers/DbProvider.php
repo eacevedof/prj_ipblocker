@@ -35,7 +35,7 @@ class DbProvider
     {
         $sql = "
         -- save_app_ip 1
-        INSERT INTO app_ip (remote_ip, country, whois) VALUES('s%','s%','s%')";
+        INSERT INTO app_ip (remote_ip, country, whois) VALUES('%s','%s','%s')";
         $sql = sprintf($sql,
                 $this->ipprovider->get_ip(),$this->ipprovider->get_country(),$this->ipprovider->get_whois());
 
@@ -43,7 +43,7 @@ class DbProvider
         if($searchbot) {
             $sql = "
             -- save_app_ip 2
-            INSERT INTO app_ip (remote_ip, country, whois) VALUES('s%','s%','s%')";
+            INSERT INTO app_ip (remote_ip, country, whois) VALUES('%s','%s','%s')";
             $sql = sprintf($sql,
                     $this->ipprovider->get_ip(),$this->ipprovider->get_country(),$searchbot);
         }
