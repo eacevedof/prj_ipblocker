@@ -32,5 +32,6 @@ jobs:
           pwd
           cd backend_web
           cat ./tests/ExampleTest.php
-          php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
+        #php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
+          php vendor/bin/phpunit tests > result.txt
           cat result.txt
