@@ -33,3 +33,4 @@ jobs:
           cd backend_web
           cat ./tests/ExampleTest.php
           php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
+          cat result.txt
