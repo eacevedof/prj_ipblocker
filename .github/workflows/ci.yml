@@ -39,4 +39,6 @@ jobs:
           cd backend_web
           pwd
           php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
+          cat result.txt; rm result.txt
+          php vendor/bin/phpunit tests/Unit/Components/SearchbotsComponentTest.php > result.txt
           cat result.txt
