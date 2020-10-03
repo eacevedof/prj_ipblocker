@@ -30,6 +30,6 @@ jobs:
       - name: Run phpunit exampletest
         run: |
           pwd
-          ls
+          cd backend_web
           cat ./tests/ExampleTest.php
           php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
