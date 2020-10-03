@@ -99,6 +99,7 @@ class DbProvider
         $get = $this->req->get_get();
         $post = $this->req->get_post();
         $files = $this->req->get_files();
+        $useragent = $this->req->get_useragent();
         if(isset($post["password"])) $post["password"] = "****";
 
         $get = $this->_to_json($get);
@@ -108,7 +109,7 @@ class DbProvider
         $sql = "
         -- save_request
         INSERT INTO app_ip_request (`remote_ip`,`domain`,`request_uri`,`post`,`get`,`files`,`user_agent`) 
-        VALUES ('{$this->ipprovider->get_ip()}','$domain','$requesturi','$post','$get','$files','')";
+        VALUES ('{$this->ipprovider->get_ip()}','$domain','$requesturi','$post','$get','$files','$useragent')";
         $this->db->exec($sql);
     }
 
