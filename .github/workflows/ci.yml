@@ -27,5 +27,7 @@ jobs:
           cd backend_web
           composer install
           ls
-      #- name: Run phpunit exampletest
-      #run: /bin/bash/php ./vendor/bin/phpunit ./tests/ExampleTest.php > result_test.txt
+      - name: Run phpunit exampletest
+        run: |
+          /usr/bin/php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
+          cat result.txt
