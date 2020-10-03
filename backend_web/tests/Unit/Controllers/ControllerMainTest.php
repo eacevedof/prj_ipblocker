@@ -8,16 +8,23 @@ use Ipblocker\Controllers\ControllerMain;
 
 class ControllerMainTest extends BaseTest
 {
-    private const IP_BANNED = "5.188.84.59";
-    private const IP_VALID = "176.83.68.84";
+    private const IP_BANNED = "127.0.0.B";
+    private const IP_NOT_BANNED = "176.83.68.84";
 
-    public function _test_empty_request()
+    public function test_not_banned_ip()
     {
-        $serv = new RulezChecker();
-        $r = $serv->is_forbidden();
-        $this->assertFalse($r);
+        $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR", self::IP_NOT_BANNED);
+        $r = (new ControllerMain())->handle_request();
+        $this->assertTrue($r);
     }
 
-
+    public function test_banned_ip()
+    {
+        $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR", self::IP_BANNED);
+        $r = (new ControllerMain())->handle_request();
+        $this->assertFalse($r);
+    }
 
 }

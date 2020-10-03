@@ -63,7 +63,7 @@ class ControllerMain
         <pre>
         {$now}:
         We have detected some malicious requests from your ip: {$ip}
-        This address will be blacklisted for some time around 24h.
+        This address will be blacklisted for some time (around 24h).
         If you consider this is not your case please contact
             eacevedof@hotmail.com
         so we can enable your ip again sooner.

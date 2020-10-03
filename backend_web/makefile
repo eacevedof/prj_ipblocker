@@ -33,3 +33,6 @@ t.unit.providers:
 
 t.unit.services:
 	./vendor/bin/phpunit ./tests/Unit/Services
+
+t.unit.controllers:
+	./vendor/bin/phpunit ./tests/Unit/Controllers
