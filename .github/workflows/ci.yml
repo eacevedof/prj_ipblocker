@@ -29,5 +29,7 @@ jobs:
           ls
       - name: Run phpunit exampletest
         run: |
+          pwd
+          ls
           cat ./tests/ExampleTest.php
           php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
