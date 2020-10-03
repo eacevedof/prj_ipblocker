@@ -5,15 +5,15 @@ jobs:
     name: deploy to cluster
     runs-on: ubuntu-lates
     steps:
-      - uses: actions/checkout@master
-      - name: build and push to docker
-        users: docker/build-push-action@v1
-        with:
-          # variables de entorno que se almacenan en:
-          # https://github.com/eacevedof/prj_ipblocker/settings/secrets
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ github.repository }}
-          tag_with_ref: true
-          tag_with_sha: true
-          tags: ${{ github.sha }}
+    - uses: actions/checkout@master
+    - name: build and push to docker
+      uses: docker/build-push-action@v1
+      with:
+        # variables de entorno que se almacenan en:
+        # https://github.com/eacevedof/prj_ipblocker/settings/secrets
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: ${{ github.repository }}
+        tag_with_ref: true
+        tag_with_sha: true
+        tags: ${{ github.sha }}
