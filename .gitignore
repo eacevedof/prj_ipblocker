@@ -11,4 +11,6 @@ backend_web/config/contexts.local.json
 backend_web/config/rulez.local.json
 backend_web/config/contexts.prod.json
 backend_web/config/rulez.prod.json
+backend_web/config/contexts.test.json
+backend_web/config/rulez.test.json
 backend_web/.phpunit.result.cache

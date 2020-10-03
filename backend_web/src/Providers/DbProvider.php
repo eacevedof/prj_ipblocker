@@ -28,7 +28,7 @@ class DbProvider
         $env = cfg::get_env();
         if($env=="local") return "db_ipblocker";
         if($env=="prod") return "dbs433062";
-        if($env=="test") return "dbXXXX";
+        if($env=="test") return "dbs863900";
     }
 
     private function _save_app_ip()
