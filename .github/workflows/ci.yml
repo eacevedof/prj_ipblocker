@@ -18,6 +18,10 @@ jobs:
           extensions: intl #optional
           ini-values: "post_max_size=256M" #optional
           tools: composer:v2
+      - name: System dependencies
+        run: |
+          sudo apt-get install -y whois
+          sudo apt-get install -y host
       - name: Check PHP Version
         run: php -v
       - name: Which php
@@ -31,7 +35,7 @@ jobs:
         run: |
           pwd
           cd backend_web
-          cat ./tests/ExampleTest.php
+          # cat ./tests/ExampleTest.php
           # php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
           php vendor/bin/phpunit tests > result.txt
           cat result.txt
