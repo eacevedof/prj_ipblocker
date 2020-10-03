@@ -6,6 +6,7 @@ use function Ipblocker\Functions\cp;
 
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
+use Ipblocker\Providers\IpdataProvider;
 
 class RulescheckerService
 {
@@ -15,10 +16,13 @@ class RulescheckerService
      */
     private $req;
 
+    private $ipprovider;
+
     public function __construct()
     {
         $this->acl = cfg::get_rulez();
         $this->req = req::getInstance();
+        $this->ipprovider = new IpdataProvider($this->req->get_remoteip());
     }
 
     private function _get_uris_by_domain($domain)
@@ -261,7 +265,7 @@ class RulescheckerService
 
     private function _is_country_nok()
     {
-        $country = $this->req->get_whois("country");
+        $country = $this->ipprovider->get_country();
         $country = strtoupper($country);
         $countries = $this->acl["domains"]["*"]["countries"]["forbidden"] ?? [];
         $countries = array_flip($countries);
@@ -283,7 +287,7 @@ class RulescheckerService
     public function is_forbidden()
     {
         //comprobar bloqueo por pais
-        if($this->_is_country_nok())  return "country:".$this->req->get_whois("country");
+        if($this->_is_country_nok())  return "country:".$this->ipprovider->get_country();
 //cp("is_forbidden after countrenok");
         //comprobar si requri es aplicable
         $requri = $this->_in_requris();
