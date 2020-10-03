@@ -23,4 +23,4 @@ jobs:
       - name: Composer Install en backend_web
         run: cd backend_web; composer install
       - name: Run phpunit tests
-        run: vendor/bin/phpunit tests
+        run: php vendor/bin/phpunit tests
