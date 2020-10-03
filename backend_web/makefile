@@ -25,7 +25,7 @@ refillna: ## Search 50 app_ip.whois=na
 	$(PHPEXE) ./public/refillwhoisna.php
 
 test: ## Run tests production
-	$(PHPEXE) ./vendor/bin/phpunit ./tests
+	${PHPEXE} ./vendor/bin/phpunit ./tests
 
 t: ## Run tests
 	$(PHPEXE) ./vendor/bin/phpunit ./tests
