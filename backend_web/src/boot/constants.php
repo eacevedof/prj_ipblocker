@@ -9,5 +9,6 @@ define("IPB_PATH_LOGS",$pathlogs);
 //=========================
 //        FLAGS
 //=========================
+define("IPB_ENV","local");
 define("IPB_ENABLE_LOGS",1);
 define("IPB_DOTRACK",1);
