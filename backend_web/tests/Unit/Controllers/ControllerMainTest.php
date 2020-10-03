@@ -19,6 +19,23 @@ class ControllerMainTest extends BaseTest
         $this->assertTrue($r);
     }
 
+    public function test_savefull_request()
+    {
+        $this->_reset_fullrequest();
+        $this->_add_server("REMOTE_ADDR", self::IP_NOT_BANNED);
+        $this->_add_server("REQUEST_URI", "/some/request/uri");
+        $this->_add_server("HTTP_USER_AGENT", "some-user agent");
+        $this->_add_post("kp1","vp1");
+        $this->_add_post("kp2","vp2");
+        $this->_add_get("kg1","vg1");
+        $this->_add_get("kg2","vg2");
+        $this->_add_files("kF1","vF1");
+        $this->_add_files("kF2","vF2");
+
+        $r = (new ControllerMain())->handle_request();
+        $this->assertTrue($r);
+    }
+
     /**
      * @runInSeparateProcess
      */

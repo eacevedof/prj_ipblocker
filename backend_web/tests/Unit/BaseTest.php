@@ -34,13 +34,19 @@ abstract class BaseTest extends TestCase
 
     protected function _add_post($k,$v)
     {
-        if(is_string($k))  $_POST[$k] = $v;
+        if(is_string($k)) $_POST[$k] = $v;
         return $this;
     }
 
     protected function _add_get($k,$v)
     {
         if(is_string($k)) $_GET[$k] = $v;
+        return $this;
+    }
+
+    protected function _add_files($k,$v)
+    {
+        if(is_string($k)) $_FILES[$k] = $v;
         return $this;
     }
 

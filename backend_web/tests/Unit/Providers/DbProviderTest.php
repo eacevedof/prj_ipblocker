@@ -89,5 +89,4 @@ class DbProviderTest extends BaseTest
         $this->assertEmpty($r);
     }
 
-
 }
