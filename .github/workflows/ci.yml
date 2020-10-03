@@ -1,6 +1,21 @@
 name: CI
 on: [push]
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+
+
+name: CI
+on: [push]
+jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
     strategy:
@@ -9,7 +24,7 @@ jobs:
         php-versions: ['7.4.10']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v2
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -17,5 +32,8 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: intl #optional
           ini-values: "post_max_size=256M" #optional
+          tools: composer:v2
       - name: Check PHP Version
         run: php -v
+      - name: Composer Install en backend_web
+        run: cd backend_web; composer install
