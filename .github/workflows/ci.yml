@@ -36,9 +36,6 @@ jobs:
           ls
       - name: Run phpunit exampletest
         run: |
-          pwd
           cd backend_web
-          # cat ./tests/ExampleTest.php
+          pwd
           php ./vendor/bin/phpunit ./tests/ExampleTest.php > result.txt
-          # php ./vendor/bin/phpunit ./tests > result.txt
-          cat result.txt
