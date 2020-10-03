@@ -1,5 +1,5 @@
 <?php
-namespace Ipblocker\Providers;
+namespace Ipblocker\Components;
 
 use Ipblocker\Traits\LogTrait as Log;
 use function Ipblocker\Functions\endswith;
@@ -36,6 +36,7 @@ class CmdComponent
     public static function get_host($remoteip) :string
     {
         $cmd = sprintf(self::CMD_HOST, $remoteip);
+cp($cmd,"get_host");
         $output = self::exec($cmd);
         return $output[0] ?? "";
         //$parts = explode(" ",$output[0] ?? "n.f");

@@ -2,7 +2,7 @@
 namespace Ipblocker\Components;
 
 use function Ipblocker\Functions\cp;
-use Ipblocker\Providers\CmdComponent as cmd;
+use Ipblocker\Components\CmdComponent as cmd;
 
 class SearchbotsComponent
 {
@@ -38,11 +38,12 @@ class SearchbotsComponent
          ]
     ];
 
-    private const CMD_WHOIS = "whois %";
+    private const CMD_WHOIS = "whois %s";
 
     public static function get_name($remoteip) : string
     {
         $cmd = sprintf(self::CMD_WHOIS, $remoteip);
+//cp($cmd,"sb:get_name");
         $output = cmd::exec($cmd);
         $output = trim($output[0]);
 

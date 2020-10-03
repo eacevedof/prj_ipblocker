@@ -2,7 +2,7 @@
 namespace Ipblocker\Providers;
 
 use function Ipblocker\Functions\endswith;
-use Ipblocker\Providers\CmdComponent as cmd;
+use Ipblocker\Components\CmdComponent as cmd;
 use Ipblocker\Components\SearchbotsComponent as sb;
 
 class IpdataProvider
