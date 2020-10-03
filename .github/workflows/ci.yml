@@ -1,37 +1,9 @@
-name: CI/CD
-on:
-  push:
-    branches:
-      - master
-
+name: CI
+on: [push]
 jobs:
-  test:
-    name: checkout and test
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: checkout project
-        uses: actions/checkout@v2
-      - name: composer install missing files
-        run: composer install
-      - name: run tests
-        run: /usr/bin/php -f bin/phpunit > output.txt
-      - name: save output
-        uses: actions/upload-artifact@v1
-        with:
-          name: output
-          path: output.txt
-  deploy:
-    name: deploy
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: retrieve output
-        uses: actions/download-artifact@v1
-        with:
-          name: output
-      - name: check results
-        run: |
-          export PHPUNIT_OUTPUT = grep -q OK "output.txt"
-      - name: conditional
-        if: {{$PHPUNIT_OUTPUT==1}}
-        run: echo test
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v2
