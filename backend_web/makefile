@@ -12,6 +12,9 @@ help: ## Show this help message
 	@echo "targets:"
 	@egrep "^(.+)\:\ ##\ (.+)" ${MAKEFILE_LIST} | column -t -c 2 -s ":#"
 
+dirlogs: ## creates logs dir in prod
+	mkdir ./logs
+
 rmlogs: ## remove all logs
 	rm -fr ./logs/*
 
