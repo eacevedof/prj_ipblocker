@@ -22,6 +22,7 @@ class ControllerMainTest extends BaseTest
     public function test_savefull_request()
     {
         $this->_reset_fullrequest();
+        $this->_add_server("HTTP_HOST", "sometestdomain.com");
         $this->_add_server("REMOTE_ADDR", self::IP_NOT_BANNED);
         $this->_add_server("REQUEST_URI", "/some/request/uri");
         $this->_add_server("HTTP_USER_AGENT", "some-user agent");
@@ -39,7 +40,7 @@ class ControllerMainTest extends BaseTest
     /**
      * @runInSeparateProcess
      */
-    public function test_banned_ip()
+    public function est_banned_ip()
     {
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR", self::IP_BANNED);
