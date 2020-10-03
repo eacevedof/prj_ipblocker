@@ -1,45 +1,37 @@
-name: CI
-on: [push]
+name: CI/CD
+on:
+  push:
+    branches:
+      - master
+
 jobs:
-  build-test:
+  test:
+    name: checkout and test
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v1 # or alternative dependency management
-      - uses: php-actions/phpunit@v9
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+      - name: checkout project
+        uses: actions/checkout@v2
+      - name: composer install missing files
+        run: composer install
+      - name: run tests
+        run: /usr/bin/php -f bin/phpunit > output.txt
+      - name: save output
+        uses: actions/upload-artifact@v1
         with:
-          php-version: 7.4
-          extensions: mbstring
-          coverage: xdebug
-
-      - name: Set PHPUnit Version
+          name: output
+          path: output.txt
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: retrieve output
+        uses: actions/download-artifact@v1
+        with:
+          name: output
+      - name: check results
         run: |
-          $content = Get-Content -Path 'backend_web/composer.json' | ConvertFrom-Json
-          $content.{require-dev}.{phpunit/phpunit} = "^9.3"
-          $content | ConvertTo-Json  | Set-Content -Path 'backend_web/composer.json'
-        shell: pwsh
-
-      - name: Composer dependencies
-        run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-
-      - name: Configure tests for the current PHPUnit version (Non-Windows)
-        run: |
-          V=$(./vendor/bin/phpunit --version)
-          sed -i.bak "s/%%VERSION%%/$V/" test/states-test.phpt
-        if: "!startsWith(matrix.os, 'windows')"
-
-      - name: Configure tests for the current PHPUnit version (Windows)
-        id: phpunit-windows
-        run: |
-          $V = (.\vendor\bin\phpunit --version | Out-String).trim()
-          $content = Get-Content -Path 'test/states-test.phpt'
-          $newContent = $content -replace '%%VERSION%%', $V
-          $newContent | Set-Content -Path 'test/states-test.phpt'
-        if: "startsWith(matrix.os, 'windows')"
-
-      - name: Run phpunit
-        run: ./vendor/bin/phpunit
+          export PHPUNIT_OUTPUT = grep -q OK "output.txt"
+      - name: conditional
+        if: {{$PHPUNIT_OUTPUT==1}}
+        run: echo test
