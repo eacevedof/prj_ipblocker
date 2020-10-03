@@ -2,9 +2,9 @@
 namespace Ipblocker\Controllers;
 
 use function Ipblocker\Functions\send_httpstatus;
-use Ipblocker\Components\SearchbotsComponent as sb;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\DbProvider;
+use Ipblocker\Providers\IpdataProvider;
 use Ipblocker\Services\RulezChecker;
 use Ipblocker\Traits\LogTrait;
 
@@ -14,16 +14,18 @@ class ControllerMain
 
     private $req;
     private $dbprovider;
+    private $ipprovider;
 
     public function __construct()
     {
         $this->req = req::getInstance();
         $this->dbprovider = new DbProvider();
+        $this->ipprovider = new IpdataProvider($this->req->get_remoteip());
     }
 
     private function _is_search_bot()
     {
-        return sb::get_name($this->req->get_remoteip());
+        return $this->ipprovider->get_searchbot();
     }
 
     private function _is_ipuntracked()

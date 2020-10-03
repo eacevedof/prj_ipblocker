@@ -3,7 +3,7 @@ namespace Ipblocker\Providers;
 
 use function Ipblocker\Functions\endswith;
 use Ipblocker\Providers\CmdComponent as cmd;
-use Ipblocker\Components\SearchbotsComponent as bot;
+use Ipblocker\Components\SearchbotsComponent as sb;
 
 class IpdataProvider
 {
@@ -94,7 +94,7 @@ class IpdataProvider
 
     public function get_searchbot() : string
     {
-        return bot::get_name($this->remoteip);
+        return sb::get_name($this->remoteip);
     }
 
 }
