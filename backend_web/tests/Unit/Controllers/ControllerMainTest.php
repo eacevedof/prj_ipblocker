@@ -19,12 +19,15 @@ class ControllerMainTest extends BaseTest
         $this->assertTrue($r);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function test_banned_ip()
     {
         $this->_reset_fullrequest();
         $this->_add_server("REMOTE_ADDR", self::IP_BANNED);
         $r = (new ControllerMain())->handle_request();
-        $this->assertFalse($r);
+        $this->assertEmpty($r);
     }
 
 }

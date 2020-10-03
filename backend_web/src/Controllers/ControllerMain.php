@@ -12,53 +12,36 @@ class ControllerMain
 {
     use LogTrait;
 
-    private $req;
     private $dbprovider;
     private $ipprovider;
 
     public function __construct()
     {
-        $this->req = req::getInstance();
+        $remoteip = req::getInstance()->get_remoteip();
         $this->dbprovider = new DbProvider();
-        $this->ipprovider = new IpdataProvider($this->req->get_remoteip());
+        $this->ipprovider = new IpdataProvider($remoteip);
     }
 
-    private function _is_search_bot()
-    {
-        return $this->ipprovider->get_searchbot();
-    }
+    private function _is_search_bot(){return $this->ipprovider->get_searchbot();}
 
-    private function _is_ipuntracked()
-    {
-        $isuntracked = $this->dbprovider->is_untracked();
-        return $isuntracked;
-    }
+    private function _is_ipuntracked(){return $this->dbprovider->is_untracked();}
 
-    private function _is_ipblacklisted()
-    {
-        $isblocked = $this->dbprovider->is_blacklisted();
-        return $isblocked;
-    }
+    private function _is_ipblacklisted(){return $this->dbprovider->is_blacklisted();}
 
     private function _check_forbidden_content()
     {
-        if($this->_is_ipblacklisted())
-            return;
-        $words = (new RulescheckerService())->is_forbidden();
-        if($words)
-            $this->dbprovider->add_to_blacklist($words);
+        if($this->_is_ipblacklisted())  return;
+        $reason = (new RulescheckerService())->is_forbidden();
+        if($reason)
+            $this->dbprovider->add_to_blacklist($reason);
     }
 
-    private function _response_headers()
+    private function _echo_message()
     {
-        //send_hhtpstatus configura headers: header($http[$num]);
-        $codes = send_httpstatus(403);
-    }
-
-    private function _pr()
-    {
-        $ip = $this->req->get_remoteip();
+        $ip = $this->ipprovider->get_ip();
         $now = date("Ymd His");
+
+        send_httpstatus(403);
         echo "
         <pre>
         {$now}:
@@ -76,15 +59,14 @@ class ControllerMain
 
     public function handle_request()
     {
-        if($this->_is_ipuntracked()) return;
+        if($this->_is_ipuntracked()) return true;
         $this->dbprovider->save_request();
-        if($this->_is_search_bot()) return;
-        //guarda en blacklist si detecta contenido prohibido y si no existiera en bl
+        if($this->_is_search_bot()) return true;
+        //guarda en blacklist si detecta contenido prohibido
         $this->_check_forbidden_content();
 
         if($this->_is_ipblacklisted()){
-            $this->_response_headers();
-            $this->_pr();
+            $this->_echo_message();
             die();
         }
         return true;
