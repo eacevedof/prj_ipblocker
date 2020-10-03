@@ -6,29 +6,25 @@ class ConfigComponent
     private const FILES = [
         "contexts" => [
             "local" =>  IPB_PATH_CONFIG."/contexts.local.json",
+            "test" =>  IPB_PATH_CONFIG."/contexts.test.json",
             "prod"  =>  IPB_PATH_CONFIG."/contexts.json",
         ],
 
         "rulez" => [
             "local" =>  IPB_PATH_CONFIG."/rulez.local.json",
+            "test" =>  IPB_PATH_CONFIG."/rulez.test.json",
             "prod"  =>  IPB_PATH_CONFIG."/rulez.json",
         ],
     ];
 
     private static function get_pathjson($type="contexts")
     {
-        if(is_file(self::FILES[$type]["local"]))
-            return self::FILES[$type]["local"];
+        $env = self::get_env();
+        if(is_file(self::FILES[$type][$env])) return self::FILES[$type][$env];
         return self::FILES[$type]["prod"];
     }
 
-    public static function get_env($type="contexts")
-    {
-        $pathjson = self::get_pathjson($type);
-        if(strstr($pathjson,"contexts.local.json"))
-            return "dev";
-        return "prod";
-    }
+    public static function get_env(){return IPB_ENV;}
 
     private static function _get_array_from_json($type="contexts")
     {
@@ -38,7 +34,7 @@ class ConfigComponent
         return $array;
     }
 
-    public static function get_schema($id,$database)
+    public static function get_schema($id, $database)
     {
         $array = self::_get_array_from_json();
         foreach ($array as $arcfg)

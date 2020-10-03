@@ -26,9 +26,9 @@ class DbProvider
     private function _get_dbname_by_env()
     {
         $env = cfg::get_env();
-        if($env=="prod")
-            return "dbs433062";
-        return "db_security";
+        if($env=="local") return "db_security";
+        if($env=="prod") return "dbs433062";
+        if($env=="test") return "dbXXXX";
     }
 
     private function _save_app_ip()

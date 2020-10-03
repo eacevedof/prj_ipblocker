@@ -14,8 +14,6 @@ abstract class BaseTest extends TestCase
 {
     use Log;
 
-    private const DB_NAME = "db_security";
-
     public function setUp(): void
     {
         $_POST = [];
@@ -82,9 +80,18 @@ abstract class BaseTest extends TestCase
         return $this;
     }
 
+    private function _get_dbname_by_env()
+    {
+        $env = cfg::get_env();
+        if($env=="local") return "db_security";
+        if($env=="prod") return "dbs433062";
+        if($env=="test") return "dbXXXX";
+    }
+
     protected function _get_db()
     {
-        $config = cfg::get_schema("c1", self::DB_NAME);
+        $dbname = $this->_get_dbname_by_env();
+        $config = cfg::get_schema("c1", $dbname);
         return new MysqlComponent($config);
     }
 }
