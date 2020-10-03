@@ -1,35 +1,63 @@
 <?php
 namespace Tests;
-// ./vendor/bin/phpunit ./tests/ExampleTest.php --color=auto
+//php ./vendor/bin/phpunit ./tests
 use PHPUnit\Framework\TestCase;
+use function Ipblocker\Functions\cp;
 use Ipblocker\Traits\LogTrait as Log;
+use Ipblocker\Components\ConfigComponent as cfg;
 
 class ConfigTest extends TestCase
 {
     use Log;
 
-    private const FILE_JSON_CONTEXTS = IPB_PATH_CONFIG."/contexts.json";
-    private const FILE_JSON_RULEZ = IPB_PATH_CONFIG."/rulez.json";
-
-    public function test_exists_contexts_json()
+    private function _get_dbname_by_env()
     {
-        $isFile = is_file(self::FILE_JSON_CONTEXTS);
-        $this->assertEquals(TRUE,$isFile);
+        $env = cfg::get_env();
+        if($env=="local") return "db_ipblocker";
+        if($env=="prod") return "dbs433062";
+        if($env=="test") return "dbs863900";
     }
 
-    /**
-     *  @depends test_exists_contexts_json
-     */
-    public function test_exists_rules_json()
+    private function _get_jsonfile_by_env($type="contexts")
     {
-        $isFile = is_file(self::FILE_JSON_RULEZ);
-        $this->assertEquals(TRUE,$isFile);
+        $env = cfg::get_env();
+        $dir = "./config";
+        $pathdir = realpath($dir);
+        //cp($pathdir,"pathdir");
+        $pathfile = "$pathdir/$type";
+
+        if($env!=="prod"){
+            $pathfile = $pathfile.".$env.json";
+        }
+        else
+            $pathfile = $pathfile.".json";
+        return $pathfile;
+    }
+
+    public function test_not_emptyrules()
+    {
+        $rules = cfg::get_rulez();
+        $this->assertNotEmpty($rules);
+    }
+
+    public function test_not_emptyenv()
+    {
+        $env = cfg::get_env();
+        $this->assertNotEmpty($env);
     }
 
     public function test_is_logfolder()
     {
         $isdir = is_dir(IPB_PATH_LOGS);
         $this->assertEquals(TRUE,$isdir);
+    }
+
+    public function test_not_empty_dbconfig()
+    {
+        $dbname = $this->_get_dbname_by_env();
+        $dbconf = cfg::get_schema("c1", $dbname);
+        $this->logd($dbconf,"test_not_empty_dbconfig.dbconf");
+        $this->assertNotEmpty($dbconf);
     }
 
     private function _is_good_json($pathjson)
@@ -43,16 +71,15 @@ class ConfigTest extends TestCase
         return $isok;
     }
 
-    public function test_contexts_json()
+    public function test_good_jsons()
     {
-        $isok = $this->_is_good_json(self::FILE_JSON_CONTEXTS);
+        $isok = $this->_is_good_json($this->_get_jsonfile_by_env());
+        $this->assertEquals(TRUE, $isok);
+
+        $isok = $this->_is_good_json($this->_get_jsonfile_by_env("rulez"));
         $this->assertEquals(TRUE, $isok);
     }
 
-    public function test_rules_json()
-    {
-        $isok = $this->_is_good_json(self::FILE_JSON_RULEZ);
-        $this->assertEquals(TRUE, $isok);
-    }
+
 
 }//ConfigTest
