@@ -6,11 +6,11 @@ use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\DbProvider;
 use Ipblocker\Providers\IpdataProvider;
 use Ipblocker\Services\RulescheckerService;
-use Ipblocker\Traits\LogTrait;
+use Ipblocker\Traits\LogTrait as Log;
 
 class ControllerMain
 {
-    use LogTrait;
+    use Log;
 
     private $dbprovider;
     private $ipprovider;
@@ -46,6 +46,7 @@ class ControllerMain
         {$now}:
         
         We have detected some malicious requests from your ip: 
+            
             <b>{$ip}</b>
         
         This address will be blacklisted for some time (around 24h).
@@ -64,6 +65,7 @@ class ControllerMain
     {
         if($this->_is_ipuntracked()) return true;
         $this->dbprovider->save_request();
+
         if($this->_is_search_bot()) return true;
         //guarda en blacklist si detecta contenido prohibido
         $this->_check_forbidden_content();
