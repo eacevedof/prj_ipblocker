@@ -46,7 +46,9 @@ class ControllerMain
             <pre>
             {$now}:
             
-            We have detected some malicious requests from your ip: {$ip}
+            We have detected some malicious requests from your ip: 
+                <b>{$ip}</b>
+            
             This address will be blacklisted for some time (around 24h).
             If you consider this is not your case please contact
                 eacevedof@hotmail.com
