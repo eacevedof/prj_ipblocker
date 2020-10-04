@@ -36,7 +36,7 @@ class ControllerMain
             $this->dbprovider->add_to_blacklist($reason);
     }
 
-    private function _exception()
+    private function _die_message()
     {
         $ip = $this->ipprovider->get_ip();
         $now = date("Ymd His");
@@ -57,7 +57,7 @@ class ControllerMain
         </pre>
         ";
         send_httpstatus(403);
-        throw new \Exception($message);
+        die($message);
     }
 
     public function handle_request()
@@ -69,7 +69,7 @@ class ControllerMain
         $this->_check_forbidden_content();
 
         if($this->_is_ipblacklisted()){
-            $this->_exception();
+            $this->_die_message();
         }
         return true;
     }
