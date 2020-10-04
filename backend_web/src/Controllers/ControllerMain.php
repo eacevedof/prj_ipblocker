@@ -38,32 +38,26 @@ class ControllerMain
 
     private function _exception()
     {
-        try {
-            $ip = $this->ipprovider->get_ip();
-            $now = date("Ymd His");
+        $ip = $this->ipprovider->get_ip();
+        $now = date("Ymd His");
 
-            $message = "
-            <pre>
-            {$now}:
-            
-            We have detected some malicious requests from your ip: 
-                <b>{$ip}</b>
-            
-            This address will be blacklisted for some time (around 24h).
-            If you consider this is not your case please contact
-                eacevedof@hotmail.com
-            so we can enable your ip again sooner.
-            
-            Powered by: <b>IP Blocker 2.0</b>
-            </pre>
-            ";
-            throw new \Exception($message);
-        }
-        catch (\Exception $e)
-        {
-            send_httpstatus(403);
-            die($e->getMessage());
-        }
+        $message = "
+        <pre>
+        {$now}:
+        
+        We have detected some malicious requests from your ip: 
+            <b>{$ip}</b>
+        
+        This address will be blacklisted for some time (around 24h).
+        If you consider this is not your case please contact
+            eacevedof@hotmail.com
+        so we can enable your ip again sooner.
+        
+        Powered by: <b>IP Blocker 2.0</b>
+        </pre>
+        ";
+        send_httpstatus(403);
+        throw new \Exception($message);
     }
 
     public function handle_request()
