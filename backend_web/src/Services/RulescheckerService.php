@@ -1,9 +1,7 @@
 <?php
 namespace Ipblocker\Services;
 
-use function Ipblocker\Functions\pp;
 use function Ipblocker\Functions\cp;
-
 use Ipblocker\Components\ConfigComponent as cfg;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\IpdataProvider;
