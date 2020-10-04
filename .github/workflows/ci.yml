@@ -42,5 +42,5 @@ jobs:
           cat result.txt; rm result.txt
           php vendor/bin/phpunit tests/Unit/Components/SearchbotsComponentTest.php > result.txt
           cat result.txt; rm result.txt
-          php vendor/bin/phpunit tests/Unit/Providers > result.txt
-          cat result.txt; rm result.txt
+          # php vendor/bin/phpunit tests/Unit/Providers > result.txt
+          # cat result.txt; rm result.txt
