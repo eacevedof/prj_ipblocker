@@ -60,7 +60,7 @@ class ControllerMain
         catch (\Exception $e)
         {
             send_httpstatus(403);
-            echo $e->getMessage();
+            die($e->getMessage());
         }
     }
 
