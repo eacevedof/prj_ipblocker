@@ -7,11 +7,9 @@ use function Ipblocker\Functions\send_httpstatus;
 use Ipblocker\Helpers\RequestHelper as req;
 use Ipblocker\Providers\DbProvider;
 use Ipblocker\Providers\IpdataProvider;
-use Ipblocker\Services\RulescheckerService;
 use Ipblocker\Traits\LogTrait as Log;
 
-
-class RequestService
+class RequestCheckService
 {
     use Log;
 

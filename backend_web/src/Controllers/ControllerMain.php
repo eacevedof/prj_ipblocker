@@ -1,11 +1,11 @@
 <?php
 namespace Ipblocker\Controllers;
-use Ipblocker\Services\RequestService;
+use Ipblocker\Services\RequestCheckService;
 
 class ControllerMain
 {
     public function __invoke()
     {
-        (new RequestService())->handle_request();
+        (new RequestCheckService())->handle_request();
     }
 }
