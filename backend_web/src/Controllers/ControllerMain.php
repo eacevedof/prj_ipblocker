@@ -36,25 +36,32 @@ class ControllerMain
             $this->dbprovider->add_to_blacklist($reason);
     }
 
-    private function _echo_message()
+    private function _exception()
     {
-        $ip = $this->ipprovider->get_ip();
-        $now = date("Ymd His");
+        try {
+            $ip = $this->ipprovider->get_ip();
+            $now = date("Ymd His");
 
-        send_httpstatus(403);
-        echo "
-        <pre>
-        {$now}:
-        We have detected some malicious requests from your ip: {$ip}
-        This address will be blacklisted for some time (around 24h).
-        If you consider this is not your case please contact
-            eacevedof@hotmail.com
-        so we can enable your ip again sooner.
-        </pre>
-        <p>
-        Powered by: <b>IP Blocker </b>
-        </p>
-        ";
+            $message = "
+            <pre>
+            {$now}:
+            We have detected some malicious requests from your ip: {$ip}
+            This address will be blacklisted for some time (around 24h).
+            If you consider this is not your case please contact
+                eacevedof@hotmail.com
+            so we can enable your ip again sooner.
+            </pre>
+            <p>
+            Powered by: <b>IP Blocker 2.0</b>
+            </p>
+            ";
+            throw new \Exception($message);
+        }
+        catch (\Exception $e)
+        {
+            send_httpstatus(403);
+            echo $e->getMessage();
+        }
     }
 
     public function handle_request()
@@ -66,8 +73,7 @@ class ControllerMain
         $this->_check_forbidden_content();
 
         if($this->_is_ipblacklisted()){
-            $this->_echo_message();
-            die();
+            $this->_exception();
         }
         return true;
     }
