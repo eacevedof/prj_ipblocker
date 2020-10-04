@@ -9,7 +9,7 @@ class ControllerMainTest extends BaseTest
 {
     public function test_invocable()
     {
-        $isinvocable = method_exists ((new ControllerMain), "__invoke" );
+        $isinvocable = method_exists ((new ControllerMain), "__invoke");
         $this->assertTrue($isinvocable);
     }
 }
