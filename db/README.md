@@ -11,6 +11,14 @@ TRUNCATE TABLE app_ip_request;
 ### Sql check:
 - [ipgeolocation](https://ipgeolocation.io/ip-location/34.241.107.14)
 ```sql
+DELETE t.* FROM `app_ip_request` t 
+WHERE t.id IN ( 
+    select id from (
+    SELECT id 
+    FROM `app_ip_request`
+    WHERE 1 
+    AND request_uri LIKE '%apple%icon%') as x
+)
 -- ips con su contenido
 SELECT remote_ip,post 
 FROM
