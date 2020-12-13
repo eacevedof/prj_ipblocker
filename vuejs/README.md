@@ -1,1 +1,5 @@
- ### [fuente youtube](https://youtu.be/fkLOx8McIGo?list=PLPl81lqbj-4JZgB4Oapr1lRrzpAqQ4mBL)
+ #### To-Do:
+ - Hay que mostrar el user agent en el listado al lado de la ip
+ - Aplicar color a los bloqueados
+ - Mostrar en el detalle el header
+ - Test de hacks
