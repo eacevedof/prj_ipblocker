@@ -20,7 +20,7 @@
             <v-row>
               <v-col class="pa-0">
                 <h4>Remote IP</h4>
-                <p>{{objrowform.remote_ip}} - <b>User agent:</b>{{objrowform.user_agent}}</p>
+                <p>{{objrowform.remote_ip}}</p>
               </v-col>
               <v-col class="pa-0">
                 <h4>Country</h4>
@@ -51,6 +51,10 @@
                 <h4>Domain</h4>
                 <p>{{objrowform.domain}}</p>
               </v-col>             
+              <v-col class="pa-0">
+                <h4>User agent</h4>
+                <p>{{objrowform.user_agent}}</p>
+              </v-col>              
               <v-col class="pa-0">
                 <h4>Req. URI</h4>
                 <p>{{objrowform.request_uri}}</p>
