@@ -20,7 +20,7 @@
             <v-row>
               <v-col class="pa-0">
                 <h4>Remote IP</h4>
-                <p>{{objrowform.remote_ip}}</p>
+                <p>{{objrowform.remote_ip}} - <b>User agent:</b>{{objrowform.user_agent}}</p>
               </v-col>
               <v-col class="pa-0">
                 <h4>Country</h4>

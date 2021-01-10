@@ -72,6 +72,7 @@ const query = {
     "i.whois",
     "r.domain",
     "r.request_uri",
+    "r.user_agent",
     "r.`get`",
     "CASE WHEN r.`get`!='' THEN 'GET' ELSE '' END hasget",
     "r.post",

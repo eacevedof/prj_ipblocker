@@ -7,7 +7,7 @@ const Apiauth = {
 
   async_get_usertoken: async (objlogin)=>{
 
-    const url = `${BASE_URL}/apifiy/security/login`
+    const url = `${BASE_URL}/apify/security/login`
     
     try {
       const data = new FormData()
@@ -32,7 +32,7 @@ const Apiauth = {
 
   async_is_validtoken: async () => {
     const usertoken = db.select("usertoken")
-    const url = `${BASE_URL}/apifiy/security/is-valid-token`
+    const url = `${BASE_URL}/apify/security/is-valid-token`
     //hay que enviar header: apify-auth: token
     try {
 
