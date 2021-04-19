@@ -19,7 +19,12 @@ class UrlService implements IRulez
 
     public function get()
     {
-
+        // comprobar filtro global por:
+        // request uri
+        // get keys
+        // get values
+        // post keys
+        // post values
         // TODO: Implement validate() method.
     }
 }
