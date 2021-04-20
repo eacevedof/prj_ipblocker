@@ -3,7 +3,7 @@ namespace Ipblocker\Rulez;
 
 use Ipblocker\IRulez;
 
-class ComponentRulez
+final class RulezService
 {
 
     private string $requrl;
@@ -17,13 +17,5 @@ class ComponentRulez
         $this->post = $post;
     }
 
-    private static function _get_stragety():IRulez
-    {
 
-    }
-
-    public function get()
-    {
-
-    }
 }

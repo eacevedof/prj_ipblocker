@@ -7,7 +7,6 @@ use Ipblocker\Components\ComponentsArray;
 
 class UrlService implements IRulez
 {
-
     private string $requrl;
     private array $arrulez;
 
@@ -15,6 +14,15 @@ class UrlService implements IRulez
     {
         $this->requrl = new ComponentString($requrl);
         $this->arrulez = new ArrayComponent($arrulez);
+    }
+
+    private function _test_global()
+    {
+        // ips
+        // countries
+        // uri
+        // post
+        // get
     }
 
     public function get()
@@ -26,5 +34,6 @@ class UrlService implements IRulez
         // post keys
         // post values
         // TODO: Implement validate() method.
+        //
     }
 }
