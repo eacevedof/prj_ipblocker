@@ -2,8 +2,8 @@
 namespace Ipblocker\Services\Rulez;
 use Ipblocker\Rulez;
 
-use Ipblocker\Components\ComponentsString;
-use Ipblocker\Components\ComponentsArray;
+use Ipblocker\Components\StringComponent;
+use Ipblocker\Components\ArrayComponent;
 
 class UrlService implements IRulez
 {
@@ -12,7 +12,7 @@ class UrlService implements IRulez
 
     public function __construct(string $requrl, array $arrulez)
     {
-        $this->requrl = new ComponentString($requrl);
+        $this->requrl = new StringComponent($requrl);
         $this->arrulez = new ArrayComponent($arrulez);
     }
 
@@ -23,6 +23,7 @@ class UrlService implements IRulez
         // uri
         // post
         // get
+        //
     }
 
     public function get()

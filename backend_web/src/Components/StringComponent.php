@@ -11,15 +11,17 @@ class StringComponent
         $this->string = strtolower(trim($string));
     }
 
-    private function _in_string($search, $string){
+    private function _in_string(string $search, string $string): bool
+    {
         if(strstr($string, $search))
             return true;
         return false;
     }
 
-    public function has_some(array $substr=[])
+    public function has_some(array $substr=[]): bool
     {
         if(!$substr) return true;
+
         foreach ($substr as $search)
             if($this->_in_string($search, $this->string))
                 return true;
@@ -27,7 +29,7 @@ class StringComponent
     }
 
     //!has_all => is_none
-    public function has_all(array $substr=[])
+    public function has_all(array $substr=[]): bool
     {
         if(!$substr) return true;
         foreach ($substr as $search)
