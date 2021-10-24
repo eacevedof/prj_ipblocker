@@ -6,3 +6,6 @@
 - Aplicar color a los bloqueados
 - Mostrar en el detalle el header
 - Test de hacks
+
+### comandos:
+- `py.sh deploy.frontbuild ipblocker`

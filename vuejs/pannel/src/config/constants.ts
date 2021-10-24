@@ -1,4 +1,4 @@
-export const APP_VERSION = "v1.2.2"
+export const APP_VERSION = "v1.2.3"
 
 /**
 export const BASE_URL = "http://localhost:3000"
