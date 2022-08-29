@@ -1,7 +1,7 @@
 <?php
 namespace Ipblocker\Services;
 
-use function Ipblocker\Functions\pp;
+//use function Ipblocker\Functions\pp;
 use function Ipblocker\Functions\send_httpstatus;
 
 use Ipblocker\Helpers\RequestHelper as req;
@@ -9,7 +9,7 @@ use Ipblocker\Providers\DbProvider;
 use Ipblocker\Providers\IpdataProvider;
 use Ipblocker\Traits\LogTrait as Log;
 
-class RequestCheckService
+final class RequestCheckService
 {
     use Log;
 
@@ -40,25 +40,18 @@ class RequestCheckService
     private function _die_message()
     {
         $ip = $this->ipprovider->get_ip();
-        $now = date("Ymd His");
+        $now = date("Y-m-d H:i:s");
 
         $message = "
         <pre>
         {$now}:
+        Sorry but this content is not longer available.
         
-        We have detected some malicious requests from your ip: 
-            
-            <b>{$ip}</b>
-        
-        This address will be blacklisted for some time (around 24h).
-        If you consider this is not your case please contact
-            eacevedof@hotmail.com
-        so we can enable your ip again sooner.
-        
+        Request from: <b>{$ip}</b>
         Powered by: <b>IP Blocker 2.0</b>
         </pre>
         ";
-        send_httpstatus(403);
+        send_httpstatus(404);
         die($message);
     }
 

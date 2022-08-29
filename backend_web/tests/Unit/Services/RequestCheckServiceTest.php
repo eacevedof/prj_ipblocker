@@ -6,7 +6,7 @@ use function Ipblocker\Functions\cp;
 use Tests\Unit\BaseTest;
 use Ipblocker\Services\RequestCheckService;
 
-class RequestCheckServiceTest extends BaseTest
+final class RequestCheckServiceTest extends BaseTest
 {
     private const IP_BANNED = "127.0.0.B";
     private const IP_NOT_BANNED = "176.83.68.84";
