@@ -106,6 +106,7 @@ final class RequestHelper
 
     /**
      * prevent from being unserialized (which would create a second instance of it)
+     * lo cambio: __wakeup() must have public visibility
      */
-    private function __wakeup(){}    
+    public function __wakeup(){}
 }
