@@ -5,11 +5,11 @@ use function Ipblocker\Functions\cp;
 use Tests\Unit\BaseTest;
 use Ipblocker\Controllers\ControllerMain;
 
-class ControllerMainTest extends BaseTest
+final class ControllerMainTest extends BaseTest
 {
     public function test_invocable()
     {
-        $isinvocable = method_exists ((new ControllerMain), "__invoke");
+        $isinvocable = method_exists((new ControllerMain), "__invoke");
         $this->assertTrue($isinvocable);
     }
 }

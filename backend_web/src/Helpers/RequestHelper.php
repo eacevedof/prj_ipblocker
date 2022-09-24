@@ -38,8 +38,8 @@ final class RequestHelper
      */
     public static function getInstance(): RequestHelper
     {
-        if (static::$thisself === null) static::$thisself = new static();
-        return static::$thisself;
+        if (self::$thisself === null) self::$thisself = new self();
+        return self::$thisself;
     }
 
     /**

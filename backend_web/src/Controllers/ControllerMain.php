@@ -2,7 +2,7 @@
 namespace Ipblocker\Controllers;
 use Ipblocker\Services\RequestCheckService;
 
-class ControllerMain
+final class ControllerMain
 {
     public function __invoke()
     {

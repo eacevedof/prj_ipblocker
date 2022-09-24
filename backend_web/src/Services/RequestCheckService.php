@@ -40,7 +40,7 @@ final class RequestCheckService
     private function _die_message()
     {
         $ip = $this->ipprovider->get_ip();
-        $now = date("Y-m-d H:i:s");
+        $now = \date("Y-m-d H:i:s");
 
         $message = "
         <pre>
